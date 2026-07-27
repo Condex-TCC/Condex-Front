@@ -10,6 +10,7 @@ import LoginLayout from '../layouts/LoginLayout';
 
 //Importando as página
 import PaginaInical from '../pages/telaInicial';
+import TelaDeLogin from '../pages/telaLogin';
 
 //Componente que será utilizado para analizar a URL
 const route = createBrowserRouter([
@@ -35,7 +36,8 @@ const route = createBrowserRouter([
                     },
                     //Tela de login
                     {
-                        //Adicionar
+                        path: "/login", //Caminho da tela inicial
+                        element: <TelaDeLogin></TelaDeLogin>, //Componente que será carregado
                     }
                 ]
             }

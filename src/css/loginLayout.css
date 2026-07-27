@@ -1,48 +1,161 @@
-.div-fundo-inicial{
+/* Reseta margens para a página ocupar tudo corretamente */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.div-fundo-inicial {
+    /* Mantenha o caminho da sua imagem */
     background-image: url("../assets/imagemInicial.png");
+    background-color: #0b1528; /* Cor de fallback caso a imagem não carregue */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 100vh;
     width: 100%;
 
-    /* ADIÇÕES: Flexbox para centralizar o botão */
+    /* Flexbox para centralizar o formulário */
     display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center;     /* Centraliza verticalmente */
+    justify-content: center; 
+    align-items: center;     
+}
+
+.div-login-formulario {
+    background-color: #F8FEFD;
+    width: 650px;
+    min-height: 400px;
+    border-radius: 10px;
+    padding: 50px 60px;
+    position: relative;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Marca d'água "LOGIN" no fundo do card */
+.texto-fundo-marca {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    font-size: 32px;
+    font-weight: 900;
+    color: #f1f4f9;
+    letter-spacing: 2px;
+    z-index: 1;
+}
+
+/* Textos do Cabeçalho */
+.cabecalho-login {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 30px;
+}
+
+.texto-boas-vindas {
+    color: #3b7ad5;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.titulo-login {
+    color: #000000;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Formulário e Inputs */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.grupo-input label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #1a2332;
+    margin-bottom: 8px;
+}
+
+.container-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.icone-esquerda {
+    position: absolute;
+    left: 15px;
+    width: 18px;
+    height: 18px;
+    color: #9ca3af;
+}
+
+.icone-direita {
+    position: absolute;
+    right: 15px;
+    width: 18px;
+    height: 18px;
+    color: #9ca3af;
+    cursor: pointer;
+}
+
+.container-input input {
+    width: 100%;
+    padding: 12px 40px 12px 45px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+.container-input input:focus {
+    border-color: #3b7ad5;
+}
+
+/* Alinhamento do Botão */
+.container-botao {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
 }
 
 .btn-login {
-    /* Estrutura e espaçamento */
-    display: inline-block;
-    padding: 14px 60px;
+    /* Estrutura e espaçamento ajustados ao design da imagem */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 60%;
+    padding: 12px 20px;
     border-radius: 6px;
     
-    /* Cores e Fundo */
-    background: linear-gradient(to right, #075bd2, #00b5fc);
+    /* Degradê da imagem (Azul claro para Azul escuro) */
+    background: linear-gradient(to right, #3482d8, #0a1f44);
     color: #ffffff;
     
     /* Tipografia */
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    text-transform: uppercase;
     text-decoration: none;
-    letter-spacing: 1px;
-    text-align: center;
     
     /* Comportamento */
     border: none;
     cursor: pointer;
     transition: opacity 0.2s ease-in-out;
-
-    /* ADIÇÃO: Empurra o botão para baixo para não ficar no meio exato da tela. 
-       DICA: Aumente ou diminua esse valor (ex: 200px, 300px) para alinhar 
-       perfeitamente com o desenho da logo na sua imagem de fundo. */
-    margin-top: 450px;
 }
 
-/* Efeito ao passar o mouse (Opcional, mas recomendado) */
+.seta-botao {
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+
 .btn-login:hover {
     opacity: 0.9;
 }
