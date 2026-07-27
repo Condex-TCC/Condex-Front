@@ -1,0 +1,48 @@
+.div-fundo-inicial{
+    background-image: url("../assets/imagemInicial.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+
+    /* ADIÇÕES: Flexbox para centralizar o botão */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+}
+
+.btn-login {
+    /* Estrutura e espaçamento */
+    display: inline-block;
+    padding: 14px 60px;
+    border-radius: 6px;
+    
+    /* Cores e Fundo */
+    background: linear-gradient(to right, #075bd2, #00b5fc);
+    color: #ffffff;
+    
+    /* Tipografia */
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-align: center;
+    
+    /* Comportamento */
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+
+    /* ADIÇÃO: Empurra o botão para baixo para não ficar no meio exato da tela. 
+       DICA: Aumente ou diminua esse valor (ex: 200px, 300px) para alinhar 
+       perfeitamente com o desenho da logo na sua imagem de fundo. */
+    margin-top: 450px;
+}
+
+/* Efeito ao passar o mouse (Opcional, mas recomendado) */
+.btn-login:hover {
+    opacity: 0.9;
+}
