@@ -159,3 +159,14 @@
 .btn-login:hover {
     opacity: 0.9;
 }
+
+.btn-inicial {
+    /* Sobrescreve os 60% da classe btn-login e define um tamanho fixo */
+    width: 250px; 
+    
+    margin-top: 400px;
+
+    /* Opcional: Deixar o botão um pouco mais alto para a tela inicial */
+    padding: 15px 30px; 
+    font-size: 18px;
+}

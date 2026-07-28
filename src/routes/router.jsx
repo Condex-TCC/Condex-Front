@@ -7,6 +7,9 @@ import { createBrowserRouter } from 'react-router-dom';
 //Importando os layouts
 import RootLayout from '../layouts/RootLayout';
 import LoginLayout from '../layouts/LoginLayout';
+import LayoutSindico from '../layouts/SindicoLayout';
+import LayoutMorador from '../layouts/MoradorLayout';
+import PorteiroLayout from '../layouts/PorteiroLayout';
 
 //Importando as página
 import PaginaInical from '../pages/telaInicial';
@@ -40,7 +43,24 @@ const route = createBrowserRouter([
                         element: <TelaDeLogin></TelaDeLogin>, //Componente que será carregado
                     }
                 ]
-            }
+            },
+
+            //Tela do sindico
+            {
+                path: "/sindico", //Caminho do primeiro elemento
+                element: <LayoutSindico></LayoutSindico>, //Componente que será carregado
+            },
+
+            //Tela do morador
+            {
+                path: "/morador", //Caminho do primeiro elemento
+                element: <LayoutMorador></LayoutMorador>, //Componente que será carregado
+            },
+
+            {
+                path: "/porteiro", //Caminho do primeiro elemento
+                element: <PorteiroLayout></PorteiroLayout>, //Componente que será carregado
+            },
         ]
     }
 ])

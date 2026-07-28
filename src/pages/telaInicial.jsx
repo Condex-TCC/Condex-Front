@@ -9,8 +9,11 @@ function PaginaInical(){
     //Retorna um componente
     return(
         
-        //Elemento que permite a navegação no entre rotas
-        <Link to="/login" className='btn-login'>Login</Link>
+        <div className="div-fundo-inicial">
+
+            {/* //Elemento que permite a navegação no entre rotas */}
+            <Link to="/login" className='btn-login btn-inicial'>Login</Link>
+        </div>
     )
 }
 
