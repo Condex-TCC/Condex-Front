@@ -1,0 +1,113 @@
+* { /* Cria um seletor global para aplicar regras a todos os elementos HTML renderizados */
+  box-sizing: border-box; /* Previne que o padding e a borda modifiquem a largura final calculada do elemento */
+  margin: 0; /* Reseta as margens externas automáticas, zerando todos os espaços em volta */
+  padding: 0; /* Reseta os preenchimentos internos automáticos, zerando todos os espaços por dentro */
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Define uma pilha de fontes modernas sem serifa para o texto */
+} /* Finaliza a regra de reset global */
+
+.header { /* Inicia a regra de estilos para o container principal da barra superior */
+  display: flex; /* Transforma o container em um modelo Flexbox, emparelhando filhos em linha por padrão */
+  align-items: center; /* Alinha os blocos esquerdo, central e direito no meio do eixo vertical (Y) */
+  justify-content: space-between; /* Espalha as três grandes seções com espaço igual vazio entre elas */
+  padding: 12px 24px; /* Aplica um distanciamento interno de 12px nas bordas verticais e 24px nas horizontais */
+  background-color: #ffffff; /* Pinta a cor de fundo com branco puro, idêntico à imagem de referência */
+  border-bottom: 2px solid #eef0f4; /* Adiciona uma sutil divisória cinza clara na extremidade inferior da barra */
+  width: 100%; /* Força a barra de topo a se esticar horizontalmente ocupando tela inteira */
+} /* Finaliza as definições do container principal */
+
+.left-section { /* Inicia os estilos destinados exclusivamente à região esquerda do cabeçalho */
+  display: flex; /* Aciona Flexbox nesta sub-seção para alinhar o botão ao lado da logomarca */
+  align-items: center; /* Assegura que o botão não fique desalinhado verticalmente em relação ao texto */
+  gap: 24px; /* Determina um espaço lateral rígido de 24 pixels separando o ícone da escrita */
+} /* Fim da configuração do container esquerdo */
+
+.menu-btn { /* Regras para o visual do botão que abriga o ícone sanduíche */
+  background: transparent; /* Remove a pintura cinza que os navegadores injetam no botão por padrão */
+  border: 1px solid #001C3F; /* Desenha um contorno fino de 1px usando um azul bastante escuro */
+  border-radius: 20px; /* Arredonda substancialmente os cantos para reproduzir o formato de cápsula */
+  padding: 6px 14px; /* Posiciona o contorno do botão afastado 6px acima/abaixo e 14px aos lados do SVG */
+  cursor: pointer; /* Modifica a flecha do mouse para o ícone de mão ao pairar sobre a área */
+  display: flex; /* Define o botão como container flexível para ancorar seu ícone filho */
+  align-items: center; /* Centraliza verticalmente o ícone em relação às bordas internas do botão */
+  justify-content: center; /* Centraliza horizontalmente o ícone SVG internamente */
+} /* Conclui os visuais aplicados ao botão do menu */
+
+.logo-container { /* Bloco dedicado ao espaçamento e empilhamento dos textos da marca */
+  display: flex; /* Liga o suporte flexbox para conseguir alinhar os dois níveis de tipografia */
+  flex-direction: column; /* Comanda os itens flexíveis a fluírem de cima para baixo, quebrando linha */
+  align-items: center; /* Posiciona a palavra "Síndico" exatamente centralizada abaixo de "Condex" */
+} /* Encerra o empilhamento tipográfico */
+
+.logo-title { /* Regras de estilo para a palavra principal (Condex) */
+  font-size: 26px; /* Aumenta expressivamente o corpo do texto para dar protagonismo de logomarca */
+  font-weight: 800; /* Engrossa as linhas da letra aplicando uma versão extrabold da tipografia escolhida */
+  color: #001C3F; /* Atribui a tinta principal da marcação: um tom escuro marinho de azul */
+  letter-spacing: -0.5px; /* Comprime milimetricamente a proximidade entre os caracteres do título */
+  line-height: 1; /* Retira entrelinhas desnecessárias prevenindo espaçamento falso acima ou abaixo da palavra */
+} /* Conclui o tratamento do título maior */
+
+.logo-e { /* Classe preventiva destinada apenas para referenciar a vogal E no nome, se houver alteração futura */
+  color: #001C3F; /* Mantém estritamente o tom escuro padronizado sem sofrer mudança de cor */
+} /* Fim do isolamento da letra */
+
+.logo-x { /* Classe dedicada unicamente para isolar a letra X que quebra o padrão visual */
+  color: #33C3F0; /* Sobrescreve a herança e pinta exclusivamente este caractere com azul ciano vibrante */
+} /* Final da injeção de cor de destaque */
+
+.logo-subtitle { /* Conjunto de regras regendo o nome de apoio (Síndico) */
+  font-size: 14px; /* Diminui a proporção tornando-a hierarquicamente inferior à logomarca principal */
+  font-weight: 500; /* Define um negrito intermediário (medium) que não briga com o título superior */
+  color: #001C3F; /* Segue o guia de design copiando o mesmo azul escuro aplicado nas letras maiores */
+  margin-top: -2px; /* Anula uma pequena fração do espaçamento natural subindo o texto verticalmente */
+} /* Termina os estilos do texto de apoio */
+
+.center-section { /* Ajustes para a fatia intermédia que detém o campo interativo de digitação */
+  flex: 1; /* Instrui o container a engolir todo o vão vazio deixado entre o lado esquerdo e o direito */
+  display: flex; /* Exige layout em flexibilidade facilitando a fixação horizontal dos elementos descendentes */
+  justify-content: flex-start; /* Atraca o elemento de pesquisa encostando-o o máximo na margem esquerda possível */
+  padding-left: 40px; /* Devolve um fôlego à leitura empurrando o campo 40 pixels longe das margens da logo */
+} /* Finaliza a diagramação da zona intermediária */
+
+.search-container { /* Define as bordas visíveis simulando o input conforme o recorte fotográfico */
+  display: flex; /* Flexibiliza o interior da caixa para agrupar o vetor do ícone junto ao elemento de input */
+  align-items: center; /* Centraliza a lupa e a barra de texto garantindo que dividam a mesma linha de centro */
+  border: 1px solid #D4D8E2; /* Instancia a moldura sutil em tom gelo acinzentado envolta do mecanismo inteiro */
+  border-radius: 6px; /* Esmerila sutilmente as quatro pontas da caixa gerando um retângulo mais macio */
+  padding: 8px 16px; /* Afasta o lugar de digitação, acrescentando respiros de 8px verticais e 16px horizontais */
+  width: 100%; /* Força o componente visual da busca a expandir preenchendo o bloco virtual do center-section */
+  max-width: 500px; /* Impede a elasticidade desenfreada, travando a caixa em, no máximo, meio milhar de pixels */
+} /* Fim das delimitações da caixa envolvente */
+
+.search-icon { /* Refere-se à manipulação superficial do desenho representativo da lupa */
+  margin-right: 10px; /* Produz um hiato linear empurrando o input de texto para longe do gráfico vetorial */
+} /* Encerramento da métrica do gráfico */
+
+.search-input { /* Regimento atuando no controle real e cru que capta o teclado digitado */
+  border: none; /* Elimina compulsoriamente os blocos delimitadores em relevo embutidos pelo sistema no elemento */
+  outline: none; /* Silencia o brilho ofuscante retangular emitido quando o componente ganha o clique principal */
+  width: 100%; /* Delibera que o componente aproveite totalmente o vácuo não consumido pelo vetor de lupa */
+  font-size: 15px; /* Configura a escala da tipografia digitada para o corpo agradável estipulado */
+  color: #333333; /* Transmite tom próximo ao negro gerando leitura fluída das letras geradas no preenchimento */
+  background: transparent; /* Zera qualquer opacidade revelando a colorimetria oriunda do nível arquitetônico acima */
+} /* Fechamento do escopo textual orgânico */
+
+.search-input::placeholder { /* Alcança indiretamente a frase provisória que habitualmente orienta o local inativo */
+  color: #A0AABF; /* Substitui a pigmentação negra por uma aquarela azul platinada diluída gerando menor alarme visual */
+} /* Expiram-se as intervenções sobre a camuflagem provisória */
+
+.right-section { /* Define o espaço latente destinado ao agrupamento alocado no flanco oposto */
+  display: flex; /* Recruta a mecânica flexbox auxiliando o controle geométrico dos ícones periféricos */
+  align-items: center; /* Promove o repouso centralizado dos elementos flutuantes sobre a sua extensão polar */
+} /* Desliga a diretriz aplicável ao quadrante ocidental */
+
+.profile-btn { /* Trilha das regras moldando o disparador circular pertencente ao usuário interativo */
+  background: transparent; /* Retira o acinzentado imposto pelas engrenagens convencionais providas aos botões web */
+  border: 1px solid #C4CBE0; /* Levanta a muralha limítrofe pintando-a do mesmo espectro metálico-azulado presente na imagem */
+  border-radius: 50%; /* Engana a geometria retangular transmutando as pontas em uma curvatura absoluta formando o círculo ideal */
+  width: 44px; /* Cimenta o limite ortogonal horizontal inibindo expansões indesejadas pelo conteúdo intrínseco e assegurando aspecto isométrico */
+  height: 44px; /* Espelha fidedignamente o quantitativo da largura criando uma equivalência exata que sela sua forma redonda definitiva */
+  display: flex; /* Invoca a estrutura flex no cerne do elemento para gerir e orientar o avatar esquemático injetado no interior dele */
+  align-items: center; /* Atraca o desenho SVG precisamente equilibrado dividindo a massa do topo e da raiz pelo vetor Y */
+  justify-content: center; /* Atraca o desenho SVG precisamente equilibrado dividindo a massa lateral oposta pelo vetor longitudinal X */
+  cursor: pointer; /* Evidencia o traço da interface transformando o traçador estático num gatilho ilustrado ao sobrepor do utilizador */
+} /* Estanca peremptoriamente os comandos arquitetônicos formatando o componente visual exposto pela imagem referencial */

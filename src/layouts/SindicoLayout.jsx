@@ -1,5 +1,6 @@
 //Elemento que permite adicioar outros componentes dentro de si
 import { Outlet } from 'react-router-dom';
+import HeaderSindico from '../components/sindico/headerSindoc';
 
 //Layout do sindico
 
@@ -12,6 +13,9 @@ function LayoutSindico(){
     return(
         <div id="div-root">
             
+            {/* Menu superio do sindico */}
+            <HeaderSindico></HeaderSindico>
+
             {/* Permite renderizar outros componentes dentro desse layout */}
             <Outlet></Outlet>
             <div>Login Sindico</div>
