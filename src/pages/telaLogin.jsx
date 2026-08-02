@@ -2,7 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import "../css/loginLayout.css"
 import { useState } from 'react';
 import LoginLayout from '../layouts/LoginLayout';
-import { Login } from '../service/Login';
+import { HendleLogin } from '../service/Login';
+import * as CookieService from '../service/cookie'
 
 //Tela de Login
 
@@ -15,7 +16,33 @@ function TelaDeLogin(){
     //Capturando o estado dos inputs
     const [usuario, setUsuario] = useState("") //Monitora o usuário
     const [password, setPassword] = useState("") //Monitora a senha
+
+    //Usuários de teste do banco de dados do Trida
     //aspencer@gmail.com | password
+    //chris62@kessler.com | password
+
+    //Função que cuida dos cookies
+    const tokenCookie = (token) => {
+
+        //Recuperando o token
+        let tokenAntigo = CookieService.GetCookie()
+
+        //Verificando de o token existe
+        if(tokenAntigo != undefined){
+
+            //Apagando o token antigo
+            CookieService.DeleteCookie()
+
+            //Criando o novo cookie
+            CookieService.SetCookie(token)
+        }else{
+
+            //Crinado o cookei
+            CookieService.SetCookie(token)
+
+        }
+    }
+
 
     //Função que envia os dados para a API
     const realizarLogin = async (evento) => {
@@ -23,15 +50,27 @@ function TelaDeLogin(){
         //Evtira que a página recarrege
         evento.preventDefault();
 
-        let tipoUsuario = await Login(usuario, password)
+        //Aguarda a operação de login
+        let data = await HendleLogin(usuario, password)
+
+        //Chamando a função do cookie
+        tokenCookie(data.token)        
 
         //Verificando o usuário e realizando a mudança de tela
-        if(tipoUsuario == "Sindico"){
+        if(data.tipo_usuario == "Sindico"){
+            
+            //Rediciona para a rote do sindico
             navigate("/sindico")
-        }else if(tipoUsuario == "Morador"){
+
+        }else if(data.tipo_usuario == "Morador"){
+
+            //Rediciona para a rote do morador
             navigate("/morador")
-        }else if(tipoUsuario == "Porteiro"){
-             navigate("/porteiro")
+
+        }else if(data.tipo_usuario == "Porteiro"){
+
+            //Rediciona para a rote do porteiro
+            navigate("/porteiro")
         }
     }
 

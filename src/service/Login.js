@@ -3,24 +3,43 @@
 import { LoginApi } from "../api/LoginApi";
 
 //Função responsavel por realizar o login
-export async function Login(emial, password){
+export async function HendleLogin(emial, password){
 
-    // 'await' faz o código esperar a resposta da API
-    const response = await LoginApi(emial, password);
-    const dados = await response.json();
-        
-    // Desestruturando o json
-    const { message, status, data } = dados;
+    //Tentando executar a operação de login
+    try{
 
-    console.log(message);
-    console.log(status);
-        
-    // Desestruturando o json de data
-    const { tipo_usuario, token } = data;
+        //Aguarda a conclução da tarefa de login no servidor
+        const response = await LoginApi(emial, password);
 
-    console.log(tipo_usuario);
-    console.log(token);
+        //Aguarda a conclução ca converção da tarefa de json para objeto
+        const dados = await response.json();
+            
+        // Desestruturando o json
+        const { message, status, data } = dados;
 
-    // Retornamos o valor diretamente
-    return tipo_usuario;
+        //Exibe no console a responsta
+        // console.log(message);
+        // console.log(status);
+            
+        //Verifica se o estatos da menssagem deu errado
+        if(status === 400){
+            
+            //Para a execução do o try, e rediceriona o fluxo para o cacth
+            throw(`${message}! Usuário ou senha invalida`)
+        }
+
+        //Exibe no console | Para validar
+        // console.log(tipo_usuario);
+        // console.log(token);
+
+        // Retornando o objeto com a data
+        return data
+
+    }
+    //Caso alguma promisse retorne um reject irá cair aqui
+    catch(error){
+
+        //Exibe a menssagem de erro no login
+        alert(error)
+    }
 }

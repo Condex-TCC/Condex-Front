@@ -26,6 +26,7 @@ function GetCookie(){
     let token = Cookies.get('token')
 
     //Retornando o token
+    return token
 }
 
 //Função responsavel por deletar o cookie
