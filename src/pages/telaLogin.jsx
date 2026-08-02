@@ -19,6 +19,35 @@ function TelaDeLogin(){
     const [password, setPassword] = useState("") //Monitora a senha
 
     //Adicionando o efeito para que toda vez o usuário entre, verifique se já tem o cookie cadastrado
+    //Esse hook será executado apenas quando a página carregar
+    useEffect(() => {
+
+        //Recuperando as credenciais do usuário
+        let credenciais = CookieService.GetCookie()
+
+        //Vericando se esse usuário já está logado
+        if(credenciais.token != undefined && credenciais.tipo != undefined){
+            
+            //Caso o usuário já esteja logado, realiza o redirecionamento
+            if(credenciais.tipo == "Sindico"){
+                
+                //Rediciona para a rote do sindico
+                navigate("/sindico")
+
+            }else if(credenciais.tipo == "Morador"){
+
+                //Rediciona para a rote do morador
+                navigate("/morador")
+
+            }else if(credenciais.tipo == "Porteiro"){
+
+                //Rediciona para a rote do porteiro
+                navigate("/porteiro")
+            }
+
+        }
+
+    }, [])
 
     //Função que cuida dos cookies
     const tokenCookie = (token, tipoUsuario) => {
