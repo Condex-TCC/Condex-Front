@@ -13,10 +13,16 @@ import  route  from './routes/router'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
 
-    {/* Envolvendo o todos os componentes dentro do contexto do provider */}
+    {/* Envolvendo todos os componentes dentro do provider, fazendo com que assim se crie um
+    componente com um valor de estado, no qual vai poder ser acessado e manupulado por todos 
+    os componentes filhos, além re-rederizar todos os componentes filhos que utilizem o contexto
+    como parte da sua lógica */}
     <MenuLateralProvider>
+
       {/* Componente que aplcia a criação dos componemtes apartir da URL */}
       <RouterProvider router={route} />
+
     </MenuLateralProvider>
+
   </StrictMode>,
 )
