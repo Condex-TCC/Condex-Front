@@ -39,7 +39,7 @@
 } /* Encerra o empilhamento tipográfico */
 
 .logo-title { /* Regras de estilo para a palavra principal (Condex) */
-  font-size: 26px; /* Aumenta expressivamente o corpo do texto para dar protagonismo de logomarca */
+  font-size: 46px; /* Aumenta expressivamente o corpo do texto para dar protagonismo de logomarca */
   font-weight: 800; /* Engrossa as linhas da letra aplicando uma versão extrabold da tipografia escolhida */
   color: #001C3F; /* Atribui a tinta principal da marcação: um tom escuro marinho de azul */
   letter-spacing: -0.5px; /* Comprime milimetricamente a proximidade entre os caracteres do título */
@@ -55,7 +55,7 @@
 } /* Final da injeção de cor de destaque */
 
 .logo-subtitle { /* Conjunto de regras regendo o nome de apoio (Síndico) */
-  font-size: 14px; /* Diminui a proporção tornando-a hierarquicamente inferior à logomarca principal */
+  font-size: 26px; /* Diminui a proporção tornando-a hierarquicamente inferior à logomarca principal */
   font-weight: 500; /* Define um negrito intermediário (medium) que não briga com o título superior */
   color: #001C3F; /* Segue o guia de design copiando o mesmo azul escuro aplicado nas letras maiores */
   margin-top: -2px; /* Anula uma pequena fração do espaçamento natural subindo o texto verticalmente */
@@ -98,7 +98,9 @@
 .right-section { /* Define o espaço latente destinado ao agrupamento alocado no flanco oposto */
   display: flex; /* Recruta a mecânica flexbox auxiliando o controle geométrico dos ícones periféricos */
   align-items: center; /* Promove o repouso centralizado dos elementos flutuantes sobre a sua extensão polar */
-} /* Desliga a diretriz aplicável ao quadrante ocidental */
+  
+  position: relative; /* <-- ADICIONE ESTA LINHA. É AQUI QUE A MÁGICA ACONTECE */
+}
 
 .profile-btn { /* Trilha das regras moldando o disparador circular pertencente ao usuário interativo */
   background: transparent; /* Retira o acinzentado imposto pelas engrenagens convencionais providas aos botões web */
@@ -111,3 +113,36 @@
   justify-content: center; /* Atraca o desenho SVG precisamente equilibrado dividindo a massa lateral oposta pelo vetor longitudinal X */
   cursor: pointer; /* Evidencia o traço da interface transformando o traçador estático num gatilho ilustrado ao sobrepor do utilizador */
 } /* Estanca peremptoriamente os comandos arquitetônicos formatando o componente visual exposto pela imagem referencial */
+
+
+/* Caixinha do Menu Dropdown */
+.dropdown-menu {
+  position: absolute;
+  top: 120%; /* Aparece logo abaixo do ícone com uma pequena folga */
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 120px;
+}
+
+/* Botão de Deslogar */
+.logout-button {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #d9534f;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: left;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #f8d7da; /* Destaque suave ao passar o mouse */
+}

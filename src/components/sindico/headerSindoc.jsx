@@ -1,10 +1,36 @@
 //Importando os elementos que serão utilizados dentro o componente
+import { useState } from "react"
 import "../../css/headerSindico.css"
+import * as CookieService from '../../service/cookie'
+import { useNavigate } from 'react-router-dom';
 
 //Header principal da página
 
 //Função que cria o componente
 function HeaderSindico(){
+    
+    //Hook que realiza a nevegação automatica
+    const navigate = useNavigate();
+
+    //Criando um estado do botão do logout do sindico
+    const [menuLogout, setMenuLogout] = useState(false)
+
+    //Função que altera o estado do botão
+    const AlteraMenu = () => {
+
+        //Inverte o valor armazenado
+        setMenuLogout(!menuLogout)
+    }
+
+    //Função que desloga o usuário
+    const deslogar = () => {
+
+        //Apaga todos os cookies
+        CookieService.DeleteCookie()
+
+        //Redireciona para a tela inicial
+        navigate('/')
+    }
 
     //Retorna o componente
     return ( 
@@ -61,7 +87,7 @@ function HeaderSindico(){
         </div>
 
         {/* Abre a seção direita do cabeçalho, focada no usuário */}
-        <div className="right-section">
+        <div className="right-section" onClick={AlteraMenu}>
 
             {/* Cria o botão circular que representa o perfil */}
             <button className="profile-btn">
@@ -72,6 +98,19 @@ function HeaderSindico(){
                     <path d="M5 20C5 16.5 7.5 14 12 14C16.5 14 19 16.5 19 20" stroke="#7A87A7" strokeWidth="1.2" strokeLinecap="round" />
                 </svg>
             </button>
+
+            {/* Verifica se o butão de menu lateral foi clicado */}
+            {
+                //Verificando se o botão foi clicado
+                menuLogout ? 
+                    <div className="dropdown-menu">
+                        <button type="button" onClick={deslogar} className="logout-button">
+                            Deslogar
+                        </button>
+                    </div>
+                :
+                console.log("O button está fechado")
+            }
         </div>
 
     </header>
