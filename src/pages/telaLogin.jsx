@@ -4,6 +4,7 @@ import { useState } from 'react';
 import LoginLayout from '../layouts/LoginLayout';
 import { HendleLogin } from '../service/Login';
 import * as CookieService from '../service/cookie'
+import { useEffect } from 'react';
 
 //Tela de Login
 
@@ -17,12 +18,10 @@ function TelaDeLogin(){
     const [usuario, setUsuario] = useState("") //Monitora o usuário
     const [password, setPassword] = useState("") //Monitora a senha
 
-    //Usuários de teste do banco de dados do Trida
-    //aspencer@gmail.com | password
-    //chris62@kessler.com | password
+    //Adicionando o efeito para que toda vez o usuário entre, verifique se já tem o cookie cadastrado
 
     //Função que cuida dos cookies
-    const tokenCookie = (token) => {
+    const tokenCookie = (token, tipoUsuario) => {
 
         //Recuperando o token
         let tokenAntigo = CookieService.GetCookie()
@@ -34,14 +33,18 @@ function TelaDeLogin(){
             CookieService.DeleteCookie()
 
             //Criando o novo cookie
-            CookieService.SetCookie(token)
+            CookieService.SetCookie(token, tipoUsuario)
         }else{
 
             //Crinado o cookei
-            CookieService.SetCookie(token)
+            CookieService.SetCookie(token, tipoUsuario)
 
         }
     }
+
+    //Usuários de teste do banco de dados do Trida
+    //aspencer@gmail.com | password
+    //chris62@kessler.com | password
 
 
     //Função que envia os dados para a API
@@ -54,7 +57,7 @@ function TelaDeLogin(){
         let data = await HendleLogin(usuario, password)
 
         //Chamando a função do cookie
-        tokenCookie(data.token)        
+        tokenCookie(data.token, data.tipo_usuario)        
 
         //Verificando o usuário e realizando a mudança de tela
         if(data.tipo_usuario == "Sindico"){
