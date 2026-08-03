@@ -10,7 +10,7 @@ import { useContext } from 'react';
 function LayoutSindico(){
 
     //Pegando as ações adicionadas no provider
-    const { menuLateral, setMenuLateral } = useContext(MenuLateralContext);
+    const {menuLateral, setMenuLateral} = useContext(MenuLateralContext);
 
     //Retorna o componente
     return(

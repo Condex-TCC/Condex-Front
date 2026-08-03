@@ -1,16 +1,20 @@
 //Importando os elementos que serão utilizados dentro o componente
-import { useState } from "react"
+import { useContext, useState } from "react"
 import "../../css/headerSindico.css"
 import * as CookieService from '../../service/cookie'
 import { useNavigate } from 'react-router-dom';
+import { MenuLateralContext } from "../../context/menuLateralContext";
 
 //Header principal da página
 
 //Função que cria o componente
-function HeaderSindico(){
+function HeaderSindico(propos){
     
     //Hook que realiza a nevegação automatica
     const navigate = useNavigate();
+
+    //Pegando as ações adicionadas no provider para manipular o contexto
+    const {menuLateral, setMenuLateral} = useContext(MenuLateralContext);
 
     //Criando um estado do botão do logout do sindico
     const [menuLogout, setMenuLogout] = useState(false)
@@ -32,12 +36,19 @@ function HeaderSindico(){
         navigate('/')
     }
 
+    //Função que altera o estado do hook useConstext para alterar o menu lateral
+    const toogleMenuLarateral = () => {
+
+        //Altera a o valor da variável do estado
+        setMenuLateral( menuLateral === 'fechado' ? "aberto" : 'fechado')
+    }
+
     //Retorna o componente
     return ( 
     <header className="header">
       
       {/* Abre a seção esquerda, que agrupa o botão e a logomarca */}
-      <div className="left-section">
+      <div className="left-section" onClick={toogleMenuLarateral}>
 
         {/*  Cria o botão que contém o ícone do menu sanduíche */}
         <button className="menu-btn">
@@ -52,20 +63,22 @@ function HeaderSindico(){
             </svg> 
         </button>
 
-        {/* Inicia o container para agrupar o título e o subtítulo da marca */}
-        <div className="logo-container">
+        {/* Realiza uma renderização condicional para apagar a logomarca */}
+        {menuLateral === 'fechado' && (
+            <div className="logo-container">
+                {/* Inicia o container para agrupar o título e o subtítulo da marca */}
+                
+                {/* Cria a tag de título de maior hierarquia para o nome principal */}
+                <h1 className="logo-title">
+                    {/* Escreve o texto com a letra 'x' isolada para destaque */}
+                    Cond<span className="logo-e">e</span><span className="logo-x">x</span>
+                </h1>
 
-            {/* Cria a tag de título de maior hierarquia para o nome principal */}
-            <h1 className="logo-title">
-
-                {/* Escreve o texto com a letra 'x' isolada para destaque */}
-                Cond<span className="logo-e">e</span><span className="logo-x">x</span>
-            </h1>
-
-            {/* Insere o subtítulo que fica abaixo da logomarca */}
-            <span className="logo-subtitle">Síndico</span>
-        </div> 
-      </div>
+                {/* Insere o subtítulo que fica abaixo da logomarca */}
+                <span className="logo-subtitle">Síndico</span>
+            </div>
+        )}
+        </div>
 
         {/* Abre a seção central do cabeçalho dedicada à área de pesquisa */}
         <div className="center-section">
