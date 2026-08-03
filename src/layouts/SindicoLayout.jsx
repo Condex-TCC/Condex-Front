@@ -30,8 +30,8 @@ function LayoutSindico(){
 
                     {/* Permite renderizar outros componentes dentro desse layout */}
                     <main style={{ padding: '24px' }}>
-                        <h1>Sindico layout</h1>
-                        <h2>Menu: {menuLateral}</h2>
+                        
+                        {/* Local onde será inserido outros elementos */}
                         <Outlet />
                     </main>
                         

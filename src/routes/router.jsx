@@ -14,6 +14,7 @@ import PorteiroLayout from '../layouts/PorteiroLayout';
 //Importando as página
 import PaginaInical from '../pages/telaInicial';
 import TelaDeLogin from '../pages/telaLogin';
+import PaginainicialSindico from '../pages/sindico/telaInicialSindico';
 
 //Componente que será utilizado para analizar a URL
 const route = createBrowserRouter([
@@ -49,12 +50,23 @@ const route = createBrowserRouter([
             {
                 path: "/sindico", //Caminho do primeiro elemento
                 element: <LayoutSindico></LayoutSindico>, //Componente que será carregado
+
+                //Array com as subrotas de sindico
+                children: [
+                    //Tela de inicial do sindico
+                    {
+                        path: "/sindico", //Caminho da tela inicial do sindico
+                        element: <PaginainicialSindico></PaginainicialSindico>, //Componente que será carregado
+                    },
+                    
+                ]
             },
 
             //Tela do morador
             {
                 path: "/morador", //Caminho do primeiro elemento
                 element: <LayoutMorador></LayoutMorador>, //Componente que será carregado
+
             },
 
             {
