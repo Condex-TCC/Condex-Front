@@ -13,6 +13,7 @@
   background-color: #ffffff; /* Pinta a cor de fundo com branco puro, idêntico à imagem de referência */
   border-bottom: 2px solid #eef0f4; /* Adiciona uma sutil divisória cinza clara na extremidade inferior da barra */
   width: 100%; /* Força a barra de topo a se esticar horizontalmente ocupando tela inteira */
+  height: 96px; /* Deixa o header com um tamanho fixo*/
 } /* Finaliza as definições do container principal */
 
 .left-section { /* Inicia os estilos destinados exclusivamente à região esquerda do cabeçalho */
@@ -64,7 +65,7 @@
 .center-section { /* Ajustes para a fatia intermédia que detém o campo interativo de digitação */
   flex: 1; /* Instrui o container a engolir todo o vão vazio deixado entre o lado esquerdo e o direito */
   display: flex; /* Exige layout em flexibilidade facilitando a fixação horizontal dos elementos descendentes */
-  justify-content: flex-start; /* Atraca o elemento de pesquisa encostando-o o máximo na margem esquerda possível */
+  justify-content: center; /* Atraca o elemento de pesquisa encostando-o o máximo na margem esquerda possível */
   padding-left: 40px; /* Devolve um fôlego à leitura empurrando o campo 40 pixels longe das margens da logo */
 } /* Finaliza a diagramação da zona intermediária */
 

@@ -1,0 +1,95 @@
+/* CONTAINER PRINCIPAL DA SIDEBAR */
+.sd-wrapper { 
+  width: 250px; 
+  height: 100vh; 
+  background-color: #111827; /* Azul ultra escuro ajustado */
+  display: flex; 
+  flex-direction: column; 
+  padding: 20px; 
+  box-sizing: border-box; 
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+  color: #ffffff; 
+  /* REMOVIDO: position: absolute; - Para que o Flexbox do LayoutSindico funcione corretamente */
+  border-right: 1px solid #1f2937; /* Leve borda na direita */
+}
+
+/* CABEÇALHO E BOTÃO DE MENU */
+.sd-header { 
+  display: flex; 
+  justify-content: flex-start; 
+  margin-bottom: 30px; 
+} 
+
+.sd-menu-btn { 
+  background-color: #3b4661; 
+  border: none; 
+  border-radius: 12px; /* Ajustado para parecer mais retangular igual na imagem */
+  padding: 8px 12px; 
+  cursor: pointer; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+} 
+
+/* ÁREA DA LOGOMARCA */
+.sd-brand-box { 
+  text-align: center; 
+  margin-bottom: 40px; 
+} 
+
+.sd-brand-title { 
+  font-size: 32px; 
+  font-weight: 700; 
+  margin: 0; 
+  color: #ffffff; 
+  letter-spacing: 0.5px; 
+  line-height: 1; 
+} 
+
+.sd-brand-e { color: #ffffff; } 
+.sd-brand-x { color: #2cb3ff; } /* Azul claro da letra X */
+
+.sd-brand-sub { 
+  font-size: 14px; 
+  font-weight: 400; 
+  color: #c4ccda; 
+  display: block; 
+  margin-top: 4px; 
+} 
+
+/* ÁREA DE NAVEGAÇÃO E LISTA */
+.sd-nav-area { width: 100%; } 
+
+.sd-nav-list { 
+  list-style-type: none; 
+  padding: 0; 
+  margin: 0; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px; /* Respiro entre os botões */
+} 
+
+/* ITENS DO MENU E ÍCONES */
+.sd-nav-item { 
+  display: flex; 
+  align-items: center; 
+  padding: 12px 18px; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  color: #f1f5f9; 
+  transition: all 0.2s ease-in-out; 
+} 
+
+.sd-nav-item:hover {
+  background-color: #3b82f6; /* Fundo azul exato do item selecionado na imagem */
+  color: #ffffff;
+}
+
+.sd-icon { 
+  margin-right: 18px; 
+} 
+
+.sd-label { 
+  font-size: 16px; 
+  font-weight: 500; 
+}

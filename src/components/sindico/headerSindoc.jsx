@@ -50,33 +50,35 @@ function HeaderSindico(propos){
       {/* Abre a seção esquerda, que agrupa o botão e a logomarca */}
       <div className="left-section" onClick={toogleMenuLarateral}>
 
-        {/*  Cria o botão que contém o ícone do menu sanduíche */}
-        <button className="menu-btn">
-
-            {/* Inicia o SVG do menu */}
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> 
-
-                {/* Desenha as linhas do SVG */}
-                <path d="M4 6H20" stroke="#001C3F" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M4 12H20" stroke="#001C3F" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M4 18H20" stroke="#001C3F" strokeWidth="1.5" strokeLinecap="round" />
-            </svg> 
-        </button>
-
         {/* Realiza uma renderização condicional para apagar a logomarca */}
         {menuLateral === 'fechado' && (
-            <div className="logo-container">
-                {/* Inicia o container para agrupar o título e o subtítulo da marca */}
-                
-                {/* Cria a tag de título de maior hierarquia para o nome principal */}
-                <h1 className="logo-title">
-                    {/* Escreve o texto com a letra 'x' isolada para destaque */}
-                    Cond<span className="logo-e">e</span><span className="logo-x">x</span>
-                </h1>
+            <>
+                {/*  Cria o botão que contém o ícone do menu sanduíche */}
+                <button className="menu-btn">
 
-                {/* Insere o subtítulo que fica abaixo da logomarca */}
-                <span className="logo-subtitle">Síndico</span>
-            </div>
+                    {/* Inicia o SVG do menu */}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> 
+
+                        {/* Desenha as linhas do SVG */}
+                        <path d="M4 6H20" stroke="#001C3F" strokeWidth="1.5" strokeLinecap="round" />
+                        <path d="M4 12H20" stroke="#001C3F" strokeWidth="1.5" strokeLinecap="round" />
+                        <path d="M4 18H20" stroke="#001C3F" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg> 
+                </button>
+
+                <div className="logo-container">
+                    {/* Inicia o container para agrupar o título e o subtítulo da marca */}
+                    
+                    {/* Cria a tag de título de maior hierarquia para o nome principal */}
+                    <h1 className="logo-title">
+                        {/* Escreve o texto com a letra 'x' isolada para destaque */}
+                        Cond<span className="logo-e">e</span><span className="logo-x">x</span>
+                    </h1>
+
+                    {/* Insere o subtítulo que fica abaixo da logomarca */}
+                    <span className="logo-subtitle">Síndico</span>
+                </div>
+            </>
         )}
         </div>
 
