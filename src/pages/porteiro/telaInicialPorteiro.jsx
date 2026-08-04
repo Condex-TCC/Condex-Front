@@ -21,35 +21,15 @@ function PaginainicialPorteiro(){
       <div className="list--section">
         <h2 className="section--title">Pre cadastrados</h2>
         
-        <div className="card--item">
-          <div className="card--top">
-            <span className="text--name">Joaquim Almeida</span>
-            <span className="text--date">Previsto para 05/06</span>
-          </div>
-          <div className="card--bottom">
-            <span className="text--block">bloco A - 27</span>
-            <span className="text--apt">Apartamento de Amanda Martins</span>
-          </div>
-        </div>
+        <h1>Não visitantes cadastrados</h1>
       </div>
 
       <div className="list--section">
         <h2 className="section--title">Visitantes ativos</h2>
         
-        <div className="card--item card--active">
-          <div className="info--group">
-            <div className="card--top">
-              <span className="text--name">Laura de Oliveira</span>
-            </div>
-            <div className="card--bottom">
-              <span className="text--block">bloco A - 19</span>
-              <span className="text--apt">Apartamento de Luana de Oliveira</span>
-            </div>
-          </div>
-          
-          <button className="btn--exit">registrar saida</button>
-        </div>
+        <h1>Não ha visitantes ativos</h1>
       </div>
+      
 
     </div>
   )
