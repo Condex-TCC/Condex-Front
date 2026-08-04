@@ -1,0 +1,106 @@
+.header { /* Início das regras de estilo para o container principal do cabeçalho */
+    display: flex; /* Define o display como flexbox para organizar os itens em linha */
+    justify-content: space-between; /* Distribui o espaço vazio entre a logo, a barra e o avatar */
+    align-items: center; /* Alinha todos os itens filhos verticalmente ao centro */
+    background-color: #111e4f; /* Define a cor de fundo como o azul escuro visto na imagem */
+    padding: 12px 24px; /* Adiciona 12px de preenchimento vertical e 24px horizontal */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* Define a fonte padrão */
+} /* Fim das regras para o container principal */
+.logo { /* Início das regras para o texto da logo à esquerda */
+    font-size: 28px; /* Define o tamanho da fonte da logo como grande */
+    font-weight: 700; /* Aplica negrito (bold) à fonte da logo */
+    letter-spacing: -0.5px; /* Reduz levemente o espaçamento entre as letras */
+} /* Fim das regras da logo */
+.logo-white { /* Início das regras para a parte inicial do nome da logo */
+    color: #ffffff; /* Define a cor do texto "Conde" como branco puro */
+} /* Fim das regras da classe logo-white */
+.logo-blue { /* Início das regras para a letra final da logo */
+    color: #4db3ff; /* Define a cor da letra "x" como o azul claro característico */
+} /* Fim das regras da classe logo-blue */
+.search-container { /* Início das regras do container da barra de pesquisa no centro */
+    display: flex; /* Usa flexbox para posicionar o ícone da lupa e o campo de texto lado a lado */
+    align-items: center; /* Alinha o ícone e o input verticalmente no centro do container */
+    background-color: #ffffff; /* Preenche o fundo da barra de pesquisa com branco */
+    border-radius: 6px; /* Adiciona bordas levemente arredondadas ao campo de pesquisa */
+    padding: 6px 12px; /* Define o espaçamento interno ao redor do texto e do ícone */
+    width: 350px; /* Define uma largura fixa razoável para a barra de pesquisa */
+    max-width: 50%; /* Garante que a barra não estoure o layout em telas menores */
+} /* Fim das regras da barra de pesquisa */
+.search-icon { /* Início das regras para o ícone de lupa em formato SVG */
+    width: 16px; /* Define a largura do ícone de pesquisa */
+    height: 16px; /* Define a altura do ícone de pesquisa, mantendo a proporção */
+    color: #a0a0a0; /* Define a cor do traçado da lupa como cinza claro */
+    margin-right: 8px; /* Adiciona uma margem à direita para separar do campo de digitação */
+} /* Fim das regras do ícone de pesquisa */
+.search-input { /* Início das regras para o elemento input de texto invisível */
+    border: none; /* Remove todas as bordas padrão aplicadas pelo navegador ao input */
+    outline: none; /* Remove o contorno de foco azul/preto padrão do navegador */
+    width: 100%; /* Faz o input ocupar 100% da largura restante do seu container pai */
+    font-size: 14px; /* Define o tamanho da fonte para o texto digitado pelo usuário */
+    color: #333333; /* Define a cor do texto digitado como cinza escuro para boa leitura */
+    background-color: transparent; /* Garante que o fundo do input não cubra o fundo do container */
+} /* Fim das regras do campo input */
+.search-input::placeholder { /* Início das regras pseudo-elemento para o texto de dica (placeholder) */
+    color: #9e9e9e; /* Colore o texto "Pesquisar..." com tom de cinza médio/claro */
+} /* Fim das regras do placeholder */
+.avatar { /* Início das regras para o círculo de perfil de usuário na extrema direita */
+    display: flex; /* Habilita o flexbox especificamente para alinhar as iniciais do usuário */
+    justify-content: center; /* Centraliza as iniciais horizontalmente dentro do círculo */
+    align-items: center; /* Centraliza as iniciais verticalmente dentro do círculo */
+    background-color: #e6f3ff; /* Define a cor de fundo do círculo como um tom muito claro de azul */
+    color: #000000; /* Define a cor da fonte das iniciais (MJ) como preto profundo */
+    font-weight: bold; /* Deixa as iniciais do nome do usuário em negrito */
+    font-size: 15px; /* Define o tamanho das letras das iniciais */
+    width: 36px; /* Define a largura total do elemento como 36 pixels */
+    height: 36px; /* Define a altura total do elemento como 36 pixels, formando um quadrado */
+    border-radius: 50%; /* Transforma o elemento quadrado de 36x36 em um círculo perfeito */
+    cursor: pointer; /* Muda o cursor do mouse para uma "mãozinha" indicando interatividade */
+} /* Fim das regras do avatar do usuário e do arquivo CSS */
+
+.logo-title { /* Regras de estilo para a palavra principal (Condex) */
+  font-size: 46px; /* Aumenta expressivamente o corpo do texto para dar protagonismo de logomarca */
+  font-weight: 800; /* Engrossa as linhas da letra aplicando uma versão extrabold da tipografia escolhida */
+  color: #ffffff; /* Atribui a tinta principal da marcação: um tom escuro marinho de azul */
+  letter-spacing: -0.5px; /* Comprime milimetricamente a proximidade entre os caracteres do título */
+  line-height: 1; /* Retira entrelinhas desnecessárias prevenindo espaçamento falso acima ou abaixo da palavra */
+} /* Conclui o tratamento do título maior */
+
+.logo-e { /* Classe preventiva destinada apenas para referenciar a vogal E no nome, se houver alteração futura */
+  color: #ffffff; /* Mantém estritamente o tom escuro padronizado sem sofrer mudança de cor */
+} /* Fim do isolamento da letra */
+
+.logo-x { /* Classe dedicada unicamente para isolar a letra X que quebra o padrão visual */
+  color: #33C3F0; /* Sobrescreve a herança e pinta exclusivamente este caractere com azul ciano vibrante */
+} /* Final da injeção de cor de destaque */
+
+.logo-subtitle { /* Conjunto de regras regendo o nome de apoio (Síndico) */
+  font-size: 26px; /* Diminui a proporção tornando-a hierarquicamente inferior à logomarca principal */
+  font-weight: 500; /* Define um negrito intermediário (medium) que não briga com o título superior */
+  color: #ffffff; /* Segue o guia de design copiando o mesmo azul escuro aplicado nas letras maiores */
+  margin-top: -2px; /* Anula uma pequena fração do espaçamento natural subindo o texto verticalmente */
+} /* Termina os estilos do texto de apoio */
+
+.right-section { /* Define o espaço latente destinado ao agrupamento alocado no flanco oposto */
+  display: flex; /* Recruta a mecânica flexbox auxiliando o controle geométrico dos ícones periféricos */
+  align-items: center; /* Promove o repouso centralizado dos elementos flutuantes sobre a sua extensão polar */
+  
+  position: relative; /* <-- ADICIONE ESTA LINHA. É AQUI QUE A MÁGICA ACONTECE */
+}
+
+/* Botão de Deslogar */
+.logout-button {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #d9534f;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: left;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #f8d7da; /* Destaque suave ao passar o mouse */
+}
