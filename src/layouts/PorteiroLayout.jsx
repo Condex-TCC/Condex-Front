@@ -1,6 +1,7 @@
 //Elemento que permite adicioar outros componentes dentro de si
 import { Outlet } from 'react-router-dom';
 import HeaderPorteiro from '../components/porteiro/headerPorteiro';
+import PaginainicialPorteiro from '../pages/porteiro/telaInicialPorteiro';
 
 //Layout do Porteiro
 
@@ -18,7 +19,8 @@ function PorteiroLayout(){
         
             {/* Permite renderizar outros componentes dentro desse layout */}
             <Outlet></Outlet>
-            <div>Layout do Porteiro</div>
+            
+            <PaginainicialPorteiro></PaginainicialPorteiro>
 
         </div>
     )
