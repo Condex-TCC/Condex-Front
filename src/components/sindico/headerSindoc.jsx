@@ -1,6 +1,6 @@
 //Importando os elementos que serão utilizados dentro o componente
 import { useContext, useState } from "react"
-import "../../css/headerSindico.css"
+import styles from "../../css/headerSindico.module.css"
 import * as CookieService from '../../service/cookie'
 import { useNavigate } from 'react-router-dom';
 import { MenuLateralContext } from "../../context/menuLateralContext";
@@ -45,16 +45,16 @@ function HeaderSindico(propos){
 
     //Retorna o componente
     return ( 
-    <header className="header">
+    <header className={styles.header}>
       
       {/* Abre a seção esquerda, que agrupa o botão e a logomarca */}
-      <div className="left-section" onClick={toogleMenuLarateral}>
+      <div className={styles["left-section"]} onClick={toogleMenuLarateral}>
 
         {/* Realiza uma renderização condicional para apagar a logomarca */}
         {menuLateral === 'fechado' && (
             <>
                 {/*  Cria o botão que contém o ícone do menu sanduíche */}
-                <button className="menu-btn">
+                <button className={styles["menu-btn"]}>
 
                     {/* Inicia o SVG do menu */}
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> 
@@ -66,30 +66,30 @@ function HeaderSindico(propos){
                     </svg> 
                 </button>
 
-                <div className="logo-container">
+                <div className={styles["logo-container"]}>
                     {/* Inicia o container para agrupar o título e o subtítulo da marca */}
                     
                     {/* Cria a tag de título de maior hierarquia para o nome principal */}
-                    <h1 className="logo-title">
+                    <h1 className={styles["logo-title"]}>
                         {/* Escreve o texto com a letra 'x' isolada para destaque */}
-                        Cond<span className="logo-e">e</span><span className="logo-x">x</span>
+                        Cond<span className={styles["logo-e"]}>e</span><span className={styles["logo-x"]}>x</span>
                     </h1>
 
                     {/* Insere o subtítulo que fica abaixo da logomarca */}
-                    <span className="logo-subtitle">Síndico</span>
+                    <span className={styles["logo-subtitle"]}>Síndico</span>
                 </div>
             </>
         )}
         </div>
 
         {/* Abre a seção central do cabeçalho dedicada à área de pesquisa */}
-        <div className="center-section">
+        <div className={styles["center-section"]}>
 
             {/* Inicia o container que constrói a caixa visual da barra de busca */}
-            <div className="search-container">
+            <div className={styles["search-container"]}>
 
                 {/* Inicia o SVG do ícone da lupa */}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="search-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles["search-icon"]}>
 
                     {/* Desenha a lupa */}
                     <circle cx="11" cy="11" r="7" stroke="#A0AABF" strokeWidth="1.5" />
@@ -97,15 +97,15 @@ function HeaderSindico(propos){
                 </svg>
 
                 {/* Renderiza o campo interativo onde o usuário digita */}
-                <input type="text" placeholder="Pesquisar..." className="search-input" />
+                <input type="text" placeholder="Pesquisar..." className={styles["search-input"]} />
             </div>
         </div>
 
         {/* Abre a seção direita do cabeçalho, focada no usuário */}
-        <div className="right-section" onClick={AlteraMenu}>
+        <div className={styles["right-section"]} onClick={AlteraMenu}>
 
             {/* Cria o botão circular que representa o perfil */}
-            <button className="profile-btn">
+            <button className={styles["profile-btn"]}>
 
                 {/* Desenha o boneco do botão do usuário para o SVG */}
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> 
@@ -118,8 +118,8 @@ function HeaderSindico(propos){
             {
                 //Verificando se o botão foi clicado
                 menuLogout ? 
-                    <div className="dropdown-menu">
-                        <button type="button" onClick={deslogar} className="logout-button">
+                    <div className={styles["dropdown-menu"]}>
+                        <button type="button" onClick={deslogar} className={styles["logout-button"]}>
                             Deslogar
                         </button>
                     </div>

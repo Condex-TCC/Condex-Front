@@ -1,11 +1,11 @@
-* { /* Cria um seletor global para aplicar regras a todos os elementos HTML renderizados */
-  box-sizing: border-box; /* Previne que o padding e a borda modifiquem a largura final calculada do elemento */
-  margin: 0; /* Reseta as margens externas automáticas, zerando todos os espaços em volta */
-  padding: 0; /* Reseta os preenchimentos internos automáticos, zerando todos os espaços por dentro */
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Define uma pilha de fontes modernas sem serifa para o texto */
-} /* Finaliza a regra de reset global */
+/* O reset global (*) foi removido daqui: CSS Modules só isola seletores de CLASSE,
+   um seletor universal "*" dentro de um .module.css continuaria vazando para o app
+   inteiro do mesmo jeito. O reset de margin/padding já existe em rootlayout.css,
+   então não precisamos duplicá-lo aqui. Se quiser a font-family 'Segoe UI' aplicada
+   ao header, ela já está definida abaixo, escopada dentro de .header. */
 
 .header { /* Inicia a regra de estilos para o container principal da barra superior */
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Define a fonte apenas dentro do header, sem vazar para o resto do app */
   display: flex; /* Transforma o container em um modelo Flexbox, emparelhando filhos em linha por padrão */
   align-items: center; /* Alinha os blocos esquerdo, central e direito no meio do eixo vertical (Y) */
   justify-content: space-between; /* Espalha as três grandes seções com espaço igual vazio entre elas */
