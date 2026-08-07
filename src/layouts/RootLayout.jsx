@@ -12,12 +12,11 @@ function RootLayout(){
 
     //Retorna o componente
     return(
-        <div id="div-root">
-            
+        <>  
             {/* Permite renderizar outros componentes dentro desse layout */}
             <Outlet></Outlet>
 
-        </div>
+        </>
     )
 }
 

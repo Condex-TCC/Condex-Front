@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import "../css/loginLayout.css"
+import styles from "../css/loginLayout.module.css" //Importando o CSS para trabalhar com módulos
 
 //Tela inicial
 
@@ -9,10 +9,10 @@ function PaginaInical(){
     //Retorna um componente
     return(
         
-        <div className="div-fundo-inicial">
+        <div className={styles["div-fundo-inicial"]}>
 
             {/* //Elemento que permite a navegação no entre rotas */}
-            <Link to="/login" className='btn-login btn-inicial'>Login</Link>
+            <Link to="/login" className={`${styles['btn-login']} ${styles['btn-inicial']}`}>Login</Link>
         </div>
     )
 }
