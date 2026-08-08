@@ -1,9 +1,14 @@
 import React, { useContext } from 'react'; // Importa a biblioteca base do React para criar o componente
 import styles from '../../css/sidebarSindico.module.css'; // Importa o arquivo de folha de estilos CSS com as novas classesimport { MenuLateralContext } from '../../context/menuLateralContext';
 import { MenuLateralContext } from '../../context/menuLateralContext';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 // Função que cria o componente da barra lateral
 const SidebarSindico = () => {
+
+    //Cmponente que realiza a nevegação automatica
+    const navigate = useNavigate();
 
     //Pegando as ações adicionadas no provider
     const {menuLateral, setMenuLateral} = useContext(MenuLateralContext);
@@ -13,6 +18,20 @@ const SidebarSindico = () => {
 
         //Altera a o valor da variável do estado
         setMenuLateral( menuLateral === 'fechado' ? "aberto" : 'fechado')
+    }
+
+    //FUNÇÕES PARA REDIRECIONAMENTO
+
+    //Inicio
+    const incio = () => {
+
+      navigate("/sindico")
+    }
+
+    //Usuários
+    const usuarios = () => {
+
+      navigate("/sindico/usuarios")
     }
 
   return (
@@ -50,18 +69,21 @@ const SidebarSindico = () => {
         <ul className={styles['sd-nav-list']}>
 
           {/* Item do menu: Início (Possui a classe active para simular seleção) */}
-          <li className={`${styles['sd-nav-item']} ${styles['sd-item-active']}`}>
+          <li className={`${styles['sd-nav-item']} ${styles['sd-item-active']}`} onClick={incio}>
+
             {/* Ícone SVG: Casa (Início) */}
             <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className={styles['sd-icon']}>
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
+
             {/* Texto descritivo do botão */}
             <span className={styles['sd-label']}>Inicio</span> 
           </li>
 
           {/* Item do menu: Usuários */}
-          <li className={styles['sd-nav-item']}>
+          <li className={styles['sd-nav-item']} onClick={usuarios}>
+
             {/* Ícone SVG: Grupo de Usuários */}
             <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className={styles['sd-icon']}>
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -69,6 +91,7 @@ const SidebarSindico = () => {
               <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
               <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
+
             {/* Texto descritivo do botão (grafia mantida conforme solicitado) */}
             <span className={styles['sd-label']}>Usúarios</span>
           </li>

@@ -16,6 +16,7 @@ import PaginaInical from '../pages/telaInicial';
 import TelaDeLogin from '../pages/telaLogin';
 import PaginainicialSindico from '../pages/sindico/telaInicialSindico';
 import PaginainicialPorteiro from '../pages/porteiro/telaInicialPorteiro';
+import PaginaExibeUsuarios from '../pages/sindico/telaExibeUsuarios';
 
 //Componente que será utilizado para analizar a URL
 const route = createBrowserRouter([
@@ -58,6 +59,12 @@ const route = createBrowserRouter([
                     {
                         path: "/sindico", //Caminho da tela inicial do sindico
                         element: <PaginainicialSindico></PaginainicialSindico>, //Componente que será carregado
+                    },
+                    
+                    //Tela de gerenciamento de usuários
+                    {
+                        path: "/sindico/usuarios", //Caminho da tela inicial do sindico
+                        element: <PaginaExibeUsuarios></PaginaExibeUsuarios>, //Componente que será carregado
                     },
                     
                 ]
