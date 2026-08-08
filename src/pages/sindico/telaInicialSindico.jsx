@@ -1,5 +1,5 @@
 //Local das importações
-import "../../css/paginaInicialSindico.css"
+import styles from "../../css/paginaInicialSindico.module.css"
 
 //Página inicial do sindico
 
@@ -8,31 +8,31 @@ function PaginainicialSindico(){
     
     //Retorna um componente
     return (
-    <div className="dashboard--principal">
+    <div className={styles['dashboard--principal']}>
       
       {/* Seção de Resumo */}
-      <div className="titulo--reclamacoes">Perguntas não respondidas</div>
-      <div className="container--resumo">
-        <div className="cartao--resumo">
-          <div className="titulo--cartao--resumo">PENDENTES</div>
-          <div className="conteudo--cartao--resumo">
-            <span className="valor--resumo">0</span>
-            <span className="icone--resumo">⚠️</span>
+      <div className={styles['titulo--reclamacoes']}>Perguntas não respondidas</div>
+      <div className={styles['container--resumo']}>
+        <div className={styles['cartao--resumo']}>
+          <div className={styles['titulo--cartao--resumo']}>PENDENTES</div>
+          <div className={styles['conteudo--cartao--resumo']}>
+            <span className={styles['valor--resumo']}>0</span>
+            <span className={styles['icone--resumo']}>⚠️</span>
           </div>
         </div>
-        <div className="cartao--resumo">
-          <div className="titulo--cartao--resumo">EM ANDAMENTO</div>
-          <div className="conteudo--cartao--resumo">
-            <span className="valor--resumo">0</span>
-            <span className="icone--resumo">🔧</span>
+        <div className={styles['cartao--resumo']}>
+          <div className={styles['titulo--cartao--resumo']}>EM ANDAMENTO</div>
+          <div className={styles['conteudo--cartao--resumo']}>
+            <span className={styles['valor--resumo']}>0</span>
+            <span className={styles['icone--resumo']}>🔧</span>
           </div>
         </div>
       </div>
 
       {/* Seção Hoje */}
-      <div className="titulo--data">Ultimos comunicados</div>
-      <div className="nao-tem-comunicados">No momento não tem comunidacos!</div>
-     
+      <div className={styles['titulo--data']}>Ultimos comunicados</div>
+      <div className={styles['nao-tem-comunicados']}>No momento não tem comunidacos!</div>
+      
 
     </div>
   )

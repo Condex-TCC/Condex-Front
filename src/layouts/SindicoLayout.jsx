@@ -18,7 +18,7 @@ function LayoutSindico(){
         <div id="div-root">
             
             {/* Container raiz ocupando 100% da tela em modo Flex */}
-            <div id="div-root" style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden', backgroundColor: '#f8f9fa' }}>
+            <div style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden', backgroundColor: '#f8f9fa' }}>
                     
                 {/* Renderiza a Sidebar lateral se estiver aberto */}
                 {menuLateral === 'aberto' && <SidebarSindico />}
