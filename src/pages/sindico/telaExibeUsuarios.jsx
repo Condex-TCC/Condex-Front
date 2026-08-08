@@ -2,9 +2,23 @@
 
 import CardUsusario from "../../components/sindico/cardUsuariosSindico"
 import styles from "../../css/telaExibeUsuarios.module.css"
+import { getMoradores } from "../../api/MoradoresApi"
+import { useEffect } from "react"
 
 //Função que cria os componentes
 function PaginaExibeUsuarios(){
+
+    const PegandoMoradores = async () => {
+
+        let moradores = await getMoradores()
+
+        console.log(moradores.json())
+    }
+    useEffect(() => {
+
+      PegandoMoradores()
+      
+    }, [])
 
     //Retorna o componente
     return (
