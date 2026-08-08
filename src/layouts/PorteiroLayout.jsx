@@ -12,15 +12,13 @@ function PorteiroLayout(){
 
     //Retorna o componente
     return(
-        <div id="div-root">
+        <div id="div-root-porteiro">
             
             {/* Adiciona o header do porteiro */}
             <HeaderPorteiro></HeaderPorteiro>
         
             {/* Permite renderizar outros componentes dentro desse layout */}
             <Outlet></Outlet>
-            
-            <PaginainicialPorteiro></PaginainicialPorteiro>
 
         </div>
     )

@@ -1,5 +1,5 @@
 //Local das importações
-import "../../css/paginainicialPorteiro.css"
+import styles from "../../css/paginainicialPorteiro.module.css"
 
 //Página inicial do porteiro
 
@@ -7,25 +7,26 @@ import "../../css/paginainicialPorteiro.css"
 function PaginainicialPorteiro(){
     
     //Retorna um componente
+    //Retorna um componente
     return (
-    <div className="dashboard--container">
+    <div className={styles['dashboard--container']}>
       
-      <div className="header--section">
-        <div className="tabs--group">
-          <button className="tab--active">Visitantes</button>
-          <button className="tab--inactive">Encomendas</button>
+      <div className={styles['header--section']}>
+        <div className={styles['tabs--group']}>
+          <button className={styles['tab--active']}>Visitantes</button>
+          <button className={styles['tab--inactive']}>Encomendas</button>
         </div>
-        <button className="btn--add">+ Registrar visitante</button>
+        <button className={styles['btn--add']}>+ Registrar visitante</button>
       </div>
 
-      <div className="list--section">
-        <h2 className="section--title">Pre cadastrados</h2>
+      <div className={styles['list--section']}>
+        <h2 className={styles['section--title']}>Pre cadastrados</h2>
         
         <h1>Não visitantes cadastrados</h1>
       </div>
 
-      <div className="list--section">
-        <h2 className="section--title">Visitantes ativos</h2>
+      <div className={styles['list--section']}>
+        <h2 className={styles['section--title']}>Visitantes ativos</h2>
         
         <h1>Não ha visitantes ativos</h1>
       </div>

@@ -15,6 +15,7 @@ import PorteiroLayout from '../layouts/PorteiroLayout';
 import PaginaInical from '../pages/telaInicial';
 import TelaDeLogin from '../pages/telaLogin';
 import PaginainicialSindico from '../pages/sindico/telaInicialSindico';
+import PaginainicialPorteiro from '../pages/porteiro/telaInicialPorteiro';
 
 //Componente que será utilizado para analizar a URL
 const route = createBrowserRouter([
@@ -72,6 +73,16 @@ const route = createBrowserRouter([
             {
                 path: "/porteiro", //Caminho do primeiro elemento
                 element: <PorteiroLayout></PorteiroLayout>, //Componente que será carregado
+
+                //Array com as subrotas do porteiro
+                children: [
+                    //Tela de inicial do porteiro
+                    {
+                        path: "/porteiro", //Caminho da tela inicial do porteiro
+                        element: <PaginainicialPorteiro></PaginainicialPorteiro>, //Componente que será carregado
+                    },
+                    
+                ]
             },
         ]
     }
