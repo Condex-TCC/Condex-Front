@@ -1,0 +1,125 @@
+/* Classe contêiner principal para envolver a tabela e os botões */
+.container {
+  /* Define a largura do contêiner para ocupar todo o espaço pai */
+  width: 100%;
+  /* Define a família de fontes como sem-serifa, padrão para interfaces modernas */
+  font-family: sans-serif;
+  /* Aplica um espaçamento interno ao redor de todo o bloco principal */
+  padding: 20px;
+}
+
+/* Classe para a área superior que contém o seletor e o botão */
+.headerControls {
+  /* Transforma a div num contêiner flexível para alinhar os itens horizontalmente */
+  display: flex;
+  /* Empurra os itens para as extremidades (um para a esquerda, outro para a direita) */
+  justify-content: space-between;
+  /* Alinha verticalmente os elementos (botão e select) no centro da linha */
+  align-items: center;
+  /* Adiciona um espaço abaixo dos controles para separá-los da tabela */
+  margin-bottom: 12px;
+}
+
+/* Classe de estilo aplicada ao elemento <select> */
+.selectBox {
+  /* Aplica espaçamento interno de 8px no topo/baixo e 12px nas laterais */
+  padding: 8px 12px;
+  /* Define o tamanho da fonte da caixa de seleção */
+  font-size: 14px;
+  /* Define uma borda fina e cinza clara para a caixa de seleção */
+  border: 1px solid #e0e0e0;
+  /* Arredonda os cantos da borda da caixa de seleção */
+  border-radius: 6px;
+  /* Garante que o fundo da caixa de seleção seja branco */
+  background-color: #ffffff;
+  /* Define a cor do texto interno como um cinza escuro */
+  color: #333333;
+  /* Remove a aparência nativa padrão do sistema operacional em alguns navegadores */
+  outline: none;
+}
+
+/* Classe de estilo aplicada ao botão de cadastrar novo usuário */
+.addButton {
+  /* Aplica espaçamento interno vertical de 8px e horizontal de 16px */
+  padding: 8px 16px;
+  /* Define o tamanho da fonte do botão */
+  font-size: 14px;
+  /* Define a borda cinza, correspondendo ao padrão visual da imagem */
+  border: 1px solid #e0e0e0;
+  /* Arredonda os cantos do botão */
+  border-radius: 6px;
+  /* Aplica a cor branca ao fundo do botão */
+  background-color: #ffffff;
+  /* Define a cor do texto do botão */
+  color: #333333;
+  /* Muda o cursor do mouse para o ícone de 'mãozinha' indicando interatividade */
+  cursor: pointer;
+}
+
+/* Classe principal para o elemento <table> */
+.table {
+  /* Força a tabela a esticar e ocupar 100% da largura do seu contêiner pai */
+  width: 100%;
+  /* Faz as bordas das células se mesclarem, removendo espaços duplos entre elas */
+  border-collapse: collapse;
+  /* Define o tamanho padrão da fonte para todo o conteúdo dentro da tabela */
+  font-size: 13px;
+  /* Adiciona uma borda externa em toda a tabela, de cor cinza */
+  border: 1px solid #d4d4d4;
+}
+
+/* Classe padrão para as células de cabeçalho <th> */
+.th {
+  /* Aplica o fundo azul característico dos cabeçalhos vistos na referência */
+  background-color: #215ca0;
+  /* Define a cor do texto do cabeçalho como branca para gerar contraste com o azul */
+  color: #ffffff;
+  /* Alinha o texto do cabeçalho à esquerda da célula */
+  text-align: left;
+  /* Cria um espaçamento interno de 12px ao redor do texto no cabeçalho */
+  padding: 12px;
+  /* Remove o negrito padrão forte e aplica um peso médio à fonte do cabeçalho */
+  font-weight: 500;
+  /* Cria linhas cinzas claras entre os cabeçalhos para separação visual */
+  border: 1px solid #d4d4d4;
+}
+
+/* Classe para células de cabeçalho <th> que exigem texto centralizado (Editar e Apagar) */
+.thCenter {
+  /* Reaplica o fundo azul do cabeçalho padrão */
+  background-color: #215ca0;
+  /* Reaplica o texto branco */
+  color: #ffffff;
+  /* Centraliza o texto das colunas finais */
+  text-align: center;
+  /* Mantém o mesmo espaçamento interno das outras células do cabeçalho */
+  padding: 12px;
+  /* Define o peso médio para a fonte */
+  font-weight: 500;
+  /* Mantém as divisões das bordas */
+  border: 1px solid #d4d4d4;
+}
+
+/* Classe de estilo para as células de dados normais <td> */
+.td {
+  /* Define o espaçamento interno das células de dados para não ficarem grudadas na borda */
+  padding: 12px;
+  /* Define as bordas (linhas e colunas) das células internas com cor cinza clara */
+  border: 1px solid #d4d4d4;
+  /* Força o alinhamento do texto padrão à esquerda */
+  text-align: left;
+  /* Aplica a cor cinza escuro para o texto da linha de dados */
+  color: #333333;
+}
+
+/* Classe para as células de dados <td> que exigem conteúdo centralizado (como os ícones) */
+.tdCenter {
+  /* Mantém o espaçamento interno, seguindo o padrão das células normais */
+  padding: 12px;
+  /* Mantém a borda divisória padrão em todas as direções da célula */
+  border: 1px solid #d4d4d4;
+  /* Centraliza o conteúdo (usado especificamente para alinhar os ícones de ação no meio) */
+  text-align: center;
+  /* Transforma o ícone em algo clicável visualmente (cursor de apontar) */
+  cursor: pointer;
+}
