@@ -5,13 +5,13 @@ import { getPorteiro } from "../api/PorteiroApi"
 
 
 //Função responsavel por realizar o login
-export async function LoagindUsers(tipoUser){
+export async function LoadindUsers(tipoUser){
 
     //Tendanto executar a requisição
     try{
 
         //Variável que irá armazenar o usuários recuperados
-        let users = []
+        let users = null
 
         //Verifica qual tipo de usuário é
         if(tipoUser === "morador"){
@@ -31,8 +31,11 @@ export async function LoagindUsers(tipoUser){
             
         }
 
+        //Convertendo o json em objeto javaScrip
+        const dados = await users.json()
+
         //Desestrutura o promisse
-        const { message, status, data} = users
+        const { message, status, data} = dados
 
         //Verifica se houve algum erro na requisição
         if(status != 200){

@@ -1,36 +1,57 @@
 //Página de usuários
 
-import CardUsusario from "../../components/sindico/cardUsuariosSindico"
+import { CardMorador, CardPorteiro } from "../../components/sindico/cardUsuariosSindico"
 import styles from "../../css/telaExibeUsuarios.module.css"
-import { getMoradores } from "../../api/MoradoresApi"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { LoadindUsers } from "../../service/CrudUsuarios"
 
 //Função que cria os componentes
 function PaginaExibeUsuarios(){
 
-    const PegandoMoradores = async () => {
+    //Criando uma variavel para se observa o seu estado
+    const [tipoUsuario, setTipoUsuario] = useState("morador")
 
-        let moradoresApi = await getMoradores()
+    //Criando uma variavel que será responsavel por armazenar os usuários que serão exibidos
+    const [usuarios, setUsuarios] = useState([])
 
-        let moradores = await moradoresApi.json()
+    //Função que obtem o value da opção selecionado na combo box
+    const obterValor = (evento) => {
 
-        const { message, status, data } = moradores;
+      //Obtendo o valor do objeto do evento
+      setTipoUsuario(evento.target.value)
 
-        console.log(data)
+      setUsuarios([])
     }
-    useEffect(() => {
 
-      PegandoMoradores()
-      
-    }, [])
+    //Criando uma função que será executa sempre que a página carreger ou se alterar o estado
+    useEffect(() => {
+        const getUsuarios = async () => {
+          // user vai receber [ [ {...} ] ] ou [] (em caso de erro)
+          let user = await LoadindUsers(tipoUsuario)
+
+          // Se user for indefinido ou nulo por algum motivo, garante um array vazio
+          const dadosSeguros = user || []
+
+          // Se o primeiro item do array for outro array (o array duplo do Insomnia), 
+          // pegamos ele. Se não for, pegamos o array normal.
+          const listaFinal = Array.isArray(dadosSeguros[0]) ? dadosSeguros[0] : dadosSeguros
+
+          // Salvamos no estado
+          setUsuarios(listaFinal)
+        }
+
+        getUsuarios()
+      }, [tipoUsuario])
 
     //Retorna o componente
     return (
     <div className={styles.container}>
+
       <div className={styles.headerControls}>
-        <select className={styles.selectBox}>
-          <option value="moradores">Moradores</option>
-          <option value="funcionarios">Funcionários</option>
+
+        <select className={styles.selectBox} onChange={obterValor}>
+          <option value="morador">Moradores</option>
+          <option value="porteiro">Porteiros</option>
         </select>
         
         <button className={styles.addButton}>
@@ -43,22 +64,55 @@ function PaginaExibeUsuarios(){
 
         {/* Header da tabela */}
         <thead>
-          <tr>
-            <th className={styles.th}>Nome</th>
-            <th className={styles.th}>Perfil</th>
-            <th className={styles.th}>CPF</th>
-            <th className={styles.th}>telefone</th>
-            <th className={styles.th}>Unidade</th>
-            <th className={styles.thCenter}>Editar</th>
-            <th className={styles.thCenter}>Apagar</th>
-          </tr>
+            {
+              //Verifica qual é tipo de morador que está selecionado
+              tipoUsuario === "morador" ?
+              (
+                <tr>
+                  <th className={styles.th}>Nome</th>
+                  <th className={styles.th}>Perfil</th>
+                  <th className={styles.th}>CPF</th>
+                  <th className={styles.th}>telefone</th>
+                  <th className={styles.th}>Unidade</th>
+                  <th className={styles.thCenter}>Editar</th>
+                  <th className={styles.thCenter}>Apagar</th>
+                </tr>
+              ) :
+
+              (
+                <tr>
+                  <th className={styles.th}>Nome</th>
+                  <th className={styles.th}>Perfil</th>
+                  <th className={styles.th}>E-mail</th>
+                  <th className={styles.thCenter}>Editar</th>
+                  <th className={styles.thCenter}>Apagar</th>
+                </tr>
+              )
+            }
+      
         </thead>
 
         {/* Elementos do corpo da tabela */}
         <tbody>
           
-            <CardUsusario></CardUsusario>
+          {
+            //Percorrendo o array de usuários
+            usuarios.map((usuario) => {
+              
+              // Verifica qual tipo de usuário está selecionado
+              if(tipoUsuario === "morador"){
 
+                //Retorna o card do usuário
+                return <CardMorador key={usuario.id} morador={usuario} />
+              } else {
+
+                //Retorna o card do usuário
+                return <CardPorteiro key={usuario.id} porteiro={usuario} />
+              }
+
+            })
+          }
+            
 
         </tbody>
       </table>
