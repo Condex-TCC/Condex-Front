@@ -31,3 +31,32 @@ export async function getMoradores(){
     //Retornado uma promise com os dados da API
     return requisicao
 }
+
+
+//Função que recupera todos os moradores do banco de dados
+export async function deleteMoradores(id){
+
+    //Receperando o token de outorização
+    let cookie = await GetCookie()
+    let token = cookie.token
+
+    //Endpoint
+    let endPoint = "http://127.0.0.1:8000/api/sindico/morador/delete/" + id
+
+    //Criando a requisição
+    const requisicao = fetch(
+        endPoint, //Passando o endPoint para a requisição
+        {
+            method: "DELETE", //Passando qual é o metodo HTTP
+
+            //Passando os headers
+            headers: {
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
+                "Authorization": `Bearer ${token}` //Eniva o token de autorização
+            },
+        }
+    )
+
+    //Retornado uma promise com os dados da API
+    return requisicao
+}

@@ -103,11 +103,11 @@ function PaginaExibeUsuarios(){
               if(tipoUsuario === "morador"){
 
                 //Retorna o card do usuário
-                return <CardMorador key={usuario.id} morador={usuario} />
+                return <CardMorador key={usuario.id} morador={usuario} redenriza={setUsuarios}/>
               } else {
 
                 //Retorna o card do usuário
-                return <CardPorteiro key={usuario.id} porteiro={usuario} />
+                return <CardPorteiro key={usuario.id} porteiro={usuario}  redenriza={setUsuarios}/>
               }
 
             })
