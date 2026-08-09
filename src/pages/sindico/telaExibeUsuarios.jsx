@@ -10,9 +10,13 @@ function PaginaExibeUsuarios(){
 
     const PegandoMoradores = async () => {
 
-        let moradores = await getMoradores()
+        let moradoresApi = await getMoradores()
 
-        console.log(moradores.json())
+        let moradores = await moradoresApi.json()
+
+        const { message, status, data } = moradores;
+
+        console.log(data)
     }
     useEffect(() => {
 
