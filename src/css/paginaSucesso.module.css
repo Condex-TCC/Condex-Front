@@ -1,0 +1,61 @@
+/* SucessoCadastro.module.css */
+
+/* Container principal para centralizar os itens na tela */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  font-family: sans-serif;
+}
+
+/* Caixa com fundo verde de sucesso */
+.messageBox {
+  background-color: #c6e0cc; /* Verde claro baseado na imagem */
+  padding: 32px 40px;
+  border-radius: 6px;
+  position: relative; /* Necessário para posicionar o detalhe azul de forma absoluta */
+  margin-bottom: 32px;
+  text-align: center;
+  min-width: 300px;
+}
+
+/* Detalhe vazado azul no canto superior esquerdo */
+.blueAccent {
+  position: absolute;
+  top: -10px; /* Sobe o elemento para fora da caixa */
+  left: -10px; /* Puxa para a esquerda fora da caixa */
+  width: 45px;
+  height: 12px;
+  border: 2px solid #0088ff; /* Borda azul clara */
+  border-radius: 4px;
+  background-color: white; /* Fundo branco para cobrir a borda da caixa verde */
+}
+
+/* Texto de sucesso dentro da caixa */
+.messageText {
+  color: #1a1a1a;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Estilo do botão de voltar */
+.btnVoltar {
+  background-color: #9cb6c9; /* Azul/cinza claro baseado na imagem */
+  color: #1a1a1a;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 32px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaçamento entre a seta e o texto */
+}
+
+/* Efeito leve ao passar o mouse (opcional) */
+.btnVoltar:hover {
+  background-color: #8aa6ba;
+}

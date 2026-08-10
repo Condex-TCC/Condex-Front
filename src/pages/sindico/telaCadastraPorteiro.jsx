@@ -1,8 +1,51 @@
 //Tela responsavel por cadastrar o porteiro
 
+import { useState } from 'react';
 import styles from '../../css/paginaCadastraUsario.module.css'
+import { criandoPorteiro } from '../../service/CrudUsuarios';
+import { useNavigate } from 'react-router-dom';
 
 function PaginaCadastraPorteiro(){
+
+    //Cmponente que realiza a nevegação automatica
+    const navigate = useNavigate();
+
+    //Criando estado para controlar as variáveis das inputs
+    const [nome, setNome] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    //Função que obtem os evento realizam a troca dos valores
+    const toogleNome = (evento) => {
+
+      //Realizando a troca do estado pelo nome
+      setNome(evento.target.value)
+    }
+
+    const toogleEmail = (evento) => {
+
+      //Realizando a troca do estado pelo email
+      setEmail(evento.target.value)
+    }
+
+    const tooglePassword = (evento) => {
+
+      //Realizando a troca do estado pela senha
+      setPassword(evento.target.value)
+    }
+
+    //Função que realiza o cadastro
+    const cadastraPorteiro = async () => {
+
+      //Chama a função que realiza o login
+      let messagePorteiro = await criandoPorteiro(nome, email, password)
+
+      //Exibe a menssagem
+      alert(messagePorteiro)
+
+      //Chama a tela de carregamento
+      navigate('/sindico/usuarios/sucesso');
+    }
 
    return (
     <div className={styles.container}>
@@ -25,16 +68,19 @@ function PaginaCadastraPorteiro(){
             type="text" 
             placeholder="Nome completo" 
             className={styles.inputField} 
+            onChange={toogleNome}
           />
           <input 
             type="email" 
             placeholder="E-mail" 
             className={styles.inputField} 
+            onChange={toogleEmail}
           />
           <input 
             type="text" 
             placeholder="Senha" 
             className={styles.inputField} 
+            onChange={tooglePassword}
           />
         </div>
 
@@ -48,7 +94,7 @@ function PaginaCadastraPorteiro(){
 
       {/* Rodapé com o botão principal de envio */}
       <div className={styles.footer}>
-        <button className={styles.btnCadastrar}>
+        <button className={styles.btnCadastrar} onClick={cadastraPorteiro}>
           Cadastrar Porteiro
         </button>
       </div>
