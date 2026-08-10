@@ -4,9 +4,13 @@ import { CardMorador, CardPorteiro } from "../../components/sindico/cardUsuarios
 import styles from "../../css/telaExibeUsuarios.module.css"
 import { useEffect, useState } from "react"
 import { LoadindUsers } from "../../service/CrudUsuarios"
+import { redirect, useNavigate } from "react-router-dom"
 
 //Função que cria os componentes
 function PaginaExibeUsuarios(){
+
+    //Cmponente que realiza a nevegação automatica
+    const navigate = useNavigate();
 
     //Criando uma variavel para se observa o seu estado
     const [tipoUsuario, setTipoUsuario] = useState("morador")
@@ -43,6 +47,23 @@ function PaginaExibeUsuarios(){
         getUsuarios()
       }, [tipoUsuario])
 
+      //Função que verifica qual o usuário selecionado e redireciona para a página de cadastro
+      const redirecCadastro = () => {
+
+        //Verifical qual a tipo de usuário está selecionado
+        if(tipoUsuario === 'morador'){
+
+          //Redireciona para a página de cadastro de morador
+          navigate('morador')
+
+        }else{
+
+          //Redireciona para a página de cadastro de porteiro
+          navigate('porteiro')
+
+        }
+      }
+
     //Retorna o componente
     return (
     <div className={styles.container}>
@@ -54,7 +75,7 @@ function PaginaExibeUsuarios(){
           <option value="porteiro">Porteiros</option>
         </select>
         
-        <button className={styles.addButton}>
+        <button className={styles.addButton} onClick={redirecCadastro}>
           + Cadastrar novo usuário
         </button>
       </div>
