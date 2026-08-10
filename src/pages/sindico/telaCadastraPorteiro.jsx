@@ -47,6 +47,13 @@ function PaginaCadastraPorteiro(){
       navigate('/sindico/usuarios/sucesso');
     }
 
+    //Função que volta para a tela inicial
+    const voltaUsuario = () => {
+
+      //Chama a tela de carregamento
+      navigate('/sindico/usuarios');
+    }
+
    return (
     <div className={styles.container}>
       
@@ -56,7 +63,7 @@ function PaginaCadastraPorteiro(){
         <h2 className={styles.title}>Cadastrar um novo Porteiro</h2>
 
         {/* Usando o símbolo de flecha esquerda (&larr;) para o ícone de voltar */}
-        <button className={styles.btnVoltar}>&larr; voltar</button>
+        <button className={styles.btnVoltar} onClick={voltaUsuario}>&larr; voltar</button>
       </div>
 
       {/* Corpo do formulário contendo as duas colunas */}
