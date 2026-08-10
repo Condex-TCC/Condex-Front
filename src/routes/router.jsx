@@ -1,7 +1,6 @@
 //Esse arquivo será o responsavel pelas rotas
 
 //Importando as dependencias
-//Cria um objeto que seja utilizado para navegar na URL
 import { createBrowserRouter } from 'react-router-dom';
 
 //Importando os layouts
@@ -17,83 +16,81 @@ import TelaDeLogin from '../pages/telaLogin';
 import PaginainicialSindico from '../pages/sindico/telaInicialSindico';
 import PaginainicialPorteiro from '../pages/porteiro/telaInicialPorteiro';
 import PaginaExibeUsuarios from '../pages/sindico/telaExibeUsuarios';
+import PaginaCadastraPorteiro from '../pages/sindico/telaCadastraPorteiro';
 
-//Componente que será utilizado para analizar a URL
+//Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
     //Elemento base do array
     {
-        path: "/", //Caminho do primeiro elemento
-        element: <RootLayout></RootLayout>, //Elemento que será carregado
+        path: "/", 
+        element: <RootLayout />, 
 
         //Array com as subrotas do sistema
         children: [
-
             //Tela inicial e login
             {
-                path: "/", //Caminho do primeiro elemento
-                element: <LoginLayout></LoginLayout>, //Componente que será carregado
-
-                //Array com as subrotas de login
+                path: "", // Caminho vazio para herdar o "/"
+                element: <LoginLayout />, 
                 children: [
                     //Tela de inicial
                     {
-                        path: "/", //Caminho da tela inicial
-                        element: <PaginaInical></PaginaInical>, //Componente que será carregado
+                        index: true, // Usa index: true para a rota padrão do pai
+                        element: <PaginaInical />, 
                     },
                     //Tela de login
                     {
-                        path: "/login", //Caminho da tela inicial
-                        element: <TelaDeLogin></TelaDeLogin>, //Componente que será carregado
+                        path: "login", // Caminho relativo (sem a barra inicial)
+                        element: <TelaDeLogin />, 
                     }
                 ]
             },
 
             //Tela do sindico
             {
-                path: "/sindico", //Caminho do primeiro elemento
-                element: <LayoutSindico></LayoutSindico>, //Componente que será carregado
+                path: "sindico", // Caminho relativo
+                element: <LayoutSindico />, 
 
-                //Array com as subrotas de sindico
                 children: [
-                    //Tela de inicial do sindico
+                    //Tela inicial do sindico
                     {
-                        path: "/sindico", //Caminho da tela inicial do sindico
-                        element: <PaginainicialSindico></PaginainicialSindico>, //Componente que será carregado
+                        index: true, // Renderiza no caminho "/sindico"
+                        element: <PaginainicialSindico />, 
                     },
-                    
                     //Tela de gerenciamento de usuários
                     {
-                        path: "/sindico/usuarios", //Caminho da tela inicial do sindico
-                        element: <PaginaExibeUsuarios></PaginaExibeUsuarios>, //Componente que será carregado
+                        path: "usuarios", // Renderiza no caminho "/sindico/usuarios"
+                        element: <PaginaExibeUsuarios />, 
                     },
-                    
+
+                    {
+                        path: "usuarios/porteiro", // Caminho que vai ser acessado na URL
+                        element: <PaginaCadastraPorteiro />, 
+                    }
                 ]
             },
 
             //Tela do morador
             {
-                path: "/morador", //Caminho do primeiro elemento
-                element: <LayoutMorador></LayoutMorador>, //Componente que será carregado
-
+                path: "morador", // Caminho relativo
+                element: <LayoutMorador />, 
             },
 
+            //Tela do porteiro
             {
-                path: "/porteiro", //Caminho do primeiro elemento
-                element: <PorteiroLayout></PorteiroLayout>, //Componente que será carregado
+                path: "porteiro", // Caminho relativo
+                element: <PorteiroLayout />, 
 
-                //Array com as subrotas do porteiro
                 children: [
-                    //Tela de inicial do porteiro
+                    //Tela inicial do porteiro
                     {
-                        path: "/porteiro", //Caminho da tela inicial do porteiro
-                        element: <PaginainicialPorteiro></PaginainicialPorteiro>, //Componente que será carregado
+                        index: true, // Renderiza no caminho "/porteiro"
+                        element: <PaginainicialPorteiro />, 
                     },
-                    
                 ]
             },
         ]
     }
-])
+]);
 
 //Exportando o roteador de rotas
-export default route
+export default route;
