@@ -189,7 +189,7 @@ export async function obtendoPorteiro(id) {
     catch(erro){
 
         //Exibe um alerta na tela
-        alert(erro)
+        console.error("Erro ao buscar o porteiro na API:", erro)
 
     }
 

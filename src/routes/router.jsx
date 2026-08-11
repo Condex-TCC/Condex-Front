@@ -19,6 +19,7 @@ import PaginaExibeUsuarios from '../pages/sindico/telaExibeUsuarios';
 import PaginaCadastraPorteiro from '../pages/sindico/telaCadastraPorteiro';
 import PaginaCadastraMorador from '../pages/sindico/telaCadastraMorador';
 import SucessoCadastro from '../pages/sindico/telaUsuarioCadastradoSucesso';
+import PaginaAtualizaPorteiro from '../pages/sindico/telaAtualizaPorteiro';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -77,6 +78,11 @@ const route = createBrowserRouter([
                     {
                         path: "usuarios/sucesso", // Caminho que vai ser acessado na URL
                         element: <SucessoCadastro></SucessoCadastro>, 
+                    },
+
+                    {
+                        path: "usuarios/porteiro/update/:id", // Caminho que vai ser acessado na URL
+                        element: <PaginaAtualizaPorteiro></PaginaAtualizaPorteiro>, 
                     }
                 ]
             },
