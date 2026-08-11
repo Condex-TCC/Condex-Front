@@ -1,7 +1,7 @@
 //Arquivo responsavel por intermediar a lógica entre a tela que de controle de usuários pelo sindico e a API
 
 import { deleteMoradores, getMoradores } from "../api/MoradoresApi"
-import { deletePorteirosAPI, getPorteiro, insertPorteiroAPI, showPorteiroAPI } from "../api/PorteiroApi"
+import { deletePorteirosAPI, getPorteiro, insertPorteiroAPI, showPorteiroAPI, updatePorteiroAPI } from "../api/PorteiroApi"
 
 
 //Função responsavel por realizar o login
@@ -202,7 +202,7 @@ export async function atualizaPorteiro (id, nome, email, password) {
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await atualizaPorteiro(id, nome, email, password)
+        let response = await updatePorteiroAPI(nome, email, password, id)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()

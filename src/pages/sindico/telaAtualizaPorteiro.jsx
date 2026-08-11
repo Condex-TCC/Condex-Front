@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import styles from '../../css/paginaCadastraUsario.module.css'
-import { criandoPorteiro, obtendoPorteiro } from '../../service/CrudUsuarios';
+import { atualizaPorteiro, criandoPorteiro, obtendoPorteiro } from '../../service/CrudUsuarios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function PaginaAtualizaPorteiro(){
@@ -69,6 +69,19 @@ function PaginaAtualizaPorteiro(){
       navigate('/sindico/usuarios');
     }
 
+    //Função que realiza o update do porteiro
+    const updatePorteiro = async () => {
+
+      //Chama a API
+      let message = await atualizaPorteiro(id, name, eamil, password)
+
+      //Exibe a menssagem ao usuário
+      alert(message)
+
+      //Redireciona o usuário para a tela de usuários
+      navigate('/sindico/usuarios');
+    }
+
    return (
     <div className={styles.container}>
       
@@ -118,7 +131,7 @@ function PaginaAtualizaPorteiro(){
 
       {/* Rodapé com o botão principal de envio */}
       <div className={styles.footer}>
-        <button className={styles.btnCadastrar}>
+        <button className={styles.btnCadastrar} onClick={updatePorteiro}>
           Atualizar Porteiro
         </button>
       </div>
