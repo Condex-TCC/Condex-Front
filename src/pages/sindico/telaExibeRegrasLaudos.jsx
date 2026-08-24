@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import styles from "../../css/paginaExibeRegrasLaudos.module.css"
+import { RegraCard } from "../../components/sindico/cardRegraSindico"
+import { LaudoCard } from "../../components/sindico/cardLaudoSincico"
 
 //Função que cria o componente
 function PaginaExibeRegrasLaudos() {
@@ -52,7 +54,13 @@ function PaginaExibeRegrasLaudos() {
           </div>
 
           <div>
-            <h1>os Card serão carregas aqui!</h1>
+           
+           {/* Exibindo os card dependendo da ação */}
+           {
+            acao === "regras" ?
+            <RegraCard></RegraCard> :
+            <LaudoCard></LaudoCard>
+           }
           </div>
 
         </div>
