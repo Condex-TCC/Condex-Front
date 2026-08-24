@@ -1,0 +1,127 @@
+/* Container que centraliza e limita a largura da interface */
+.container {
+  font-family: Arial, Helvetica, sans-serif; /* Fonte base padrão */
+  max-width: 800px;
+  margin: 20px auto;
+  color: #111;
+}
+
+/* Alinhamento da barra superior separando as abas do botão principal */
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Espaçamento entre os botões de abas */
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+/* Estado inicial dos botões das abas (Não selecionado / Branco) */
+.tabButton {
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #374151;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Efeito ao passar o mouse por cima das abas (Muda para azul claro) */
+.tabButton:hover {
+  background-color: #e0f2fe;
+  border-color: #bae6fd;
+}
+
+/* Estilo para o botão de "+ Nova Regra" */
+.primaryButton {
+  background-color: #1e3a8a; /* Azul escuro da imagem */
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Estilo do título "Regras do condomínio (12)" */
+.sectionTitle {
+  font-size: 13px;
+  font-weight: normal;
+  margin-bottom: 12px;
+  color: #4b5563;
+}
+
+/* Estilo estrutural principal do card */
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px 20px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Layout horizontal do cabeçalho do card */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Grupo de ícones alinhados à direita */
+.cardActions {
+  display: flex;
+  gap: 16px;
+}
+
+/* Removemos o estilo padrão do botão para deixar só o SVG visível */
+.iconButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.iconButton:hover {
+  opacity: 0.6;
+}
+
+/* Organização vertical do horário e descrição */
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Alinhamento lateral do ícone de relógio com o texto */
+.timeInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #111;
+}
+
+/* Texto de baixo recuado para alinhar com o horário, pulando o ícone */
+.description {
+  margin: 0;
+  font-size: 13px;
+  color: #4b5563;
+  margin-left: 24px;
+}

@@ -20,6 +20,7 @@ import PaginaCadastraPorteiro from '../pages/sindico/telaCadastraPorteiro';
 import PaginaCadastraMorador from '../pages/sindico/telaCadastraMorador';
 import SucessoCadastro from '../pages/sindico/telaUsuarioCadastradoSucesso';
 import PaginaAtualizaPorteiro from '../pages/sindico/telaAtualizaPorteiro';
+import PaginaExibeRegrasLaudos from '../pages/sindico/telaExibeRegrasLaudos';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -65,24 +66,41 @@ const route = createBrowserRouter([
                         element: <PaginaExibeUsuarios />, 
                     },
 
+                    //Tela para cadastrar os porteiros
                     {
                         path: "usuarios/porteiro", // Caminho que vai ser acessado na URL
                         element: <PaginaCadastraPorteiro />, 
                     },
 
+                    //Tela para cadastrar os moradores
                     {
                         path: "usuarios/morador", // Caminho que vai ser acessado na URL
                         element: <PaginaCadastraMorador></PaginaCadastraMorador>, 
                     },
 
+                    //Tela de sucesso no cadastro
                     {
                         path: "usuarios/sucesso", // Caminho que vai ser acessado na URL
                         element: <SucessoCadastro></SucessoCadastro>, 
                     },
 
+                    //Tela de updadte do porteiro
                     {
+                        //Essa rota recebe um parametro na url
                         path: "usuarios/porteiro/update/:id", // Caminho que vai ser acessado na URL
                         element: <PaginaAtualizaPorteiro></PaginaAtualizaPorteiro>, 
+                    },
+
+                    //Tela de exibir regras
+                    {
+                        path: "condominio/regras", //Caminho que vai ser acessado na URL
+                        element: <PaginaExibeRegrasLaudos></PaginaExibeRegrasLaudos>
+                    },
+
+                    //Tela de exibir os laudos
+                    {
+                        path: "condominio/regras", //Caminho que vai ser acessado na URL
+                        element: <PaginaExibeRegrasLaudos></PaginaExibeRegrasLaudos>
                     }
                 ]
             },
