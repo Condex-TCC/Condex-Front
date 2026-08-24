@@ -25,13 +25,6 @@ export function RegraCard() {
       </header>
 
       <div className={styles.content}>
-        <div className={styles.timeInfo}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10" />
-            <polyline points="12 6 12 12 16 14" />
-          </svg>
-          <span>Das 22h às 08h</span>
-        </div>
         <p className={styles.description}>
           Evitar som alto, obras e festas nesse período.
         </p>
