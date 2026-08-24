@@ -1,0 +1,101 @@
+.container {
+  font-family: sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #000;
+  margin: 0;
+  text-decoration: underline;
+  text-decoration-color: #0088ff;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+.backButton {
+  background-color: #274092;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.backButton:hover {
+  background-color: #1e3375;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.inputTitle, .inputDescription {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  outline: none;
+  color: #333;
+}
+
+.inputTitle::placeholder, .inputDescription::placeholder {
+  color: #b8b8b8;
+  font-weight: 500;
+}
+
+.inputTitle:focus, .inputDescription:focus {
+  border-color: #0088ff;
+}
+
+/* O input de título é visivelmente menor na imagem */
+.inputTitle {
+  max-width: 350px; 
+}
+
+/* A descrição é mais larga e alta */
+.inputDescription {
+  max-width: 600px;
+  min-height: 150px;
+  resize: vertical;
+}
+
+.submitContainer {
+  max-width: 600px; /* Alinha o botão ao centro em relação à textarea */
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.submitButton {
+  background: linear-gradient(to right, #3476d6, #0d1e50);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 3.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.submitButton:hover {
+  opacity: 0.9;
+}
