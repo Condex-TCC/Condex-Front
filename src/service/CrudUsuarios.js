@@ -71,21 +71,29 @@ export async function deleteMorador(id) {
         //Desestrutura o promisse
         const { message, status, data} = json
 
-        //Verifica se houve algum erro na requisição
-        if(status != 200){
-
-            //Para a execução do try e lança um erro para o catch
-            throw("Erro na requisição " + status)
+       
+        //Verifica se houve algum erro na requisição (tanto no HTTP quanto no corpo da resposta).
+        //É aqui que cai, por exemplo, quando o backend recusa o delete porque esse morador
+        //ainda tem algum registro vinculado a ele (visitante, encomenda, autorização, etc.)
+        if(!response.ok || status != 200){
+ 
+            //Para a execução do try e lança para o catch a mensagem que veio do backend
+            //(ex: "Não é possível apagar esse morador porque existem registros vinculados a ele")
+            throw(message || ("Erro na requisição " + status))
         }
-
-        //Retornando a menssagem
-        return message
+ 
+        //Retorna sucesso, para o componente saber que pode remover a linha da tabela
+        return { sucesso: true, mensagem: message }
     }
     //Casso aconteça algum erro na requisição, cai nesse bloco
     catch(erro){
 
-        //Exibe um alerta na tela
-        alert(erro)
+        //Mostra o erro real no console (útil para debug técnico)
+        console.error("Erro ao deletar morador:", erro)
+ 
+        //Retorna falha e a mensagem para ser exibida ao síndico em um alert
+        //explicando por que o morador não pôde ser excluído
+        return { sucesso: false, mensagem: "Não foi possivel deletar o Morador" }
 
     }
 
@@ -105,21 +113,28 @@ export async function deletePorterio(id) {
         //Desestrutura o promisse
         const { message, status, data} = json
 
-        //Verifica se houve algum erro na requisição
-        if(status != 200){
-
-            //Para a execução do try e lança um erro para o catch
-            throw("Erro na requisição " + status)
+        //Verifica se houve algum erro na requisição (tanto no HTTP quanto no corpo da resposta).
+        //É aqui que cai, por exemplo, quando o backend recusa o delete porque esse porteiro
+        //ainda tem encomendas (ou outro registro) vinculadas a ele
+        if(!response.ok || status != 200){
+ 
+            //Para a execução do try e lança para o catch a mensagem que veio do backend
+            //(ex: "Não é possível apagar esse porteiro porque existem encomendas vinculadas a ele")
+            throw(message || ("Erro na requisição " + status))
         }
-
-        //Retornando a menssagem
-        return message
+ 
+        //Retorna sucesso, para o componente saber que pode remover a linha da tabela
+        return { sucesso: true, mensagem: message }
     }
     //Casso aconteça algum erro na requisição, cai nesse bloco
     catch(erro){
 
-        //Exibe um alerta na tela
-        alert(erro)
+       //Mostra o erro real no console (útil para debug técnico)
+        console.error("Erro ao deletar porteiro:", erro)
+ 
+        //Retorna falha e a mensagem para ser exibida ao síndico em um alert
+        //explicando por que o porteiro não pôde ser excluído
+        return { sucesso: false, mensagem: "Não foi possivel deletar o porteiro!" }
 
     }
 

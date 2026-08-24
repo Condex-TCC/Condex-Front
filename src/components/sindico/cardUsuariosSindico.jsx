@@ -15,13 +15,15 @@ function CardMorador({morador, redenriza}){
     const delMorador = async () => {
 
       //Chama a função de delete
-      let message = await deleteMorador(id)
+      let resultado = await deleteMorador(id)
 
       //Exibe uma alerte mostrnado a menssagem
-      alert(message)
+      alert(resultado.mensagem)     
 
       //Altera o estado do componente pai forçando o recarregamento
+     if(resultado.sucesso){                   // só some da tabela se realmente apagou
       redenriza((usuariosAtuais) => usuariosAtuais.filter((user) => user.id !== id))
+    }
 
     }
 
@@ -70,14 +72,16 @@ function CardPorteiro({porteiro, redenriza}){
     const delPorteiro = async () => {
 
       //Chama a função de delete
-      let message = await deletePorterio(id)
+      let resultado = await deletePorterio(id)
 
       //Exibe uma alerte mostrnado a menssagem
-      alert(message)
+      alert(resultado.mensagem)
 
       //Altera o estado do componente pai forçando o recarregamento
       //Se passa fuma função de callback que filtra os usuários salvos no state
-      redenriza((usuariosAtuais) => usuariosAtuais.filter((user) => user.id !== id))
+      if(resultado.sucesso){
+        redenriza((usuariosAtuais) => usuariosAtuais.filter((user) => user.id !== id))
+      }
 
     }
 
