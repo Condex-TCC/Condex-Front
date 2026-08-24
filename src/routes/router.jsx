@@ -93,13 +93,13 @@ const route = createBrowserRouter([
 
                     //Tela de exibir regras
                     {
-                        path: "condominio/regras", //Caminho que vai ser acessado na URL
+                        path: "condominio/regrasLaudos", //Caminho que vai ser acessado na URL
                         element: <PaginaExibeRegrasLaudos></PaginaExibeRegrasLaudos>
                     },
 
                     //Tela de exibir os laudos
                     {
-                        path: "condominio/regras", //Caminho que vai ser acessado na URL
+                        path: "condominio/laudos", //Caminho que vai ser acessado na URL
                         element: <PaginaExibeRegrasLaudos></PaginaExibeRegrasLaudos>
                     }
                 ]
