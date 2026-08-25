@@ -2,6 +2,15 @@ import React from 'react';
 import styles from '../../css/cardRegrasLaudosSindico.module.css';
 
 export function LaudoCard({laudo, renderiza}) {
+
+  //Função responsavel por redirecionar o sindico para o local onde irá visualiar o documento
+  const visualizarLaudo = () => {
+
+    //Redirecionando para outra página
+    window.open(laudo.caminho, "_blank", "noopener,noreferrer")
+  }
+
+  
   return (
 
     <div className={styles.card}>
@@ -29,14 +38,17 @@ export function LaudoCard({laudo, renderiza}) {
         </div>
 
         <div className={styles.rightActions}>
-          <button className={styles.actionButton}>
+
+          <button className={styles.actionButton} onClick={visualizarLaudo}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
               <circle cx="12" cy="12" r="3" />
             </svg>
             Visualizar
           </button>
+
         </div>
+
       </footer>
     </div>
   );
