@@ -1,0 +1,111 @@
+/* Container geral do componente */
+.container {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Cabeçalho */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #000;
+  margin: 0;
+}
+
+.btnVoltar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #69b4cd;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Área de campos */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 450px; 
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.labelText {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Estilos comuns para o Input e o Box de Upload */
+.input, .uploadBox {
+  border: 1px solid #b3b3b3;
+  border-radius: 8px;
+  padding: 12px 16px;
+  background-color: #ffffff;
+}
+
+.input {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  outline: none;
+}
+
+.input::placeholder {
+  color: #a3a3a3;
+}
+
+/* Faz o box de upload funcionar visualmente como um botão */
+.uploadBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+/* Esconde o input original de arquivo, deixando apenas o visual do label */
+.hiddenFileInput {
+  display: none;
+}
+
+.uploadText {
+  font-size: 18px;
+  font-weight: 700;
+  color: #a3a3a3;
+}
+
+/* Rodapé e botão salvar */
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.btnSalvar {
+  background-color: #4b80b7;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 60px;
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+}

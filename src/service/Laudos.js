@@ -1,6 +1,6 @@
 //Arquivo responsavel por fazer a requisição e tratar os dados
 
-import { deleteLaudoAPI, getLaudosAPI } from "../api/LaudosAPI"
+import { deleteLaudoAPI, getLaudosAPI, insertLaudoAPI } from "../api/LaudosAPI"
 
 
 //Função que obtem todas as regras
@@ -73,40 +73,35 @@ export async function deleteLaudo(id) {
 
 }
 
-// //Função que que cria as regras
-// export async function insertRegras() {
-    
-//     //Tendanto executar a requisição
-//     try{
+// Função que cria o laudo
+export async function insertLaudo(nome, documento) {
 
-//         //Chamando a função que realiza a requisição no API
-//         let response = await insertRegraAPI()
+    // Tentando executar a requisição
+    try {
+        // Chamando a função que realiza a requisição na API
+        let response = await insertLaudoAPI(nome, documento)
 
-//         //Convertendo o JSON para objetos no JS
-//         let json = await response.json()
+        // Convertendo o JSON para objetos no JS
+        let json = await response.json()
 
-//         //Desestrutura o promisse
-//         const { message, status, data} = json
+        // Desestrutura a promise[cite: 2]
+        const { message, status, data } = json
 
-//         //Verifica se houve algum erro na requisição
-//         if(status != 200){
+        // Verifica se houve algum erro na requisição (No Insomnia, o sucesso retornou 200)
+        if (status != 200) {
+            // Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
 
-//             //Para a execução do try e lança um erro para o catch
-//             throw("Erro na requisição " + status)
-//         }
-
-//         //Retornando a menssagem
-//         return message
-//     }
-//     //Casso aconteça algum erro na requisição, cai nesse bloco
-//     catch(erro){
-
-//         //Exibe um alerta na tela
-//         console.error("Erro ao buscar o porteiro na API:", erro)
-
-//     }
-
-// }
+        // Retornando a mensagem de sucesso
+        return message
+    } 
+    // Caso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro) {
+        // Exibe um alerta no console
+        console.error("Erro ao cadastrar o laudo na API:", erro) 
+    }
+}
 
 // //Função que que recupera apenas uma regra
 // export async function showRegra(id) {

@@ -88,7 +88,8 @@ function PaginaExibeRegrasLaudos() {
     //Função que realiza a mudança de rota para cadastrar as regras
     const cadastraLaudos = () => {
 
-      alert("Fazer depois!")
+      //Realiza a mudança de tela
+      navigate("/sindico/condominio/laudos/create")
     }
 
 

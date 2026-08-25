@@ -59,43 +59,43 @@ export async function deleteLaudoAPI(id){
     return requisicao
 }
 
-// //Função que que salva no banco de dados a nova regra
-// export async function insertRegraAPI(nome, descricao){
 
-//     //Receperando o token de outorização
-//     let cookie = await GetCookie()
-//     let token = cookie.token
+// Função que envia o novo laudo para a API
+export async function insertLaudoAPI(nome, documento) {
 
-//     //Endpoint
-//     let endPoint = "http://127.0.0.1:8000/api/sindico/regras/create"
+    // Recuperando o token de autorização
+    let cookie = await GetCookie()
+    let token = cookie.token
 
-//     //Objeto com os elementos
-//     let novaRegra = {
-//         nome: nome,
-// 	    descricao: descricao
-//     }
+    // Endpoint baseado no seu print do Insomnia
+    let endPoint = "http://127.0.0.1:8000/api/sindico/laudos/create"
 
-//     //Criando a requisição
-//     const requisicao = fetch(
-//         endPoint, //Passando o endPoint para a requisição
-//         {
-//             method: "POST", //Passando qual é o metodo HTTP
+    // Criando um FormData para suportar envio de arquivo e texto juntos
+    let formData = new FormData()
+    
+    // Adicionando o arquivo com o nome da chave exato exigido no Insomnia
+    formData.append("documento", documento)
+    
+    // Adicionando o JSON stringificado na chave "dados" como mostrado no Insomnia
+    formData.append("dados", JSON.stringify({ nome: nome }))
 
-//             //Passando os headers
-//             headers: {
-//                 'Content-Type': 'application/json', //Tipo de formatação
-//                 'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
-//                 "Authorization": `Bearer ${token}` //Eniva o token de autorização
-//             },
+    // Criando a requisição[cite: 1]
+    const requisicao = fetch(
+        endPoint,
+        {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
+                "Authorization": `Bearer ${token}` // Envia o token de autorização
+                // Não coloque Content-Type aqui, o FormData resolve automaticamente!
+            },
+            body: formData 
+        }
+    )
 
-//             //Passando o corpo da requisição
-//             body: JSON.stringify(novaRegra) //Convertendo o objeto em Json
-//         }
-//     )
-
-//     //Retornado uma promise com os dados da API
-//     return requisicao
-// }
+    // Retornado uma promise com os dados da API
+    return requisicao
+}
 
 // //Função que recupera apenas uma regra
 // export async function showRegraAPI(id){
