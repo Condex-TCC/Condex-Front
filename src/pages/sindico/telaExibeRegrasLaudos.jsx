@@ -46,7 +46,7 @@ function PaginaExibeRegrasLaudos() {
       let regras = await obtendoRegras()
 
       //Altera o estado da variável e recarrega a página
-      setCards(regras)
+      setCards(regras[0])
     }
 
     //Função que chama a função para obter as regras
@@ -122,25 +122,20 @@ function PaginaExibeRegrasLaudos() {
            
            {/* Exibindo os card dependendo da ação */}
            {
-              cards.map((card) => {
+              //Percorrendo o array com os cards que serão exibidos
+              cards.map((elemento) => {
+                
+                //Verifica qual card deve ser redenrizado
+                if (acao === "regras") {
 
-                  return card.map((elemento, index) => {
+                  //Retorna o card das regras
+                  return <RegraCard key={elemento.id} regra={elemento} renderiza={setCards} />
+                } else {
 
-                    //Verifica qual é o estado
-                    if(acao === "regras"){
-
-                      //Chama e passa os valores para o card de regras
-                      return <RegraCard key={index} regra={elemento} renderiza={setCards} ></RegraCard>
-
-                    }else{
-                      
-                      //Chama e passa os valores para o card de laudos
-                      return <LaudoCard key={index}></LaudoCard>
-
-                    }
-                  
-                  })
-               
+                  //Retorna os cards dos laudso
+                  return <LaudoCard key={elemento.id} />
+                }
+                
               })
            }
               

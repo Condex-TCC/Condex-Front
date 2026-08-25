@@ -4,26 +4,23 @@ import { deleteRegras } from '../../service/Regra';
 
 export function RegraCard( {regra, renderiza} ) {
 
-  //Criando uma variavel com o estado para controlar o Id
-  const [id, setId] = useState(regra.id)
-
   //Função que deleta o card
   const deleteRegra =  async() => {
 
     //Chama a função que deleta a regra
-    let message = await deleteRegras(id)
+    let message = await deleteRegras(regra.id)
 
     //Exibe a menssagem no front
     alert(message)
 
     //Chama o setCards para renderizar novamente a tela
-    renderiza((usuariosAtuais) => usuariosAtuais.filter((user) => user.id !== id))
+    renderiza((regrasAtuais) => regrasAtuais.filter((item) => item.id !== regra.id));
   }
 
   //Função que atualiza a regra
   const atualizaRegra = async () => {
 
-    alert("atualiza regra de id: " + id)
+    alert("atualiza regra de id: " + regra.id);
   }
 
   return (
