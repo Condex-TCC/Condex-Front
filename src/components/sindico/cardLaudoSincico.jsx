@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from '../../css/cardRegrasLaudosSindico.module.css';
 
-export function LaudoCard() {
+export function LaudoCard({laudo, renderiza}) {
   return (
+
     <div className={styles.card}>
+      
       <header className={styles.header}>
-        <h3 className={styles.title}>Laudo do Elevador</h3>
+        <h3 className={styles.title}>{laudo.laudo}</h3>
       </header>
 
       <footer className={styles.footer}>

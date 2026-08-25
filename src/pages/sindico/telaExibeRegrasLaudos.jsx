@@ -6,6 +6,7 @@ import { RegraCard } from "../../components/sindico/cardRegraSindico"
 import { LaudoCard } from "../../components/sindico/cardLaudoSincico"
 import { obtendoRegras } from "../../service/Regra"
 import { useNavigate } from "react-router-dom"
+import { obtendoLaudo } from "../../service/Laudos"
 
 //Função que cria o componente
 function PaginaExibeRegrasLaudos() {
@@ -53,11 +54,10 @@ function PaginaExibeRegrasLaudos() {
     const exibeLaudos = async () => {
 
       //Chama a função de regras e obtem os dados
-      // let regras = await obtendoRegras()
+      let laudos = await obtendoLaudo()
 
       //Altera o estado da variável e recarrega a página
-      // setCards(regras)
-      alert("Laudos, A fazer!")
+      setCards(laudos[0])
     }
 
     //Use effect que irá ser chamado sempre que o dado for alterado
@@ -133,7 +133,7 @@ function PaginaExibeRegrasLaudos() {
                 } else {
 
                   //Retorna os cards dos laudso
-                  return <LaudoCard key={elemento.id} />
+                  return <LaudoCard key={elemento.id} laudo={elemento} renderiza={setCards}/>
                 }
                 
               })
