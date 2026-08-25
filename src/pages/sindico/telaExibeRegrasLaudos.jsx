@@ -5,9 +5,13 @@ import styles from "../../css/paginaExibeRegrasLaudos.module.css"
 import { RegraCard } from "../../components/sindico/cardRegraSindico"
 import { LaudoCard } from "../../components/sindico/cardLaudoSincico"
 import { obtendoRegras } from "../../service/Regra"
+import { useNavigate } from "react-router-dom"
 
 //Função que cria o componente
 function PaginaExibeRegrasLaudos() {
+
+    //Hook que realiza a navegação
+    const navigate = useNavigate()
 
     //Criando um estado para controlar qual das elementos deve ser redenrizado
     const [acao, setAcao] = useState("regras")
@@ -74,6 +78,20 @@ function PaginaExibeRegrasLaudos() {
 
     }, [acao])
 
+    //Função que realiza a mudança de rota para cadastrar as regras
+    const cadastraRegra = () => {
+
+      //Realiza a mudança de tela
+      navigate("/sindico/condominio/regras/create")
+    }
+
+    //Função que realiza a mudança de rota para cadastrar as regras
+    const cadastraLaudos = () => {
+
+      alert("Fazer depois!")
+    }
+
+
     //Retorna um componente
     return (
         // Container principal que engloba tudo
@@ -88,7 +106,11 @@ function PaginaExibeRegrasLaudos() {
             </div>
             
             {/* Botão para criar nova regra */}
-            <button className={styles.primaryButton}>
+            <button className={styles.primaryButton} 
+            onClick={
+              acao === "regras"? cadastraRegra : cadastraLaudos
+            }
+            >
 
               {/* Verifica qual ação que é para exibir a menssagem */}
               { acao === "regras" ? "+ Cadastar nova Regra": "+ Cadastrar novo Laudo"}
