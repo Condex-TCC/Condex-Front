@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import styles from '../../css/cardRegrasLaudosSindico.module.css';
 import { deleteRegras } from '../../service/Regra';
+import { useNavigate } from 'react-router-dom';
 
 export function RegraCard( {regra, renderiza} ) {
+
+  //Cmponente que realiza a nevegação automatica
+  const navigate = useNavigate();
 
   //Função que deleta o card
   const deleteRegra =  async() => {
@@ -20,8 +24,10 @@ export function RegraCard( {regra, renderiza} ) {
   //Função que atualiza a regra
   const atualizaRegra = async () => {
 
-    alert("atualiza regra de id: " + regra.id);
+    //Realiza a navegação para a tela de updade de regra
+    navigate("/sindico/condominio/regras/update/" + regra.id)
   }
+
 
   return (
     <div className={styles.card}>
