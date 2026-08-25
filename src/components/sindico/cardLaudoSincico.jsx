@@ -1,8 +1,13 @@
 import React from 'react';
 import styles from '../../css/cardRegrasLaudosSindico.module.css';
 import { deleteLaudo } from '../../service/Laudos';
+import { useNavigate } from 'react-router-dom';
 
 export function LaudoCard({laudo, renderiza}) {
+
+  //Cmponente que realiza a nevegação automatica
+  const navigate = useNavigate();
+
 
   //Função responsavel por redirecionar o sindico para o local onde irá visualiar o documento
   const visualizarLaudo = () => {
@@ -22,6 +27,13 @@ export function LaudoCard({laudo, renderiza}) {
   
     //Chama o setCards para renderizar novamente a tela
     renderiza((laudosAtuais) => laudosAtuais.filter((item) => item.id !== laudo.id));
+  }
+
+  //Função que navega até a página onde será atualizado o laudo
+  const navegaLaudo = () => {
+
+    //Realiza a navegação para a tela de updade de regra
+    navigate("/sindico/condominio/laudos/update/" + laudo.id)
   }
 
   
@@ -48,11 +60,13 @@ export function LaudoCard({laudo, renderiza}) {
 
           </button>
 
-          <button className={styles.iconButton} aria-label="Editar">
+          <button className={styles.iconButton} aria-label="Editar" onClick={navegaLaudo}>
+
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
             </svg>
+
           </button>
         </div>
 

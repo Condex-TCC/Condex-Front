@@ -1,10 +1,41 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from '../../css/paginaLaudos.module.css';
+import { showLaudo } from '../../service/Laudos';
+import { useEffect, useState } from 'react';
 
 export default function PaginaAtualizaLaudos() {
 
   //Cmponente que realiza a nevegação automatica
   const navigate = useNavigate()
+
+  // Captura o :id que foi passado na URL
+  const { id } = useParams() 
+
+  // Estados para armazenar os dados do laudo
+  const [nome, setNome] = useState("");
+  const [caminhoAtual, setCaminhoAtual] = useState(""); 
+  const [novoArquivo, setNovoArquivo] = useState(null); // Caso o usuário queira subir um novo PDF
+ 
+  // Hook que executa assim que a tela carrega
+  // Hook que executa assim que a tela carrega
+  useEffect(() => {
+    async function carregarDados() {
+      if (id) {
+        // Chama a API passando o ID
+        const dadosLaudo = await showLaudo(id);
+        
+        // Verifica se os dados existem e se tem algo no array
+        if (dadosLaudo && dadosLaudo.length > 0) {
+          // Preenche os estados acessando o índice [0] do array
+          setNome(dadosLaudo[0].laudo); 
+          setCaminhoAtual(dadosLaudo[0].caminho);
+        }
+      }
+    }
+    
+    //Chama a função que carrega os dados
+    carregarDados();
+  }, [id]);
 
   //Função responsavel por voltar para a tela que exibe os laudos
   const back = () => {
@@ -18,7 +49,7 @@ export default function PaginaAtualizaLaudos() {
       {/* Cabeçalho */}
       <header className={styles.header}>
 
-        <h2 className={styles.title}>Alterando o Laudo: nome do laudo</h2>
+        <h2 className={styles.title}>Alterando o Laudo: {nome || "Carregando..."}</h2>
 
         <button className={styles.btnVoltar} onClick={back}>
           <svg 
@@ -46,17 +77,20 @@ export default function PaginaAtualizaLaudos() {
             type="text" 
             className={styles.input} 
             placeholder="Nome" 
+            value={nome} // Valor atrelado ao estado preenchido pela API
+            onChange={(e) => setNome(e.target.value)} // Permite edição
           />
         </div>
 
         <div className={styles.fieldGroup}>
-          <span className={styles.labelText}>Adicionar arquivo</span>
+          <span className={styles.labelText}>Substituir arquivo (Opcional)</span>
           
           {/* O label atua como o botão clicável que aciona o input invisível */}
           <label className={styles.uploadBox}>
             <input 
               type="file" 
               className={styles.hiddenFileInput} 
+              onChange={(e) => setNovoArquivo(e.target.files[0])}
             />
             <svg 
               width="24" 
