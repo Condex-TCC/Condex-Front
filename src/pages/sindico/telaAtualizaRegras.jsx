@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../css/paginaCadastraRegra.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { showRegra } from '../../service/Regra';
+import { showRegra, updateRegra } from '../../service/Regra';
+import { updateRegraAPI } from '../../api/RegrasAPI';
 
 export default function PaginaAtualizaRegra() {
 
@@ -58,6 +59,19 @@ export default function PaginaAtualizaRegra() {
 
   }, [id]);
 
+  //Função que realiza o updadte da regra
+  const atualizaRegra = async () => {
+  
+    //Chama a API
+    let message = await updateRegra(id, nome, descricao)
+  
+    //Exibe a menssagem ao usuário
+    alert(message)
+  
+    //Redireciona o usuário para a tela de usuários
+    back()
+  }
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -84,7 +98,7 @@ export default function PaginaAtualizaRegra() {
         />
         
         <div className={styles.submitContainer}>
-          <button type="submit" className={styles.submitButton}>
+          <button type="submit" className={styles.submitButton} onClick={atualizaRegra}>
             Atualizar
           </button>
         </div>

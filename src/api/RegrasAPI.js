@@ -125,41 +125,40 @@ export async function showRegraAPI(id){
     return requisicao
 }
 
-// //Função que atualiza o porteiro
-// export async function updatePorteiroAPI(nome, email, password, id){
+//Função que atualiza o porteiro
+export async function updateRegraAPI(nome, descricao, id){
 
-//     //Receperando o token de outorização
-//     let cookie = await GetCookie()
-//     let token = cookie.token
+    //Receperando o token de outorização
+    let cookie = await GetCookie()
+    let token = cookie.token
 
-//     //Endpoint
-//     let endPoint = "http://127.0.0.1:8000/api/sindico/porteiro/update/" + id
+    //Endpoint
+    let endPoint = "http://127.0.0.1:8000/api/sindico/regras/update/" + id
 
-//     //Objeto com os valores que vão ser atualizados
-//     let porteiroAtualizado = {
-//         nome: nome,
-// 	    email: email,
-// 	    password: password
-//     }
+    //Objeto com os valores que vão ser atualizados
+    let porteiroAtualizado = {
+        nome: nome,
+	    descricao: descricao
+    }
 
-//     //Criando a requisição
-//     const requisicao = fetch(
-//         endPoint, //Passando o endPoint para a requisição
-//         {
-//             method: "PUT", //Passando qual é o metodo HTTP
+    //Criando a requisição
+    const requisicao = fetch(
+        endPoint, //Passando o endPoint para a requisição
+        {
+            method: "PUT", //Passando qual é o metodo HTTP
 
-//             //Passando os headers
-//             headers: {
-//                 'Content-Type': 'application/json', //Tipo de formatação
-//                 'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
-//                 "Authorization": `Bearer ${token}` //Eniva o token de autorização
-//             },
+            //Passando os headers
+            headers: {
+                'Content-Type': 'application/json', //Tipo de formatação
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
+                "Authorization": `Bearer ${token}` //Eniva o token de autorização
+            },
 
-//             //Passando o corpo da requisição
-//             body: JSON.stringify(porteiroAtualizado) //Convertendo o objeto em Json
-//         }
-//     )
+            //Passando o corpo da requisição
+            body: JSON.stringify(porteiroAtualizado) //Convertendo o objeto em Json
+        }
+    )
 
-//     //Retornado uma promise com os dados da API
-//     return requisicao
-// }
+    //Retornado uma promise com os dados da API
+    return requisicao
+}
