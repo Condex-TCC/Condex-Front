@@ -1,15 +1,19 @@
 //Tela que vai ser responsavel por exibir as regras e os laudos
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styles from "../../css/paginaExibeRegrasLaudos.module.css"
 import { RegraCard } from "../../components/sindico/cardRegraSindico"
 import { LaudoCard } from "../../components/sindico/cardLaudoSincico"
+import { obtendoRegras } from "../../service/Regra"
 
 //Função que cria o componente
 function PaginaExibeRegrasLaudos() {
 
     //Criando um estado para controlar qual das elementos deve ser redenrizado
     const [acao, setAcao] = useState("regras")
+
+    //Criando um estado para controlar os card que serão exibidos
+    const [cards, setCards] = useState([])
 
     //Função que troca as ações
     const trocaAcaoRegra = () => {
@@ -30,6 +34,45 @@ function PaginaExibeRegrasLaudos() {
         setAcao("laudos")
       }
     }
+
+    //Função que chama a função para obter as regras
+    const exibeRegras = async () => {
+
+      //Chama a função de regras e obtem os dados
+      let regras = await obtendoRegras()
+
+      //Altera o estado da variável e recarrega a página
+      setCards(regras)
+    }
+
+    //Função que chama a função para obter as regras
+    const exibeLaudos = async () => {
+
+      //Chama a função de regras e obtem os dados
+      // let regras = await obtendoRegras()
+
+      //Altera o estado da variável e recarrega a página
+      // setCards(regras)
+      alert("Laudos, A fazer!")
+    }
+
+    //Use effect que irá ser chamado sempre que o dado for alterado
+    useEffect(() => {
+
+      //Verifica qual é o estado e chama a função correspondente
+      if(acao === "regras"){
+
+        //Chama a função para exibir as regras
+        exibeRegras()
+
+      }else{
+
+        //Chama a função para exibir os laudos
+        exibeLaudos()
+
+      }
+
+    }, [acao])
 
     //Retorna um componente
     return (
@@ -57,10 +100,28 @@ function PaginaExibeRegrasLaudos() {
            
            {/* Exibindo os card dependendo da ação */}
            {
-            acao === "regras" ?
-            <RegraCard></RegraCard> :
-            <LaudoCard></LaudoCard>
+              cards.map((card) => {
+
+                  return card.map((elemento, index) => {
+
+                    //Verifica qual é o estado
+                    if(acao === "regras"){
+
+                      //Chama e passa os valores para o card de regras
+                      return <RegraCard key={index} regra={elemento} renderiza={setCards} ></RegraCard>
+
+                    }else{
+                      
+                      //Chama e passa os valores para o card de laudos
+                      return <LaudoCard key={index}></LaudoCard>
+
+                    }
+                  
+                  })
+               
+              })
            }
+              
           </div>
 
         </div>
