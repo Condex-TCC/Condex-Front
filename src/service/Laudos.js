@@ -1,6 +1,6 @@
 //Arquivo responsavel por fazer a requisição e tratar os dados
 
-import { deleteLaudoAPI, getLaudosAPI, insertLaudoAPI, showLaudoAPI } from "../api/LaudosAPI"
+import { deleteLaudoAPI, getLaudosAPI, insertLaudoAPI, showLaudoAPI, updateLaudoAPI } from "../api/LaudosAPI"
 
 
 //Função que obtem todas as regras
@@ -129,43 +129,34 @@ export async function showLaudo(id) {
     }
     // Caso aconteça algum erro na requisição, cai nesse bloco
     catch(erro){
-        
+
         // Exibe um alerta no console
         console.error("Erro ao buscar o laudo na API:", erro)
     }
 }
 
-// //Função que atualiza a regra
-// export async function updateRegra(id, nome, descricao) {
+// Função que atualiza o laudo
+export async function updateLaudo(id, nome, documentoOuCaminho) {
     
-//     //Tendanto executar a requisição
-//     try{
+    try {
+        // Chamando a função que realiza a requisição na API
+        let response = await updateLaudoAPI(id, nome, documentoOuCaminho)
 
-//         //Chamando a função que realiza a requisição no API
-//         let response = await updateRegraAPI(nome, descricao, id)
+        // Convertendo o JSON
+        let json = await response.json()
 
-//         //Convertendo o JSON para objetos no JS
-//         let json = await response.json()
+        // Desestrutura a promise
+        const { message, status } = json
 
-//         //Desestrutura o promisse
-//         const { message, status, data} = json
+        // Verifica se houve algum erro
+        if(status != 200){
+            throw("Erro na requisição " + status)
+        }
 
-//         //Verifica se houve algum erro na requisição
-//         if(status != 200){
-
-//             //Para a execução do try e lança um erro para o catch
-//             throw("Erro na requisição " + status)
-//         }
-
-//         //Retornando a menssagem
-//         return message
-//     }
-//     //Casso aconteça algum erro na requisição, cai nesse bloco
-//     catch(erro){
-
-//         //Exibe um alerta na tela
-//         console.error("Erro ao buscar o porteiro na API:", erro)
-
-//     }
-
-// }
+        // Retornando a mensagem de sucesso para exibir no front
+        return message
+    }
+    catch(erro){
+        console.error("Erro ao atualizar o laudo na API:", erro)
+    }
+}

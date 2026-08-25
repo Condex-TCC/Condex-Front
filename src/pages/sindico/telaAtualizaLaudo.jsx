@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from '../../css/paginaLaudos.module.css';
-import { showLaudo } from '../../service/Laudos';
+import { showLaudo, updateLaudo } from '../../service/Laudos';
 import { useEffect, useState } from 'react';
 
 export default function PaginaAtualizaLaudos() {
@@ -42,6 +42,23 @@ export default function PaginaAtualizaLaudos() {
 
     //Navega para a tela que exibe os laudos
     navigate("/sindico/condominio/regrasLaudos")
+  }
+
+  // NOVA FUNÇÃO: Disparada ao clicar em "Atualizar"
+  const handleAtualizar = async () => {
+
+    // Se o usuário selecionou um novo arquivo, enviamos ele. 
+    // Se for null (não escolheu nada), enviamos o caminho que já estava salvo no banco.
+    const documentoParaEnviar = novoArquivo ? novoArquivo : caminhoAtual;
+
+    // Chama o serviço passando o id, o nome e o arquivo/caminho
+    let message = await updateLaudo(id, nome, documentoParaEnviar);
+
+    // Exibe a mensagem de sucesso do backend
+    alert(message || "Laudo atualizado com sucesso!");
+
+    // Volta para a tela de listagem
+    back();
   }
 
   return (
@@ -113,7 +130,7 @@ export default function PaginaAtualizaLaudos() {
 
       {/* Rodapé / Botão de Ação */}
       <footer className={styles.footer}>
-        <button className={styles.btnSalvar}>Atualiza</button>
+        <button className={styles.btnSalvar} onClick={handleAtualizar}>Atualiza</button>
       </footer>
     </div>
   );

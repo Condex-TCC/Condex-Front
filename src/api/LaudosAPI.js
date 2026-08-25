@@ -125,40 +125,39 @@ export async function showLaudoAPI(id){
     return requisicao
 }
 
-// //Função que atualiza o porteiro
-// export async function updateRegraAPI(nome, descricao, id){
+// Função que atualiza o laudo
+export async function updateLaudoAPI(id, nome, documentoOuCaminho) {
 
-//     //Receperando o token de outorização
-//     let cookie = await GetCookie()
-//     let token = cookie.token
+    // Recuperando o token de autorização
+    let cookie = await GetCookie()
+    let token = cookie.token
 
-//     //Endpoint
-//     let endPoint = "http://127.0.0.1:8000/api/sindico/regras/update/" + id
+    // Endpoint baseado no seu print do Insomnia para atualizar
+    let endPoint = "http://127.0.0.1:8000/api/sindico/laudos/update/" + id
 
-//     //Objeto com os valores que vão ser atualizados
-//     let porteiroAtualizado = {
-//         nome: nome,
-// 	    descricao: descricao
-//     }
+    // Criando o FormData (mesma estrutura do create)
+    let formData = new FormData()
+    
+    // Se o usuário selecionou um arquivo, envia o arquivo. Se não, envia o caminho antigo em formato de texto.
+    formData.append("documento", documentoOuCaminho)
+    
+    // Adicionando os dados do nome como JSON stringificado, conforme o print do Insomnia
+    formData.append("dados", JSON.stringify({ nome: nome }))
 
-//     //Criando a requisição
-//     const requisicao = fetch(
-//         endPoint, //Passando o endPoint para a requisição
-//         {
-//             method: "PUT", //Passando qual é o metodo HTTP
+    // Criando a requisição
+    const requisicao = fetch(
+        endPoint,
+        {
+            method: "POST", // Mantendo POST conforme a imagem do Insomnia
+            headers: {
+                'Accept': 'application/json',
+                "Authorization": `Bearer ${token}` 
+                // Sem Content-Type, o navegador define automaticamente como multipart/form-data com o boundary correto
+            },
+            body: formData
+        }
+    )
 
-//             //Passando os headers
-//             headers: {
-//                 'Content-Type': 'application/json', //Tipo de formatação
-//                 'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
-//                 "Authorization": `Bearer ${token}` //Eniva o token de autorização
-//             },
-
-//             //Passando o corpo da requisição
-//             body: JSON.stringify(porteiroAtualizado) //Convertendo o objeto em Json
-//         }
-//     )
-
-//     //Retornado uma promise com os dados da API
-//     return requisicao
-// }
+    // Retornado uma promise com os dados da API
+    return requisicao
+}
