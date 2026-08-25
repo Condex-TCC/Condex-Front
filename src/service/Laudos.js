@@ -1,6 +1,6 @@
 //Arquivo responsavel por fazer a requisição e tratar os dados
 
-import { getLaudosAPI } from "../api/LaudosAPI"
+import { deleteLaudoAPI, getLaudosAPI } from "../api/LaudosAPI"
 
 
 //Função que obtem todas as regras
@@ -38,40 +38,40 @@ export async function obtendoLaudo() {
 
 }
 
-// //Função que deleta as regras
-// export async function deleteRegras(id) {
+//Função que deleta os laudos
+export async function deleteLaudo(id) {
     
-//     //Tendanto executar a requisição
-//     try{
+    //Tendanto executar a requisição
+    try{
 
-//         //Chamando a função que realiza a requisição no API
-//         let response = await deleteRegraAPI(id)
+        //Chamando a função que realiza a requisição no API
+        let response = await deleteLaudoAPI(id)
 
-//         //Convertendo o JSON para objetos no JS
-//         let json = await response.json()
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
 
-//         //Desestrutura o promisse
-//         const { message, status, data} = json
+        //Desestrutura o promisse
+        const { message, status, data} = json
 
-//         //Verifica se houve algum erro na requisição
-//         if(status != 200){
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
 
-//             //Para a execução do try e lança um erro para o catch
-//             throw("Erro na requisição " + status)
-//         }
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
 
-//         //Retornando a menssagem
-//         return message
-//     }
-//     //Casso aconteça algum erro na requisição, cai nesse bloco
-//     catch(erro){
+        //Retornando a menssagem
+        return message
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
 
-//         //Exibe um alerta na tela
-//         console.error("Erro ao buscar o porteiro na API:", erro)
+        //Exibe um alerta na tela
+        console.error("Erro ao buscar o porteiro na API:", erro)
 
-//     }
+    }
 
-// }
+}
 
 // //Função que que cria as regras
 // export async function insertRegras() {
