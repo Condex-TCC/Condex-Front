@@ -18,7 +18,7 @@ import PaginainicialPorteiro from '../pages/porteiro/telaInicialPorteiro';
 import PaginaExibeUsuarios from '../pages/sindico/telaExibeUsuarios';
 import PaginaCadastraPorteiro from '../pages/sindico/telaCadastraPorteiro';
 import PaginaCadastraMorador from '../pages/sindico/telaCadastraMorador';
-import SucessoCadastro from '../pages/sindico/telaUsuarioCadastradoSucesso';
+import PaginaMenssagem from '../pages/sindico/telaMenssagem';
 import PaginaAtualizaPorteiro from '../pages/sindico/telaAtualizaPorteiro';
 import PaginaExibeRegrasLaudos from '../pages/sindico/telaExibeRegrasLaudos';
 import PaginaCadastraRegra from '../pages/sindico/telaCadastraRegras';
@@ -84,8 +84,8 @@ const route = createBrowserRouter([
 
                     //Tela de sucesso no cadastro
                     {
-                        path: "usuarios/sucesso", // Caminho que vai ser acessado na URL
-                        element: <SucessoCadastro></SucessoCadastro>, 
+                        path: "mensagem", // Caminho que vai ser acessado na URL
+                        element: <PaginaMenssagem></PaginaMenssagem>, 
                     },
 
                     //Tela de updadte do porteiro
