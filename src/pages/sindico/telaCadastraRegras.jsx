@@ -37,12 +37,15 @@ export default function PaginaCadastraRegra() {
     
     //Chama a função que cadastra as regras
     let message = await insertRegraAPI(nome, descricao)
-    
-    //Exibe a menssagem no front
-    alert("Regra Criada com sucesso!")
 
-    //Realiza a navegação para a tela inicial
-    back()
+    //Chama a tela de menssagem
+    navigate('/sindico/mensagem', {
+      //Realiza a passagem de valores para a página
+      state: {
+        menssagem: "Regra Criada com sucesso!" ,
+        redirecionamento: '/sindico/condominio/regrasLaudos'
+      }
+    });
   }
 
   return (
@@ -57,7 +60,7 @@ export default function PaginaCadastraRegra() {
 
       </header>
 
-      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+      <form className={styles.form} onSubmit={(e) => { e.preventDefault(); cadastraRegra(); }}>
         <input 
           type="text" 
           placeholder="Titulo.." 
@@ -74,7 +77,7 @@ export default function PaginaCadastraRegra() {
         />
         
         <div className={styles.submitContainer}>
-          <button type="submit" className={styles.submitButton} onClick={cadastraRegra}>
+          <button type="submit" className={styles.submitButton}>
             Adicionar
           </button>
         </div>

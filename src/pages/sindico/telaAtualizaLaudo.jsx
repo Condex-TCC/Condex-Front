@@ -54,11 +54,14 @@ export default function PaginaAtualizaLaudos() {
     // Chama o serviço passando o id, o nome e o arquivo/caminho
     let message = await updateLaudo(id, nome, documentoParaEnviar);
 
-    // Exibe a mensagem de sucesso do backend
-    alert(message || "Laudo atualizado com sucesso!");
-
-    // Volta para a tela de listagem
-    back();
+    //Chama a tela de menssagem
+    navigate('/sindico/mensagem', {
+      //Realiza a passagem de valores para a página
+      state: {
+        menssagem: message ,
+        redirecionamento: '/sindico/condominio/regrasLaudos'
+      }
+    });
   }
 
   return (

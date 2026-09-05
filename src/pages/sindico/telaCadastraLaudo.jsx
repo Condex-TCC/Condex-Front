@@ -32,8 +32,16 @@ export default function PaginaCadastraLaudos() {
         const resultado = await insertLaudo(nome, arquivo);
         
         if(resultado){
-            alert(resultado); // Exibe a mensagem de sucesso da API
-            back(); // Volta de tela se der certo
+            
+            //Chama a tela de menssagem
+            navigate('/sindico/mensagem', {
+              //Realiza a passagem de valores para a página
+              state: {
+                menssagem: resultado ,
+                redirecionamento: '/sindico/condominio/regrasLaudos'
+              }
+            });
+
         } else {
             alert("Erro ao tentar cadastrar o laudo.");
         }

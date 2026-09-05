@@ -40,11 +40,15 @@ function PaginaCadastraPorteiro(){
       //Chama a função que realiza o login
       let messagePorteiro = await criandoPorteiro(nome, email, password)
 
-      //Exibe a menssagem
-      alert(messagePorteiro)
 
-      //Chama a tela de carregamento
-      navigate('/sindico/usuarios/sucesso');
+      //Chama a tela de menssagem
+      navigate('/sindico/mensagem', {
+        //Realiza a passagem de valores para a página
+        state: {
+          menssagem: messagePorteiro ,
+          redirecionamento: '/sindico/usuarios'
+        }
+      });
     }
 
     //Função que volta para a tela inicial

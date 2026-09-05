@@ -75,11 +75,14 @@ function PaginaAtualizaPorteiro(){
       //Chama a API
       let message = await atualizaPorteiro(id, name, eamil, password)
 
-      //Exibe a menssagem ao usuário
-      alert(message)
-
-      //Redireciona o usuário para a tela de usuários
-      navigate('/sindico/usuarios');
+      //Chama a tela de menssagem
+      navigate('/sindico/mensagem', {
+        //Realiza a passagem de valores para a página
+        state: {
+          menssagem: message ,
+          redirecionamento: '/sindico/usuarios'
+        }
+      });
     }
 
    return (
