@@ -1,6 +1,6 @@
 //Arquivo responsavel por solicitar a requisição e trata-la
 
-import { deleteApertamentoAPI, getApertamentosAPI, insertApertamentoAPI, showApertamentoAPI } from "../api/ApertamentosAPI"
+import { deleteApertamentoAPI, getApertamentosAPI, insertApertamentoAPI, showApertamentoAPI, updateApertamentoAPI } from "../api/ApertamentosAPI"
 
 //Função que obtem todas as regras
 export async function getApertamentos() {
@@ -142,37 +142,37 @@ export async function showApertamento(id) {
 
 }
 
-// //Função que atualiza a regra
-// export async function updateRegra(id, nome, descricao) {
+//Função que atualiza o apertamento
+export async function updateApertamento(id, bloco, numero, descricao) {
     
-//     //Tendanto executar a requisição
-//     try{
+    //Tendanto executar a requisição
+    try{
 
-//         //Chamando a função que realiza a requisição no API
-//         let response = await updateRegraAPI(nome, descricao, id)
+        //Chamando a função que realiza a requisição no API
+        let response = await updateApertamentoAPI(id, bloco, numero, descricao)
 
-//         //Convertendo o JSON para objetos no JS
-//         let json = await response.json()
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
 
-//         //Desestrutura o promisse
-//         const { message, status, data} = json
+        //Desestrutura o promisse
+        const { message, status, data} = json
 
-//         //Verifica se houve algum erro na requisição
-//         if(status != 200){
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
 
-//             //Para a execução do try e lança um erro para o catch
-//             throw("Erro na requisição " + status)
-//         }
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
 
-//         //Retornando a menssagem
-//         return message
-//     }
-//     //Casso aconteça algum erro na requisição, cai nesse bloco
-//     catch(erro){
+        //Retornando a menssagem
+        return message
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
 
-//         //Exibe um alerta na tela
-//         console.error("Erro ao buscar o porteiro na API:", erro)
+        //Exibe um alerta na tela
+        console.error("Erro ao atualizar o apertamento na API:", erro)
 
-//     }
+    }
 
-// }
+}

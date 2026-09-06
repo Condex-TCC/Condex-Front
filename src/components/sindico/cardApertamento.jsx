@@ -60,7 +60,7 @@ export function ApertamentoCard( {apertamento, renderiza} ) {
 
       <div className={styles.content}>
         <p className={styles.description}>
-          {apertamento.descricao}
+          {apertamento.descricao == null ? "Sem descrição" : apertamento.descricao}
         </p>
       </div>
     </div>

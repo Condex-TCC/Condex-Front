@@ -2,7 +2,8 @@ import React, { use, useEffect, useState } from 'react';
 import styles from '../../css/paginaCadastraRegra.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { insertRegraAPI } from '../../api/RegrasAPI';
-import { insertApertamentos, showApertamento } from '../../service/Apartamentos';
+import { insertApertamentos, showApertamento, updateApertamento } from '../../service/Apartamentos';
+import { updateLaudo } from '../../service/Laudos';
 
 export default function PaginaAtualizaApertamento() {
 
@@ -68,24 +69,21 @@ export default function PaginaAtualizaApertamento() {
   
     }, [id]);
   
-//     //Função que realiza o updadte da regra
-//     const atualizaRegra = async () => {
+    //Função que realiza o updadte da regra
+    const atualizaApertamento = async () => {
     
-//       //Chama a API
-//       let message = await updateRegra(id, nome, descricao)
+      //Chama a API
+      let message = await updateApertamento(id, bloco, numero, descricao)
     
-//       //Exibe a menssagem ao usuário
-//       alert(message)
-    
-//       //Chama a tela de menssagem
-//       navigate('/sindico/mensagem', {
-//         //Realiza a passagem de valores para a página
-//         state: {
-//           menssagem: message ,
-//           redirecionamento: '/sindico/condominio/regrasLaudos'
-//         }
-//       });
-//     }
+      //Chama a tela de menssagem
+      navigate('/sindico/mensagem', {
+        //Realiza a passagem de valores para a página
+        state: {
+          menssagem: message ,
+          redirecionamento: '/sindico/condominio/regrasLaudos'
+        }
+      });
+    }
 
   return (
     <div className={styles.container}>
@@ -99,7 +97,7 @@ export default function PaginaAtualizaApertamento() {
 
       </header>
 
-      <form className={styles.form} onSubmit={(e) => { e.preventDefault();}}>
+      <form className={styles.form} onSubmit={(e) => { e.preventDefault(); atualizaApertamento();}}>
         <input 
           type="text" 
           placeholder="Bloco" 
@@ -125,7 +123,7 @@ export default function PaginaAtualizaApertamento() {
         
         <div className={styles.submitContainer}>
           <button type="submit" className={styles.submitButton}>
-            Adicionar
+            Atualizar
           </button>
         </div>
       </form>
