@@ -1,6 +1,6 @@
 //Arquivo responsavel por solicitar a requisição e trata-la
 
-import { deleteApertamentoAPI, getApertamentosAPI, insertApertamentoAPI } from "../api/ApertamentosAPI"
+import { deleteApertamentoAPI, getApertamentosAPI, insertApertamentoAPI, showApertamentoAPI } from "../api/ApertamentosAPI"
 
 //Função que obtem todas as regras
 export async function getApertamentos() {
@@ -107,40 +107,40 @@ export async function insertApertamentos(bloco, numero, descricao) {
 
 }
 
-// //Função que que recupera apenas uma regra
-// export async function showRegra(id) {
+//Função que que recupera apenas um apertamento
+export async function showApertamento(id) {
     
-//     //Tendanto executar a requisição
-//     try{
+    //Tendanto executar a requisição
+    try{
 
-//         //Chamando a função que realiza a requisição no API
-//         let response = await showRegraAPI(id)
+        //Chamando a função que realiza a requisição no API
+        let response = await showApertamentoAPI(id)
 
-//         //Convertendo o JSON para objetos no JS
-//         let json = await response.json()
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
 
-//         //Desestrutura o promisse
-//         const { message, status, data} = json
+        //Desestrutura o promisse
+        const { message, status, data} = json
 
-//         //Verifica se houve algum erro na requisição
-//         if(status != 200){
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
 
-//             //Para a execução do try e lança um erro para o catch
-//             throw("Erro na requisição " + status)
-//         }
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
 
-//         //Retornando a menssagem
-//         return data
-//     }
-//     //Casso aconteça algum erro na requisição, cai nesse bloco
-//     catch(erro){
+        //Retornando a menssagem
+        return data
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
 
-//         //Exibe um alerta na tela
-//         console.error("Erro ao buscar o porteiro na API:", erro)
+        //Exibe um alerta na tela
+        console.error("Erro ao buscar o apertamento na API:", erro)
 
-//     }
+    }
 
-// }
+}
 
 // //Função que atualiza a regra
 // export async function updateRegra(id, nome, descricao) {

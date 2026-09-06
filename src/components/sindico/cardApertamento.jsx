@@ -24,8 +24,8 @@ export function ApertamentoCard( {apertamento, renderiza} ) {
   //Função que atualiza a regra
   const atualizaRegra = async () => {
 
-    // //Realiza a navegação para a tela de updade de regra
-    // navigate("/sindico/condominio/regras/update/" + regra.id)
+    //Realiza a navegação para a tela de updade de regra
+    navigate("/sindico/condominio/apertamentos/update/" + apertamento.id)
   }
 
 
