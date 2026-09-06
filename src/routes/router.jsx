@@ -119,13 +119,11 @@ const route = createBrowserRouter([
                         element: <PaginaCadastraLaudos></PaginaCadastraLaudos>
                     },
 
-                     //Tela para atualizar os laudos
+                    //Tela para atualizar os laudos
                     {
                         path: "condominio/laudos/update/:id", //Caminho que vai ser acessado na URL
                         element: <PaginaAtualizaLaudos></PaginaAtualizaLaudos>
                     },
-
-
 
                     
                 ]
