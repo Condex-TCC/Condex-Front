@@ -7,6 +7,8 @@ import { LaudoCard } from "../../components/sindico/cardLaudoSincico"
 import { obtendoRegras } from "../../service/Regra"
 import { useNavigate } from "react-router-dom"
 import { obtendoLaudo } from "../../service/Laudos"
+import { getApertamentos } from "../../service/Apartamentos"
+import { ApertamentoCard } from "../../components/sindico/cardApertamento"
 
 //Função que cria o componente
 function PaginaExibeRegrasLaudos() {
@@ -79,7 +81,11 @@ function PaginaExibeRegrasLaudos() {
     //Função que chama a função para obter os apertamentos
     const exibeApertamentos = async () => {
 
-      alert("Exibe os apertamentos!")
+      //Chama a função de regras e obtem os dados
+      let apertamento = await getApertamentos()
+
+      //Altera o estado da variável e recarrega a página
+      setCards(apertamento[0])
     }
 
     //Use effect que irá ser chamado sempre que o estado for alterado
@@ -125,18 +131,19 @@ function PaginaExibeRegrasLaudos() {
       // navigate("/sindico/condominio/laudos/create")
       alert("Cadastra apertamentos")
     }
-
+    
+    //Função responsavel por lidar e verificar qual deve ser a tela de cadastro
     const henbleCadastro = () => {
       //Verifica qual ação é para realizar a ação
       if(acao === 'regras'){
 
-        cadastraRegra()
+        cadastraRegra() //Função de cadastro de regra
       }else if(acao === 'laudos'){
 
-        cadastraLaudos()
+        cadastraLaudos() //Função de cadastro de laudos
       }else{
                   
-        cadastraApartamentos()
+        cadastraApartamentos() //Função de cadastro de apertamentos
       }
     }
 
@@ -179,10 +186,17 @@ function PaginaExibeRegrasLaudos() {
 
                   //Retorna o card das regras
                   return <RegraCard key={elemento.id} regra={elemento} renderiza={setCards} />
-                } else {
+
+                } else if (acao === "laudos"){
 
                   //Retorna os cards dos laudso
                   return <LaudoCard key={elemento.id} laudo={elemento} renderiza={setCards}/>
+
+                }else{
+
+                  //Retorna o card de apartamentos
+                  return <ApertamentoCard key={elemento.id} apertamento={elemento} renderiza={setCards}/>
+                  
                 }
                 
               })
