@@ -25,6 +25,7 @@ import PaginaCadastraRegra from '../pages/sindico/telaCadastraRegras';
 import PaginaAtualizaRegra from '../pages/sindico/telaAtualizaRegras';
 import PaginaCadastraLaudos from '../pages/sindico/telaCadastraLaudo';
 import PaginaAtualizaLaudos from '../pages/sindico/telaAtualizaLaudo';
+import PaginaCadastraApertamento from '../pages/sindico/telaCadastraApertamento';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -123,6 +124,12 @@ const route = createBrowserRouter([
                     {
                         path: "condominio/laudos/update/:id", //Caminho que vai ser acessado na URL
                         element: <PaginaAtualizaLaudos></PaginaAtualizaLaudos>
+                    },
+
+                    //Tela para casdastro dos apartamentos
+                    {
+                        path: "apertamentos/laudos/create", //Caminho que vai ser acessado na URL
+                        element: <PaginaCadastraApertamento></PaginaCadastraApertamento>
                     },
 
                     

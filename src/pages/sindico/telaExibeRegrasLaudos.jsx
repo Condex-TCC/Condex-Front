@@ -128,8 +128,7 @@ function PaginaExibeRegrasLaudos() {
     const cadastraApartamentos = () => {
 
       //Realiza a mudança de tela
-      // navigate("/sindico/condominio/laudos/create")
-      alert("Cadastra apertamentos")
+      navigate("/sindico/apertamentos/laudos/create")
     }
     
     //Função responsavel por lidar e verificar qual deve ser a tela de cadastro
