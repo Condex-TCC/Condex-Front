@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../../css/cardRegrasLaudosSindico.module.css';
 import { useNavigate } from 'react-router-dom';
+import { deleteApertamento } from '../../service/Apartamentos';
 
 export function ApertamentoCard( {apertamento, renderiza} ) {
 
@@ -8,16 +9,16 @@ export function ApertamentoCard( {apertamento, renderiza} ) {
   const navigate = useNavigate();
 
   //Função que deleta o card
-  const deleteRegra =  async() => {
+  const deletandoApertamento =  async() => {
 
-    // //Chama a função que deleta a regra
-    // let message = await deleteRegras(regra.id)
+    //Chama a função que deleta o apertamento
+    let message = await deleteApertamento(apertamento.id)
 
-    // //Exibe a menssagem no front
-    // alert(message)
+    //Exibe a menssagem no front
+    alert(message)
 
-    // //Chama o setCards para renderizar novamente a tela
-    // renderiza((regrasAtuais) => regrasAtuais.filter((item) => item.id !== regra.id));
+    //Chama o setCards para renderizar novamente a tela
+    renderiza((regrasAtuais) => regrasAtuais.filter((item) => item.id !== apertamento.id));
   }
 
   //Função que atualiza a regra
@@ -46,7 +47,7 @@ export function ApertamentoCard( {apertamento, renderiza} ) {
             </svg>
           </button>
 
-          <button className={`${styles.iconButton} ${styles.deleteBtn}`} aria-label="Excluir" onClick={deleteRegra}>
+          <button className={`${styles.iconButton} ${styles.deleteBtn}`} aria-label="Excluir" onClick={deletandoApertamento}>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="3 6 5 6 21 6" />
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
