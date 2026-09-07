@@ -36,7 +36,7 @@ function PaginaSelecionaApertamento(){
     const back = () => {
 
         //Realiza a navegação da página
-        navigate("/sindico/usuario")
+        navigate("/sindico/usuarios")
     }
 
     //Retorna um componente
@@ -47,6 +47,12 @@ function PaginaSelecionaApertamento(){
               {/* Barra superior contendo as abas e o botão de ação principal */}
               <div className={styles.topBar}>
                 
+                <h1 className={styles.title}>Selecione o apertamento</h1>
+
+                <button className={styles.backButton} onClick={back}>
+                          &larr; Voltar
+                </button>
+
               </div>
     
               <div>
