@@ -1,35 +1,154 @@
 //Tela responsavel por cadastrar o porteiro
 
-import styles from '../../css/paginaCadastraUsario.module.css'
+import { useNavigate, useParams } from 'react-router-dom';
+import styles from '../../css/paginaCadastraRegra.module.css';
+import { useEffect, useState } from 'react';
+import { showApertamento } from '../../service/Apartamentos';
 
 function PaginaCadastraMorador(){
 
-   return (
-    <div className={styles.container}>
-      
-      {/* Cabeçalho da página */}
-      <div className={styles.header}>
+  //Hook que realiza a navegação
+  const navigate = useNavigate()
 
-        <h2 className={styles.title}>Cadastrar um novo Morador</h2>
+  //Componente que recupera a informação da url
+  const { id } = useParams();
 
-        {/* Usando o símbolo de flecha esquerda (&larr;) para o ícone de voltar */}
-        <button className={styles.btnVoltar}>&larr; voltar</button>
-      </div>
+  //States para controlar o valor dos campos
+  const [nome, setNome] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [email, setEmail] = useState('')
+  const [telefone, setTelefone] = useState('')
+  const [senha, setSenha] = useState('')
 
-      {/* Corpo do formulário contendo as duas colunas */}
-      <div className={styles.formContainer}>
+  //States para controlar os campos do condomio selecionado
+  const [bloco, setBloco] = useState('')
+  const [numero, setNumero] = useState('')
+  const [descricao, setDescricao] = useState('')
+
+  //Função responsavel por voltar para a tela que exibe os laudos
+  const back = () => {
+
+    //Navega para a tela que exibe os laudos
+    navigate("/sindico/usuarios/morador/apertamento")
+  }
+
+  //Funções de toogle para alterar o esdado das variáveis 
+  const nomeState = (evento) => {
+
+    //Troca o estado
+    setNome(evento.target.value)
+  }
+  const cpfState = (evento) => {
+
+    //Troca o estado
+    setCpf(evento.target.value)
+  }
+  const emailState = (evento) => {
+
+    //Troca o estado
+    setEmail(evento.target.value)
+  }
+   const telefoneState = (evento) => {
+
+    //Troca o estado
+    setTelefone(evento.target.value)
+  }
+   const senhaState = (evento) => {
+
+    //Troca o estado
+    setSenha(evento.target.value)
+  }
+
+  //Função que carrega os dados da API
+  const obtendoApertamento = async () => {
+    
+    //Chama a função que trata a API
+    let dados = await showApertamento(id)
         
-      </div>
+    //Desestruturando os dados vindos da API
+    const { bloco, numero, descricao } = await dados[0]
+        
+    //Atualizando os estados com os dados vindos do banco de dados
+    setBloco(bloco)
+    setNumero(numero)
+    setDescricao(descricao)
+  }
 
-      {/* Rodapé com o botão principal de envio */}
-      <div className={styles.footer}>
-        <button className={styles.btnCadastrar}>
-          Cadastrar Porteiro
-        </button>
-      </div>
+  //Sempre que a página for carreger irá adicionar os dados nos campos
+  useEffect(() => {
+            
+    //Chamando a função que carrega os dados do apartamento
+    obtendoApertamento()
+    
+  }, [id]);
+    
 
-    </div>
-  );
+   return (
+       <div className={styles.container}>
+   
+         <header className={styles.header}>
+           <h1 className={styles.title}>Cadastrar novo morador</h1>
+   
+           <button className={styles.backButton} onClick={back}>
+             &larr; Voltar
+           </button>
+   
+         </header>
+   
+         <form className={styles.form} onSubmit={(e) => { e.preventDefault(); cadastraRegra(); }}>
+           <input 
+             type="text" 
+             placeholder="Nome" 
+             className={styles.inputTitle} 
+             value={nome}
+             onChange={nomeState}
+           />
+   
+           <input 
+             type="text" 
+             placeholder="CPF" 
+             className={styles.inputTitle}
+             value={cpf}
+             onChange={cpfState}
+           />
+
+           <input 
+             type="text" 
+             placeholder="E-mail" 
+             className={styles.inputTitle}
+             value={email}
+             onChange={emailState}
+           />
+
+           <input 
+             type="text" 
+             placeholder="Telefone" 
+             className={styles.inputTitle}
+             value={telefone}
+             onChange={setTelefone}
+           />
+
+           <input 
+             type="text" 
+             placeholder="Senha" 
+             className={styles.inputTitle}
+             value={senha}
+             onChange={senhaState}
+           />
+
+           {/* Dados do condominio */}
+           <h3>Apertamento</h3>
+           <p>{bloco} - N° {numero}</p>
+           <p>{descricao === null ? "Não há descrição" : descricao}</p>
+           
+           <div className={styles.submitContainer}>
+             <button type="submit" className={styles.submitButton}>
+               Adicionar
+             </button>
+           </div>
+         </form>
+       </div>
+     );
 }
 
 export default PaginaCadastraMorador
