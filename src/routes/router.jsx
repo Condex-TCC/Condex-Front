@@ -28,6 +28,8 @@ import PaginaAtualizaLaudos from '../pages/sindico/telaAtualizaLaudo';
 import PaginaCadastraApertamento from '../pages/sindico/telaCadastraApertamento';
 import PaginaAtualizaApertamento from '../pages/sindico/telaAtualizaApertamento';
 import PaginaSelecionaApertamento from '../pages/sindico/telaSelecionaApartamento';
+import PaginaAtualizaMorador from '../pages/sindico/telaAtualizaMorador';
+import PaginaSelecionaApertamentoUpdate from '../pages/sindico/telaSelecionaApartamentoUpdate';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -91,10 +93,22 @@ const route = createBrowserRouter([
                         element: <PaginaCadastraMorador></PaginaCadastraMorador>, 
                     },
 
+                    //Tela para para cadastrar os moradoes
+                    {
+                        path: "usuarios/morador/updade/:id", // Caminho que vai ser acessado na URL
+                        element: <PaginaAtualizaMorador></PaginaAtualizaMorador>, 
+                    },
+
                     //Tela de sucesso no cadastro
                     {
                         path: "mensagem", // Caminho que vai ser acessado na URL
                         element: <PaginaMenssagem></PaginaMenssagem>, 
+                    },
+
+                    //Tela para selecionar o apartento para atualizar 
+                    {
+                        path: "usuarios/morador/apertamento/update", // Caminho que vai ser acessado na URL
+                        element: <PaginaSelecionaApertamentoUpdate></PaginaSelecionaApertamentoUpdate>, 
                     },
 
                     //Tela de updadte do porteiro
