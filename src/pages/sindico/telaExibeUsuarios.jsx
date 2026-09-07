@@ -53,8 +53,8 @@ function PaginaExibeUsuarios(){
         //Verifical qual a tipo de usuário está selecionado
         if(tipoUsuario === 'morador'){
 
-          //Redireciona para a página de cadastro de morador
-          navigate('morador')
+          //Redireciona para a página para poder selecionar o apertamento
+          navigate("morador/apertamento")
 
         }else{
 
