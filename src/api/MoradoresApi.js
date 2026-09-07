@@ -89,3 +89,45 @@ export async function vefifyMoradorAPI(id){
     //Retornado uma promise com os dados da API
     return requisicao
 }
+
+//Função que que salva no banco de dados o novo morador
+export async function insertMoradorAPI(nome, cpf, email, telefone, senha, id_unidade){
+
+    //Receperando o token de outorização
+    let cookie = await GetCookie()
+    let token = cookie.token
+
+    //Endpoint
+    let endPoint = "http://127.0.0.1:8000/api/sindico/morador/create"
+
+    //Objeto com os elementos
+    let novaRegra = {
+        nome: nome,
+        cpf: cpf,
+        email: email,
+        telefone: telefone,
+        password: senha,
+        id_unidade: id_unidade,
+    }
+
+    //Criando a requisição
+    const requisicao = fetch(
+        endPoint, //Passando o endPoint para a requisição
+        {
+            method: "POST", //Passando qual é o metodo HTTP
+
+            //Passando os headers
+            headers: {
+                'Content-Type': 'application/json', //Tipo de formatação
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
+                "Authorization": `Bearer ${token}` //Eniva o token de autorização
+            },
+
+            //Passando o corpo da requisição
+            body: JSON.stringify(novaRegra) //Convertendo o objeto em Json
+        }
+    )
+
+    //Retornado uma promise com os dados da API
+    return requisicao
+}

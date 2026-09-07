@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from '../../css/paginaCadastraRegra.module.css';
 import { useEffect, useState } from 'react';
 import { showApertamento } from '../../service/Apartamentos';
+import { insertMorador } from '../../service/CrudUsuarios';
 
 function PaginaCadastraMorador(){
 
@@ -81,6 +82,21 @@ function PaginaCadastraMorador(){
     obtendoApertamento()
     
   }, [id]);
+
+  //Função responsavel por castrar o morador
+  const cadastraMorador = async () => {
+
+    //Chama a função responsavel cadastrar o morador
+    const message = await insertMorador(nome, cpf, email, telefone, senha, id)
+
+    //Realiza a mudança de tela para a tela de menssagem
+    navigate("/sindico/mensagem", {
+      state: {
+        menssagem: message,
+        redirecionamento: "/sindico/usuarios"
+      }
+    })
+  }
     
 
    return (
@@ -95,7 +111,7 @@ function PaginaCadastraMorador(){
    
          </header>
    
-         <form className={styles.form} onSubmit={(e) => { e.preventDefault(); cadastraRegra(); }}>
+         <form className={styles.form} onSubmit={(e) => { e.preventDefault(); cadastraMorador(); }}>
            <input 
              type="text" 
              placeholder="Nome" 
@@ -125,7 +141,7 @@ function PaginaCadastraMorador(){
              placeholder="Telefone" 
              className={styles.inputTitle}
              value={telefone}
-             onChange={setTelefone}
+             onChange={telefoneState}
            />
 
            <input 
