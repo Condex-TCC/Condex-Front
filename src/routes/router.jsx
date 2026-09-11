@@ -31,6 +31,7 @@ import PaginaSelecionaApertamento from '../pages/sindico/telaSelecionaApartament
 import PaginaAtualizaMorador from '../pages/sindico/telaAtualizaMorador';
 import PaginaSelecionaApertamentoUpdate from '../pages/sindico/telaSelecionaApartamentoUpdate';
 import PaginaExibeReserva from '../pages/sindico/reservas/telaExibeReservas';
+import PaginaGerenciaReservas from '../pages/sindico/reservas/telaGerenciamentoReservas';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -165,6 +166,12 @@ const route = createBrowserRouter([
                     {
                         path: "reservas",
                         element: <PaginaExibeReserva></PaginaExibeReserva>
+                    },
+
+                    //Tela para o gerenciamento das reservas
+                    {
+                        path: "reservas/gerenciamento",
+                        element: <PaginaGerenciaReservas></PaginaGerenciaReservas>
                     }
 
                     

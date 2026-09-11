@@ -1,12 +1,25 @@
 // Reservas.jsx
+import { useNavigate } from 'react-router-dom';
 import styles from '../../../css/PaginaExibeReserva.module.css';
 
 export default function PaginaExibeReserva() {
+
+    //Hook para navegação
+    const navigate = useNavigate()
+
+    //Função que realiza o redirecionamento
+    const redirecionaGerencia = () => {
+
+        navigate("gerenciamento")
+    }
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <h1 className={styles.title}>Reservas de áreas comuns</h1>
-        <button className={styles.configButton}>configurar áreas</button>
+
+        {/* Botão que redireciona para outra tela */}
+        <button className={styles.configButton} onClick={redirecionaGerencia}>configurar áreas</button>
       </header>
 
       <main className={styles.content}>
