@@ -30,6 +30,7 @@ import PaginaAtualizaApertamento from '../pages/sindico/telaAtualizaApertamento'
 import PaginaSelecionaApertamento from '../pages/sindico/telaSelecionaApartamento';
 import PaginaAtualizaMorador from '../pages/sindico/telaAtualizaMorador';
 import PaginaSelecionaApertamentoUpdate from '../pages/sindico/telaSelecionaApartamentoUpdate';
+import PaginaExibeReserva from '../pages/sindico/reservas/telaExibeReservas';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -159,6 +160,12 @@ const route = createBrowserRouter([
                         path: "condominio/apertamentos/update/:id", //Caminho que vai ser acessado na URL
                         element: <PaginaAtualizaApertamento></PaginaAtualizaApertamento>
                     },
+
+                    //Tela inicial das reservas
+                    {
+                        path: "reservas",
+                        element: <PaginaExibeReserva></PaginaExibeReserva>
+                    }
 
                     
                 ]
