@@ -68,8 +68,14 @@ export default function PaginaAtualizaRegra() {
     //Exibe a menssagem ao usuário
     alert(message)
   
-    //Redireciona o usuário para a tela de usuários
-    back()
+    //Chama a tela de menssagem
+    navigate('/sindico/mensagem', {
+      //Realiza a passagem de valores para a página
+      state: {
+        menssagem: message ,
+        redirecionamento: '/sindico/condominio/regrasLaudos'
+      }
+    });
   }
 
   return (

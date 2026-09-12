@@ -1,9 +1,9 @@
-import React, { use, useState } from 'react';
-import styles from '../../css/paginaCadastraRegra.module.css';
+import React, { useState } from 'react';
+import styles from '../../../css/paginaCadastraRegra.module.css';
 import { useNavigate } from 'react-router-dom';
-import { insertRegraAPI } from '../../api/RegrasAPI';
+import { insertAreaComun } from '../../../service/AreaComum';
 
-export default function PaginaCadastraRegra() {
+export default function PaginaCadastraArea() {
 
   //Hook que realiza a navegação
   const navigate = useNavigate()
@@ -11,6 +11,7 @@ export default function PaginaCadastraRegra() {
   //States para controlar o valor dos campos
   const [nome, setNome] = useState("")
   const [descricao, setDescricao] = useState("")
+  const [autorizacao, setAutorizacao] = useState(false)
 
   //Função que pega o valor e altera o estado
   const nomeState = (evento) => {
@@ -30,20 +31,20 @@ export default function PaginaCadastraRegra() {
   const back = () => {
 
     //Navega para a tela que exibe os laudos
-    navigate("/sindico/condominio/regrasLaudos")
+    navigate("/sindico/reservas/gerenciamento")
   }
 
   const cadastraRegra = async () => {
     
     //Chama a função que cadastra as regras
-    let message = await insertRegraAPI(nome, descricao)
+    let message = await insertAreaComun(nome, descricao, autorizacao)
 
     //Chama a tela de menssagem
     navigate('/sindico/mensagem', {
       //Realiza a passagem de valores para a página
       state: {
-        menssagem: "Regra Criada com sucesso!" ,
-        redirecionamento: '/sindico/condominio/regrasLaudos'
+        menssagem: message ,
+        redirecionamento: '/sindico/reservas/gerenciamento'
       }
     });
   }
@@ -52,7 +53,7 @@ export default function PaginaCadastraRegra() {
     <div className={styles.container}>
 
       <header className={styles.header}>
-        <h1 className={styles.title}>Adicionar nova regra</h1>
+        <h1 className={styles.title}>Adicionar nova Área Comum</h1>
 
         <button className={styles.backButton} onClick={back}>
           &larr; Voltar
@@ -63,18 +64,46 @@ export default function PaginaCadastraRegra() {
       <form className={styles.form} onSubmit={(e) => { e.preventDefault(); cadastraRegra(); }}>
         <input 
           type="text" 
-          placeholder="Titulo.." 
+          placeholder="Nome do local.." 
           className={styles.inputTitle}
           value={nome}
           onChange={nomeState} 
         />
         
         <textarea 
-          placeholder="Descrição..." 
+          placeholder="Descrição do local..." 
           className={styles.inputDescription}
           value={descricao}
           onChange={descricaoState}
         />
+
+        {/* Início dos Radio Buttons */}
+        <div className={styles.radioGroup}>
+          <span className={styles.radioTitle}>Requer autorização?</span>
+          
+          <label className={styles.radioLabel}>
+            <input 
+              type="radio" 
+              name="autorizacao"
+              className={styles.radioInput}
+              checked={autorizacao === true}
+              onChange={() => setAutorizacao(true)}
+            />
+            Sim
+          </label>
+          
+          <label className={styles.radioLabel}>
+            <input 
+              type="radio" 
+              name="autorizacao"
+              className={styles.radioInput}
+              checked={autorizacao === false}
+              onChange={() => setAutorizacao(false)}
+            />
+            Não
+          </label>
+        </div>
+        {/* Fim dos Radio Buttons */}
         
         <div className={styles.submitContainer}>
           <button type="submit" className={styles.submitButton}>

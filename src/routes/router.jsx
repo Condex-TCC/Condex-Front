@@ -21,7 +21,7 @@ import PaginainicialPorteiro from '../pages/porteiro/telaInicialPorteiro';
 import PaginaExibeUsuarios from '../pages/sindico/telaExibeUsuarios';
 import PaginaCadastraPorteiro from '../pages/sindico/telaCadastraPorteiro';
 import PaginaCadastraMorador from '../pages/sindico/telaCadastraMorador';
-import SucessoCadastro from '../pages/sindico/telaUsuarioCadastradoSucesso';
+import PaginaMenssagem from '../pages/sindico/telaMenssagem';
 import PaginaAtualizaPorteiro from '../pages/sindico/telaAtualizaPorteiro';
 import PaginaExibeRegrasLaudos from '../pages/sindico/telaExibeRegrasLaudos';
 import PaginaCadastraRegra from '../pages/sindico/telaCadastraRegras';
@@ -29,6 +29,18 @@ import PaginaAtualizaRegra from '../pages/sindico/telaAtualizaRegras';
 import PaginaCadastraVisitante from '../pages/porteiro/RegistroVisitante';
 import PaginaCadastraEncomenda from '../pages/porteiro/CadastrarEncomenda';
 import PaginaRetiradaEncomenda from '../pages/porteiro/RetiradaEncomenda';
+import PaginaCadastraLaudos from '../pages/sindico/telaCadastraLaudo';
+import PaginaAtualizaLaudos from '../pages/sindico/telaAtualizaLaudo';
+import PaginaCadastraApertamento from '../pages/sindico/telaCadastraApertamento';
+import PaginaAtualizaApertamento from '../pages/sindico/telaAtualizaApertamento';
+import PaginaSelecionaApertamento from '../pages/sindico/telaSelecionaApartamento';
+import PaginaAtualizaMorador from '../pages/sindico/telaAtualizaMorador';
+import PaginaSelecionaApertamentoUpdate from '../pages/sindico/telaSelecionaApartamentoUpdate';
+import PaginaExibeReserva from '../pages/sindico/reservas/telaExibeReservas';
+import PaginaGerenciaReservas from '../pages/sindico/reservas/telaGerenciamentoReservas';
+import PaginaCadastraArea from '../pages/sindico/reservas/telaCadastraArea';
+import PaginaAtualizaArea from '../pages/sindico/reservas/telaAtualizaArea';
+import PaginaAutorizaRerva from '../pages/sindico/reservas/telaAutorizaReserva';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -80,16 +92,34 @@ const route = createBrowserRouter([
                         element: <PaginaCadastraPorteiro />,
                     },
 
-                    //Tela para cadastrar os moradores
+                    //Tela para selecionar o apartento
                     {
-                        path: "usuarios/morador", // Caminho que vai ser acessado na URL
-                        element: <PaginaCadastraMorador></PaginaCadastraMorador>,
+                        path: "usuarios/morador/apertamento", // Caminho que vai ser acessado na URL
+                        element: <PaginaSelecionaApertamento></PaginaSelecionaApertamento>, 
+                    },
+
+                    //Tela para para cadastrar os moradoes
+                    {
+                        path: "usuarios/morador/create/:id", // Caminho que vai ser acessado na URL
+                        element: <PaginaCadastraMorador></PaginaCadastraMorador>, 
+                    },
+
+                    //Tela para para cadastrar os moradoes
+                    {
+                        path: "usuarios/morador/updade/:id", // Caminho que vai ser acessado na URL
+                        element: <PaginaAtualizaMorador></PaginaAtualizaMorador>, 
                     },
 
                     //Tela de sucesso no cadastro
                     {
-                        path: "usuarios/sucesso", // Caminho que vai ser acessado na URL
-                        element: <SucessoCadastro></SucessoCadastro>,
+                        path: "mensagem", // Caminho que vai ser acessado na URL
+                        element: <PaginaMenssagem></PaginaMenssagem>, 
+                    },
+
+                    //Tela para selecionar o apartento para atualizar 
+                    {
+                        path: "usuarios/morador/apertamento/update", // Caminho que vai ser acessado na URL
+                        element: <PaginaSelecionaApertamentoUpdate></PaginaSelecionaApertamentoUpdate>, 
                     },
 
                     //Tela de updadte do porteiro
@@ -116,6 +146,62 @@ const route = createBrowserRouter([
                         path: "condominio/regras/update/:id", //Caminho que vai ser acessado na URL
                         element: <PaginaAtualizaRegra></PaginaAtualizaRegra>
                     },
+
+                    //Tela para cadastro dos laudos
+                    {
+                        path: "condominio/laudos/create", //Caminho que vai ser acessado na URL
+                        element: <PaginaCadastraLaudos></PaginaCadastraLaudos>
+                    },
+
+                    //Tela para atualizar os laudos
+                    {
+                        path: "condominio/laudos/update/:id", //Caminho que vai ser acessado na URL
+                        element: <PaginaAtualizaLaudos></PaginaAtualizaLaudos>
+                    },
+
+                    //Tela para casdastro dos apartamentos
+                    {
+                        path: "apertamentos/laudos/create", //Caminho que vai ser acessado na URL
+                        element: <PaginaCadastraApertamento></PaginaCadastraApertamento>
+                    },
+
+                    //Tela para atualizar os apartamentos
+                    {
+                        path: "condominio/apertamentos/update/:id", //Caminho que vai ser acessado na URL
+                        element: <PaginaAtualizaApertamento></PaginaAtualizaApertamento>
+                    },
+
+                    //Tela inicial das reservas
+                    {
+                        path: "reservas",
+                        element: <PaginaExibeReserva></PaginaExibeReserva>
+                    },
+
+                    //Tela para o gerenciamento das reservas
+                    {
+                        path: "reservas/gerenciamento",
+                        element: <PaginaGerenciaReservas></PaginaGerenciaReservas>
+                    },
+
+                    //Tela para o cadastro das areas
+                    {
+                        path: "reservas/gerenciamento/area/cadastro",
+                        element: <PaginaCadastraArea></PaginaCadastraArea>
+                    },
+
+                    //Tela para atualizar as areas comuns
+                    {
+                        path: "reservas/gerenciamento/area/update/:id",
+                        element: <PaginaAtualizaArea></PaginaAtualizaArea>
+                    },
+
+                    //Tela para visualizar uma unica reserva para a provação
+                    {   
+                        path: "reservas/gerenciamento/autorizacao/:id",
+                        element: <PaginaAutorizaRerva></PaginaAutorizaRerva>
+                    },
+
+                    
                 ]
             },
 

@@ -2,21 +2,30 @@ import React, { use, useState } from 'react';
 import styles from '../../css/paginaCadastraRegra.module.css';
 import { useNavigate } from 'react-router-dom';
 import { insertRegraAPI } from '../../api/RegrasAPI';
+import { insertApertamentos } from '../../service/Apartamentos';
 
-export default function PaginaCadastraRegra() {
+export default function PaginaCadastraApertamento() {
 
   //Hook que realiza a navegação
   const navigate = useNavigate()
 
   //States para controlar o valor dos campos
-  const [nome, setNome] = useState("")
+  const [bloco, setBloco] = useState("")
+  const [numero, setNumero] = useState("")
   const [descricao, setDescricao] = useState("")
 
   //Função que pega o valor e altera o estado
-  const nomeState = (evento) => {
+  const blocoState = (evento) => {
 
     //Troca o estado
-    setNome(evento.target.value)
+    setBloco(evento.target.value)
+  }
+
+  //Função que pega o valor e altera o estado
+  const numeroState = (evento) => {
+
+    //Troca o estado
+    setNumero(evento.target.value)
   }
 
   //Função que pega o valor e altera o estado
@@ -35,14 +44,14 @@ export default function PaginaCadastraRegra() {
 
   const cadastraRegra = async () => {
     
-    //Chama a função que cadastra as regras
-    let message = await insertRegraAPI(nome, descricao)
+    //Chama a função que cadastra os apertamentos
+    let message = await insertApertamentos(bloco, numero, descricao)
 
     //Chama a tela de menssagem
     navigate('/sindico/mensagem', {
       //Realiza a passagem de valores para a página
       state: {
-        menssagem: "Regra Criada com sucesso!" ,
+        menssagem: message,
         redirecionamento: '/sindico/condominio/regrasLaudos'
       }
     });
@@ -52,7 +61,7 @@ export default function PaginaCadastraRegra() {
     <div className={styles.container}>
 
       <header className={styles.header}>
-        <h1 className={styles.title}>Adicionar nova regra</h1>
+        <h1 className={styles.title}>Adicionar novo apertamento</h1>
 
         <button className={styles.backButton} onClick={back}>
           &larr; Voltar
@@ -63,10 +72,18 @@ export default function PaginaCadastraRegra() {
       <form className={styles.form} onSubmit={(e) => { e.preventDefault(); cadastraRegra(); }}>
         <input 
           type="text" 
-          placeholder="Titulo.." 
+          placeholder="Bloco" 
           className={styles.inputTitle}
-          value={nome}
-          onChange={nomeState} 
+          value={bloco}
+          onChange={blocoState} 
+        />
+
+        <input 
+          type="text" 
+          placeholder="Número" 
+          className={styles.inputTitle}
+          value={numero}
+          onChange={numeroState} 
         />
         
         <textarea 

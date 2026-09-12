@@ -99,3 +99,74 @@
 .submitButton:hover {
   opacity: 0.9;
 }
+
+/* ======== NOVAS CLASSES ADICIONADAS PARA OS RADIO BUTTONS ======== */
+
+.radioGroup {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 600px;
+}
+
+.radioTitle {
+  font-weight: 500;
+  color: #333;
+  font-size: 1rem;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.radioInput {
+  cursor: pointer;
+  accent-color: #0088ff; /* Deixa o radio com a cor principal do tema, dependendo do browser */
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+
+/* ======== NOVAS CLASSES PARA OS BOTÕES DE APROVAR/RECUSAR ======== */
+
+.actionsContainer {
+  display: flex;
+  gap: 3rem; /* Aumentei o espaçamento entre os botões */
+  justify-content: center; /* Centraliza os botões horizontalmente no formulário */
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.buttonAprovar, .buttonRecusar {
+  color: white;
+  border: none;
+  border-radius: 8px;
+  /* Aumentei o padding vertical e horizontal para deixar os botões maiores */
+  padding: 1rem 4rem; 
+  font-size: 1.25rem; /* Aumentei o tamanho da fonte */
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  min-width: 200px; /* Garante que os botões fiquem com um tamanho robusto e simétrico */
+}
+
+.buttonAprovar {
+  background-color: #7ab973;
+}
+
+.buttonAprovar:hover {
+  opacity: 0.85;
+}
+
+.buttonRecusar {
+  background-color: #d14649;
+}
+
+.buttonRecusar:hover {
+  opacity: 0.85;
+}

@@ -6,6 +6,9 @@ import { RegraCard } from "../../components/sindico/cardRegraSindico"
 import { LaudoCard } from "../../components/sindico/cardLaudoSincico"
 import { obtendoRegras } from "../../service/Regra"
 import { useNavigate } from "react-router-dom"
+import { obtendoLaudo } from "../../service/Laudos"
+import { getApertamentos } from "../../service/Apartamentos"
+import { ApertamentoCard } from "../../components/sindico/cardApertamento"
 
 //Função que cria o componente
 function PaginaExibeRegrasLaudos() {
@@ -19,23 +22,39 @@ function PaginaExibeRegrasLaudos() {
     //Criando um estado para controlar os card que serão exibidos
     const [cards, setCards] = useState([])
 
+    //Criando um estado para exibir o texto do botão para cadastrar
+    const [text, setText] = useState("+ Cadastar nova Regra")
+
     //Função que troca as ações
     const trocaAcaoRegra = () => {
 
       //Troca a ação
-      if(acao === "laudos"){
+      if(acao === "laudos" || acao === 'apartamentos'){
 
         //Realiza a ação
         setAcao("regras")
+        setText("+ Cadastar nova Regra")
       }
     }
     const trocaAcaoLaudo = () => {
 
       //Troca a ação
-      if(acao === "regras"){
+      if(acao === "regras" || acao === 'apartamentos'){
 
         //Realiza a ação
         setAcao("laudos")
+        setText("+ Cadastar novo Laudo")
+      }
+    }
+
+    const trocaAcaoApartamento = () => {
+
+      //Troca a ação
+      if(acao === "regras" || acao === 'laudos'){
+
+        //Realiza a ação
+        setAcao("apartamentos")
+        setText("+ Cadastar novo Apertamento")
       }
     }
 
@@ -53,27 +72,40 @@ function PaginaExibeRegrasLaudos() {
     const exibeLaudos = async () => {
 
       //Chama a função de regras e obtem os dados
-      // let regras = await obtendoRegras()
+      let laudos = await obtendoLaudo()
 
       //Altera o estado da variável e recarrega a página
-      // setCards(regras)
-      alert("Laudos, A fazer!")
+      setCards(laudos[0])
     }
 
-    //Use effect que irá ser chamado sempre que o dado for alterado
-    useEffect(() => {
+    //Função que chama a função para obter os apertamentos
+    const exibeApertamentos = async () => {
 
+      //Chama a função de regras e obtem os dados
+      let apertamento = await getApertamentos()
+
+      //Altera o estado da variável e recarrega a página
+      setCards(apertamento[0])
+    }
+
+    //Use effect que irá ser chamado sempre que o estado for alterado
+    useEffect(() => {
+      
       //Verifica qual é o estado e chama a função correspondente
       if(acao === "regras"){
 
         //Chama a função para exibir as regras
         exibeRegras()
 
-      }else{
+      }else if(acao === "laudos"){
 
         //Chama a função para exibir os laudos
         exibeLaudos()
 
+      }else{
+
+        //Chama a função para exibir os apertamentos
+        exibeApertamentos()
       }
 
     }, [acao])
@@ -85,10 +117,33 @@ function PaginaExibeRegrasLaudos() {
       navigate("/sindico/condominio/regras/create")
     }
 
-    //Função que realiza a mudança de rota para cadastrar as regras
+    //Função que realiza a mudança de rota para cadastrar os laudos
     const cadastraLaudos = () => {
 
-      alert("Fazer depois!")
+      //Realiza a mudança de tela
+      navigate("/sindico/condominio/laudos/create")
+    }
+
+    //Função que realiza a mudança de rota para cadastrar as regras
+    const cadastraApartamentos = () => {
+
+      //Realiza a mudança de tela
+      navigate("/sindico/apertamentos/laudos/create")
+    }
+    
+    //Função responsavel por lidar e verificar qual deve ser a tela de cadastro
+    const henbleCadastro = () => {
+      //Verifica qual ação é para realizar a ação
+      if(acao === 'regras'){
+
+        cadastraRegra() //Função de cadastro de regra
+      }else if(acao === 'laudos'){
+
+        cadastraLaudos() //Função de cadastro de laudos
+      }else{
+                  
+        cadastraApartamentos() //Função de cadastro de apertamentos
+      }
     }
 
 
@@ -103,17 +158,17 @@ function PaginaExibeRegrasLaudos() {
               {/* Botões de aba (ambos não selecionados por padrão) */}
               <button className={styles.tabButton} onClick={trocaAcaoRegra}>Regras do condominio</button>
               <button className={styles.tabButton} onClick={trocaAcaoLaudo}>Laudos</button>
+              <button className={styles.tabButton} onClick={trocaAcaoApartamento}>Apartamentos</button>
             </div>
             
-            {/* Botão para criar nova regra */}
+            {/* Botão para criar novo elementos (regra, laudo ou apartamento) */}
             <button className={styles.primaryButton} 
-            onClick={
-              acao === "regras"? cadastraRegra : cadastraLaudos
-            }
+            // Adiciona uma ação ao click
+            onClick={henbleCadastro}
             >
 
-              {/* Verifica qual ação que é para exibir a menssagem */}
-              { acao === "regras" ? "+ Cadastar nova Regra": "+ Cadastrar novo Laudo"}
+              {/* Exibe o text opara o cadastro do button */}
+              {text}
 
             </button>
           </div>
@@ -130,10 +185,17 @@ function PaginaExibeRegrasLaudos() {
 
                   //Retorna o card das regras
                   return <RegraCard key={elemento.id} regra={elemento} renderiza={setCards} />
-                } else {
+
+                } else if (acao === "laudos"){
 
                   //Retorna os cards dos laudso
-                  return <LaudoCard key={elemento.id} />
+                  return <LaudoCard key={elemento.id} laudo={elemento} renderiza={setCards}/>
+
+                }else{
+
+                  //Retorna o card de apartamentos
+                  return <ApertamentoCard key={elemento.id} apertamento={elemento} renderiza={setCards}/>
+                  
                 }
                 
               })

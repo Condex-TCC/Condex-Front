@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom"
 //Função que cria o componente
 function CardMorador({morador, redenriza}){
 
+    //Cmponente que realiza a nevegação automatica
+    const navigate = useNavigate();
+
     //Estado que vai salver o Id da variável
     const [id, SetId] = useState(morador.id)
 
@@ -27,6 +30,14 @@ function CardMorador({morador, redenriza}){
 
     }
 
+    //Função responsavel por recuperar os dados do porteiro
+    const showMorador = () => {
+
+      //Realiza o redirecionamento
+      navigate("morador/updade/" + id)
+    }
+
+
     //Retorna o componenete
     return(
         <tr>
@@ -38,7 +49,8 @@ function CardMorador({morador, redenriza}){
             
             {/* Button que edita */}
             <td className={styles.tdCenter}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              onClick={showMorador}>
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
               </svg>

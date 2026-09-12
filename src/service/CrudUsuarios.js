@@ -1,6 +1,6 @@
 //Arquivo responsavel por intermediar a lógica entre a tela que de controle de usuários pelo sindico e a API
 
-import { deleteMoradores, getMoradores } from "../api/MoradoresApi"
+import { deleteMoradores, getMoradores, insertMoradorAPI, showMoradorAPI, updateMoradorAPI, vefifyMoradorAPI } from "../api/MoradoresApi"
 import { deletePorteirosAPI, getPorteiro, insertPorteiroAPI, showPorteiroAPI, updatePorteiroAPI } from "../api/PorteiroApi"
 
 
@@ -250,3 +250,114 @@ export async function atualizaPorteiro (id, nome, email, password) {
 //bateu com o que RegistroVisitante.jsx enviava, e essa API nunca existia no projeto.
 //O cadastro de visitante agora vive em "src/service/Visitante.js", junto com o
 //restante das funções de Visitante/Autorização/Encomenda do módulo do porteiro.
+//Função que verifica se o apertamendo selecionado está sem morador cadastrado
+export async function verifyMorador(id) {
+    
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await vefifyMoradorAPI(id)
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { message, status, errors, data} = json
+
+        //Retornando a menssagem
+        return {message: message, data: data}
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao buscar o porteiro na API:", erro)
+
+    }
+
+}
+
+//Função que salva o morador no banco de dados
+export async function insertMorador(nome, cpf, email, telefone, senha, id_unidade) {
+    
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await insertMoradorAPI(nome, cpf, email, telefone, senha, id_unidade)
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { message, status, errors, data} = json
+
+        //Retornando a menssagem
+        return message
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao cadastar o morador na API:", erro)
+
+    }
+
+}
+
+//Função que recupera do banco de dados apenas um morador
+export async function showMorador(id) {
+    
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await showMoradorAPI(id)
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { message, status, data} = json
+
+        //Retornando a menssagem
+        return data
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao cadastar o morador na API:", erro)
+
+    }
+
+}
+
+//Função que atualiza o morador no banco de dados
+export async function updateMorador(id, nome, cpf, email, telefone, senha, id_unidade) {
+    
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await updateMoradorAPI(id, nome, cpf, email, telefone, senha, id_unidade)
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { message, status, errors, data} = json
+
+        //Retornando a menssagem
+        return message
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao cadastar o morador na API:", erro)
+
+    }
+
+}
