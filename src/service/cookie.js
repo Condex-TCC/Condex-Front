@@ -3,6 +3,12 @@
 //Importando a biblioteca para interagir com o cookie
 import Cookies from 'js-cookie'
 
+//Em desenvolvimento local o site normalmente roda em "http://localhost" (sem HTTPS).
+//Se o cookie for marcado como "secure: true" nesse cenário, o navegador simplesmente
+//recusa salvar o cookie, e o login "funciona" na API mas o token nunca fica salvo no front.
+//Por isso o atributo "secure" só é ativado quando o site realmente está em HTTPS.
+const conexaoSegura = typeof window !== 'undefined' && window.location.protocol === 'https:'
+
 //Função responsavel por criar o cookie para salvar o token
 function SetCookie(authorizationToken, tipoUsuario){
 
@@ -13,7 +19,7 @@ function SetCookie(authorizationToken, tipoUsuario){
         //Atributos do token
         {
             expires: 7, //Define data de expiração
-            secure: true, // Só será enviado em conexões HTTPS
+            secure: conexaoSegura, // Só exige HTTPS quando o site estiver rodando em HTTPS
             sameSite: 'strict' // Protege contra ataques CSRF
         }
     )
@@ -25,7 +31,7 @@ function SetCookie(authorizationToken, tipoUsuario){
         //Atributos do token
         {
             expires: 7, //Define data de expiração
-            secure: true, // Só será enviado em conexões HTTPS
+            secure: conexaoSegura, // Só exige HTTPS quando o site estiver rodando em HTTPS
             sameSite: 'strict' // Protege contra ataques CSRF
         }
     )

@@ -66,6 +66,11 @@
   border-radius: 8px;
   padding: 20px;
   background-color: #ffffff;
+  margin-bottom: 14px;
+}
+
+.card--item:last-child {
+  margin-bottom: 0;
 }
 
 .card--top {
@@ -88,6 +93,8 @@
 .card--bottom {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 15px;
 }
 
 .text--block {
@@ -103,6 +110,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid #dfdfdf;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #ffffff;
+  margin-bottom: 14px;
+  gap: 15px;
+}
+
+.card--active:last-child {
+  margin-bottom: 0;
 }
 
 .info--group {
@@ -119,4 +136,54 @@
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn--exit:hover:not(:disabled) {
+  background-color: #203481;
+}
+
+.btn--exit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 900px) {
+
+  .dashboard--container {
+    padding: 20px;
+  }
+
+  .header--section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .tabs--group {
+    justify-content: stretch;
+  }
+
+  .tab--active,
+  .tab--inactive {
+    flex: 1;
+    padding: 10px 12px;
+  }
+
+  .card--top,
+  .card--bottom,
+  .card--active {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .btn--exit {
+    align-self: stretch;
+  }
 }

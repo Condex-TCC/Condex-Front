@@ -245,6 +245,11 @@ export async function atualizaPorteiro (id, nome, email, password) {
 
 }
 
+//OBS: a antiga função "criandoVisitante" que existia aqui foi removida.
+//Ela chamava "insertVisitanteAPI" com uma assinatura (nome, email, password) que nunca
+//bateu com o que RegistroVisitante.jsx enviava, e essa API nunca existia no projeto.
+//O cadastro de visitante agora vive em "src/service/Visitante.js", junto com o
+//restante das funções de Visitante/Autorização/Encomenda do módulo do porteiro.
 //Função que verifica se o apertamendo selecionado está sem morador cadastrado
 export async function verifyMorador(id) {
     
