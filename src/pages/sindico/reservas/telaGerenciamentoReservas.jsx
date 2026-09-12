@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "../../../css/paginaExibeRegrasLaudos.module.css"
 import { CardArea } from "../../../components/sindico/cardArea";
 import { obtendoAreasComuns } from "../../../service/AreaComum";
+import  CardReservaAutorizacao from "../../../components/sindico/cardReserva";
 
 
 export default function PaginaGerenciaReservas() {
@@ -100,8 +101,7 @@ export default function PaginaGerenciaReservas() {
   
                   }else{
   
-                    //Retorna o card de apartamentos
-                    return alert("Autorização")
+                    return <CardReservaAutorizacao></CardReservaAutorizacao>
                     
                   }
                   

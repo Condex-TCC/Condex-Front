@@ -130,3 +130,43 @@
   width: 1.1rem;
   height: 1.1rem;
 }
+
+
+/* ======== NOVAS CLASSES PARA OS BOTÕES DE APROVAR/RECUSAR ======== */
+
+.actionsContainer {
+  display: flex;
+  gap: 3rem; /* Aumentei o espaçamento entre os botões */
+  justify-content: center; /* Centraliza os botões horizontalmente no formulário */
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.buttonAprovar, .buttonRecusar {
+  color: white;
+  border: none;
+  border-radius: 8px;
+  /* Aumentei o padding vertical e horizontal para deixar os botões maiores */
+  padding: 1rem 4rem; 
+  font-size: 1.25rem; /* Aumentei o tamanho da fonte */
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  min-width: 200px; /* Garante que os botões fiquem com um tamanho robusto e simétrico */
+}
+
+.buttonAprovar {
+  background-color: #7ab973;
+}
+
+.buttonAprovar:hover {
+  opacity: 0.85;
+}
+
+.buttonRecusar {
+  background-color: #d14649;
+}
+
+.buttonRecusar:hover {
+  opacity: 0.85;
+}

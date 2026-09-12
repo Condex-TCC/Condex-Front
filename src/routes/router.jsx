@@ -34,6 +34,7 @@ import PaginaExibeReserva from '../pages/sindico/reservas/telaExibeReservas';
 import PaginaGerenciaReservas from '../pages/sindico/reservas/telaGerenciamentoReservas';
 import PaginaCadastraArea from '../pages/sindico/reservas/telaCadastraArea';
 import PaginaAtualizaArea from '../pages/sindico/reservas/telaAtualizaArea';
+import PaginaAutorizaRerva from '../pages/sindico/reservas/telaAutorizaReserva';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -186,8 +187,13 @@ const route = createBrowserRouter([
                     {
                         path: "reservas/gerenciamento/area/update/:id",
                         element: <PaginaAtualizaArea></PaginaAtualizaArea>
-                    }
+                    },
 
+                    //Tela para visualizar uma unica reserva para a provação
+                    {   
+                        path: "reservas/gerenciamento/autorizacao/:id",
+                        element: <PaginaAutorizaRerva></PaginaAutorizaRerva>
+                    },
 
                     
                 ]
