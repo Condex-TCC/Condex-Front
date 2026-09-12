@@ -99,3 +99,34 @@
 .submitButton:hover {
   opacity: 0.9;
 }
+
+/* ======== NOVAS CLASSES ADICIONADAS PARA OS RADIO BUTTONS ======== */
+
+.radioGroup {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 600px;
+}
+
+.radioTitle {
+  font-weight: 500;
+  color: #333;
+  font-size: 1rem;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.radioInput {
+  cursor: pointer;
+  accent-color: #0088ff; /* Deixa o radio com a cor principal do tema, dependendo do browser */
+  width: 1.1rem;
+  height: 1.1rem;
+}

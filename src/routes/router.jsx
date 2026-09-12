@@ -32,6 +32,7 @@ import PaginaAtualizaMorador from '../pages/sindico/telaAtualizaMorador';
 import PaginaSelecionaApertamentoUpdate from '../pages/sindico/telaSelecionaApartamentoUpdate';
 import PaginaExibeReserva from '../pages/sindico/reservas/telaExibeReservas';
 import PaginaGerenciaReservas from '../pages/sindico/reservas/telaGerenciamentoReservas';
+import PaginaCadastraArea from '../pages/sindico/reservas/telaCadastraArea';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -172,6 +173,12 @@ const route = createBrowserRouter([
                     {
                         path: "reservas/gerenciamento",
                         element: <PaginaGerenciaReservas></PaginaGerenciaReservas>
+                    },
+
+                    //Tela para o cadastro das areas
+                    {
+                        path: "reservas/gerenciamento/area/cadastro",
+                        element: <PaginaCadastraArea></PaginaCadastraArea>
                     }
 
                     

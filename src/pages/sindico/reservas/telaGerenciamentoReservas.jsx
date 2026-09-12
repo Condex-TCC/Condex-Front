@@ -55,10 +55,18 @@ export default function PaginaGerenciaReservas() {
             exibeAreas()
 
         }else {
-    
+          
+          console.log("chama os cards de reservas pendentes")
             
         }
     }, [acao])
+
+
+    //Função que redireciona para a tela de cadastro de areas comuns
+    const cadastraArea = () =>{
+
+      navigate("area/cadastro")
+    }
 
   //Retorna um componente
       return (
@@ -74,7 +82,7 @@ export default function PaginaGerenciaReservas() {
               </div>
               
               {/* Exibe esse botão apenas se for area */}
-              { acao === 'area' && <button className={styles.primaryButton}>+ Cadastrar Area comum</button>}
+              { acao === 'area' && <button className={styles.primaryButton} onClick={cadastraArea}>+ Cadastrar Area comum</button>}
             </div>
   
             <div>
