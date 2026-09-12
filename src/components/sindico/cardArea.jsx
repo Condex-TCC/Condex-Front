@@ -23,10 +23,10 @@ export function CardArea( {area, renderiza} ) {
   }
 
   //Função que atualiza a regra
-  const atualizaArea = async () => {
+  const atualizaArea = () => {
 
     //Realiza a navegação para a tela de updade de regra
-    // navigate("/sindico/condominio/regras/update/" + regra.id)
+    navigate("/sindico/reservas/gerenciamento/area/update/" + area.id)
   }
 
 

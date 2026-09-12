@@ -33,6 +33,7 @@ import PaginaSelecionaApertamentoUpdate from '../pages/sindico/telaSelecionaApar
 import PaginaExibeReserva from '../pages/sindico/reservas/telaExibeReservas';
 import PaginaGerenciaReservas from '../pages/sindico/reservas/telaGerenciamentoReservas';
 import PaginaCadastraArea from '../pages/sindico/reservas/telaCadastraArea';
+import PaginaAtualizaArea from '../pages/sindico/reservas/telaAtualizaArea';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -179,7 +180,14 @@ const route = createBrowserRouter([
                     {
                         path: "reservas/gerenciamento/area/cadastro",
                         element: <PaginaCadastraArea></PaginaCadastraArea>
+                    },
+
+                    //Tela para atualizar as areas comuns
+                    {
+                        path: "reservas/gerenciamento/area/update/:id",
+                        element: <PaginaAtualizaArea></PaginaAtualizaArea>
                     }
+
 
                     
                 ]

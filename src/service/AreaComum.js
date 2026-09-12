@@ -88,10 +88,11 @@ export async function showAreaComun(id) {
     }
 }
 
-//Função que atualiza a área comum[cite: 2]
+//Função que atualiza a área comum
 export async function updateAreaComun(id, nome, descricao, autorizacao) {
     
     try{
+        // ATENÇÃO: A ordem aqui deve corresponder à ordem definida no arquivo AreaComumApi.js (nome, descricao, autorizacao, id)
         let response = await updateAreaComunAPI(nome, descricao, autorizacao, id)
         let json = await response.json()
         const { message, status, data} = json
