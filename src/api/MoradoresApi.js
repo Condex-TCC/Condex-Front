@@ -1,62 +1,15 @@
-//Arquivo responsável por fazer a requisição para a API dos moradores
+//Arquivo responsável por fazer a requisição para a API dos moradores (visão do síndico)
 
-
-import { GetCookie } from "../service/cookie"
+import { apiFetch } from '../service/httpClient'
 
 //Função que recupera todos os moradores do banco de dados
-export async function getMoradores(){
+export function getMoradores(){
 
-    //Receperando o token de outorização
-    let cookie = await GetCookie()
-    let token = cookie.token
-
-    //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/morador/get"
-
-    //Criando a requisição
-    const requisicao = fetch(
-        endPoint, //Passando o endPoint para a requisição
-        {
-            method: "GET", //Passando qual é o metodo HTTP
-
-            //Passando os headers
-            headers: {
-                'Content-Type': 'application/json', //Tipo de formatação
-                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
-                "Authorization": `Bearer ${token}` //Eniva o token de autorização
-            },
-        }
-    )
-
-    //Retornado uma promise com os dados da API
-    return requisicao
+    return apiFetch('/sindico/morador/get', { method: 'GET' })
 }
 
+//Função que apaga um morador do banco de dados
+export function deleteMoradores(id){
 
-//Função que recupera todos os moradores do banco de dados
-export async function deleteMoradores(id){
-
-    //Receperando o token de outorização
-    let cookie = await GetCookie()
-    let token = cookie.token
-
-    //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/morador/delete/" + id
-
-    //Criando a requisição
-    const requisicao = fetch(
-        endPoint, //Passando o endPoint para a requisição
-        {
-            method: "DELETE", //Passando qual é o metodo HTTP
-
-            //Passando os headers
-            headers: {
-                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
-                "Authorization": `Bearer ${token}` //Eniva o token de autorização
-            },
-        }
-    )
-
-    //Retornado uma promise com os dados da API
-    return requisicao
+    return apiFetch(`/sindico/morador/delete/${id}`, { method: 'DELETE' })
 }

@@ -1,0 +1,366 @@
+/* CSS compartilhado pelas telas "Cadastrar encomenda" e "Retirada de encomenda".
+   Reaproveita a mesma linguagem visual usada em paginaCadastraVisitante.module.css
+   (cabeçalho, botão voltar, título, grade de formulário) para manter consistência
+   entre as telas do módulo do porteiro. */
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #d3d3d3;
+  box-sizing: border-box;
+  padding: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+.header {
+  height: 80px;
+  background-color: #14286b;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 24px;
+
+  box-sizing: border-box;
+}
+
+.logo {
+  width: 190px;
+
+  color: white;
+
+  font-size: 34px;
+  font-weight: bold;
+}
+
+.logo span {
+  color: #36a9e1;
+}
+
+.pesquisa {
+  width: 450px;
+  max-width: 40%;
+  height: 36px;
+
+  background-color: white;
+
+  border-radius: 9px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 12px;
+
+  margin-left: 20px;
+}
+
+.iconePesquisa {
+  color: #999;
+
+  font-size: 26px;
+
+  margin-right: 8px;
+}
+
+.pesquisa input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  font-size: 13px;
+
+  color: #555;
+}
+
+.usuario {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background-color: #edf4f8;
+
+  color: #111;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  font-weight: bold;
+
+  margin-left: auto;
+
+  border: 1px solid #aaa;
+}
+
+
+/* =========================
+   ÁREA PRINCIPAL
+========================= */
+
+.main {
+  position: relative;
+
+  min-height: 445px;
+
+  background-color: white;
+
+  padding: 1px 20px 40px 20px;
+
+  box-sizing: border-box;
+}
+
+.btnVoltar {
+  position: absolute;
+
+  top: 11px;
+  left: 14px;
+
+  width: 127px;
+  height: 42px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background-color: #2948a5;
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.btnVoltar span {
+  font-size: 27px;
+
+  margin-right: 17px;
+
+  vertical-align: -2px;
+}
+
+.btnVoltar:hover {
+  background-color: #203b8f;
+}
+
+.titulo {
+  text-align: center;
+
+  margin: 16px 0 50px 0;
+
+  color: #2948a5;
+
+  font-size: 26px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   FORMULÁRIO (Cadastrar encomenda)
+========================= */
+
+.formulario {
+  width: 700px;
+  max-width: 100%;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 22px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.campo label {
+  color: #777;
+
+  font-size: 18px;
+
+  margin-left: 16px;
+
+  margin-bottom: 6px;
+}
+
+.campo input,
+.campo textarea {
+  box-sizing: border-box;
+
+  border: 1px solid #aaa;
+
+  border-radius: 11px;
+
+  outline: none;
+
+  padding: 15px;
+
+  font-size: 18px;
+
+  color: #555;
+
+  font-family: inherit;
+
+  resize: vertical;
+}
+
+.campo input {
+  height: 54px;
+}
+
+.campo textarea {
+  min-height: 110px;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  border-color: #2948a5;
+
+  box-shadow: 0 0 0 1px #2948a5;
+}
+
+.mensagemErro {
+  color: #c0392b;
+  font-size: 14px;
+  margin-top: 6px;
+  margin-left: 16px;
+}
+
+
+/* =========================
+   RESUMO (Retirada de encomenda)
+========================= */
+
+.resumo {
+  width: 700px;
+  max-width: 100%;
+
+  margin: 0 auto;
+
+  border: 1px solid #dfdfdf;
+  border-radius: 11px;
+
+  padding: 24px 28px;
+
+  box-sizing: border-box;
+}
+
+.resumoTitulo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #111;
+
+  margin-bottom: 10px;
+}
+
+.resumoLinha {
+  font-size: 16px;
+  color: #555;
+
+  margin-bottom: 6px;
+}
+
+.avisoRetirada {
+  width: 700px;
+  max-width: 100%;
+
+  margin: 18px auto 0 auto;
+
+  font-size: 14px;
+  color: #777;
+
+  text-align: center;
+}
+
+
+/* =========================
+   BOTÃO SALVAR / CONFIRMAR
+========================= */
+
+.areaSalvar {
+  display: flex;
+
+  justify-content: center;
+
+  margin-top: 50px;
+}
+
+.btnSalvar {
+  width: 254px;
+  height: 49px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  background: linear-gradient(
+    90deg,
+    #5d7ddd 0%,
+    #0e287a 100%
+  );
+
+  color: white;
+
+  font-size: 22px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.btnSalvar:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.btnSalvar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 768px) {
+
+  .header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .pesquisa {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .btnVoltar {
+    position: static;
+    margin-bottom: 20px;
+  }
+
+  .titulo {
+    margin-top: 0;
+  }
+
+  .formulario,
+  .resumo,
+  .avisoRetirada {
+    width: 100%;
+  }
+}

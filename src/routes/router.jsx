@@ -10,6 +10,9 @@ import LayoutSindico from '../layouts/SindicoLayout';
 import LayoutMorador from '../layouts/MoradorLayout';
 import PorteiroLayout from '../layouts/PorteiroLayout';
 
+//Importando o componente de proteção de rotas
+import RotaProtegida from './RotaProtegida';
+
 //Importando as página
 import PaginaInical from '../pages/telaInicial';
 import TelaDeLogin from '../pages/telaLogin';
@@ -23,74 +26,77 @@ import PaginaAtualizaPorteiro from '../pages/sindico/telaAtualizaPorteiro';
 import PaginaExibeRegrasLaudos from '../pages/sindico/telaExibeRegrasLaudos';
 import PaginaCadastraRegra from '../pages/sindico/telaCadastraRegras';
 import PaginaAtualizaRegra from '../pages/sindico/telaAtualizaRegras';
+import PaginaCadastraVisitante from '../pages/porteiro/RegistroVisitante';
+import PaginaCadastraEncomenda from '../pages/porteiro/CadastrarEncomenda';
+import PaginaRetiradaEncomenda from '../pages/porteiro/RetiradaEncomenda';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
     //Elemento base do array
     {
-        path: "/", 
-        element: <RootLayout />, 
+        path: "/",
+        element: <RootLayout />,
 
         //Array com as subrotas do sistema
         children: [
             //Tela inicial e login
             {
                 path: "", // Caminho vazio para herdar o "/"
-                element: <LoginLayout />, 
+                element: <LoginLayout />,
                 children: [
                     //Tela de inicial
                     {
                         index: true, // Usa index: true para a rota padrão do pai
-                        element: <PaginaInical />, 
+                        element: <PaginaInical />,
                     },
                     //Tela de login
                     {
                         path: "login", // Caminho relativo (sem a barra inicial)
-                        element: <TelaDeLogin />, 
+                        element: <TelaDeLogin />,
                     }
                 ]
             },
 
-            //Tela do sindico
+            //Tela do sindico (protegida: só entra quem tem cookie de tipo "sindico")
             {
                 path: "sindico", // Caminho relativo
-                element: <LayoutSindico />, 
+                element: <RotaProtegida tipoPermitido="Sindico"><LayoutSindico /></RotaProtegida>,
 
                 children: [
                     //Tela inicial do sindico
                     {
                         index: true, // Renderiza no caminho "/sindico"
-                        element: <PaginainicialSindico />, 
+                        element: <PaginainicialSindico />,
                     },
                     //Tela de gerenciamento de usuários
                     {
                         path: "usuarios", // Renderiza no caminho "/sindico/usuarios"
-                        element: <PaginaExibeUsuarios />, 
+                        element: <PaginaExibeUsuarios />,
                     },
 
                     //Tela para cadastrar os porteiros
                     {
                         path: "usuarios/porteiro", // Caminho que vai ser acessado na URL
-                        element: <PaginaCadastraPorteiro />, 
+                        element: <PaginaCadastraPorteiro />,
                     },
 
                     //Tela para cadastrar os moradores
                     {
                         path: "usuarios/morador", // Caminho que vai ser acessado na URL
-                        element: <PaginaCadastraMorador></PaginaCadastraMorador>, 
+                        element: <PaginaCadastraMorador></PaginaCadastraMorador>,
                     },
 
                     //Tela de sucesso no cadastro
                     {
                         path: "usuarios/sucesso", // Caminho que vai ser acessado na URL
-                        element: <SucessoCadastro></SucessoCadastro>, 
+                        element: <SucessoCadastro></SucessoCadastro>,
                     },
 
                     //Tela de updadte do porteiro
                     {
                         //Essa rota recebe um parametro na url
                         path: "usuarios/porteiro/update/:id", // Caminho que vai ser acessado na URL
-                        element: <PaginaAtualizaPorteiro></PaginaAtualizaPorteiro>, 
+                        element: <PaginaAtualizaPorteiro></PaginaAtualizaPorteiro>,
                     },
 
                     //Tela de exibir regras
@@ -113,25 +119,45 @@ const route = createBrowserRouter([
                 ]
             },
 
-            //Tela do morador
+            //Tela do morador (protegida: só entra quem tem cookie de tipo "morador")
             {
                 path: "morador", // Caminho relativo
-                element: <LayoutMorador />, 
+                element: <RotaProtegida tipoPermitido="Morador"><LayoutMorador /></RotaProtegida>,
             },
 
-            //Tela do porteiro
+            //Tela do porteiro (protegida: só entra quem tem cookie de tipo "porteiro")
             {
-                path: "porteiro", // Caminho relativo
-                element: <PorteiroLayout />, 
+                path: "porteiro",
+                element: <RotaProtegida tipoPermitido="Porteiro"><PorteiroLayout /></RotaProtegida>,
 
                 children: [
-                    //Tela inicial do porteiro
+                    // Tela inicial do porteiro
                     {
-                        index: true, // Renderiza no caminho "/porteiro"
-                        element: <PaginainicialPorteiro />, 
+                        index: true,
+                        element: <PaginainicialPorteiro />,
+                    },
+
+                    // Tela de registro de visitante
+                    {
+                        path: "RegistroVisitante",
+                        element: <PaginaCadastraVisitante />,
+                    },
+
+                    // Tela de cadastro de encomenda
+                    {
+                        path: "CadastrarEncomenda",
+                        element: <PaginaCadastraEncomenda />,
+                    },
+
+                    // Tela de retirada de encomenda
+                    {
+                        path: "Encomenda/:id/retirada",
+                        element: <PaginaRetiradaEncomenda />,
                     },
                 ]
             },
+
+
         ]
     }
 ]);

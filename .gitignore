@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Variáveis de ambiente locais (contém a URL da API de cada ambiente)
+.env
+.env.local
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
