@@ -35,6 +35,9 @@ import PaginaGerenciaReservas from '../pages/sindico/reservas/telaGerenciamentoR
 import PaginaCadastraArea from '../pages/sindico/reservas/telaCadastraArea';
 import PaginaAtualizaArea from '../pages/sindico/reservas/telaAtualizaArea';
 import PaginaAutorizaRerva from '../pages/sindico/reservas/telaAutorizaReserva';
+import PaginaCadastraEncomenda from '../pages/porteiro/telaCadastraEncomenda';
+import PaginaDetalheEncomenda from '../pages/porteiro/telaDetalheEncomenda';
+
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -215,6 +218,18 @@ const route = createBrowserRouter([
                     {
                         index: true, // Renderiza no caminho "/porteiro"
                         element: <PaginainicialPorteiro />, 
+                    },
+
+                    //Tela de cadastro de encomenda
+                    {
+                        path: "encomenda/create", // Renderiza no caminho "/porteiro/encomenda/create"
+                        element: <PaginaCadastraEncomenda />,
+                    },
+
+                    //Tela de detalhe da encomenda, com a ação de registrar retirada
+                    {
+                        path: "encomenda/show/:id", // Renderiza no caminho "/porteiro/encomenda/show/:id"
+                        element: <PaginaDetalheEncomenda />,
                     },
                 ]
             },
