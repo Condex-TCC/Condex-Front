@@ -44,6 +44,7 @@ export async function insertEncomendaAPI(nome, descricao){
     let novaEncomenda = {
         nome: nome,
         descricao: descricao,
+        id_morador: 1 //Provisório, apenas para engambelar o Rubens | TODO: Consertar aqui depois
     }
 
     //Criando a requisição
