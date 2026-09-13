@@ -118,7 +118,7 @@ const SidebarSindico = () => {
               <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
             {/* Texto descritivo do botão */}
-            <span className={styles['sd-label']}>Reservas</span>
+            <span className={styles['sd-label']}>Áreas comuns</span>
           </li>
 
           {/* Item do menu: Comunicados */}
@@ -128,7 +128,7 @@ const SidebarSindico = () => {
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
             {/* Texto descritivo do botão */}
-            <span className={styles['sd-label']}>Comunicados</span> 
+            <span className={styles['sd-label']}>Comunicação</span> 
           </li>
 
           {/* Item do menu: Condomínio */}

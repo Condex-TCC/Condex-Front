@@ -79,11 +79,11 @@ export default function PaginaGerenciaReservas() {
               <div className={styles.tabs}>
                 {/* Botões de aba (ambos não selecionados por padrão) */}
                 <button className={styles.tabButton} onClick={trocaArea}>Areas comuns</button>
-                <button className={styles.tabButton} onClick={trocaAutrorizacao}>Autrorizar reservas</button>
+                <button className={styles.tabButton} onClick={trocaAutrorizacao}>Gerenciar reservas</button>
               </div>
               
               {/* Exibe esse botão apenas se for area */}
-              { acao === 'area' && <button className={styles.primaryButton} onClick={cadastraArea}>+ Cadastrar Area comum</button>}
+              { acao === 'area' && <button className={styles.primaryButton} onClick={cadastraArea}>+ Registrar Area comum</button>}
             </div>
   
             <div>
