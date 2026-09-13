@@ -343,7 +343,7 @@ export async function updateMorador(id, nome, cpf, email, telefone, senha, id_un
 
         //Desestrutura o promisse
         const { message, status, errors, data} = json
-
+        console.log(errors)
         //Retornando a menssagem
         return message
     }

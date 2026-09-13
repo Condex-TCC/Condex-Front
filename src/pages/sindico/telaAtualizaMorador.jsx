@@ -90,7 +90,7 @@ function PaginaAtualizaMorador(){
         
     //Desestruturando os dados vindos da API
     const { nome, cpf, email, telefone, senha, unidade } = await dados[0]
-    const {id_apertamento, bloco, numero, descricao} = await unidade
+    const { id: id_apertamento, bloco, numero, descricao } = await unidade;
         
     //Atualizando os estados com os dados vindos do banco de dados
     setNome(nome)
@@ -109,13 +109,14 @@ function PaginaAtualizaMorador(){
         let dados = await showApertamento(novoApertamento)
 
         //Desestruturando os dados vindos da API
-        const {id_apertamento, bloco, numero, descricao} = await dados[0]
+        const { id: id_apertamento, bloco, numero, descricao } = await dados[0];
 
         //Chama a função responsavel por obter os dados do apertamento
         setIDApertamento(id_apertamento)
         setBloco(bloco)
         setNumero(numero)
         setDescricao(descricao)
+        
 
     }else{
 
