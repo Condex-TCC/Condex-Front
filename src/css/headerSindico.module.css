@@ -14,6 +14,9 @@
   border-bottom: 2px solid #eef0f4; /* Adiciona uma sutil divisória cinza clara na extremidade inferior da barra */
   width: 100%; /* Força a barra de topo a se esticar horizontalmente ocupando tela inteira */
   height: 96px; /* Deixa o header com um tamanho fixo*/
+  box-sizing: border-box; /* Faz com que os 96px de altura incluam o padding e a borda, sem variar */
+  flex-shrink: 0; /* Impede que o flex encolha o header quando a página tem muito conteúdo */
+  flex-grow: 0; /* Impede que o flex estique o header além dos 96px definidos */
 } /* Finaliza as definições do container principal */
 
 .left-section { /* Inicia os estilos destinados exclusivamente à região esquerda do cabeçalho */
