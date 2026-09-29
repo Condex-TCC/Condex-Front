@@ -1,9 +1,17 @@
 //Arquivo responsável por fazer a requisição para a API das encomendas
 
 import { GetCookie } from "../service/cookie"
+import { USE_MOCK } from "../mock/ativo"
+import { getEncomendasMock, insertEncomendaMock, withdrawEncomendaMock } from "../mock/porteiroMock"
 
 //Função que recupera todas as encomendas do banco de dados
 export async function getEncomendasAPI(){
+
+    //Com o mock ligado, devolve os dados fictícios em memória
+    if(USE_MOCK){
+
+        return getEncomendasMock()
+    }
 
     //Receperando o token de outorização
     let cookie = await GetCookie()
@@ -31,7 +39,16 @@ export async function getEncomendasAPI(){
 }
 
 //Função que cadastra uma nova encomenda
-export async function insertEncomendaAPI(nome, descricao){
+//O parâmetro detalhes leva bloco, apartamento e data do formulário. A API
+//real ainda não tem colunas para esses dados, então eles são ignorados
+//nessa chamada e só são usados pelo mock
+export async function insertEncomendaAPI(nome, descricao, detalhes = {}){
+
+    //Com o mock ligado, grava o registro em memória
+    if(USE_MOCK){
+
+        return insertEncomendaMock(nome, descricao, detalhes)
+    }
 
     //Receperando o token de outorização
     let cookie = await GetCookie()
@@ -71,6 +88,12 @@ export async function insertEncomendaAPI(nome, descricao){
 
 //Função que registra a retirada de uma encomenda
 export async function withdrawEncomendaAPI(id){
+
+    //Com o mock ligado, marca a retirada em memória
+    if(USE_MOCK){
+
+        return withdrawEncomendaMock(id)
+    }
 
     //Receperando o token de outorização
     let cookie = await GetCookie()

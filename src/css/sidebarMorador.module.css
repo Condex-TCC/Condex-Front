@@ -1,0 +1,9 @@
+/* ESTOS EXTRAS DA SIDEBAR DO MORADOR */
+/* A sidebar do morador reaproveita sidebarSindico.module.css. Aqui fica apenas
+   a classe de item selecionado, para não alterar o visual da sidebar do síndico. */
+
+/* Item do menu que corresponde à tela que está aberta */
+.sd-item--ativo {
+  background-color: #3b82f6; /* Fundo azul, igual ao item selecionado da sidebar do síndico */
+  color: #ffffff; /* Texto branco para destacar da cor padrão dos itens */
+}

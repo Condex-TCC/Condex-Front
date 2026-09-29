@@ -1,0 +1,163 @@
+/* TELA DE VISITANTES DO MORADOR */
+
+/* Container principal da tela */
+.vm-container {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Mesma tipografia do header */
+  color: #001c3f; /* Azul marinho escuro usado como cor de texto em todo o app */
+  width: 100%;
+  max-width: 720px; /* Limita a largura em telas grandes para o conteúdo não ficar esticado */
+  margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
+  padding-bottom: 8px; /* Pequeno respiro antes do menu inferior */
+}
+
+/* Cabeçalho da tela (título e descrição) */
+.vm-page-header {
+  margin-bottom: 24px; /* Separa o cabeçalho do conteúdo */
+}
+
+.vm-page-title {
+  font-size: 26px; /* Tamanho de título de tela */
+  font-weight: 700; /* Deixa o título mais forte */
+  line-height: 1.2; /* Reduz o espaçamento vertical do texto */
+}
+
+.vm-page-subtitle {
+  margin-top: 4px; /* Pequeno espaço abaixo do título */
+  font-size: 14px; /* Texto de apoio */
+  color: #7a87a7; /* Cinza azulado usado nos textos secundários do projeto */
+}
+
+/* Cada seção da tela (Visitantes ativos / Próximas visitas) */
+.vm-section {
+  margin-bottom: 28px; /* Respiro entre as seções */
+}
+
+.vm-section-title {
+  font-size: 16px; /* Tamanho dos títulos de seção */
+  font-weight: 700; /* Deixa o título em negrito */
+  color: #001c3f; /* Cor principal do projeto */
+  margin-bottom: 12px; /* Espaço entre o título e os cards */
+}
+
+/* Estado vazio exibido quando a seção não tem registros */
+.vm-empty {
+  border: 1px dashed #d4d8e2; /* Contorno tracejado para diferenciar de um card real */
+  border-radius: 10px; /* Arredonda os cantos do estado vazio */
+  background-color: #ffffff; /* Fundo branco */
+  padding: 20px; /* Respiro interno */
+  text-align: center; /* Centraliza o texto */
+  font-size: 14px; /* Tamanho do texto */
+  color: #7a87a7; /* Cinza azulado, indicando que é apenas uma informação */
+}
+
+/* Card de um visitante ou de uma visita */
+.vm-card {
+  display: flex; /* Coloca o avatar e as informações lado a lado */
+  align-items: center; /* Centraliza verticalmente o avatar em relação aos textos */
+  gap: 12px; /* Espaço entre o avatar e o bloco de textos */
+  background-color: #ffffff; /* Fundo branco do card */
+  border: 1px solid #eef0f4; /* Contorno claro, no mesmo tom da divisória do header */
+  border-radius: 10px; /* Arredonda os cantos do card */
+  padding: 14px; /* Respiro interno do card */
+  margin-bottom: 10px; /* Espaço entre os cards da lista */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra leve, igual aos cards do porteiro */
+}
+
+/* Avatar circular com as iniciais do visitante */
+.vm-avatar {
+  flex-shrink: 0; /* Impede que o avatar seja espremido em telas estreitas */
+  width: 44px; /* Largura do círculo */
+  height: 44px; /* Altura igual à largura, formando o círculo perfeito */
+  border-radius: 50%; /* Transforma o quadrado em círculo */
+  background-color: #eef2ff; /* Fundo azul bem claro */
+  color: #2b45a2; /* Texto azul escuro, igual à cor das abas ativas do porteiro */
+  display: flex; /* Usa flexbox para centralizar o conteúdo */
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+  font-size: 15px; /* Tamanho das iniciais */
+  font-weight: 700; /* Deixa as iniciais mais fortes */
+}
+
+/* Bloco de textos do card */
+.vm-info {
+  flex: 1; /* Ocupa o espaço restante da linha, empurrando a etiqueta para a direita */
+  min-width: 0; /* Permite que o texto encolha em telas estreitas */
+}
+
+.vm-name {
+  font-size: 15px; /* Tamanho do nome */
+  font-weight: 700; /* Nome em negrito */
+  color: #001c3f; /* Cor principal do projeto */
+  overflow: hidden; /* Esconde o excesso de texto */
+  text-overflow: ellipsis; /* Mostra reticências em vez de quebrar o layout */
+  white-space: nowrap; /* Mantém o nome em uma única linha */
+}
+
+.vm-details {
+  margin-top: 4px; /* Espaço entre o nome e os detalhes */
+  font-size: 13px; /* Tamanho dos detalhes */
+  color: #7a87a7; /* Cinza azulado dos textos secundários */
+  line-height: 1.5; /* Deixa as linhas de detalhe mais respiradas */
+}
+
+/* Etiqueta de status exibida à direita do card */
+.vm-badge {
+  flex-shrink: 0; /* Impede que a etiqueta seja espremida */
+  display: inline-block; /* Permite o uso de padding e border-radius */
+  padding: 4px 10px; /* Respiro interno da etiqueta */
+  border-radius: 20px; /* Formato de cápsula */
+  font-size: 11px; /* Texto pequeno da etiqueta */
+  font-weight: 700; /* Deixa o texto da etiqueta forte */
+  white-space: nowrap; /* Impede que o texto da etiqueta quebre de linha */
+}
+
+/* Etiqueta do visitante que está dentro do condomínio */
+.vm-badge--ativo {
+  background-color: #e4f7e8; /* Verde bem claro */
+  color: #1e7e34; /* Verde escuro, garantindo contraste */
+}
+
+/* Etiqueta da visita que ainda vai acontecer */
+.vm-badge--agendada {
+  background-color: #eef2ff; /* Azul bem claro */
+  color: #2b45a2; /* Azul escuro usado nas abas ativas */
+}
+
+/* Área do botão de cadastro */
+.vm-action {
+  margin-top: 8px; /* Respiro em relação à última seção */
+}
+
+/* Botão principal que abre o formulário de pré cadastro */
+.vm-btn-primary {
+  width: 100%; /* Ocupa toda a largura, o que facilita o toque no celular */
+  background-color: #2b45a2; /* Azul escuro, igual à aba ativa do porteiro */
+  color: #ffffff; /* Texto branco */
+  border: none; /* Remove a borda padrão do botão */
+  border-radius: 10px; /* Arredonda os cantos */
+  padding: 14px 20px; /* Respiro interno, grande o bastante para o toque */
+  font-size: 15px; /* Tamanho do texto do botão */
+  font-weight: 700; /* Deixa o texto em negrito */
+  cursor: pointer; /* Indica que o botão é clicável */
+  transition: background-color 0.2s ease-in-out; /* Suaviza a troca de cor ao passar o mouse */
+}
+
+.vm-btn-primary:hover {
+  background-color: #203b8f; /* Escurece o azul ao passar o mouse, como nos outros botões do projeto */
+}
+
+.vm-btn-primary:active {
+  transform: scale(0.99); /* Dá uma leve impressão de clique */
+}
+
+/* Telas menores: a etiqueta desce para baixo do nome para não apertar o texto */
+@media (max-width: 420px) {
+
+  .vm-card {
+    flex-wrap: wrap; /* Permite que os itens quebrem de linha */
+  }
+
+  .vm-badge {
+    margin-left: 56px; /* Alinha a etiqueta com o início dos textos, depois do avatar */
+  }
+}

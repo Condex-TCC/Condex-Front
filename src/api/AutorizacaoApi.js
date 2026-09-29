@@ -1,9 +1,17 @@
 //Arquivo responsável por fazer a requisição para a API das autorizações de visitantes
 
 import { GetCookie } from "../service/cookie"
+import { USE_MOCK } from "../mock/ativo"
+import { allowEntryMock, getAuthorizedVisitorsMock } from "../mock/porteiroMock"
 
 //Função que recupera os visitantes autorizados (pré cadastrados) do porteiro
 export async function getAuthorizedVisitorsAPI(){
+
+    //Com o mock ligado, devolve os dados fictícios em memória
+    if(USE_MOCK){
+
+        return getAuthorizedVisitorsMock()
+    }
 
     //Receperando o token de outorização
     let cookie = await GetCookie()
@@ -32,6 +40,12 @@ export async function getAuthorizedVisitorsAPI(){
 
 //Função que libera a entrada de um visitante autorizado
 export async function allowEntryAPI(id){
+
+    //Com o mock ligado, registra a entrada em memória
+    if(USE_MOCK){
+
+        return allowEntryMock(id)
+    }
 
     //Receperando o token de outorização
     let cookie = await GetCookie()

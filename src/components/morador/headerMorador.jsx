@@ -1,6 +1,7 @@
 //Importando os elementos que serão utilizados dentro o componente
 import { useContext, useState } from "react"
 import styles from "../../css/headerSindico.module.css"
+import stylesMorador from "../../css/headerMorador.module.css"
 import * as CookieService from '../../service/cookie'
 import { useNavigate } from 'react-router-dom';
 import { MenuLateralContext } from "../../context/menuLateralContext";
@@ -8,7 +9,7 @@ import { MenuLateralContext } from "../../context/menuLateralContext";
 //Header principal da página
 
 //Função que cria o componente
-function HeaderMorador(propos){
+function HeaderMorador(){
     
     //Hook que realiza a nevegação automatica
     const navigate = useNavigate();
@@ -103,6 +104,39 @@ function HeaderMorador(propos){
 
         {/* Abre a seção direita do cabeçalho, focada no usuário */}
         <div className={styles["right-section"]} onClick={AlteraMenu}>
+
+            {/* Impede que os botões de ação abram o menu de deslogar do avatar */}
+            <button
+                type="button"
+                className={stylesMorador["hm-action-btn"]}
+                onClick={(evento) => evento.stopPropagation()}
+                title="Configurações"
+                aria-label="Configurações"
+            >
+                {/* Desenha o ícone de engrenagem */}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+            </button>
+
+            {/* Botão de notificações, com o selo indicando novas mensagens */}
+            <button
+                type="button"
+                className={stylesMorador["hm-action-btn"]}
+                onClick={(evento) => evento.stopPropagation()}
+                title="Notificações"
+                aria-label="Notificações"
+            >
+                {/* Desenha o sino de notificações */}
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+
+                {/* Selo vermelho de notificação não lida */}
+                <span className={stylesMorador["hm-notification-dot"]}></span>
+            </button>
 
             {/* Cria o botão circular que representa o perfil */}
             <button className={styles["profile-btn"]}>

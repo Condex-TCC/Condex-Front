@@ -2,7 +2,10 @@
   font-family: Arial, Helvetica, sans-serif;
   padding: 30px;
   color: #111;
-  width: 100vw;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #f4f4f4;
 }
 
 .header--section {
@@ -59,6 +62,25 @@
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 15px;
+}
+
+/* Estado vazio exibido quando a seção não tem registros */
+.empty--state {
+  border: 1px dashed #dfdfdf;
+  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  font-size: 15px;
+  color: #777777;
+}
+
+/* Linha de informações do card (bloco, apartamento, morador) */
+.card--info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
 }
 
 .card--item {
@@ -119,4 +141,81 @@
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+  flex-shrink: 0; /* Impede que o botão seja espremido em telas estreitas */
+}
+
+.btn--exit:hover {
+  background-color: #203b8f;
+}
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+/* Tablets: as abas e o botão principal podem ficar lado a lado sem aperto */
+@media (max-width: 900px) {
+
+  .tab--active,
+  .tab--inactive {
+    padding: 10px 24px;
+  }
+}
+
+/* Celulares: reduz o respiro e empilha a linha de ação do card */
+@media (max-width: 640px) {
+
+  .dashboard--container {
+    padding: 16px;
+  }
+
+  .header--section {
+    flex-direction: column; /* Abas e botão ficam em linhas separadas */
+    align-items: stretch; /* Ocupa a largura toda para facilitar o toque */
+    gap: 12px; /* Espaço entre as abas e o botão */
+    margin-bottom: 28px; /* Reduz o espaço antes da primeira seção */
+  }
+
+  .tabs--group {
+    gap: 10px; /* Reduz o espaço entre as duas abas */
+  }
+
+  .tab--active,
+  .tab--inactive {
+    flex: 1 1 0; /* As duas abas dividem a largura igualmente */
+    padding: 10px 12px; /* Respiro menor para caber na tela estreita */
+    font-size: 15px; /* Reduz um pouco a fonte do texto das abas */
+  }
+
+  .btn--add {
+    width: 100%; /* O botão principal ocupa a linha inteira */
+    padding: 12px 16px; /* Respiro maior, com a altura boa para o dedo */
+  }
+
+  .card--item {
+    padding: 16px; /* Reduz o respiro interno do card */
+  }
+
+  .card--active {
+    flex-direction: column; /* O botão de ação desce para baixo das informações */
+    align-items: stretch; /* O botão ocupa a largura do card */
+    gap: 12px; /* Espaço entre as informações e o botão */
+  }
+
+  .btn--exit {
+    width: 100%; /* Garante que o botão continue acessível no celular */
+    padding: 12px 16px;
+  }
+
+  .list--section {
+    margin-bottom: 28px; /* Reduz o espaço entre as seções */
+  }
+}
+
+/* Celulares muito estreitos: evita que o nome do visitante quebre a linha de forma feia */
+@media (max-width: 380px) {
+
+  .text--name {
+    font-size: 15px;
+    margin-right: 0;
+  }
 }

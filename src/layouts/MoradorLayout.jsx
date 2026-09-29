@@ -2,6 +2,7 @@
 import { Outlet } from 'react-router-dom';
 import HeaderMorador from '../components/morador/headerMorador';
 import SidebarMorador from '../components/morador/sidebarMorador';
+import MenuInferiorMorador from '../components/morador/menuInferiorMorador';
 import { MenuLateralContext } from '../context/menuLateralContext';
 import { useContext } from 'react';
 
@@ -13,7 +14,7 @@ import { useContext } from 'react';
 function LayoutMorador(){
 
     //Pegando as ações adicionadas no provider
-    const {menuLateral, setMenuLateral} = useContext(MenuLateralContext);
+    const {menuLateral} = useContext(MenuLateralContext);
 
     //Retorna o componente
     return(
@@ -32,11 +33,15 @@ function LayoutMorador(){
                     <HeaderMorador></HeaderMorador>
 
                     {/* Permite renderizar outros componentes dentro desse layout */}
-                    <main style={{ padding: '24px' }}>
+                    {/* O flex: 1 empurra o menu inferior para a base da tela quando o conteúdo é curto */}
+                    <main style={{ padding: '24px', flex: 1 }}>
                         
                         {/* Local onde será inserido outros elementos */}
                         <Outlet />
                     </main>
+
+                    {/* Menu inferior com a navegação principal do morador */}
+                    <MenuInferiorMorador></MenuInferiorMorador>
                         
                 </div>
             </div>

@@ -1,0 +1,61 @@
+/* MENU INFERIOR (NAVEGAÇÃO PRINCIPAL DO MORADOR) */
+
+/* Container principal que segura todos os itens da barra */
+.mi-wrapper {
+  display: flex; /* Coloca os itens lado a lado, formando a barra horizontal */
+  align-items: stretch; /* Faz com que todos os itens tenham a mesma altura */
+  justify-content: space-between; /* Distribui os itens igualmente pela largura da tela */
+  width: 100%; /* Ocupa toda a largura disponível dentro do layout */
+  box-sizing: border-box; /* Inclui o padding dentro da largura total */
+  flex-shrink: 0; /* Impede que a barra encolha quando o conteúdo da tela é grande */
+  padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); /* Respiro interno, com folga extra para celulares que têm notch */
+  background-color: #ffffff; /* Fundo branco para destacar do conteúdo da tela */
+  border-top: 2px solid #eef0f4; /* Linha divisória clara no topo, no mesmo tom usado no header */
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Mesma tipografia do header do morador */
+}
+
+/* Cada botão individual da barra */
+.mi-item {
+  flex: 1 1 0; /* Todos os itens crescem e encolhem na mesma proporção */
+  min-width: 0; /* Permite que o item encolha abaixo do tamanho do conteúdo */
+  display: flex; /* Usa flexbox para centralizar o ícone e o texto */
+  flex-direction: column; /* Empilha o ícone em cima do texto */
+  align-items: center; /* Centraliza horizontalmente */
+  justify-content: center; /* Centraliza verticalmente */
+  gap: 4px; /* Pequeno espaço entre o ícone e o texto */
+  padding: 6px 2px; /* Respiro interno do item */
+  border: none; /* Remove a borda padrão dos botões */
+  border-radius: 10px; /* Arredonda os cantos do item */
+  background: transparent; /* Fundo transparente no estado normal */
+  color: #7a87a7; /* Cor do ícone e do texto no estado inativo */
+  cursor: pointer; /* Muda o cursor para indicar que o item é clicável */
+  transition: all 0.2s ease-in-out; /* Suaviza a troca de cor do item ativo */
+}
+
+/* Efeito ao passar o mouse ou o dedo sobre o item */
+.mi-item:hover {
+  color: #2b45a2; /* Escurece levemente o ícone ao interagir */
+}
+
+/* Item que representa a aba atualmente aberta */
+.mi-item--ativo {
+  color: #2b45a2; /* Destaca a aba selecionada com o azul usado no resto do app */
+  background-color: #eef2ff; /* Leve fundo azul para reforçar a seleção */
+}
+
+/* Tamanho do ícone de cada item */
+.mi-icon {
+  width: 22px; /* Largura fixa para todos os ícones ficarem alinhados */
+  height: 22px; /* Altura igual à largura, mantendo o desenho quadrado */
+}
+
+/* Texto (rótulo) de cada item */
+.mi-label {
+  font-size: 11px; /* Texto pequeno para caber cinco itens sem quebrar a linha */
+  font-weight: 600; /* Deixa o texto mais forte para ser legível em telas pequenas */
+  text-align: center; /* Garante que textos de dois palavras quebrem de forma simétrica */
+  line-height: 1.2; /* Reduz o espaçamento entre as linhas do texto */
+  white-space: nowrap; /* Impede que o texto quebre no meio da palavra */
+  overflow: hidden; /* Esconde qualquer excesso de largura */
+  text-overflow: ellipsis; /* Mostra reticências caso o texto não caiba */
+}

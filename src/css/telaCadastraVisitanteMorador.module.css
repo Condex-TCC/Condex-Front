@@ -1,0 +1,126 @@
+/* FORMULÁRIO DE PRÉ CADASTRO DE VISITANTE DO MORADOR */
+
+.cv-container {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Mesma tipografia do header */
+  color: #001c3f; /* Azul marinho escuro usado como cor de texto em todo o app */
+  width: 100%;
+  max-width: 720px; /* Limita a largura em telas grandes */
+  margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
+  padding-bottom: 8px; /* Pequeno respiro antes do menu inferior */
+}
+
+/* Cabeçalho com o botão de voltar e o título */
+.cv-header {
+  display: flex; /* Coloca o botão e o título lado a lado */
+  align-items: center; /* Centraliza verticalmente */
+  gap: 12px; /* Espaço entre o botão e o título */
+  margin-bottom: 20px; /* Separa o cabeçalho do formulário */
+}
+
+/* Botão de voltar para a lista de visitantes */
+.cv-btn-voltar {
+  flex-shrink: 0; /* Impede que o botão seja espremido */
+  background-color: #ffffff; /* Fundo branco */
+  border: 1px solid #d4d8e2; /* Contorno claro */
+  border-radius: 8px; /* Arredonda os cantos */
+  color: #2b45a2; /* Texto azul, igual à cor das abas ativas do porteiro */
+  font-size: 14px; /* Tamanho do texto */
+  font-weight: 700; /* Deixa o texto em negrito */
+  padding: 8px 12px; /* Respiro interno */
+  cursor: pointer; /* Indica que o botão é clicável */
+}
+
+.cv-btn-voltar:hover {
+  background-color: #eef2ff; /* Leve fundo azul ao passar o mouse */
+}
+
+.cv-title {
+  font-size: 22px; /* Tamanho do título da tela */
+  font-weight: 700; /* Deixa o título em negrito */
+  line-height: 1.2; /* Reduz o espaçamento vertical do texto */
+}
+
+/* Texto de apoio que explica o que a tela faz */
+.cv-subtitle {
+  margin: -14px 0 20px 0; /* Sobe o texto para ficar logo abaixo do título */
+  font-size: 14px; /* Tamanho do texto */
+  color: #7a87a7; /* Cinza azulado dos textos secundários do projeto */
+}
+
+/* Área que agrupa todos os campos do formulário */
+.cv-form {
+  display: grid; /* Usa grid para organizar os campos em duas colunas */
+  grid-template-columns: 1fr 1fr; /* Duas colunas de largura igual */
+  gap: 16px; /* Espaço entre os campos */
+}
+
+/* Cada campo do formulário */
+.cv-field {
+  display: flex; /* Empilha o rótulo e o input */
+  flex-direction: column; /* Coloca o rótulo acima do input */
+}
+
+/* Campo que ocupa a linha inteira (usado no nome e no documento) */
+.cv-field--full {
+  grid-column: 1 / -1; /* Estende o campo de ponta a ponta da grade */
+}
+
+.cv-field label {
+  font-size: 13px; /* Tamanho do rótulo */
+  font-weight: 600; /* Deixa o rótulo com um pouco mais de destaque */
+  color: #001c3f; /* Cor principal do projeto */
+  margin-bottom: 6px; /* Espaço entre o rótulo e o campo */
+}
+
+.cv-field input {
+  height: 46px; /* Altura confortável para o toque no celular */
+  box-sizing: border-box; /* Inclui a borda dentro da altura definida */
+  border: 1px solid #d4d8e2; /* Contorno claro, no tom usado na busca do header */
+  border-radius: 8px; /* Arredonda os cantos do campo */
+  outline: none; /* Remove o contorno padrão ao clicar */
+  padding: 0 12px; /* Respiro interno do texto */
+  font-size: 14px; /* Tamanho do texto digitado */
+  color: #001c3f; /* Cor do texto digitado */
+  background-color: #ffffff; /* Fundo branco do campo */
+  width: 100%; /* Ocupa toda a largura da coluna */
+}
+
+.cv-field input:focus {
+  border-color: #2b45a2; /* Destaca o campo que está sendo editado */
+  box-shadow: 0 0 0 1px #2b45a2; /* Reforça o destaque com um halo azul */
+}
+
+/* Área do botão de salvar */
+.cv-action {
+  margin-top: 24px; /* Respiro em relação ao último campo */
+}
+
+/* Botão principal que confirma o cadastro */
+.cv-btn-salvar {
+  width: 100%; /* Ocupa toda a largura, o que facilita o toque no celular */
+  background-color: #2b45a2; /* Azul escuro, igual à aba ativa do porteiro */
+  color: #ffffff; /* Texto branco */
+  border: none; /* Remove a borda padrão do botão */
+  border-radius: 10px; /* Arredonda os cantos */
+  padding: 14px 20px; /* Respiro interno, grande o bastante para o toque */
+  font-size: 15px; /* Tamanho do texto do botão */
+  font-weight: 700; /* Deixa o texto em negrito */
+  cursor: pointer; /* Indica que o botão é clicável */
+  transition: background-color 0.2s ease-in-out; /* Suaviza a troca de cor ao passar o mouse */
+}
+
+.cv-btn-salvar:hover {
+  background-color: #203b8f; /* Escurece o azul ao passar o mouse */
+}
+
+/* Telas estreitas: os campos passam a ocupar uma coluna por vez */
+@media (max-width: 560px) {
+
+  .cv-form {
+    grid-template-columns: 1fr; /* Uma única coluna */
+  }
+
+  .cv-field--full {
+    grid-column: auto; /* Deixa de ocupar duas linhas, já que existe só uma coluna */
+  }
+}

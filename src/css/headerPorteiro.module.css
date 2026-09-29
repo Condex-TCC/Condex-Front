@@ -98,7 +98,21 @@
   display: flex; /* Recruta a mecânica flexbox auxiliando o controle geométrico dos ícones periféricos */
   align-items: center; /* Promove o repouso centralizado dos elementos flutuantes sobre a sua extensão polar */
   
-  position: relative; /* <-- ADICIONE ESTA LINHA. É AQUI QUE A MÁGICA ACONTECE */
+  position: relative; /* Referência de posição para o menu de deslogar ficar sobre o avatar */
+}
+
+/* Menu suspenso que abre ao clicar no avatar */
+.dropdown-menu {
+  position: absolute; /* Tira o menu do fluxo normal e o gruda no avatar */
+  top: 120%; /* Abre logo abaixo do avatar, com uma pequena folga */
+  right: 0; /* Alinha a borda direita do menu com a do avatar */
+  background-color: #ffffff; /* Fundo branco para destacar do cabeçalho escuro */
+  border: 1px solid #e0e0e0; /* Contorno discreto */
+  border-radius: 8px; /* Arredonda os cantos do menu */
+  padding: 8px; /* Respiro interno do menu */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra para separar o menu do cabeçalho */
+  z-index: 1000; /* Garante que o menu fique acima do conteúdo da tela */
+  min-width: 120px; /* Largura mínima para o texto do botão caber */
 }
 
 /* Botão de Deslogar */
@@ -117,4 +131,58 @@
 
 .logout-button:hover {
   background-color: #f8d7da; /* Destaque suave ao passar o mouse */
+}
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+/* Telas médias: a logomarca já é grande, então a barra de pesquisa cede espaço */
+@media (max-width: 768px) {
+
+  .header {
+    padding: 10px 16px; /* Reduz o respiro lateral do cabeçalho */
+  }
+
+  .logo-title {
+    font-size: 32px; /* Reduz a logomarca para caber junto com a pesquisa */
+  }
+
+  .logo-subtitle {
+    font-size: 16px; /* Reduz o subtítulo "Porteiro" na mesma proporção */
+  }
+
+  .search-container {
+    width: 100%; /* A pesquisa passa a ocupar todo o espaço livre do cabeçalho */
+    max-width: none; /* Libera o limite de 50% que existia para telas grandes */
+    padding: 6px 10px; /* Respiro interno menor */
+  }
+}
+
+/* Celulares: a pesquisa desce para uma segunda linha em vez de espremer o cabeçalho */
+@media (max-width: 560px) {
+
+  .header {
+    flex-wrap: wrap; /* Permite que a pesquisa quebre para a linha de baixo */
+    row-gap: 10px; /* Espaço entre as linhas do cabeçalho */
+  }
+
+  .search-container {
+    order: 3; /* Coloca a pesquisa depois da logomarca e do avatar */
+    flex-basis: 100%; /* Ocupa a linha inteira, mantendo a busca utilizável */
+  }
+
+  .logo-title {
+    font-size: 26px; /* Reduz um pouco mais a logomarca */
+  }
+
+  .logo-subtitle {
+    font-size: 13px;
+  }
+
+  .avatar {
+    width: 32px; /* Reduz o avatar junto com a logomarca */
+    height: 32px; /* Mantém o formato circular */
+    font-size: 13px; /* Reduz a fonte das iniciais */
+  }
 }

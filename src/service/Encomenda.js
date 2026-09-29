@@ -15,7 +15,7 @@ export async function getEncomendas() {
         let json = await response.json()
 
         //Desestrutura o promisse
-        const { message, status, data} = json
+        const { status, data} = json
 
         //Verifica se houve algum erro na requisição
         if(status != 200){
@@ -24,7 +24,7 @@ export async function getEncomendas() {
             throw("Erro na requisição " + status)
         }
 
-        //Retornando a menssagem
+        //Retornando a lista de encomendas
         return data
     }
     //Casso aconteça algum erro na requisição, cai nesse bloco
@@ -38,19 +38,22 @@ export async function getEncomendas() {
 }
 
 //Função que cadastra uma nova encomenda
-export async function cadastrarEncomenda(nome, descricao) {
+//O parâmetro detalhes leva bloco, apartamento e data do formulário. A API
+//real ainda não tem colunas para esses dados, então são ignorados na
+//requisição e só aproveitados pelo mock
+export async function cadastrarEncomenda(nome, descricao, detalhes = {}) {
 
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await insertEncomendaAPI(nome, descricao)
+        let response = await insertEncomendaAPI(nome, descricao, detalhes)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()
 
         //Desestrutura o promisse
-        const { message, status, data} = json
+        const { message, status} = json
 
         //Verifica se houve algum erro na requisição
         if(status != 201 && status != 200){
@@ -85,7 +88,7 @@ export async function registrarRetiradaEncomenda(id) {
         let json = await response.json()
 
         //Desestrutura o promisse
-        const { message, status, data} = json
+        const { message, status} = json
 
         //Verifica se houve algum erro na requisição
         if(status != 200){

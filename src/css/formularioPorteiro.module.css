@@ -1,0 +1,305 @@
+/* FORMULÁRIOS DO PORTEIRO (cadastro de encomenda e registro de retirada) */
+/* O cabeçalho azul escuro da tela vem do HeaderPorteiro, dentro do PorteiroLayout,
+   então aqui só entram o cartão branco, o formulário e os botões. */
+
+/* Container com o fundo cinza claro que envolve a área branca */
+.fp-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #d3d3d3;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 40px 16px;
+}
+
+/* Área principal branca, centralizada e com 656px de largura */
+.fp-main {
+  width: 656px;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 24px 32px 40px 32px;
+  box-sizing: border-box;
+}
+
+/* Coluna do topo: botão voltar no canto e título logo abaixo, mais ao centro */
+.fp-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 32px;
+}
+
+/* Botão azul de retorno, alinhado ao canto superior esquerdo do cartão */
+.fp-btn-voltar {
+  align-self: flex-start;
+  background-color: #2b45a2;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.fp-btn-voltar:hover {
+  background-color: #203b8f;
+}
+
+/* Título da tela, em preto e negrito */
+.fp-titulo {
+  color: #000000;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
+}
+
+/* Coluna do formulário, com a largura do campo "Destinatário" */
+.fp-formulario {
+  width: 366px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Cada campo do formulário */
+.fp-campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+/* Rótulo visível, usado apenas no "Recebida :" */
+.fp-label-visivel {
+  color: #111111;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* Rótulo escondido visualmente, para leitores de tela manterem a
+   associação entre o texto do campo e a sua etiqueta */
+.fp-rotulo-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Aparência base de todos os campos da referência */
+.fp-input {
+  height: 44px;
+  box-sizing: border-box;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  outline: none;
+  padding: 0 12px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #333333;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fp-input::placeholder {
+  color: #999999;
+}
+
+.fp-input:focus {
+  border-color: #2b45a2;
+  box-shadow: 0 0 0 1px #2b45a2;
+}
+
+/* Remove as setas dos campos numéricos, que não existem na referência */
+.fp-input::-webkit-outer-spin-button,
+.fp-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.fp-input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Campo largo do destinatário */
+.fp-input--destinatario {
+  width: 366px;
+  max-width: 100%;
+}
+
+/* Linha que agrupa bloco e apartamento */
+.fp-linha-endereco {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Campo pequeno do bloco */
+.fp-input--bloco {
+  width: 82px;
+}
+
+/* Campo do apartamento */
+.fp-input--apartamento {
+  width: 146px;
+}
+
+/* Linha que agrupa os campos de data e hora */
+.fp-linha-recebida {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+/* Campos curtos de dia, mês e ano */
+.fp-input--data {
+  width: 56px;
+  text-align: center;
+}
+
+/* Campo de horário, um pouco mais largo */
+.fp-input--hora {
+  width: 97px;
+  text-align: center;
+}
+
+/* Aviso exibido quando um campo não passa na validação */
+.fp-erro {
+  color: #d9534f;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+/* Aviso exibido quando o envio falha, por exemplo quando a API recusa o cadastro */
+.fp-erro-envio {
+  color: #d9534f;
+  font-size: 13px;
+  margin: 16px 0 0 0;
+  text-align: center;
+}
+
+/* Texto de apoio usado pela tela de retirada */
+.fp-subtitulo {
+  color: #777777;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 auto 24px;
+  max-width: 366px;
+}
+
+/* Cartão de resumo dos dados da encomenda (tela de retirada) */
+.fp-resumo {
+  background-color: #f4f6fb;
+  border: 1px solid #dfe3ee;
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin: 0 auto 24px;
+  max-width: 366px;
+}
+
+.fp-resumo-titulo {
+  color: #2948a5;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.fp-resumo-linha {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 15px;
+  color: #555555;
+  padding: 4px 0;
+}
+
+.fp-resumo-linha span:last-child {
+  color: #111111;
+  font-weight: bold;
+  text-align: right;
+}
+
+/* Área do botão de salvar */
+.fp-area-salvar {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+/* Botão principal que confirma a operação */
+.fp-btn-salvar {
+  width: 176px;
+  height: 35px;
+  border: none;
+  border-radius: 7px;
+  background: linear-gradient(90deg, #5d7ddd 0%, #0e287a 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.fp-btn-salvar:hover {
+  filter: brightness(1.08);
+}
+
+.fp-btn-salvar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Telas médias: o cartão deixa de ter largura fixa e respeita as bordas da tela */
+@media (max-width: 720px) {
+
+  .fp-main {
+    padding: 20px 20px 32px 20px;
+  }
+}
+
+/* Celulares: os campos de endereço e de data passam a ocupar a linha inteira */
+@media (max-width: 480px) {
+
+  .fp-container {
+    padding: 16px 12px;
+  }
+
+  .fp-formulario,
+  .fp-resumo,
+  .fp-subtitulo {
+    max-width: 100%;
+  }
+
+  .fp-linha-endereco,
+  .fp-linha-recebida {
+    flex-wrap: wrap;
+  }
+
+  .fp-input--bloco,
+  .fp-input--apartamento {
+    flex: 1 1 0;
+    min-width: 82px;
+  }
+
+  .fp-input--data {
+    flex: 1 1 56px;
+  }
+
+  .fp-input--hora {
+    flex: 1 1 97px;
+  }
+
+  .fp-titulo {
+    font-size: 20px;
+  }
+}

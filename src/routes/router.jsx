@@ -38,6 +38,11 @@ import PaginaAutorizaRerva from '../pages/sindico/reservas/telaAutorizaReserva';
 import PaginaCadastraEncomenda from '../pages/porteiro/telaCadastraEncomenda';
 import PaginaDetalheEncomenda from '../pages/porteiro/telaDetalheEncomenda';
 
+//Importando as páginas do morador
+import PaginaVisitantesMorador from '../pages/morador/telaVisitantesMorador';
+import PaginaCadastraVisitanteMorador from '../pages/morador/telaCadastraVisitanteMorador';
+import PaginaEmBreveMorador from '../pages/morador/telaEmBreveMorador';
+
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -206,6 +211,44 @@ const route = createBrowserRouter([
             {
                 path: "morador", // Caminho relativo
                 element: <LayoutMorador />, 
+
+                children: [
+                    //Tela inicial do morador
+                    {
+                        index: true, // Renderiza no caminho "/morador"
+                        element: <PaginaEmBreveMorador titulo="Início" descricao="Seja bem-vindo ao Cond e x, morador." />,
+                    },
+
+                    //Tela de visitantes do morador
+                    {
+                        path: "visitantes", // Renderiza no caminho "/morador/visitantes"
+                        element: <PaginaVisitantesMorador />,
+                    },
+
+                    //Tela de pré cadastro de visitante
+                    {
+                        path: "visitantes/cadastro", // Renderiza no caminho "/morador/visitantes/cadastro"
+                        element: <PaginaCadastraVisitanteMorador />,
+                    },
+
+                    //Tela de reservas do morador
+                    {
+                        path: "reservas", // Renderiza no caminho "/morador/reservas"
+                        element: <PaginaEmBreveMorador titulo="Reservas" descricao="Agende e acompanhe as reservas das áreas comuns." />,
+                    },
+
+                    //Tela de mensagens do morador
+                    {
+                        path: "mensagens", // Renderiza no caminho "/morador/mensagens"
+                        element: <PaginaEmBreveMorador titulo="Mensagens" descricao="Comunicados e notificações do condomínio." />,
+                    },
+
+                    //Tela de documentos do morador
+                    {
+                        path: "documentos", // Renderiza no caminho "/morador/documentos"
+                        element: <PaginaEmBreveMorador titulo="Documentos" descricao="Consulta os documentos do condomínio." />,
+                    },
+                ]
             },
 
             //Tela do porteiro
