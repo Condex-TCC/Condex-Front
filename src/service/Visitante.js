@@ -1,126 +1,146 @@
 //Arquivo responsável por fornecer os dados de visitantes do morador
 
-//ATENÇÃO: hoje a aplicação está usando MOCK data porque ainda não existe
-//uma API de visitantes para o morador (a única existente é a do porteiro em
-//api/AutorizacaoApi.js). A estrutura dos objetos já segue o formato que a API
-//deverá devolver, então, quando os endpoints ficarem prontos, basta trocar o
-//retorno das funções abaixo pela requisição, seguindo o mesmo padrão de
-//tratamento usado nos outros arquivos da pasta service.
+import { getVisitantesMoradorAPI, insertVisitanteMoradorAPI } from "../api/VisitanteMoradorApi"
 
-//ESTRUTURA DE DADOS ESPERADA DA API
+//ATENÇÃO: a tabela de visitantes da API guarda apenas nome, cpf e o morador
+//responsável. Os campos de agendamento (data, horário de chegada e saída
+//prevista) não possuem coluna no banco, por isso não são exibidos nas telas.
+//Assim que o backend criar essas colunas, basta devolvê-las no mapeamento
+//abaixo para que os cards voltem a mostrar a data e o horaário da visita.
 
-//Visitante com entrada liberada e dentro do condomínio
-//{ id, nome, documento, bloco, apartamento, entrada, saidaPrevista, status }
+//Função que desembrulha a lista que vem dentro de um array extra
+//A API devolve { data: [ [visitantes] ], então o primeiro passo é
+//sempre pegar o primeiro elemento quando ele for uma lista
+function desembrulharLista(data){
 
-//Visita previamente cadastrada/agendada pelo morador
-//{ id, nome, documento, data, horario, saidaPrevista, status }
+    //Sem dado devolvido, a tela recebe uma lista vazia
+    if(!Array.isArray(data)){
 
-//Lista de visitantes que estão dentro do condomínio no momento
-const visitantesAtivos = [
-    {
-        id: 1,
-        nome: 'Maria de Souza Oliveira',
-        documento: '123.456.789-00',
-        bloco: 'A',
-        apartamento: '102',
-        entrada: '14:20',
-        saidaPrevista: '18:00',
-        status: 'Em andamento'
-    },
-    {
-        id: 2,
-        nome: 'Carlos Eduardo Ramos',
-        documento: '987.654.321-00',
-        bloco: 'B',
-        apartamento: '351',
-        entrada: '16:45',
-        saidaPrevista: '20:00',
-        status: 'Em andamento'
+        return []
     }
-]
 
-//Lista de visitantes previamente cadastrados que ainda vão chegar
-const proximasVisitas = [
-    {
-        id: 1,
-        nome: 'Ana Paula Ferreira',
-        documento: '456.789.123-00',
-        data: '2026-10-05',
-        horario: '09:00',
-        saidaPrevista: '12:00',
-        status: 'Agendada'
-    },
-    {
-        id: 2,
-        nome: 'Roberto Alves Lima',
-        documento: '321.987.654-00',
-        data: '2026-10-08',
-        horario: '15:30',
-        saidaPrevista: '19:00',
-        status: 'Agendada'
-    },
-    {
-        id: 3,
-        nome: 'Juliana Martins Costa',
-        documento: '789.123.456-00',
-        data: '2026-10-12',
-        horario: '11:15',
-        saidaPrevista: '14:00',
-        status: 'Agendada'
+    //Desembrulha o array extra quando a API responde com lista de listas
+    return Array.isArray(data[0]) ? data[0] : data
+}
+
+//Função que converte o registro bruto da API no formato usado pelos cards
+function paraVisita(visitante){
+
+    return {
+        id: visitante.pk_id_visitante,
+        nome: visitante.nome_visitante,
+        documento: visitante.cpf_visitante,
+        data: null, //A API ainda não possui essa coluna
+        horario: null, //A API ainda não possui essa coluna
+        saidaPrevista: null, //A API ainda não possui essa coluna
+        status: 'Cadastrado'
     }
-]
+}
 
 //Função que obtem os visitantes que possuem entrada ativa
+//PENDENTE: a API não expõe um endpoint com os visitantes que já entraram,
+//então a lista devolve vazia e a tela mostra o estado vazio corretamente
 export async function getVisitantesAtivos() {
 
-    //Devolve uma cópia da lista para que a tela não altere a fonte dos dados
-    return visitantesAtivos.map((visitante) => ({ ...visitante }))
+    return []
 }
 
-//Função que obtem as visitas previamente cadastradas, da mais próxima para a mais distante
+//Função que obtem os visitantes previamente cadastrados pelo morador logado
 export async function getProximasVisitas() {
 
-    //Copia a lista para poder ordenar sem alterar a fonte dos dados
-    const copia = proximasVisitas.map((visita) => ({ ...visita }))
+    //Tenta executar a requisição
+    try{
 
-    //Ordena pela data e, dentro do mesmo dia, pelo horário
-    copia.sort((a, b) => {
+        //Chamando a função que realiza a requisição na API
+        let response = await getVisitantesMoradorAPI()
 
-        //Junta data e horário para comparar as visitas como um único momento
-        const momentoA = `${a.data}T${a.horario}`
-        const momentoB = `${b.data}T${b.horario}`
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
 
-        //string no formato ISO pode ser comparada diretamente
-        return momentoA.localeCompare(momentoB)
-    })
+        //Desestrutura a promisse
+        const { status, data } = json
 
-    return copia
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
+
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
+
+        //Converte cada registro bruto no formato esperado pelos cards
+        return desembrulharLista(data).map(paraVisita)
+    }
+    //Caso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao buscar os visitantes na API:", erro)
+
+        //Devolve lista vazia para a tela não quebrar
+        return []
+    }
 }
 
-//Função que cadastra um visitante previamente, deixando ele agendado para uma próxima visita
+//Função que cadastra um novo visitante para o morador logado
+//Recebe { nome, documento } e devolve { sucesso, mensagem } para a tela
+//saber se pode navegar ou se precisa mostrar o erro da API
 export async function criarVisitaPreCadastrada(visita) {
 
-    //Gera um identificador único para o novo registro
-    const novoId = proximasVisitas.length > 0
-        ? Math.max(...proximasVisitas.map((item) => item.id)) + 1
-        : 1
+    //Tenta executar a requisição
+    try{
 
-    //Monta o registro no mesmo formato devolvido pela API
-    const novoRegistro = {
-        id: novoId,
-        nome: visita.nome,
-        documento: visita.documento,
-        data: visita.data,
-        horario: visita.horario,
-        saidaPrevista: visita.saidaPrevista,
-        status: 'Agendada'
+        //A API espera o CPF no campo "cpf"
+        let response = await insertVisitanteMoradorAPI(visita.nome, visita.documento)
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura a promisse
+        const { message, status, errors } = json
+
+        //Verifica se houve algum erro na requisição
+        if(status != 201 && status != 200){
+
+            //A API devolve os erros no formato [ {campo: [mensagens]} ],
+            //então cada item precisa ser aberto para virar texto legível
+            let detalhes = ""
+
+            if(Array.isArray(errors)){
+
+                detalhes = errors
+
+                    //Desembrulha cada item | Object.values pega as mensagens do campo
+                    .map((erro) => typeof erro === "object" && erro !== null
+                        ? Object.values(erro).flat().join(" ")
+                        : String(erro))
+
+                    .join(" ")
+            }
+
+            return {
+                sucesso: false,
+                mensagem: `${message || "Não foi possível cadastrar o visitante"} ${detalhes}`.trim()
+            }
+        }
+
+        //Retorna o sucesso com a mensagem da API
+        return {
+            sucesso: true,
+            mensagem: message
+        }
     }
+    //Caso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
 
-    //Guarda o registro na lista
-    proximasVisitas.push(novoRegistro)
+        //Exibe o erro no console para depuração
+        console.error("Erro ao cadastrar o visitante na API:", erro)
 
-    //Devolve a mensagem para a tela exibir
-    return `Visita de ${novoRegistro.nome} cadastrada com sucesso!`
+        //Devolve uma mensagem amigável para a tela exibir
+        return {
+            sucesso: false,
+            mensagem: "Não foi possível conectar à API. Verifique se o servidor está no ar."
+        }
+    }
 }
 
 //Função auxiliar que converte a data no padrão ISO (2026-10-05) para o padrão brasileiro (05/10/2026)

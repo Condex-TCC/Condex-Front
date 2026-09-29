@@ -137,10 +137,12 @@ function PaginainicialPorteiro(){
         navigate("/porteiro/encomenda/create")
     }
 
-    //Função que avisa que o cadastro de visitante ainda depende do backend
+    //Função que avisa que o cadastro de visitante ainda não pode ser usado
+    //A API tem o endpoint de criação, mas ele exige o id do morador
+    //responsável, e o porteiro não tem nenhuma rota para consultar moradores
     const registrarVisitante = () => {
 
-        alert("Cadastro de visitante indisponível: o backend ainda não expõe o endpoint de criação de visitante.")
+        alert("Cadastro de visitante indisponível: a API exige o id do morador responsável e o porteiro não possui um endpoint para consultar os moradores.")
     }
 
     //Retorna um componente

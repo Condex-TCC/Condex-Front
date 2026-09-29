@@ -21,13 +21,17 @@ function CardVisitantePreCadastrado({ autorizacao, renderiza }){
     const registrarEntrada = async () => {
 
         //Chama a função que libera a entrada na API
-        const mensagem = await registrarEntradaVisitante(autorizacao.id)
+        const resultado = await registrarEntradaVisitante(autorizacao.id)
 
-        //Exibe a menssagem retornada
-        alert(mensagem)
+        //Exibe a menssagem retornada (sucesso ou erro)
+        alert(resultado.mensagem)
 
-        //Remove o card da lista de pré cadastrados, já que o visitante deixou de esperar
-        renderiza((atuais) => atuais.filter((item) => item.id !== autorizacao.id))
+        //Remove o card da lista de pré cadastrados somente quando a
+        //API confirmou | Em caso de erro o card continua na tela
+        if(resultado.sucesso){
+
+            renderiza((atuais) => atuais.filter((item) => item.id !== autorizacao.id))
+        }
     }
 
     //Retorna o componente

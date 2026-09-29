@@ -39,6 +39,8 @@ export async function getVisitantesPreCadastrados() {
 }
 
 //Função que libera a entrada de um visitante
+//Devolve { sucesso, mensagem } para o card saber se pode tirar o
+//visitante da lista de espera ou se precisa manter o card na tela
 export async function registrarEntradaVisitante(id) {
 
     //Tendanto executar a requisição
@@ -57,11 +59,11 @@ export async function registrarEntradaVisitante(id) {
         if(status != 200){
 
             //Para a execução do try e lança um erro para o catch
-            throw("Erro na requisição " + status)
+            throw(message || ("Erro na requisição " + status))
         }
 
-        //Retornando a menssagem
-        return message
+        //Retornando a menssagem de sucesso
+        return { sucesso: true, mensagem: message }
     }
     //Casso aconteça algum erro na requisição, cai nesse bloco
     catch(erro){
@@ -69,6 +71,11 @@ export async function registrarEntradaVisitante(id) {
         //Exibe um alerta na tela
         console.error("Erro ao registrar a entrada do visitante na API:", erro)
 
+        //Devolve o erro para a tela exibir sem remover o card
+        return {
+            sucesso: false,
+            mensagem: typeof erro === "string" ? erro : "Não foi possível registrar a entrada do visitante."
+        }
     }
 
 }

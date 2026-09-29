@@ -22,14 +22,20 @@ function CardProximaVisita({ visita }) {
             <div className={styles['vm-info']}>
                 <div className={styles['vm-name']}>{visita.nome}</div>
                 <div className={styles['vm-details']}>
-                    {formatarDataBrasileira(visita.data)} · {visita.horario}
-                    {visita.saidaPrevista ? ` até ${visita.saidaPrevista}` : ''}
+                    {
+                        //Quando a API não devolve a data, mostra o documento
+                        //cadastro no lugar, para o card não ficar com texto vazio
+                        visita.data ?
+                            `${formatarDataBrasileira(visita.data)}${visita.horario ? ` · ${visita.horario}` : ''}${visita.saidaPrevista ? ` até ${visita.saidaPrevista}` : ''}`
+                        :
+                            visita.documento ? `Documento: ${visita.documento}` : 'Dados da visita não informados'
+                    }
                 </div>
             </div>
 
             {/* Etiqueta que mostra que a visita ainda vai acontecer */}
             <span className={`${styles['vm-badge']} ${styles['vm-badge--agendada']}`}>
-                {visita.status || 'Agendada'}
+                {visita.status || 'Cadastrado'}
             </span>
 
         </div>

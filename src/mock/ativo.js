@@ -2,7 +2,8 @@
 //Com USE_MOCK em false, todas as telas voltam a chamar a API real
 //normalmente, sem precisar desfazer nenhuma outra alteração.
 
-export const USE_MOCK = true
+//false = telas do porteiro usam a API real (encomendas e autorizações)
+export const USE_MOCK = false
 
 //Atraso simulado, em milissegundos, para as telas não carregarem de
 //repente. Serve para conferir os estados de carregamento e os botões
