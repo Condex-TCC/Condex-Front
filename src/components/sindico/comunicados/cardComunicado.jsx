@@ -21,6 +21,12 @@ function formatarData(dataIso) {
 // Criando a função
 function CardComunicados({ comunicado }) {
 
+    //Função que pega o id do comuinicado
+    const detalhesComunicados = () => {
+
+        alert("id do comunicado: " + comunicado.id)
+    }
+
     // Retorna o componente | Card
     return (
         /* Card do comunicado */

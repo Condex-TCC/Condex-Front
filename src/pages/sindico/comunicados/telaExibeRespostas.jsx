@@ -4,9 +4,15 @@
 import { useNavigate } from "react-router-dom"
 import styles from "../../../css/paginaExibeRegrasLaudos.module.css"
 import cardStyles from "../../../css/cardRegrasLaudosSindico.module.css"
+import { getRespostas } from "../../../service/Comunicados"
+import { useEffect, useState } from "react"
+import CardResposta from "../../../components/sindico/comunicados/cardResposta"
 
 //Função que cria o componentes
 function PaginaExibeResposta(){
+
+    //Hook que irá controlar o estado das respostas
+    const [cards, setCards] = useState([])
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
@@ -24,6 +30,27 @@ function PaginaExibeResposta(){
         //Realiza a mudança de tela
         navigate("/sindico/comunicados/respostas")
     }
+
+    //Função que recupera todas as respostas
+    const obtendoRespostas = async () => {
+    
+        //Pegando as respostas
+        let dados = await getRespostas()
+    
+        //Desestruturando os dados
+        let { perguntas } = await dados
+        console.log(perguntas)
+        //Atualizando o estado
+        setCards(perguntas)
+    }
+    
+    //Função com useEffect para visualiar pegar as respostas
+    useEffect(() => {
+    
+        //Chama a função para pegar as respostas
+        obtendoRespostas()
+    
+    }, [])
 
     //Retona o componente
     return(
@@ -48,66 +75,15 @@ function PaginaExibeResposta(){
 
             {/*Div com os cards */}
             <div>
-
-                {/* Card da pergunta do morador */}
-                <div className={cardStyles.card}>
-
-                    {/* Cabeçalho do card com o nome do morador e o apartamento */}
-                    <header className={cardStyles.header}>
-
-                        <h3 className={cardStyles.title}>Maria Souza</h3>
-
-                        <div className={cardStyles.timeInfo}>Bloco B - Apto 204</div>
-                    </header>
-
-                    {/* Corpo do card com o texto da pergunta */}
-                    <div className={cardStyles.horarioContent}>
-
-                        <p className={cardStyles.description}>
-                            Boa tarde, o petioporto continua fechada? Preciso receber uma entrega.
-                        </p>
-                    </div>
-                </div>
-
-                {/* Card da pergunta do morador */}
-                <div className={cardStyles.card}>
-
-                    {/* Cabeçalho do card com o nome do morador e o apartamento */}
-                    <header className={cardStyles.header}>
-
-                        <h3 className={cardStyles.title}>João Carlos Ferreira</h3>
-
-                        <div className={cardStyles.timeInfo}>Bloco A - Apto 101</div>
-                    </header>
-
-                    {/* Corpo do card com o texto da pergunta */}
-                    <div className={cardStyles.horarioContent}>
-
-                        <p className={cardStyles.description}>
-                            Qual a data da próxima reunião sobre a troca do portão eletrônico?
-                        </p>
-                    </div>
-                </div>
-
-                {/* Card da pergunta do morador */}
-                <div className={cardStyles.card}>
-
-                    {/* Cabeçalho do card com o nome do morador e o apartamento */}
-                    <header className={cardStyles.header}>
-
-                        <h3 className={cardStyles.title}>Ana Beatriz Lima</h3>
-
-                        <div className={cardStyles.timeInfo}>Bloco C - Apto 302</div>
-                    </header>
-
-                    {/* Corpo do card com o texto da pergunta */}
-                    <div className={cardStyles.horarioContent}>
-
-                        <p className={cardStyles.description}>
-                            É possível reservar o salão de eventos para o dia 21/06?
-                        </p>
-                    </div>
-                </div>
+                
+                {/* Cards com as respostas */}
+                {
+                    // Interando e adicioando os cards
+                    cards.map((resposta) => {
+                        //Retorna o card de comunicado
+                        return <CardResposta resposta={resposta}></CardResposta>
+                    } )
+                }
             </div>
         </div>
     )
