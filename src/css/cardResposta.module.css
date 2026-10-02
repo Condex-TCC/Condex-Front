@@ -1,0 +1,160 @@
+/* =========================================
+   CARD DE RESPOSTA (ENVIO DO MORADOR)
+   ========================================= */
+
+/* Card com destaque lateral e sombra para separar os envios da lista */
+.card {
+  border: 1px solid #e0e0e0;
+  border-left: 4px solid #1e3a8a; /* Azul escuro já usado nos botões da tela */
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  font-family: sans-serif;
+  margin-bottom: 16px; /* Espaçamento entre os cards, mesmo padrão do cardReserva */
+}
+
+/* Cabeçalho alinhando o nome do morador e a unidade */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Nome do morador com corpo maior para destacar quem enviou */
+.titulo {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Unidade do morador exibida como etiqueta ao lado do nome */
+.unidade {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  background-color: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+/* Bloco com os dados de contato e o comunicado de referência */
+.contexto {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+/* Texto dos dados de contato e do comunicado de referência */
+.contextoItem {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Bloco principal com a pergunta do morador e a resposta do síndico */
+.conversa {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Pergunta do morador */
+.pergunta {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+
+/* Resposta do síndico destacada em um bloco próprio */
+.resposta {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  background-color: #e0f2fe;
+  border-left: 3px solid #1e3a8a;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+/* Rodapé separando o status e o botão de ação */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 12px;
+}
+
+/* Status do envio (pendente ou visualizado) */
+.statusContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.statusLabel {
+  color: #333;
+  font-weight: 600;
+}
+
+/* Base da etiqueta de status, muda apenas a cor conforme a situação */
+.statusPendente,
+.statusVisualizado {
+  font-weight: 600;
+  background-color: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+/* Cor do status quando o morador ainda não visualizou */
+.statusPendente {
+  color: #a72828;
+}
+
+/* Cor do status quando o morador já visualizou */
+.statusVisualizado {
+  color: #2e7d32;
+}
+
+/* Grupo que alinha o botão de resposta */
+.actionGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Botão de responder */
+.actionButton {
+  background-color: #8bb3eb;
+  color: #000000;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.actionButton:hover {
+  background-color: #79a1d9;
+}

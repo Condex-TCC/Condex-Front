@@ -7,6 +7,7 @@ import cardStyles from "../../../css/cardRegrasLaudosSindico.module.css"
 import { getComunicados } from "../../../service/Comunicados"
 import { useEffect, useState } from "react"
 import CardComunicado from "../../../components/sindico/comunicados/cardComunicado"
+import stylesTitle from '../../../css/paginaCadastraRegra.module.css';
 
 //Função que cria o componentes
 function PaginaExibeComunicados(){
@@ -74,7 +75,7 @@ function PaginaExibeComunicados(){
                 <button className={styles.primaryButton}>+ Cadastrar comunicado</button>
             </div>
 
-            <h1 className={styles.cardTitle}>Página exibe os comunicados</h1>
+            <h1 className={stylesTitle.title} style={{ marginBottom: "26px", marginTop: "36px" }}>Página exibe os comunicados</h1>
 
             {/*div com os cards */}
             <div>

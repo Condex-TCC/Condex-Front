@@ -7,6 +7,7 @@ import cardStyles from "../../../css/cardRegrasLaudosSindico.module.css"
 import { getRespostas } from "../../../service/Comunicados"
 import { useEffect, useState } from "react"
 import CardResposta from "../../../components/sindico/comunicados/cardResposta"
+import stylesTitle from '../../../css/paginaCadastraRegra.module.css';
 
 //Função que cria o componentes
 function PaginaExibeResposta(){
@@ -71,7 +72,7 @@ function PaginaExibeResposta(){
                 </div>
             </div>
 
-            <h1 className={styles.cardTitle}>Perguntas dos moradores</h1>
+            <h1 className={stylesTitle.title} style={{marginBottom: "26px", marginTop: "36px"}}>Perguntas dos moradores</h1>
 
             {/*Div com os cards */}
             <div>

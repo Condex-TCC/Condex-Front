@@ -1,0 +1,27 @@
+/* Lista que empilha os cards de resposta (o espaçamento entre eles vem do próprio card) */
+.listaEnvios {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px; /* Separa a lista do bloco de dados do comunicado */
+}
+
+/* Bloco de destaque com os dados do comunicado */
+.comunicado {
+  border-left: 4px solid #1e3a8a; /* Azul escuro já usado nos botões da tela */
+}
+
+/* Título do comunicado com corpo maior para ganhar destaque sobre os cards */
+.comunicado .comunicadoTitulo {
+  font-size: 20px;
+}
+
+/* Espaçamento maior entre a descrição e a data de criação */
+.comunicado .comunicadoCorpo {
+  gap: 12px;
+}
+
+/* Descrição do comunicado com corpo maior que o dos cards de resposta */
+.comunicado .comunicadoDescricao {
+  font-size: 14px;
+  color: #333;
+}

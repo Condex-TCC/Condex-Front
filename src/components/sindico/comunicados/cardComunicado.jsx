@@ -1,6 +1,6 @@
 // Importações para o arquivo
 import { useNavigate } from "react-router-dom";
-import cardStyles from "../../../css/cardRegrasLaudosSindico.module.css";
+import cardStyles from "../../../css/cardResposta.module.css";
 
 // Função para formatar a data e hora
 function formatarData(dataIso) {
@@ -37,21 +37,18 @@ function CardComunicados({ comunicado }) {
         /* Card do comunicado */
         <div className={cardStyles.card} onClick={detalhesComunicados}>
         
-            {/* Cabeçalho do card com o título do comunicado */}
+            {/* Cabeçalho do card com o título do comunicado e a data de criação */}
             <header className={cardStyles.header}>
-                <h3 className={cardStyles.title}>{comunicado.titulo}</h3>
+                <h3 className={cardStyles.titulo}>{comunicado.titulo}</h3>
+                <span className={cardStyles.unidade}>
+                    {formatarData(comunicado.criado_em)}
+                </span>
             </header>
         
-            {/* Corpo do card com a data e o trecho do comunicado */}
-            <div className={cardStyles.horarioContent}>
-                <div className={cardStyles.timeInfo}>
-                    {formatarData(comunicado.criado_em)}
-                </div>
-        
-                <p className={cardStyles.description}>
-                    {comunicado.descricao}
-                </p>
-            </div>
+            {/* Descrição do comunicado em destaque */}
+            <p className={cardStyles.resposta}>
+                {comunicado.descricao}
+            </p>
         </div>
     );
 }
