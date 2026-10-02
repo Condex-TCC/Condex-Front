@@ -114,7 +114,7 @@ function PaginaExibeEnvios(){
                     envios.map((envio) => {
 
                         //Retorna o card de resposta com o envio do morador
-                        return <CardResposta key={envio.id} resposta={envio}></CardResposta>
+                        return <CardResposta key={envio.id} resposta={envio} redirecionamento={"/sindico/comunicados/envios/" + id}></CardResposta>
                     } )
                 }
             </div>

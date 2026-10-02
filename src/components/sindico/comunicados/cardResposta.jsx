@@ -1,12 +1,23 @@
 // Importações para o arquivo
+import { useNavigate } from "react-router-dom";
 import cardStyles from "../../../css/cardResposta.module.css";
 
 // Criando a função
-function CardResposta({ resposta }) {
+function CardResposta({ resposta, redirecionamento }) {
+
+    //Hook que realiza a navegação
+    const navigate = useNavigate()
 
     // Função que pega o id da resposta e do comunicado
     const responderPerunta = () => {
         alert("ID da interação: " + resposta.id + "\nID do comunicado: " + resposta.comunicado.id);
+
+        //Realiza a navegação | Passando a ultima tela que o usuário acessou
+        navigate("/sindico/comunicados/responder/" + resposta.id, {
+            state: {
+                redirecionamento: redirecionamento
+            }
+        })
     }
 
     // Desestruturação para facilitar a leitura

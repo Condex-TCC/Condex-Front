@@ -89,3 +89,70 @@ export async function getEnviosComunicadosAPI(id){
     //Retornado uma promise com os dados da API
     return requisicao
 }
+
+//Função que recupera os dados do envio
+export async function showEnvioDetalheAPI(id){
+
+    //Receperando o token de outorização
+    let cookie = await GetCookie()
+    let token = cookie.token
+
+    //Endpoint
+    let endPoint = "http://127.0.0.1:8000/api/sindico/comunicado/show/detalhes/" + id
+
+    //Criando a requisição
+    const requisicao = fetch(
+        endPoint, //Passando o endPoint para a requisição
+        {
+            method: "GET", //Passando qual é o metodo HTTP
+
+            //Passando os headers
+            headers: {
+                'Content-Type': 'application/json', //Tipo de formatação
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
+                "Authorization": `Bearer ${token}` //Eniva o token de autorização
+            },
+        }
+    )
+
+    //Retornado uma promise com os dados da API
+    return requisicao
+}
+
+//Função que atualiza o registro do envio, adicionando contra resposta
+export async function updateEnvioContraRespostaAPI(id, contraResposta){
+
+    //Receperando o token de outorização
+    let cookie = await GetCookie()
+    let token = cookie.token
+
+    //Endpoint
+    let endPoint = "http://127.0.0.1:8000/api/sindico/comunicado/contraResposta/" + id
+
+    //Construtindo o objeto que ser envio no body do json
+    let bodyJson = {
+        "contra_resposta": contraResposta
+    }
+
+    //Criando a requisição
+    const requisicao = fetch(
+        endPoint, //Passando o endPoint para a requisição
+        {
+            method: "PUT", //Passando qual é o metodo HTTP
+
+            //Passando os headers
+            headers: {
+                'Content-Type': 'application/json', //Tipo de formatação
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
+                "Authorization": `Bearer ${token}` //Eniva o token de autorização
+            },
+
+            //Padando o body
+            body: JSON.stringify(bodyJson)
+        }
+    )
+
+    //Retornado uma promise com os dados da API
+    return requisicao
+}
+

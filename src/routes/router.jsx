@@ -45,6 +45,7 @@ import PaginaEmBreveMorador from '../pages/morador/telaEmBreveMorador';
 import PaginaExibeComunicados from '../pages/sindico/comunicados/telaExibeComunicados';
 import PaginaExibeResposta from '../pages/sindico/comunicados/telaExibeRespostas';
 import PaginaExibeEnvios from '../pages/sindico/comunicados/telaExibeEnvios';
+import PaginaCadastraContraResposta from '../pages/sindico/comunicados/telaCadastraContraResposta';
 
 
 //Componente que será utilizado para analisar a URL
@@ -222,9 +223,13 @@ const route = createBrowserRouter([
                     {
                         path: "comunicados/envios/:id", //Caminho
                         element: <PaginaExibeEnvios></PaginaExibeEnvios>
-                    }
+                    },
 
-                    
+                    //Tela onde o sindico irá cadastrar a contra resposta ao morador
+                    {
+                        path: "comunicados/responder/:id",
+                        element: <PaginaCadastraContraResposta></PaginaCadastraContraResposta>
+                    },
                 ]
             },
 

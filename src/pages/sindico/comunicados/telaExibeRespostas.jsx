@@ -82,7 +82,7 @@ function PaginaExibeResposta(){
                     // Interando e adicioando os cards
                     cards.map((resposta) => {
                         //Retorna o card de comunicado
-                        return <CardResposta resposta={resposta}></CardResposta>
+                        return <CardResposta resposta={resposta} redirecionamento={"/sindico/comunicados/respostas"}></CardResposta>
                     } )
                 }
             </div>
