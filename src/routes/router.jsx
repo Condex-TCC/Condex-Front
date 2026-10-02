@@ -42,6 +42,8 @@ import PaginaDetalheEncomenda from '../pages/porteiro/telaDetalheEncomenda';
 import PaginaVisitantesMorador from '../pages/morador/telaVisitantesMorador';
 import PaginaCadastraVisitanteMorador from '../pages/morador/telaCadastraVisitanteMorador';
 import PaginaEmBreveMorador from '../pages/morador/telaEmBreveMorador';
+import PaginaExibeComunicados from '../pages/sindico/comunicados/telaExibeComunicados';
+import PaginaExibeResposta from '../pages/sindico/comunicados/telaExibeRespostas';
 
 
 //Componente que será utilizado para analisar a URL
@@ -201,6 +203,18 @@ const route = createBrowserRouter([
                     {   
                         path: "reservas/gerenciamento/autorizacao/:id",
                         element: <PaginaAutorizaRerva></PaginaAutorizaRerva>
+                    },
+
+                    //Tela do comunicados
+                    {
+                        path: "comunicados", // Renderiza no caminho "/morador/documentos"
+                        element: <PaginaExibeComunicados></PaginaExibeComunicados>
+                    },
+
+                    //Tela do comunicados
+                    {
+                        path: "comunicados/respostas", // Renderiza no caminho "/morador/documentos"
+                        element: <PaginaExibeResposta></PaginaExibeResposta>
                     },
 
                     
