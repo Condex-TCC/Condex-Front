@@ -44,6 +44,7 @@ import PaginaCadastraVisitanteMorador from '../pages/morador/telaCadastraVisitan
 import PaginaEmBreveMorador from '../pages/morador/telaEmBreveMorador';
 import PaginaExibeComunicados from '../pages/sindico/comunicados/telaExibeComunicados';
 import PaginaExibeResposta from '../pages/sindico/comunicados/telaExibeRespostas';
+import PaginaExibeEnvios from '../pages/sindico/comunicados/telaExibeEnvios';
 
 
 //Componente que será utilizado para analisar a URL
@@ -216,6 +217,12 @@ const route = createBrowserRouter([
                         path: "comunicados/respostas", // Renderiza no caminho "/morador/documentos"
                         element: <PaginaExibeResposta></PaginaExibeResposta>
                     },
+
+                    //Tela exibe os envios do comunicado
+                    {
+                        path: "comunicados/envios/:id", //Caminho
+                        element: <PaginaExibeEnvios></PaginaExibeEnvios>
+                    }
 
                     
                 ]

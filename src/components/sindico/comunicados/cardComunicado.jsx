@@ -1,4 +1,5 @@
 // Importações para o arquivo
+import { useNavigate } from "react-router-dom";
 import cardStyles from "../../../css/cardRegrasLaudosSindico.module.css";
 
 // Função para formatar a data e hora
@@ -21,16 +22,20 @@ function formatarData(dataIso) {
 // Criando a função
 function CardComunicados({ comunicado }) {
 
+    //Hook utilizado para realizar a naveração
+    const navigate = useNavigate()
+
     //Função que pega o id do comuinicado
     const detalhesComunicados = () => {
 
-        alert("id do comunicado: " + comunicado.id)
+        //Muda para para a tela de detalhes dos envios | Passando o id do comunicado
+        navigate('/sindico/comunicados/envios/' + comunicado.id)
     }
 
     // Retorna o componente | Card
     return (
         /* Card do comunicado */
-        <div className={cardStyles.card}>
+        <div className={cardStyles.card} onClick={detalhesComunicados}>
         
             {/* Cabeçalho do card com o título do comunicado */}
             <header className={cardStyles.header}>
