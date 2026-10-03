@@ -34,7 +34,8 @@ function PaginaCadastraComunicados(){
     //Função que irá redirecionar para a tela de selecionar os moradores
     const selectMorador = () => {
 
-        //TODO: Fazer a lógica mais terde
+        //Realiza a navegação para o tela onde será selecionado os moradoes
+        navigate('/sindico/comunicados/cadastrar/selecionar')
     }
 
     //Função que realiza o cadastro do comunicado e realiza o envio

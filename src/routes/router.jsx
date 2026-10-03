@@ -47,31 +47,32 @@ import PaginaExibeResposta from '../pages/sindico/comunicados/telaExibeRespostas
 import PaginaExibeEnvios from '../pages/sindico/comunicados/telaExibeEnvios';
 import PaginaCadastraContraResposta from '../pages/sindico/comunicados/telaCadastraContraResposta';
 import PaginaCadastraComunicados from '../pages/sindico/comunicados/telaCadastraComunicados';
+import PaginaSelecionaMoradorComunicado from '../pages/sindico/comunicados/telaSelecionaMorador';
 
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
     //Elemento base do array
     {
-        path: "/", 
-        element: <RootLayout />, 
+        path: "/",
+        element: <RootLayout />,
 
         //Array com as subrotas do sistema
         children: [
             //Tela inicial e login
             {
                 path: "", // Caminho vazio para herdar o "/"
-                element: <LoginLayout />, 
+                element: <LoginLayout />,
                 children: [
                     //Tela de inicial
                     {
                         index: true, // Usa index: true para a rota padrão do pai
-                        element: <PaginaInical />, 
+                        element: <PaginaInical />,
                     },
                     //Tela de login
                     {
                         path: "login", // Caminho relativo (sem a barra inicial)
-                        element: <TelaDeLogin />, 
+                        element: <TelaDeLogin />,
                     }
                 ]
             },
@@ -79,61 +80,61 @@ const route = createBrowserRouter([
             //Tela do sindico
             {
                 path: "sindico", // Caminho relativo
-                element: <LayoutSindico />, 
+                element: <LayoutSindico />,
 
                 children: [
                     //Tela inicial do sindico
                     {
                         index: true, // Renderiza no caminho "/sindico"
-                        element: <PaginainicialSindico />, 
+                        element: <PaginainicialSindico />,
                     },
                     //Tela de gerenciamento de usuários
                     {
                         path: "usuarios", // Renderiza no caminho "/sindico/usuarios"
-                        element: <PaginaExibeUsuarios />, 
+                        element: <PaginaExibeUsuarios />,
                     },
 
                     //Tela para cadastrar os porteiros
                     {
                         path: "usuarios/porteiro", // Caminho que vai ser acessado na URL
-                        element: <PaginaCadastraPorteiro />, 
+                        element: <PaginaCadastraPorteiro />,
                     },
 
                     //Tela para selecionar o apartento
                     {
                         path: "usuarios/morador/apertamento", // Caminho que vai ser acessado na URL
-                        element: <PaginaSelecionaApertamento></PaginaSelecionaApertamento>, 
+                        element: <PaginaSelecionaApertamento></PaginaSelecionaApertamento>,
                     },
 
                     //Tela para para cadastrar os moradoes
                     {
                         path: "usuarios/morador/create/:id", // Caminho que vai ser acessado na URL
-                        element: <PaginaCadastraMorador></PaginaCadastraMorador>, 
+                        element: <PaginaCadastraMorador></PaginaCadastraMorador>,
                     },
 
                     //Tela para para cadastrar os moradoes
                     {
                         path: "usuarios/morador/updade/:id", // Caminho que vai ser acessado na URL
-                        element: <PaginaAtualizaMorador></PaginaAtualizaMorador>, 
+                        element: <PaginaAtualizaMorador></PaginaAtualizaMorador>,
                     },
 
                     //Tela de sucesso no cadastro
                     {
                         path: "mensagem", // Caminho que vai ser acessado na URL
-                        element: <PaginaMenssagem></PaginaMenssagem>, 
+                        element: <PaginaMenssagem></PaginaMenssagem>,
                     },
 
                     //Tela para selecionar o apartento para atualizar 
                     {
                         path: "usuarios/morador/apertamento/update", // Caminho que vai ser acessado na URL
-                        element: <PaginaSelecionaApertamentoUpdate></PaginaSelecionaApertamentoUpdate>, 
+                        element: <PaginaSelecionaApertamentoUpdate></PaginaSelecionaApertamentoUpdate>,
                     },
 
                     //Tela de updadte do porteiro
                     {
                         //Essa rota recebe um parametro na url
                         path: "usuarios/porteiro/update/:id", // Caminho que vai ser acessado na URL
-                        element: <PaginaAtualizaPorteiro></PaginaAtualizaPorteiro>, 
+                        element: <PaginaAtualizaPorteiro></PaginaAtualizaPorteiro>,
                     },
 
                     //Tela de exibir regras
@@ -203,7 +204,7 @@ const route = createBrowserRouter([
                     },
 
                     //Tela para visualizar uma unica reserva para a provação
-                    {   
+                    {
                         path: "reservas/gerenciamento/autorizacao/:id",
                         element: <PaginaAutorizaRerva></PaginaAutorizaRerva>
                     },
@@ -236,6 +237,12 @@ const route = createBrowserRouter([
                     {
                         path: "comunicados/cadastrar",
                         element: <PaginaCadastraComunicados></PaginaCadastraComunicados>
+                    },
+
+                    //Tela que vai seleiconar os moradores
+                    {
+                        path: "comunicados/cadastrar/selecionar",
+                        element: <PaginaSelecionaMoradorComunicado></PaginaSelecionaMoradorComunicado>
                     }
                 ]
             },
@@ -243,7 +250,7 @@ const route = createBrowserRouter([
             //Tela do morador
             {
                 path: "morador", // Caminho relativo
-                element: <LayoutMorador />, 
+                element: <LayoutMorador />,
 
                 children: [
                     //Tela inicial do morador
@@ -287,13 +294,13 @@ const route = createBrowserRouter([
             //Tela do porteiro
             {
                 path: "porteiro", // Caminho relativo
-                element: <PorteiroLayout />, 
+                element: <PorteiroLayout />,
 
                 children: [
                     //Tela inicial do porteiro
                     {
                         index: true, // Renderiza no caminho "/porteiro"
-                        element: <PaginainicialPorteiro />, 
+                        element: <PaginainicialPorteiro />,
                     },
 
                     //Tela de cadastro de encomenda
