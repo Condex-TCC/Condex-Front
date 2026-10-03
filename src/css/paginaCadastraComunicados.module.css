@@ -1,0 +1,33 @@
+/* Linha que informa para quem o comunicado será enviado e traz o botão de seleção à direita */
+.destinatario {
+  display: flex; /* Coloca o texto e o botão na mesma linha */
+  justify-content: space-between; /* Joga o texto para a esquerda e o botão para a direita */
+  align-items: center; /* Centraliza os dois verticalmente */
+  margin-bottom: 16px; /* Respiro em relação ao primeiro campo */
+}
+
+/* Texto que mostra se o comunicado vai para todos ou para os moradores selecionados */
+.destinatarioTexto {
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+}
+
+/* Botão secundário que leva para a seleção dos moradores */
+.botaoSelecionar {
+  background-color: #ffffff;
+  color: #274092; /* Mesmo azul do botão de voltar da tela */
+  border: 1px solid #274092;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.botaoSelecionar:hover {
+  background-color: #eef2ff;
+}

@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { envioComunicado } from "../../../service/Comunicados";
+import styles from "../../../css/paginaCadastraRegra.module.css";
+import destaqueStyles from "../../../css/paginaCadastraContraResposta.module.css";
+import selecaoStyles from "../../../css/paginaCadastraComunicados.module.css";
 
 
 //Criando o componente
@@ -49,18 +52,76 @@ function PaginaCadastraComunicados(){
 
     //Retorna o componente
     return (
-        // <h1></h1>
-        //Titulo Cadastrar comunicados
 
-        //Um texto mostando se todos estão delecionados ou se o sindico selecionou todos
-        //na diretira um botão para o sindico cadastrar os comunicados
+        // Container principal que engloba tudo
+        <div className={styles.container}>
 
-        //Uma compo para o sindico cadastar o titulo do comunicado
+            {/* Cabeçalho com o título da tela e o botão de voltar */}
+            <header className={styles.header}>
 
-        //outro campo para o sindico cadastrar a descrição do conteutdo
+                <h1 className={styles.title}>Cadastrar comunicado</h1>
 
-        //Um botão verde centralizado escrito: Enviar novo comunicado
-        <button onClick={CadastrarEnvioComunicado}>Enviar</button>
+                {/* Botão que retorna para a tela dos comunicados */}
+                <button className={styles.backButton} onClick={back}>
+                    &larr; Voltar
+                </button>
+            </header>
+
+            {/* Linha que mostra o destinatário do comunicado e o botão de seleção na outra extremidade */}
+            <div className={selecaoStyles.destinatario}>
+
+                {/* Texto que muda conforme existam moradores selecionados ou não */}
+                <span className={selecaoStyles.destinatarioTexto}>
+                    {moradoresSelecionados.length > 0 ? "Moradores selecionados" : "Todos os moradores cadastrados"}
+                </span>
+
+                {/* Botão que leva para a tela de seleção dos moradores */}
+                <button className={selecaoStyles.botaoSelecionar} onClick={selectMorador}>
+                    Selecionar morador
+                </button>
+            </div>
+
+            {/* Bloco com o campo onde o síndico escreve o título do comunicado */}
+            <div className={destaqueStyles.campoResposta}>
+
+                <label className={destaqueStyles.rotulo} htmlFor="tituloComunicado">Título</label>
+
+                <input
+                    id="tituloComunicado"
+                    type="text"
+                    className={styles.inputTitle}
+                    placeholder="Digite o título do comunicado..."
+                    value={titulo}
+                    onChange={(evento) => setTiulo(evento.target.value)}
+                />
+            </div>
+
+            {/* Bloco com o campo onde o síndico escreve a descrição do comunicado */}
+            <div className={destaqueStyles.campoResposta}>
+
+                <label className={destaqueStyles.rotulo} htmlFor="descricaoComunicado">Descrição</label>
+
+                <textarea
+                    id="descricaoComunicado"
+                    className={styles.inputDescription}
+                    placeholder="Escreva aqui o conteúdo do comunicado..."
+                    value={descricao}
+                    onChange={(evento) => setDescricao(evento.target.value)}
+                />
+            </div>
+
+            {/* Botão verde de envio do comunicado, centralizado na tela */}
+            <div className={styles.actionsContainer}>
+
+                <button
+                    type="button"
+                    className={styles.buttonAprovar}
+                    onClick={CadastrarEnvioComunicado}
+                >
+                    Enviar novo comunicado
+                </button>
+            </div>
+        </div>
     );
 }
 
