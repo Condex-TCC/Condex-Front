@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { showEnvioDetalhe, updateEnvioContraResposta } from "../../../service/Comunicados";
+import styles from "../../../css/paginaCadastraRegra.module.css";
+import cardStyles from "../../../css/cardResposta.module.css";
+import destaqueStyles from "../../../css/paginaCadastraContraResposta.module.css";
 
 //Função que cria o componente
 function PaginaCadastraContraResposta(){
@@ -69,20 +72,107 @@ function PaginaCadastraContraResposta(){
 
     //Retorna um componente
     return (
-        <h1></h1>
-        // Title dizendo: respondendo o morador
-        // No canto direito o botão de voltar
 
-        // Div com as informações do comunicado
+        // Container principal que engloba tudo
+        <div className={styles.container}>
 
-        // div com os dados do morador
+            {/* Cabeçalho com o título da tela e o botão de voltar */}
+            <header className={styles.header}>
 
-        // Div com a resposta do morador
+                <h1 className={styles.title}>Respondendo o morador</h1>
 
-        // Campo onde o sindico irá escrevar a contra resposta
-        
-        // Embaixo de tudo dentralizado no meio da tela um botão verde para cadastrar
-    );
+                {/* Botão que retorna para a tela anterior */}
+                <button className={styles.backButton} onClick={back}>
+                    &larr; Voltar
+                </button>
+            </header>
+
+            {/* Bloco com as informações do comunicado */}
+            <div className={cardStyles.card}>
+
+                {/* Cabeçalho do bloco com o título do comunicado e a data de criação */}
+                <header className={cardStyles.header}>
+
+                    <h2 className={cardStyles.titulo}>{comunicado.titulo}</h2>
+
+                    {/* Data de criação formatada no padrão brasileiro */}
+                    <span className={cardStyles.unidade}>
+                        {
+                            comunicado.criado_em ?
+                                new Intl.DateTimeFormat("pt-BR", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                    timeZone: "America/Sao_Paulo"
+                                }).format(new Date(comunicado.criado_em)) : ""
+                        }
+                    </span>
+                </header>
+
+                {/* Descrição do comunicado */}
+                <div className={cardStyles.contexto}>
+
+                    <p className={cardStyles.contextoItem}><strong>Descrição:</strong> {comunicado.descricao}</p>
+                </div>
+            </div>
+
+            {/* Bloco com os dados do morador */}
+            <div className={cardStyles.card}>
+
+                {/* Cabeçalho do bloco com o nome do morador e a unidade */}
+                <header className={cardStyles.header}>
+
+                    <h2 className={cardStyles.titulo}>{morador.nome}</h2>
+
+                    <span className={cardStyles.unidade}>
+                        {morador.unidade?.bloco} - Apto {morador.unidade?.numero}
+                    </span>
+                </header>
+
+                {/* Contato do morador */}
+                <div className={cardStyles.contexto}>
+
+                    <p className={cardStyles.contextoItem}><strong>Telefone:</strong> {morador.telefone}</p>
+
+                    <p className={cardStyles.contextoItem}><strong>E-mail:</strong> {morador.email}</p>
+                </div>
+            </div>
+
+            {/* Bloco em destaque com a pergunta do morador */}
+            <div className={destaqueStyles.perguntaDestaque}>
+
+                <span className={destaqueStyles.rotulo}>Pergunta do morador</span>
+
+                <p className={destaqueStyles.perguntaTexto}>{respostaMorador}</p>
+            </div>
+
+            {/* Bloco com o campo onde o síndico escreve a resposta */}
+            <div className={destaqueStyles.campoResposta}>
+
+                <label className={destaqueStyles.rotulo} htmlFor="respostaSindico">Sua resposta</label>
+
+                <textarea
+                    id="respostaSindico"
+                    className={styles.inputDescription}
+                    placeholder="Escreva aqui a resposta para o morador..."
+                    value={constraResposta}
+                    onChange={(evento) => setContraResposta(evento.target.value)}
+                />
+            </div>
+
+            {/* Botão verde de cadastro da resposta, centralizado na tela */}
+            <div className={styles.actionsContainer}>
+
+                <button
+                    type="button"
+                    className={styles.buttonAprovar}
+                    onClick={CadastraContraResposta}
+                >
+                    Cadastrar resposta
+                </button>
+            </div>
+        </div>
+    )
 }
 
 //Exporta o componente para poder ser utilizado em outros arquivos

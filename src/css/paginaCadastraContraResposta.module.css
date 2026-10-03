@@ -1,0 +1,33 @@
+/* Bloco em destaque com a pergunta do morador */
+.perguntaDestaque {
+  border-left: 4px solid #1e3a8a; /* Azul escuro já usado nos botões da tela */
+  background-color: #e0f2fe;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Rótulo dos campos da tela (Pergunta do morador e Sua resposta) */
+.rotulo {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+/* Texto da pergunta do morador exibido em corpo maior */
+.perguntaTexto {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+
+/* Bloco que alinha o rótulo e o campo de resposta do síndico */
+.campoResposta {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px; /* Mesma largura usada pelos campos das telas de cadastro */
+  margin-bottom: 16px;
+}

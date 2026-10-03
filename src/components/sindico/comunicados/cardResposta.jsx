@@ -52,7 +52,7 @@ function CardResposta({ resposta, redirecionamento }) {
                 }
                 
                 {/* Exibe a contra-resposta apenas se ela não for nula */}
-                {contra_resposta && (
+                {contra_resposta != null && (
                     <p className={cardStyles.resposta}>
                         <strong>Resposta do Síndico:</strong> {contra_resposta}
                     </p>
