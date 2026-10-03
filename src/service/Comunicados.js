@@ -1,6 +1,6 @@
 //Arquivo responsavel por fazer a requisição e tratar os dados
 
-import { getComunicadosAPI, getEnviosComunicadosAPI, getRespostasAPI, showEnvioDetalheAPI, updateEnvioContraRespostaAPI } from "../api/ComunicadosAPI"
+import { envioComunicadoAPI, getComunicadosAPI, getEnviosComunicadosAPI, getRespostasAPI, showEnvioDetalheAPI, updateEnvioContraRespostaAPI } from "../api/ComunicadosAPI"
 
 //Função que obtem todos os laudos
 export async function getComunicados() {
@@ -172,6 +172,42 @@ export async function updateEnvioContraResposta(id, contraResposta) {
 
         //Exibe um alerta na tela
         console.error("Erro ao buscar as informações do envio na API:", erro)
+
+    }
+
+}
+
+
+//Função que cadastra o comunicado e realiza o envio para os moradores
+export async function envioComunicado(titulo, descricao, moradorSelecionado) {
+    
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await envioComunicadoAPI(titulo, descricao, moradorSelecionado)
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { message, status, data} = json
+
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
+
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
+
+        //Retornando a menssagem
+        return message
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao cadastrar o comunicado e enviar na API:", erro)
 
     }
 

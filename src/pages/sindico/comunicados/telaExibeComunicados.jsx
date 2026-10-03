@@ -32,6 +32,13 @@ function PaginaExibeComunicados(){
         navigate("/sindico/comunicados/respostas")
     }
 
+    //Função que leva para a tela para cadastar comunicados
+    const navegaEnvio = () => {
+
+        //Realiza a navegação
+        navigate("/sindico/comunicados/cadastrar")
+    }
+
     //Função que recupera todos os comunicados
     const obtendoComunicados = async () => {
 
@@ -72,7 +79,7 @@ function PaginaExibeComunicados(){
                 </div>
 
                 {/* Botão para cadastrar um novo comunicado */}
-                <button className={styles.primaryButton}>+ Cadastrar comunicado</button>
+                <button className={styles.primaryButton} onClick={navegaEnvio}>+ Cadastrar comunicado</button>
             </div>
 
             <h1 className={stylesTitle.title} style={{ marginBottom: "26px", marginTop: "36px" }}>Página exibe os comunicados</h1>

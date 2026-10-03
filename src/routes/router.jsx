@@ -46,6 +46,7 @@ import PaginaExibeComunicados from '../pages/sindico/comunicados/telaExibeComuni
 import PaginaExibeResposta from '../pages/sindico/comunicados/telaExibeRespostas';
 import PaginaExibeEnvios from '../pages/sindico/comunicados/telaExibeEnvios';
 import PaginaCadastraContraResposta from '../pages/sindico/comunicados/telaCadastraContraResposta';
+import PaginaCadastraComunicados from '../pages/sindico/comunicados/telaCadastraComunicados';
 
 
 //Componente que será utilizado para analisar a URL
@@ -230,6 +231,12 @@ const route = createBrowserRouter([
                         path: "comunicados/responder/:id",
                         element: <PaginaCadastraContraResposta></PaginaCadastraContraResposta>
                     },
+
+                    //Tela que vai cadastrar e enviar os comunicados
+                    {
+                        path: "comunicados/cadastrar",
+                        element: <PaginaCadastraComunicados></PaginaCadastraComunicados>
+                    }
                 ]
             },
 
