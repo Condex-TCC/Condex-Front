@@ -166,6 +166,7 @@ export default function PaginaCadastraEncomenda() {
 
     //States para controlar o valor de cada campo do formulário
     const [destinatario, setDestinatario] = useState('')
+    const [idMorador, setIdMorador] = useState('')
     const [bloco, setBloco] = useState('')
     const [apartamento, setApartamento] = useState('')
     const [dia, setDia] = useState('')
@@ -211,6 +212,18 @@ export default function PaginaCadastraEncomenda() {
             novosErros.destinatario = 'Informe o nome do destinatário.'
         }
 
+        //A API exige o id do morador destinatário (id_morador) para vincular a encomenda
+        if(!idMorador){
+
+            novosErros.idMorador = 'Informe o ID do morador destinatário.'
+        }
+
+        //O id precisa ser um número inteiro maior que zero
+        else if(!Number.isInteger(Number(idMorador)) || Number(idMorador) < 1){
+
+            novosErros.idMorador = 'ID do morador inválido.'
+        }
+
         //Junta os erros de formato da data e da hora
         Object.assign(novosErros, validarData({ dia, mes, ano, hora }))
 
@@ -248,9 +261,10 @@ export default function PaginaCadastraEncomenda() {
 
         try{
 
-            //Chama a função que cadastra a encomenda na API, levando os campos
-            //separados para o mock conseguir mostrar bloco, apartamento e data
-            const mensagem = await cadastrarEncomenda(destinatario.trim(), descricao, {
+            //Chama a função que cadastra a encomenda na API, levando o id do morador
+            //que a API exige e os campos separados para o mock conseguir mostrar
+            //bloco, apartamento e data
+            const resultado = await cadastrarEncomenda(destinatario.trim(), descricao, Number(idMorador), {
                 bloco,
                 apartamento,
                 dia,
@@ -259,11 +273,11 @@ export default function PaginaCadastraEncomenda() {
                 hora: normalizaHora(hora)
             })
 
-            //A service devolve undefined quando a gravação falha, e nesse caso
-            //a tela precisa ficar como está para o porteiro tentar de novo
-            if(mensagem == null){
+            //Quando a API recusa o cadastro, a tela fica como está, exibindo o
+            //motivo devolvido, para o porteiro corrigir e tentar de novo
+            if(!resultado.sucesso){
 
-                setErros({ submit: 'Não foi possível cadastrar a encomenda. Tente novamente.' })
+                setErros({ submit: resultado.mensagem })
 
                 return
             }
@@ -272,7 +286,7 @@ export default function PaginaCadastraEncomenda() {
             navigate("/porteiro")
 
             //Exibe a mensagem retornada depois da navegação
-            alert(mensagem)
+            alert(resultado.mensagem)
         }
         finally{
 
@@ -310,6 +324,22 @@ export default function PaginaCadastraEncomenda() {
                             onChange={(evento) => setDestinatario(evento.target.value)}
                         />
                         {erros.destinatario && <span className={styles['fp-erro']}>{erros.destinatario}</span>}
+                    </div>
+
+                    {/* Campo do morador destinatário: a API vincula a encomenda pelo id do morador */}
+                    <div className={styles['fp-campo']}>
+                        <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-id-morador">ID do morador</label>
+                        <input
+                            id="encomenda-id-morador"
+                            className={`${styles['fp-input']} ${styles['fp-input--apartamento']}`}
+                            type="text"
+                            inputMode="numeric"
+                            placeholder="ID do morador"
+                            maxLength={10}
+                            value={idMorador}
+                            onChange={(evento) => setIdMorador(limita(evento.target.value, 10))}
+                        />
+                        {erros.idMorador && <span className={styles['fp-erro']}>{erros.idMorador}</span>}
                     </div>
 
                     {/* Linha com bloco e apartamento */}

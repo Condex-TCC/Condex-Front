@@ -4,10 +4,9 @@
 import styles from "../../css/paginainicialPorteiro.module.css"
 import { useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getVisitantesAtivos, getVisitantesPreCadastrados } from "../../service/Autorizacao"
+import { getVisitantesPorteiro } from "../../service/VisitantePorteiro"
 import { getEncomendas } from "../../service/Encomenda"
-import CardVisitantePreCadastrado from "../../components/porteiro/cardVisitantePreCadastrado"
-import CardVisitanteAtivo from "../../components/porteiro/cardVisitanteAtivo"
+import CardVisitanteCadastrado from "../../components/porteiro/cardVisitanteCadastrado"
 import CardEncomenda from "../../components/porteiro/cardEncomenda"
 
 //Componente de estado vazio, reaproveitado por todas as seções da tela
@@ -25,14 +24,14 @@ function PaginainicialPorteiro(){
     //Estado que controla qual aba está ativa
     const [abaAtiva, setAbaAtiva] = useState("visitantes")
 
-    //Estado que armazena os visitantes pré cadastrados (autorizados, aguardando entrada)
-    const [preCadastrados, setPreCadastrados] = useState([])
-
-    //Estado que armazena os visitantes que já registraram entrada
-    const [ativos, setAtivos] = useState([])
+    //Estado que armazena os visitantes cadastrados na API (por moradores ou por porteiros)
+    const [visitantes, setVisitantes] = useState([])
 
     //Estado que armazena as encomendas
     const [encomendas, setEncomendas] = useState([])
+
+    //Estado que guarda o aviso quando alguma lista não pôde ser carregada
+    const [erroCarga, setErroCarga] = useState("")
 
     //Função que trata a lista que veio da API
     //Trata o caso do dado vir dentro de um array extra, assim como em telaExibeUsuarios.jsx
@@ -45,24 +44,12 @@ function PaginainicialPorteiro(){
         return Array.isArray(dadosSeguros[0]) ? dadosSeguros[0] : dadosSeguros
     }
 
-    //Função que busca os visitantes pré cadastrados e devolve a lista pronta
-    const buscarPreCadastrados = useCallback(async () => {
+    //Função que busca os visitantes cadastrados
+    //Devolve null quando a API falha, para a tela avisar o porteiro
+    const buscarVisitantes = useCallback(async () => {
 
-        //Chama a service que busca os visitantes autorizados
-        const resultado = await getVisitantesPreCadastrados()
-
-        //Devolve a lista já normalizada
-        return normalizaLista(resultado)
-    }, [])
-
-    //Função que busca os visitantes que já estão dentro do condomínio
-    const buscarAtivos = useCallback(async () => {
-
-        //Chama a service que busca os visitantes ativos
-        const resultado = await getVisitantesAtivos()
-
-        //Devolve a lista já normalizada
-        return normalizaLista(resultado)
+        //Chama a service que busca os visitantes do porteiro
+        return await getVisitantesPorteiro()
     }, [])
 
     //Função que busca as encomendas e devolve a lista pronta
@@ -70,6 +57,12 @@ function PaginainicialPorteiro(){
 
         //Chama a service que busca as encomendas
         const resultado = await getEncomendas()
+
+        //Devolve null quando a API falha, para a tela avisar o porteiro
+        if(resultado === null){
+
+            return null
+        }
 
         //Devolve a lista já normalizada
         return normalizaLista(resultado)
@@ -82,8 +75,11 @@ function PaginainicialPorteiro(){
         //Busca a lista no backend
         const lista = await buscarEncomendas()
 
-        //Salva no estado
-        setEncomendas(lista)
+        //Só atualiza a tela quando a busca funcionou
+        if(lista !== null){
+
+            setEncomendas(lista)
+        }
     }, [buscarEncomendas])
 
     //Busca os dados assim que a página carrega
@@ -92,13 +88,12 @@ function PaginainicialPorteiro(){
         //Variável que avisa se a tela foi fechada antes da requisição terminar
         let cancelado = false
 
-        //Função que busca os três blocos de dados ao mesmo tempo
+        //Função que busca os dois blocos de dados ao mesmo tempo
         const carregarTela = async () => {
 
-            //Espera as três requisições terminarem juntas
-            const [listaPreCadastrados, listaAtivos, listaEncomendas] = await Promise.all([
-                buscarPreCadastrados(),
-                buscarAtivos(),
+            //Espera as duas requisições terminarem juntas
+            const [listaVisitantes, listaEncomendas] = await Promise.all([
+                buscarVisitantes(),
                 buscarEncomendas()
             ])
 
@@ -108,10 +103,24 @@ function PaginainicialPorteiro(){
                 return
             }
 
-            //Salva tudo nos estados
-            setPreCadastrados(listaPreCadastrados)
-            setAtivos(listaAtivos)
-            setEncomendas(listaEncomendas)
+            //Monta o aviso com o que não pôde ser carregado
+            const falhas = []
+
+            if(listaVisitantes === null){
+
+                falhas.push("os visitantes")
+            }
+
+            if(listaEncomendas === null){
+
+                falhas.push("as encomendas")
+            }
+
+            setErroCarga(falhas.length > 0 ? `Não foi possível carregar ${falhas.join(" e ")}. Verifique sua conexão e se o servidor está no ar.` : "")
+
+            //Salva nos estados, mantendo lista vazia quando a busca falhou
+            setVisitantes(listaVisitantes ?? [])
+            setEncomendas(listaEncomendas ?? [])
         }
 
         //Dispara o carregamento
@@ -122,7 +131,7 @@ function PaginainicialPorteiro(){
 
             cancelado = true
         }
-    }, [buscarPreCadastrados, buscarAtivos, buscarEncomendas])
+    }, [buscarVisitantes, buscarEncomendas])
 
     //Separando as encomendas pendentes das já retiradas
     //A API trata o campo "data" como a data da retirada, então a encomenda é
@@ -137,12 +146,11 @@ function PaginainicialPorteiro(){
         navigate("/porteiro/encomenda/create")
     }
 
-    //Função que avisa que o cadastro de visitante ainda não pode ser usado
-    //A API tem o endpoint de criação, mas ele exige o id do morador
-    //responsável, e o porteiro não tem nenhuma rota para consultar moradores
+    //Função que abre a tela de cadastro de visitante
     const registrarVisitante = () => {
 
-        alert("Cadastro de visitante indisponível: a API exige o id do morador responsável e o porteiro não possui um endpoint para consultar os moradores.")
+        //Navega para a tela de cadastro de visitante do porteiro
+        navigate("/porteiro/visitante/create")
     }
 
     //Retorna um componente
@@ -182,21 +190,25 @@ function PaginainicialPorteiro(){
       </div>
 
       {
+        //Aviso exibido quando alguma lista não pôde ser carregada da API
+        erroCarga &&
+        <p className={styles['empty--state']}>{erroCarga}</p>
+      }
+
+      {
         abaAtiva === "visitantes" ?
           <>
             <div className={styles['list--section']}>
-              <h2 className={styles['section--title']}>Por cadastrar</h2>
+              <h2 className={styles['section--title']}>Visitantes cadastrados</h2>
 
               {
-                preCadastrados.length === 0 ?
-                  <EstadoVazio>Nenhum visitante aguardando entrada</EstadoVazio>
+                //Os visitantes cadastrados pelo morador (sem porteiro) e pelo
+                //porteiro (com porteiro) são todos válidos e aparecem na lista
+                visitantes.length === 0 ?
+                  <EstadoVazio>Nenhum visitante cadastrado</EstadoVazio>
                 :
-                  preCadastrados.map((autorizacao) => (
-                    <CardVisitantePreCadastrado
-                      key={autorizacao.id}
-                      autorizacao={autorizacao}
-                      renderiza={setPreCadastrados}
-                    />
+                  visitantes.map((visitante) => (
+                    <CardVisitanteCadastrado key={visitante.id} visitante={visitante} />
                   ))
               }
             </div>
@@ -204,14 +216,12 @@ function PaginainicialPorteiro(){
             <div className={styles['list--section']}>
               <h2 className={styles['section--title']}>Visitantes ativos</h2>
 
-              {
-                ativos.length === 0 ?
-                  <EstadoVazio>Nenhum visitante ativo</EstadoVazio>
-                :
-                  ativos.map((visitante) => (
-                    <CardVisitanteAtivo key={visitante.id} visitante={visitante} />
-                  ))
-              }
+              {/* A API não possui endpoint de entrada, saída ou visitantes ativos,
+                  então não há como listar quem está dentro do condomínio */}
+              <EstadoVazio>
+                O registro de entrada e saída ainda não está disponível na API,
+                por isso não é possível listar os visitantes ativos.
+              </EstadoVazio>
             </div>
           </>
         :

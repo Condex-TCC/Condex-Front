@@ -40,12 +40,13 @@ function CardEncomenda({ encomenda, atualizaLista }){
         evento.stopPropagation()
 
         //Chama a função que registra a retirada na API
-        const mensagem = await registrarRetiradaEncomenda(encomenda.id)
+        const resultado = await registrarRetiradaEncomenda(encomenda.id)
 
-        //Exibe a menssagem retornada
-        alert(mensagem)
+        //Exibe a menssagem retornada pela API (sucesso ou erro)
+        alert(resultado.mensagem)
 
         //Busca a lista novamente no backend para a tela refletir o que foi salvo
+        //Mesmo em caso de erro, pois a encomenda pode já ter sido retirada por outro porteiro
         atualizaLista()
     }
 
@@ -59,12 +60,17 @@ function CardEncomenda({ encomenda, atualizaLista }){
             </div>
 
             {/* Linha de informações: bloco, apartamento e recebimento */}
-            <div className={styles["card--info"]}>
-                <span className={styles["text--block"]}>
-                    Bloco: {ouSimbolo(bloco)} · Apartamento: {ouSimbolo(apartamento)}
-                </span>
-                <span className={styles["text--date"]}>Recebida em: {ouSimbolo(recebida)}</span>
-            </div>
+            {/* A API não devolve esses campos (bloco e apartamento ficam dentro da descrição),
+                então a linha só aparece quando algum deles existe */}
+            {
+                (bloco != null || apartamento != null || recebida != null) &&
+                <div className={styles["card--info"]}>
+                    <span className={styles["text--block"]}>
+                        Bloco: {ouSimbolo(bloco)} · Apartamento: {ouSimbolo(apartamento)}
+                    </span>
+                    <span className={styles["text--date"]}>Recebida em: {ouSimbolo(recebida)}</span>
+                </div>
+            }
 
             {/* Linha de ação: descrição, dados da retirada e botão */}
             <div className={styles["card--active"]}>
@@ -78,9 +84,13 @@ function CardEncomenda({ encomenda, atualizaLista }){
                         //Quem retirou e a data da retirada aparecem depois que a encomenda é retirada
                         jaRetirada &&
                         <>
-                            <span className={styles["text--date"]}>
-                                Retirado por: {ouSimbolo(encomenda.retirado_por)}
-                            </span>
+                            {
+                                //A API não informa quem retirou, então só mostra quando existir
+                                encomenda.retirado_por != null &&
+                                <span className={styles["text--date"]}>
+                                    Retirado por: {encomenda.retirado_por}
+                                </span>
+                            }
                             <span className={styles["text--date"]}>Retirada em: {encomenda.data}</span>
                         </>
                     }
