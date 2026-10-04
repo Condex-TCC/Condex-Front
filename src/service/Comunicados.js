@@ -1,6 +1,6 @@
 //Arquivo responsavel por fazer a requisição e tratar os dados
 
-import { envioComunicadoAPI, getComunicadoHistoricoAPI, getComunicadoMoradorAPI, getComunicadosAPI, getEnviosComunicadosAPI, getRespostasAPI, showEnvioDetalheAPI, updateEnvioContraRespostaAPI } from "../api/ComunicadosAPI"
+import { envioComunicadoAPI, getComunicadoHistoricoAPI, getComunicadoMoradorAPI, getComunicadosAPI, getDetalhesComunicadoAPI, getEnviosComunicadosAPI, getRespostasAPI, showEnvioDetalheAPI, updateEnvioContraRespostaAPI } from "../api/ComunicadosAPI"
 
 //Função que obtem todos os laudos
 export async function getComunicados() {
@@ -278,6 +278,41 @@ export async function  getComunicadoHistorico() {
 
         //Exibe um alerta na tela
         console.error("Erro ao buscar comunicadosdo hoistórico do moradoe na API:", erro)
+
+    }
+
+}
+
+//Função que pega todos os comunicados não visualidos do morador
+export async function  getDetalhesComunicado(id) {
+    
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await getDetalhesComunicadoAPI(id)
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { message, status, data} = json
+
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
+
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
+
+        //Retornando a menssagem
+        return data
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao buscar o comunicado selecionado na API:", erro)
 
     }
 

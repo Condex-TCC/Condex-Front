@@ -50,6 +50,7 @@ import PaginaCadastraComunicados from '../pages/sindico/comunicados/telaCadastra
 import PaginaSelecionaMoradorComunicado from '../pages/sindico/comunicados/telaSelecionaMorador';
 import PaginaExibeComunicadosMorador from '../pages/morador/comunicados/telaExibeComunicados';
 import PaginaExibeComunicadosHistorico from '../pages/morador/comunicados/telaExibeComunicadosHistorico';
+import PaginaDetalhesComunicados from '../pages/morador/comunicados/telaDetalhesComunicados';
 
 
 //Componente que será utilizado para analisar a URL
@@ -301,6 +302,12 @@ const route = createBrowserRouter([
                     {
                         path: "comunicados/historico", // Renderiza no caminho "/morador/comunicados/historico"
                         element: <PaginaExibeComunicadosHistorico></PaginaExibeComunicadosHistorico>
+                    },
+
+                    //Tela que exibe os detalhes de um comunicado especifico
+                    {
+                        path: "comunicados/detalhes/:id", // Renderiza no caminho "/morador/comunicados/historico"
+                        element: <PaginaDetalhesComunicados></PaginaDetalhesComunicados>
                     },
                 ]
             },

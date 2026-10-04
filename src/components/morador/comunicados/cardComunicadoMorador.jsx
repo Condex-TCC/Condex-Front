@@ -1,6 +1,7 @@
 //Card que exibe um comunicado enviado para o morador
 
 //Local das importações
+import { useNavigate } from 'react-router-dom';
 import styles from '../../../css/cardComunicadoMorador.module.css'
 
 //Função auxiliar que converte a data do formato ISO para o padrão brasileiro (dd/mm/aaaa)
@@ -24,10 +25,20 @@ function formatarData(dataIso) {
 //Card reutilizável de comunicado do morador
 function CardComunicadoMorador({ envio }) {
 
+    //Hook que realiza a navegação
+    const navigate = useNavigate()
+
+    //Função que realiza a navegação para detalhes
+    const detalhesComunicado = () => {
+
+        //Realiza a navegação
+        navigate("/morador/comunicados/detalhes/" + envio.id)
+    }
+
     //Retorna o componente
     return (
 
-        <div className={styles['cm-card']}>
+        <div className={styles['cm-card']} onClick={detalhesComunicado}>
 
             {/* Cabeçalho do card com o título do comunicado e a data de criação */}
             <header className={styles['cm-header']}>
