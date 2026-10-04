@@ -13,8 +13,8 @@ import selecaoStyles from "../../../css/paginaCadastraComunicados.module.css"
 function PaginaSelecionaMoradorComunicado(){
 
     //Hook que irá armazenar os moradores
-    const [moradoes, setMoradores] = useState([])
-    const [moradoesSelecionados, setMoradoresSelecionado] = useState([])
+    const [moradoes, setMoradores] = useState([]) //Array de objetos
+    const [moradoesSelecionados, setMoradoresSelecionado] = useState([]) //Array de id do tipo int
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
@@ -60,16 +60,26 @@ function PaginaSelecionaMoradorComunicado(){
     //Função que irá realizar o retorno para a tela de cadastro, passando os moradores
     const selectedMoradores = () => {
 
-        //TODO: Implementar essa lógica mais tarde
-
-        console.log(moradoesSelecionados)
+        //Realiza a navegação para a tela de cadastro passando o array de moradores selecionados
+        navigate('/sindico/comunicados/cadastrar', {
+            state: {
+                moradoresSelecionados: moradoesSelecionados
+            }
+        })
     }
 
     //Função que seleciona todos os moradores
     const selectAll = () => {
 
-        //Define o array se moradoresSelecionados como o de moradores
-        setMoradoresSelecionado(moradoes)
+        //Percorre todos os moradores pegando apenas o id de cada um
+        let idsMoradores = moradoes.map((morador) => {
+
+            //Retorna o id do morador
+            return morador.id
+        })
+
+        //Define o array de moradores selecionados com os ids de todos os moradores
+        setMoradoresSelecionado(idsMoradores)
     }
 
     //Função que cria o componente

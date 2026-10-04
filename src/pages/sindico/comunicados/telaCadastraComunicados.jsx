@@ -1,11 +1,12 @@
 //Importações do arquivo
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { envioComunicado } from "../../../service/Comunicados";
 import styles from "../../../css/paginaCadastraRegra.module.css";
 import destaqueStyles from "../../../css/paginaCadastraContraResposta.module.css";
 import selecaoStyles from "../../../css/paginaCadastraComunicados.module.css";
+import { getMoradores } from "../../../api/MoradoresApi";
 
 
 //Criando o componente
@@ -14,15 +15,19 @@ function PaginaCadastraComunicados(){
     //REGRA DE NEGOCIO: quando for todos os moradores o array deverá ir vazio,
     //já se for para alguns moradores o array irá conter os id dos moarados selecionados
 
-    //Hook de elementos que vai ser utilizados no cadastro
-    const [moradoresSelecionados, setMoradoresSelecionado] = useState([])
-
     //Hook de com os valores que serão recuperados do componente
     const [titulo, setTiulo] = useState("")
     const [descricao, setDescricao] = useState("")
+    const [moradoes, setMoradores] = useState([]) //Array de objetos
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
+
+    //Hook utilizado para enviar dados durante o redirecionamento
+    const location = useLocation();
+
+    //Variavel que será utilizada para realizar o redirecionamento
+    const moradoresSelecionados = location.state?.moradoresSelecionados || [];
 
     //Função que volta para a a tela de comunicados
     const back = () => {
@@ -38,11 +43,30 @@ function PaginaCadastraComunicados(){
         navigate('/sindico/comunicados/cadastrar/selecionar')
     }
 
-    //Função que realiza o cadastro do comunicado e realiza o envio
     const CadastrarEnvioComunicado = async () => {
 
-        //Chamando a função que chama a api
-        const menssage = await envioComunicado(titulo, descricao, moradoresSelecionados)
+        //Veriável que vai ser operada
+        let menssage = ""
+
+        //Realizando as verifcações para o cadastro
+        if(moradoresSelecionados.length === 0){
+
+            //NENHUM SELECIONADO: ENVIA PARA TODOS
+            alert("Todos")
+            menssage = await envioComunicado(titulo, descricao, [])
+
+        }else if (moradoresSelecionados.length === moradoes.length){
+
+            //O SINDICO SELECIONOU TODOS OS MORADORES MANUALMENTE
+            alert("Selecionado Todos")
+            menssage = await envioComunicado(titulo, descricao, [])
+
+        }else{
+
+            //MORADORES SELECIONADOS (apenas alguns)
+            alert("Selecionados")
+            menssage = await envioComunicado(titulo, descricao, moradoresSelecionados)
+        }
 
         //Exibindo a menssagem
         alert(menssage)
@@ -50,6 +74,37 @@ function PaginaCadastraComunicados(){
         //Chama a função para redirecioar para os comunicados
         back()
     }
+
+    //Função que recupera todos os moradores selecionados
+    const obtendoMoradores = async () => {
+    
+        //Fazendo a requisição
+        const response = await getMoradores()
+    
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+    
+        //Desestrutura o promisse
+        const { message, status, data} = await json
+    
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
+    
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
+    
+        //Pegando os moradores
+        await setMoradores(data[0])
+    }
+    
+    //useEffet que será chamando no momento em que se criar a página
+    useEffect(() => {
+    
+        //Chama a função que recupera os dados
+        obtendoMoradores()
+    
+    }, [])
 
     //Retorna o componente
     return (
@@ -73,7 +128,7 @@ function PaginaCadastraComunicados(){
 
                 {/* Texto que muda conforme existam moradores selecionados ou não */}
                 <span className={selecaoStyles.destinatarioTexto}>
-                    {moradoresSelecionados.length > 0 ? "Moradores selecionados" : "Todos os moradores cadastrados"}
+                    {moradoresSelecionados.length > 0 ? "Moradores selecionados" : "Todos os moradores"}
                 </span>
 
                 {/* Botão que leva para a tela de seleção dos moradores */}
