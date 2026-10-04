@@ -34,10 +34,10 @@ export default function PaginaDetalheEncomenda() {
     const retirar = async () => {
 
         //Chama a função que registra a retirada na API
-        const mensagem = await registrarRetiradaEncomenda(encomenda?.id ?? id)
+        const resultado = await registrarRetiradaEncomenda(encomenda?.id ?? id)
 
-        //Exibe a menssagem retornada
-        alert(mensagem ?? 'Não foi possível registrar a retirada.')
+        //Exibe a menssagem retornada pela API (sucesso ou erro)
+        alert(resultado.mensagem)
 
         //Volta para a tela inicial do porteiro, que recarrega os dados
         navigate("/porteiro")

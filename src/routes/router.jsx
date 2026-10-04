@@ -37,6 +37,7 @@ import PaginaAtualizaArea from '../pages/sindico/reservas/telaAtualizaArea';
 import PaginaAutorizaRerva from '../pages/sindico/reservas/telaAutorizaReserva';
 import PaginaCadastraEncomenda from '../pages/porteiro/telaCadastraEncomenda';
 import PaginaDetalheEncomenda from '../pages/porteiro/telaDetalheEncomenda';
+import PaginaRegistroVisitante from '../pages/porteiro/RegistroVisitante';
 
 //Importando as páginas do morador
 import PaginaVisitantesMorador from '../pages/morador/telaVisitantesMorador';
@@ -301,6 +302,12 @@ const route = createBrowserRouter([
                     {
                         index: true, // Renderiza no caminho "/porteiro"
                         element: <PaginainicialPorteiro />,
+                    },
+
+                    //Tela de cadastro de visitante pelo porteiro
+                    {
+                        path: "visitante/create", // Renderiza no caminho "/porteiro/visitante/create"
+                        element: <PaginaRegistroVisitante />,
                     },
 
                     //Tela de cadastro de encomenda

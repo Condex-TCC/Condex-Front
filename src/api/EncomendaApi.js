@@ -39,10 +39,11 @@ export async function getEncomendasAPI(){
 }
 
 //Função que cadastra uma nova encomenda
+//A API exige três campos: nome, descricao e id_morador (id do morador destinatário).
 //O parâmetro detalhes leva bloco, apartamento e data do formulário. A API
 //real ainda não tem colunas para esses dados, então eles são ignorados
 //nessa chamada e só são usados pelo mock
-export async function insertEncomendaAPI(nome, descricao, detalhes = {}){
+export async function insertEncomendaAPI(nome, descricao, idMorador, detalhes = {}){
 
     //Com o mock ligado, grava o registro em memória
     if(USE_MOCK){
@@ -61,7 +62,7 @@ export async function insertEncomendaAPI(nome, descricao, detalhes = {}){
     let novaEncomenda = {
         nome: nome,
         descricao: descricao,
-        id_morador: 1 //Provisório, apenas para engambelar o Rubens | TODO: Consertar aqui depois
+        id_morador: Number(idMorador) //Id do morador destinatário, informado pelo porteiro na tela
     }
 
     //Criando a requisição
