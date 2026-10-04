@@ -56,7 +56,7 @@ function TelaVisitantesMorador(){
             <div className={styles['vm-page-header']}>
                 <h1 className={styles['vm-page-title']}>Visitantes</h1>
                 <p className={styles['vm-page-subtitle']}>
-                    Acompanhe quem está no condomínio e quem já está agendado para te visitar.
+                    Acompanhe quem está no condomínio e quem já está cadastrado para te visitar.
                 </p>
             </div>
 
@@ -75,14 +75,14 @@ function TelaVisitantesMorador(){
                 }
             </section>
 
-            {/* Seção das visitas previamente cadastradas */}
+            {/* Seção dos visitantes previamente cadastrados */}
             <section className={styles['vm-section']}>
-                <h2 className={styles['vm-section-title']}>Próximas visitas</h2>
+                <h2 className={styles['vm-section-title']}>Visitantes cadastrados</h2>
 
                 {
-                    //Se não houver nenhuma visita agendada, mostra o estado vazio
+                    //Se não houver nenhum visitante cadastrado, mostra o estado vazio
                     proximasVisitas.length === 0 ?
-                        <p className={styles['vm-empty']}>Nenhuma visita cadastrada</p>
+                        <p className={styles['vm-empty']}>Nenhum visitante cadastrado</p>
                     :
                         proximasVisitas.map((visita) => (
                             <CardProximaVisita key={visita.id} visita={visita} />

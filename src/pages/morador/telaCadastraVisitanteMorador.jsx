@@ -15,9 +15,6 @@ function TelaCadastraVisitanteMorador(){
     //Estado que guarda os valores digitados nos campos do formulário
     const [nome, setNome] = useState('')
     const [documento, setDocumento] = useState('')
-    const [data, setData] = useState('')
-    const [horario, setHorario] = useState('')
-    const [saidaPrevista, setSaidaPrevista] = useState('')
 
     //Função que devolve o morador para a lista de visitantes
     const voltarParaVisitantes = () => {
@@ -31,31 +28,32 @@ function TelaCadastraVisitanteMorador(){
         //Evita que a página recarregue ao enviar o formulário
         evento.preventDefault()
 
-        //Impede o envio sem os campos obrigatórios
-        if(!nome.trim() || !data || !horario){
+        //Impede o envio sem os campos obrigatórios da API (nome e cpf)
+        if(!nome.trim() || !documento.trim()){
 
-            alert('Preencha o nome, a data e o horário da visita.')
+            alert('Preencha o nome e o CPF do visitante.')
 
             return
         }
 
-        //Monta o registro no mesmo formato que a API devolve
+        //Monta o registro no formato aceito pela API
         const visita = {
             nome: nome.trim(),
-            documento: documento.trim(),
-            data,
-            horario,
-            saidaPrevista
+            documento: documento.trim()
         }
 
-        //Chama a service que grava a visita
-        const mensagem = await criarVisitaPreCadastrada(visita)
+        //Chama a service que grava a visita e devolve o resultado
+        const resultado = await criarVisitaPreCadastrada(visita)
 
-        //Exibe a mensagem retornada
-        alert(mensagem)
+        //Exibe a mensagem retornada (sucesso ou erro da API)
+        alert(resultado.mensagem)
 
-        //Volta para a tela de visitantes, que agora lista a nova visita
-        navigate('/morador/visitantes')
+        //Só navega quando a API confirmou a gravação
+        if(resultado.sucesso){
+
+            //Volta para a tela de visitantes, que agora lista o novo cadastro
+            navigate('/morador/visitantes')
+        }
     }
 
     //Retorna o componente
@@ -72,7 +70,7 @@ function TelaCadastraVisitanteMorador(){
             </div>
 
             <p className={styles['cv-subtitle']}>
-                Preencha os dados para autorizar a entrada deste visitante antes que ele chegue.
+                Preencha o nome e o CPF para deixar este visitante cadastrado para o porteiro.
             </p>
 
             {/* Formulário */}
@@ -103,37 +101,11 @@ function TelaCadastraVisitanteMorador(){
                 </div>
 
                 {/* Data */}
-                <div className={styles['cv-field']}>
-                    <label htmlFor="cv-data">Data da visita</label>
-                    <input
-                        id="cv-data"
-                        type="date"
-                        value={data}
-                        onChange={(evento) => setData(evento.target.value)}
-                    />
-                </div>
-
-                {/* Horário de chegada */}
-                <div className={styles['cv-field']}>
-                    <label htmlFor="cv-horario">Horário de chegada</label>
-                    <input
-                        id="cv-horario"
-                        type="time"
-                        value={horario}
-                        onChange={(evento) => setHorario(evento.target.value)}
-                    />
-                </div>
-
-                {/* Saída prevista */}
-                <div className={`${styles['cv-field']} ${styles['cv-field--full']}`}>
-                    <label htmlFor="cv-saida">Saída prevista (opcional)</label>
-                    <input
-                        id="cv-saida"
-                        type="time"
-                        value={saidaPrevista}
-                        onChange={(evento) => setSaidaPrevista(evento.target.value)}
-                    />
-                </div>
+                {/*
+                    A API de visitantes ainda não possui colunas de agendamento
+                    (data, horário de chegada e saída prevista), então esses
+                    campos ficaram fora do formulário até o backend criá-los.
+                */}
 
                 {/* Botão de salvar */}
                 <div className={`${styles['cv-action']} ${styles['cv-field--full']}`}>
