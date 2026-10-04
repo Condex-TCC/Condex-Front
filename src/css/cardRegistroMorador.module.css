@@ -1,0 +1,62 @@
+/* =========================================
+   CARDS DE LAUDOS E REGRAS DO MORADOR
+   ========================================= */
+
+/* Card com os dados de uma regra ou de um laudo */
+.cr-card {
+  background-color: #ffffff; /* Fundo branco do card */
+  border: 1px solid #eef0f4; /* Contorno claro, no mesmo tom da divisória do header */
+  border-radius: 10px; /* Arredonda os cantos do card */
+  padding: 14px; /* Respiro interno do card */
+  margin-bottom: 10px; /* Espaço entre os cards da lista */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra leve, igual aos cards do morador */
+}
+
+/* Cabeçalho do card com o nome da regra ou do laudo */
+.cr-header {
+  display: flex; /* Coloca o nome e os demais elementos na mesma linha */
+  justify-content: space-between; /* Joga o nome para a esquerda */
+  align-items: flex-start; /* Alinha os elementos pelo topo */
+  gap: 8px; /* Espaço entre os elementos */
+  flex-wrap: wrap; /* Em telas muito estreitas os elementos descem de linha */
+  margin-bottom: 8px; /* Espaço entre o cabeçalho e o conteúdo do card */
+}
+
+/* Nome da regra ou do laudo */
+.cr-titulo {
+  margin: 0;
+  font-size: 15px; /* Tamanho do título do card */
+  font-weight: 700; /* Deixa o título em negrito */
+  line-height: 1.3; /* Deixa o título mais compacto */
+  color: #001c3f; /* Cor principal do projeto */
+  min-width: 0; /* Permite que o título encolha em telas estreitas */
+}
+
+/* Descrição da regra */
+.cr-descricao {
+  margin: 0;
+  font-size: 13px; /* Tamanho do texto de apoio */
+  line-height: 1.5; /* Deixa as linhas da descrição mais respiradas */
+  color: #7a87a7; /* Cinza azulado dos textos secundários */
+}
+
+/* Link que abre o documento do laudo, no mesmo estilo do botão de visualizar do sindico */
+.cr-link {
+  display: inline-flex; /* Permite o uso de padding e alinhamento interno */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  gap: 6px; /* Espaço entre o ícone e o texto */
+  margin-top: 12px; /* Respiro em relação ao nome do laudo */
+  padding: 8px 14px; /* Respiro interno do botão */
+  border-radius: 6px; /* Arredonda os cantos */
+  background-color: #8bb3eb; /* Azul claro usado no botão de visualizar do sindico */
+  color: #000000; /* Texto preto */
+  font-size: 14px; /* Tamanho do texto do link */
+  font-weight: 600; /* Deixa o texto em negrito */
+  text-decoration: none; /* Remove o sublinhado padrão dos links */
+  cursor: pointer; /* Indica que o elemento é clicável */
+  transition: background-color 0.2s; /* Suaviza a troca de cor ao passar o mouse */
+}
+
+.cr-link:hover {
+  background-color: #79a1d9; /* Escurece o azul ao passar o mouse */
+}

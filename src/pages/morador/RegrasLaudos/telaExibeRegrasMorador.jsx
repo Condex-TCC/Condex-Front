@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRegrasMorador } from "../../../service/Regra";
+import CardRegraMorador from "../../../components/morador/registros/cardRegraMorador";
+import styles from "../../../css/telaVisitantesMorador.module.css";
+import abasStyles from "../../../css/paginainicialPorteiro.module.css";
+import listaStyles from "../../../css/paginaExibeEnvios.module.css";
 
 
 
@@ -41,13 +45,47 @@ function PaginaExibeRegrasMorador(){
 
     //Retorna o componente
     return (
-        <h1>Regras do condominio</h1>
 
-        //titulo
+        // Container principal da tela
+        <div className={styles['vm-container']}>
 
-        //botão de regra(faz nada), botão de laudo (realiza a navegação)
+            {/* Cabeçalho da tela com o título das regras */}
+            <div className={styles['vm-page-header']}>
+                <h1 className={styles['vm-page-title']}>Regras do condomínio</h1>
+            </div>
 
-        //Div que rederiza os cards com as regras
+            {/*Div com os botões de navegação entre as telas de laudos e regras*/}
+            <div className={abasStyles['tabs--group']}>
+
+                {/* Botão que leva para os laudos do condomínio */}
+                <button
+                    type="button"
+                    className={abasStyles['tab--inactive']}
+                    onClick={navegaLaudo}
+                >
+                    Laudos
+                </button>
+
+                {/* Botão da tela atual, por isso não navega para lugar nenhum */}
+                <button type="button" className={abasStyles['tab--active']}>
+                    Regras
+                </button>
+            </div>
+
+            {/*Div que irá exibir os cards das regras*/}
+            <div className={listaStyles.listaEnvios}>
+
+                {/* Cards com as regras do condomínio */}
+                {
+                    // Iterando e adicionando os cards
+                    regras.map((regra) => {
+
+                        //Retorna o card da regra
+                        return <CardRegraMorador key={regra.id} regra={regra}></CardRegraMorador>
+                    } )
+                }
+            </div>
+        </div>
     );
 }
 

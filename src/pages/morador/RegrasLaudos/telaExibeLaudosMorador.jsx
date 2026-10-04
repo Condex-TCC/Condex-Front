@@ -1,6 +1,12 @@
 //Importando do arquivo
 
 import { getLaudosMorador } from "../../../service/Laudos"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CardLaudoMorador from "../../../components/morador/registros/cardLaudoMorador";
+import styles from "../../../css/telaVisitantesMorador.module.css";
+import abasStyles from "../../../css/paginainicialPorteiro.module.css";
+import listaStyles from "../../../css/paginaExibeEnvios.module.css";
 
 
 
@@ -39,13 +45,47 @@ function PaginaExibeLaudosMorador(){
 
     //Retorna o componente
     return (
-        <h1>Laudos do condominio</h1>
 
-        //titulo
+        // Container principal da tela
+        <div className={styles['vm-container']}>
 
-        //botão de regra(realiza a navegação), botão de laudo (faz nada)
+            {/* Cabeçalho da tela com o título dos laudos */}
+            <div className={styles['vm-page-header']}>
+                <h1 className={styles['vm-page-title']}>Laudos do condomínio</h1>
+            </div>
 
-        //Div que rederiza os cards com os laudos
+            {/*Div com os botões de navegação entre as telas de laudos e regras*/}
+            <div className={abasStyles['tabs--group']}>
+
+                {/* Botão da tela atual, por isso não navega para lugar nenhum */}
+                <button type="button" className={abasStyles['tab--active']}>
+                    Laudos
+                </button>
+
+                {/* Botão que leva para as regras do condomínio */}
+                <button
+                    type="button"
+                    className={abasStyles['tab--inactive']}
+                    onClick={navegaRegra}
+                >
+                    Regras
+                </button>
+            </div>
+
+            {/*Div que irá exibir os cards dos laudos*/}
+            <div className={listaStyles.listaEnvios}>
+
+                {/* Cards com os laudos do condomínio */}
+                {
+                    // Iterando e adicionando os cards
+                    laudos.map((laudo) => {
+
+                        //Retorna o card do laudo
+                        return <CardLaudoMorador key={laudo.id} laudo={laudo}></CardLaudoMorador>
+                    } )
+                }
+            </div>
+        </div>
     );
 }
 
