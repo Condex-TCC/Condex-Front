@@ -23,7 +23,7 @@ function formatarData(dataIso) {
 }
 
 //Card reutilizável de comunicado do morador
-function CardComunicadoMorador({ envio }) {
+function CardComunicadoMorador({ envio, back }) {
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
@@ -31,8 +31,12 @@ function CardComunicadoMorador({ envio }) {
     //Função que realiza a navegação para detalhes
     const detalhesComunicado = () => {
 
-        //Realiza a navegação
-        navigate("/morador/comunicados/detalhes/" + envio.id)
+        //Realiza a navegação | Passando o redirecionamento
+        navigate("/morador/comunicados/detalhes/" + envio.id, {
+            state: {
+                redirecionamento: back
+            }
+        })
     }
 
     //Retorna o componente

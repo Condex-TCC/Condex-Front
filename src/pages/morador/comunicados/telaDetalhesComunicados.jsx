@@ -1,6 +1,6 @@
 //Importações do arquivo
 
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { cadastraRespostaMorador, getDetalhesComunicado } from "../../../service/Comunicados";
 import { useEffect, useState } from "react";
 import styles from "../../../css/paginaDetalhesComunicados.module.css";
@@ -19,6 +19,15 @@ function PaginaDetalhesComunicados(){
 
     //Hook que vai receber o id vindo da url
     const { id } = useParams()
+
+    //Hook que realiza a navegação para outra tela
+    const navigate = useNavigate()
+
+    //Hook que vai pegar os dados passados pela requisição
+    const location = useLocation()
+
+    //Variavel que será utilizada para realizar o redirecionamento
+    const redirecionamento = location.state?.redirecionamento || '/morador/comunicados/exibe';
 
     //Função que recupera os comunicados
     const obtemComunicados = async () => {
@@ -43,7 +52,8 @@ function PaginaDetalhesComunicados(){
     //Função que irá fazer o botão volta
     const back = () => {
 
-        //TODO: Será implementado mais tarde
+        //Realiza a navegação para a ultima tela que o usuário utilizou
+        navigate(redirecionamento)
     }
 
     //Função que irá cadastrar a resposta do morador ao comunicado

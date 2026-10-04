@@ -86,7 +86,7 @@ function PaginaExibeComunicadosHistorico(){
                     comunicados.map((envio) => {
 
                         //Retorna o card do comunicado
-                        return <CardComunicadoMorador key={envio.id} envio={envio}></CardComunicadoMorador>
+                        return <CardComunicadoMorador key={envio.id} envio={envio} back={"/morador/comunicados/historico"}></CardComunicadoMorador>
                     } )
                 }
             </div>
