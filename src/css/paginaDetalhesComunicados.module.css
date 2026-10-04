@@ -1,0 +1,13 @@
+/* =========================================
+   TELA DE DETALHES DO COMUNICADO DO MORADOR
+   ========================================= */
+
+/* Cabeçalho com o título da tela e o botão de voltar */
+.dc-header {
+  display: flex; /* Coloca o título e o botão de voltar na mesma linha */
+  justify-content: space-between; /* Joga o título para a esquerda e o botão para a direita */
+  align-items: center; /* Centraliza os dois verticalmente */
+  gap: 12px; /* Espaço entre o título e o botão */
+  flex-wrap: wrap; /* Em telas muito estreitas o botão desce para a linha de baixo */
+  margin-bottom: 20px; /* Separa o cabeçalho do conteúdo */
+}
