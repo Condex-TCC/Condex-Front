@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getComunicadoMorador } from "../../../service/Comunicados";
+import CardComunicadoMorador from "../../../components/morador/comunicados/cardComunicadoMorador";
+import styles from "../../../css/telaVisitantesMorador.module.css";
+import abasStyles from "../../../css/paginainicialPorteiro.module.css";
+import listaStyles from "../../../css/paginaExibeEnvios.module.css";
 
 
 //Função que cria o componente
@@ -46,13 +50,47 @@ function PaginaExibeComunicadosMorador(){
 
     //Retorna um componente
     return(
-        <h1>Não visualidados</h1>
 
-        //Fazer o titulo de comunicados não visualidaos
+        // Container principal da tela
+        <div className={styles['vm-container']}>
 
-        //Fazer um div com dois botões um para comunicadoo não visualizados e outro para o histórico de comunicados
+            {/* Cabeçalho da tela com o título dos comunicados não visualizados */}
+            <div className={styles['vm-page-header']}>
+                <h1 className={styles['vm-page-title']}>Comunicados não visualizados</h1>
+            </div>
 
-        //Div que irá exibir os cards do comunicados não visualizados, puxando os dados de state comuinicados
+            {/*Div com os botões de navegação entre as telas de comunicados*/}
+            <div className={abasStyles['tabs--group']}>
+
+                {/* Botão da tela atual, por isso não navega para lugar nenhum */}
+                <button type="button" className={abasStyles['tab--active']}>
+                    Não visualizados
+                </button>
+
+                {/* Botão que leva para o histórico de comunicados */}
+                <button
+                    type="button"
+                    className={abasStyles['tab--inactive']}
+                    onClick={navegaHistorico}
+                >
+                    Histórico
+                </button>
+            </div>
+
+            {/*Div que irá exibir os cards dos comunicados não visualizados*/}
+            <div className={listaStyles.listaEnvios}>
+
+                {/* Cards com os comunicados que o morador ainda não visualizou */}
+                {
+                    // Iterando e adicionando os cards
+                    comunicados.map((envio) => {
+
+                        //Retorna o card do comunicado
+                        return <CardComunicadoMorador key={envio.id} envio={envio}></CardComunicadoMorador>
+                    } )
+                }
+            </div>
+        </div>
     );
 }
 

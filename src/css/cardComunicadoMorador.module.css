@@ -1,0 +1,108 @@
+/* =========================================
+   CARD DE COMUNICADO DO MORADOR
+   ========================================= */
+
+/* Card com o resumo do comunicado que foi enviado para o morador */
+.cm-card {
+  background-color: #ffffff; /* Fundo branco do card */
+  border: 1px solid #eef0f4; /* Contorno claro, no mesmo tom da divisória do header */
+  border-radius: 10px; /* Arredonda os cantos do card */
+  padding: 14px; /* Respiro interno do card */
+  margin-bottom: 10px; /* Espaço entre os cards da lista */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra leve, igual aos cards de visitante */
+}
+
+/* Cabeçalho alinhando o título do comunicado e a data de criação */
+.cm-header {
+  display: flex; /* Coloca o título e a data na mesma linha */
+  justify-content: space-between; /* Joga o título para a esquerda e a data para a direita */
+  align-items: flex-start; /* Alinha os dois pelo topo */
+  gap: 8px; /* Espaço entre o título e a data */
+  flex-wrap: wrap; /* Em telas muito estreitas a data desce para a linha de baixo */
+  margin-bottom: 8px; /* Espaço entre o cabeçalho e a descrição */
+}
+
+/* Título do comunicado */
+.cm-titulo {
+  margin: 0;
+  font-size: 15px; /* Tamanho do título do card */
+  font-weight: 700; /* Deixa o título em negrito */
+  line-height: 1.3; /* Deixa o título mais compacto */
+  color: #001c3f; /* Cor principal do projeto */
+  min-width: 0; /* Permite que o título encolha em telas estreitas */
+}
+
+/* Data de criação do comunicado exibida como etiqueta */
+.cm-data {
+  flex-shrink: 0; /* Impede que a etiqueta seja espremida */
+  padding: 4px 10px; /* Respiro interno da etiqueta */
+  border-radius: 20px; /* Formato de cápsula */
+  background-color: #eef2ff; /* Azul bem claro */
+  color: #2b45a2; /* Azul escuro usado nas abas ativas */
+  font-size: 11px; /* Texto pequeno da etiqueta */
+  font-weight: 700; /* Deixa o texto da etiqueta forte */
+  white-space: nowrap; /* Impede que a data quebre de linha */
+}
+
+/* Descrição do comunicado */
+.cm-descricao {
+  margin: 0;
+  font-size: 13px; /* Tamanho do texto de apoio */
+  line-height: 1.5; /* Deixa as linhas da descrição mais respiradas */
+  color: #7a87a7; /* Cinza azulado dos textos secundários */
+}
+
+/* Etiqueta que informa se o morador já visualizou o comunicado */
+.cm-status {
+  display: inline-block; /* Permite o uso de padding e border-radius */
+  margin-top: 10px; /* Respiro em relação à descrição */
+  padding: 4px 10px; /* Respiro interno da etiqueta */
+  border-radius: 20px; /* Formato de cápsula */
+  font-size: 11px; /* Texto pequeno da etiqueta */
+  font-weight: 700; /* Deixa o texto da etiqueta forte */
+  white-space: nowrap; /* Impede que o texto da etiqueta quebre de linha */
+}
+
+/* Etiqueta do comunicado que o morador ainda não visualizou */
+.cm-status--naoVisualizado {
+  background-color: #f4f5f9; /* Cinza bem claro */
+  color: #55628b; /* Cinza azulado escuro */
+}
+
+/* Etiqueta do comunicado que o morador já visualizou */
+.cm-status--visualizado {
+  background-color: #e4f7e8; /* Verde bem claro */
+  color: #1e7e34; /* Verde escuro, garantindo contraste */
+}
+
+/* Bloco com a pergunta do morador e a resposta do síndico */
+.cm-conversa {
+  display: flex; /* Empilha a pergunta e a resposta */
+  flex-direction: column;
+  gap: 8px; /* Espaço entre a pergunta e a resposta */
+  margin-top: 12px; /* Separa o bloco da descrição */
+}
+
+/* Pergunta feita pelo morador */
+.cm-pergunta {
+  margin: 0;
+  padding: 10px 12px; /* Respiro interno do bloco */
+  border-left: 3px solid #8b93b8; /* Marca visual da pergunta */
+  border-radius: 6px; /* Arredonda os cantos */
+  background-color: #f4f5f9; /* Fundo cinza claro */
+  font-size: 13px;
+  line-height: 1.5;
+  color: #001c3f; /* Cor principal do projeto */
+}
+
+/* Resposta enviada pelo síndico */
+.cm-resposta {
+  margin: 0;
+  padding: 10px 12px; /* Respiro interno do bloco */
+  border-left: 3px solid #2b45a2; /* Azul escuro já usado nas abas ativas */
+  border-radius: 6px; /* Arredonda os cantos */
+  background-color: #eef2ff; /* Azul bem claro */
+  font-size: 13px;
+  line-height: 1.5;
+  color: #001c3f; /* Cor principal do projeto */
+}
