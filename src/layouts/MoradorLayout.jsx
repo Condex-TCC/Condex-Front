@@ -2,7 +2,6 @@
 import { Outlet } from 'react-router-dom';
 import HeaderMorador from '../components/morador/headerMorador';
 import SidebarMorador from '../components/morador/sidebarMorador';
-import MenuInferiorMorador from '../components/morador/menuInferiorMorador';
 import { MenuLateralContext } from '../context/menuLateralContext';
 import { useContext } from 'react';
 

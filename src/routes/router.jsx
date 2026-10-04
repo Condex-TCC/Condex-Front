@@ -48,6 +48,7 @@ import PaginaExibeEnvios from '../pages/sindico/comunicados/telaExibeEnvios';
 import PaginaCadastraContraResposta from '../pages/sindico/comunicados/telaCadastraContraResposta';
 import PaginaCadastraComunicados from '../pages/sindico/comunicados/telaCadastraComunicados';
 import PaginaSelecionaMoradorComunicado from '../pages/sindico/comunicados/telaSelecionaMorador';
+import PaginaExibeComunicadosMorador from '../pages/morador/comunicados/telaExibeComunicados';
 
 
 //Componente que será utilizado para analisar a URL
@@ -287,6 +288,18 @@ const route = createBrowserRouter([
                     {
                         path: "documentos", // Renderiza no caminho "/morador/documentos"
                         element: <PaginaEmBreveMorador titulo="Documentos" descricao="Consulta os documentos do condomínio." />,
+                    },
+
+                    //Tela que exibe os comunicados
+                    {
+                        path: "comunicados/exibe", // Renderiza no caminho "/morador/documentos"
+                        element: <PaginaExibeComunicadosMorador></PaginaExibeComunicadosMorador>
+                    },
+
+                    //Tela que exibe todos os comunicados desse morador
+                    {
+                        path: "comunicados/historico", // Renderiza no caminho "/morador/documentos"
+                        element: <PaginaExibeComunicadosMorador></PaginaExibeComunicadosMorador>
                     },
                 ]
             },
