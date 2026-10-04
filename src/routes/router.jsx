@@ -52,6 +52,8 @@ import PaginaSelecionaMoradorComunicado from '../pages/sindico/comunicados/telaS
 import PaginaExibeComunicadosMorador from '../pages/morador/comunicados/telaExibeComunicados';
 import PaginaExibeComunicadosHistorico from '../pages/morador/comunicados/telaExibeComunicadosHistorico';
 import PaginaDetalhesComunicados from '../pages/morador/comunicados/telaDetalhesComunicados';
+import PaginaExibeRegrasMorador from '../pages/morador/RegrasLaudos/telaExibeRegrasMorador';
+import PaginaExibeLaudosMorador from '../pages/morador/RegrasLaudos/telaExibeLaudosMorador';
 
 
 //Componente que será utilizado para analisar a URL
@@ -287,12 +289,6 @@ const route = createBrowserRouter([
                         element: <PaginaEmBreveMorador titulo="Mensagens" descricao="Comunicados e notificações do condomínio." />,
                     },
 
-                    //Tela de documentos do morador
-                    {
-                        path: "documentos", // Renderiza no caminho "/morador/documentos"
-                        element: <PaginaEmBreveMorador titulo="Documentos" descricao="Consulta os documentos do condomínio." />,
-                    },
-
                     //Tela que exibe os comunicados
                     {
                         path: "comunicados/exibe", // Renderiza no caminho "/morador/documentos"
@@ -309,6 +305,18 @@ const route = createBrowserRouter([
                     {
                         path: "comunicados/detalhes/:id", // Renderiza no caminho "/morador/comunicados/historico"
                         element: <PaginaDetalhesComunicados></PaginaDetalhesComunicados>
+                    },
+
+                    //Tela onde será exibidos as regras
+                    {
+                        path: "registros/regras",
+                        element: <PaginaExibeRegrasMorador></PaginaExibeRegrasMorador>
+                    },
+
+                    //Tela onde será exibidos os laudos
+                    {
+                        path: "registros/laudos",
+                        element: <PaginaExibeLaudosMorador></PaginaExibeLaudosMorador>
                     },
                 ]
             },
