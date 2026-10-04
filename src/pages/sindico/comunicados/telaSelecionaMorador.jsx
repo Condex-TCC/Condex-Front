@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react"
 import { getMoradores } from "../../../api/MoradoresApi"
 import { useNavigate } from "react-router-dom"
+import CardMorador from "../../../components/sindico/comunicados/cardMorador"
+import styles from "../../../css/paginaCadastraRegra.module.css"
+import listaStyles from "../../../css/paginaExibeEnvios.module.css"
+import selecaoStyles from "../../../css/paginaCadastraComunicados.module.css"
 
 
 //Função que cria o componente
@@ -57,17 +61,71 @@ function PaginaSelecionaMoradorComunicado(){
     const selectedMoradores = () => {
 
         //TODO: Implementar essa lógica mais tarde
+
+        console.log(moradoesSelecionados)
+    }
+
+    //Função que seleciona todos os moradores
+    const selectAll = () => {
+
+        //Define o array se moradoresSelecionados como o de moradores
+        setMoradoresSelecionado(moradoes)
     }
 
     //Função que cria o componente
     return(
-        <h1></h1>
-        //Titulo selecionar moradores
-        //na direita do tiutlo um botão de voltar
 
-        //uma div onde será exibido os cards dos moradores 
+        // Container principal que engloba tudo
+        <div className={styles.container}>
 
-        //um obtão verde, escrito: Selecoinar esses moradores
+            {/* Cabeçalho com o título da tela e o botão de voltar */}
+            <header className={styles.header}>
+
+                <h1 className={styles.title}>Selecionar moradores</h1>
+
+                {/* Botão que retorna para a tela de cadastro de comunicados */}
+                <button className={styles.backButton} onClick={back}>
+                    &larr; Voltar
+                </button>
+            </header>
+
+            {/*Div que agrupa os cards dos moradores*/}
+            <div className={listaStyles.listaEnvios}>
+
+                {/* Cards com os moradores que podem ser selecionados */}
+                {
+                    // Iterando e adicionando os cards
+                    moradoes.map((morador) => {
+
+                        //Retorna o card do morador
+                        return <CardMorador key={morador.id} morador={morador}
+                         renderiza={setMoradoresSelecionado} moradoresSelecionados={moradoesSelecionados} ></CardMorador>
+                    } )
+                }
+            </div>
+
+            {/* Área de ação com o botão que seleciona todos e o botão verde de confirmação */}
+            <div className={styles.actionsContainer}>
+
+                {/* Botão que seleciona todos os moradores de uma só vez */}
+                <button
+                    type="button"
+                    className={selecaoStyles.botaoSelecionar}
+                    onClick={selectAll}
+                >
+                    Selecionar todos
+                </button>
+
+                {/* Botão verde de confirmação da seleção, centralizado na tela */}
+                <button
+                    type="button"
+                    className={styles.buttonAprovar}
+                    onClick={selectedMoradores}
+                >
+                    Selecionar esses moradores
+                </button>
+            </div>
+        </div>
     )
 }
 
