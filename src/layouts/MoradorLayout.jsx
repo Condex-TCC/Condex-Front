@@ -39,9 +39,6 @@ function LayoutMorador(){
                         {/* Local onde será inserido outros elementos */}
                         <Outlet />
                     </main>
-
-                    {/* Menu inferior com a navegação principal do morador */}
-                    <MenuInferiorMorador></MenuInferiorMorador>
                         
                 </div>
             </div>
