@@ -23,7 +23,7 @@ function PaginaExibeLaudosMorador(){
     const navegaRegra = () => {
 
         //Realiza a navagação
-        navigate("/morador/registros/regra")
+        navigate("/morador/registros/regras")
     }
 
     //Função que obtem os laudos
