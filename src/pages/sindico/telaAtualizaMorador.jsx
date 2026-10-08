@@ -158,70 +158,114 @@ function PaginaAtualizaMorador(){
 
    return (
        <div className={styles.container}>
-   
-         <header className={styles.header}>
-           <h1 className={styles.title}>Atualiza morador</h1>
-   
-           <button className={styles.backButton} onClick={back}>
+
+         {/* Cabeçalho da página: contexto, ação concreta e apoio */}
+         <header className={styles['cabecalho-pagina']}>
+           <div>
+             <p className="cx-overline">Usuários</p>
+             <h2 className="cx-page-title">Atualiza morador</h2>
+             <p className="cx-page-subtitle">
+               Edite os dados do morador e, se preciso, troque a unidade.
+             </p>
+           </div>
+
+           <button type="button" className={styles.backButton} onClick={back}>
              &larr; Voltar
            </button>
-   
          </header>
-   
+
          <form className={styles.form} onSubmit={(e) => { e.preventDefault(); atualizaMorador(); }}>
-           <input 
-             type="text" 
-             placeholder="Nome" 
-             className={styles.inputTitle} 
-             value={nome}
-             onChange={nomeState}
-           />
-   
-           <input 
-             type="text" 
-             placeholder="CPF" 
-             className={styles.inputTitle}
-             value={cpf}
-             onChange={cpfState}
-           />
 
-           <input 
-             type="text" 
-             placeholder="E-mail" 
-             className={styles.inputTitle}
-             value={email}
-             onChange={emailState}
-           />
+           <section className={styles['form-secao']} aria-labelledby="secao-dados-pessoais">
+             <h3 className={styles['form-secao__titulo']} id="secao-dados-pessoais">
+               Dados pessoais
+             </h3>
 
-           <input 
-             type="text" 
-             placeholder="Telefone" 
-             className={styles.inputTitle}
-             value={telefone}
-             onChange={telefoneState}
-           />
+             <div className={styles['form-grid']}>
+               {/* Nome abre a linha inteira: é o identificador do cadastro */}
+               <div className={`${styles.campo} ${styles['campo--full']}`}>
+                 <label className={styles['campo__label']} htmlFor="morador-nome">Nome</label>
+                 <input
+                   id="morador-nome"
+                   type="text"
+                   placeholder="Nome"
+                   className={styles.inputTitle}
+                   value={nome}
+                   onChange={nomeState}
+                 />
+               </div>
 
-           <input 
-             type="text" 
-             placeholder="Senha (opicional)" 
-             className={styles.inputTitle}
-             value={senha}
-             onChange={senhaState}
-           />
+               <div className={styles.campo}>
+                 <label className={styles['campo__label']} htmlFor="morador-cpf">CPF</label>
+                 <input
+                   id="morador-cpf"
+                   type="text"
+                   placeholder="CPF"
+                   className={styles.inputTitle}
+                   value={cpf}
+                   onChange={cpfState}
+                 />
+               </div>
 
-           {/* Dados do condominio */}
-           <header className={styles.header}>
-           <h3>Apertamento {text}</h3>
-   
-           <button className={styles.backButton} type='button' onClick={alteraApertamento}>
-                Escolher outro apertamento
-           </button>
-   
-            </header>
+               <div className={styles.campo}>
+                 <label className={styles['campo__label']} htmlFor="morador-email">E-mail</label>
+                 <input
+                   id="morador-email"
+                   type="text"
+                   placeholder="E-mail"
+                   className={styles.inputTitle}
+                   value={email}
+                   onChange={emailState}
+                 />
+               </div>
 
-            <p>{bloco} - N° {numero}</p>
-           <p>{descricao === null ? "Não há descrição" : descricao}</p>
-           
+               <div className={styles.campo}>
+                 <label className={styles['campo__label']} htmlFor="morador-telefone">Telefone</label>
+                 <input
+                   id="morador-telefone"
+                   type="text"
+                   placeholder="Telefone"
+                   className={styles.inputTitle}
+                   value={telefone}
+                   onChange={telefoneState}
+                 />
+               </div>
+
+               <div className={styles.campo}>
+                 <label className={styles['campo__label']} htmlFor="morador-senha">Senha</label>
+                 <input
+                   id="morador-senha"
+                   type="text"
+                   placeholder="Senha (opicional)"
+                   className={styles.inputTitle}
+                   value={senha}
+                   onChange={senhaState}
+                 />
+               </div>
+             </div>
+           </section>
+
+           {/* Unidade vinculada: título da seção à esquerda e a ação
+               de troca à direita, separados por filete. */}
+           <section className={styles['form-secao']} aria-labelledby="secao-apertamento">
+             <div className={styles['form-secao__topo']}>
+               <h3 className={styles['form-secao__titulo']} id="secao-apertamento">
+                 Apertamento {text}
+               </h3>
+
+               <button className={styles.backButton} type='button' onClick={alteraApertamento}>
+                 Escolher outro apertamento
+               </button>
+             </div>
+
+             {/* Dados da unidade: somente leitura, vêm da API */}
+             <div className={styles.infoBox}>
+               <p>{bloco} - N° {numero}</p>
+               <p>{descricao === null ? "Não há descrição" : descricao}</p>
+             </div>
+           </section>
+
+           {/* Rodapé de ações: única primária da tela, à direita */}
            <div className={styles.submitContainer}>
              <button type='submit' className={styles.submitButton}>
                Atualizar

@@ -11,7 +11,7 @@ function CardProximaVisita({ visita }) {
     //Retorna o componente
     return (
 
-        <div className={styles['vm-card']}>
+        <div className={`${styles['vm-card']} ${styles['vm-card--agendada']}`}>
 
             {/* Avatar com as iniciais do visitante */}
             <div className={styles['vm-avatar']} aria-hidden="true">
@@ -33,8 +33,9 @@ function CardProximaVisita({ visita }) {
                 </div>
             </div>
 
-            {/* Etiqueta que mostra que a visita ainda vai acontecer */}
-            <span className={`${styles['vm-badge']} ${styles['vm-badge--agendada']}`}>
+            {/* Etiqueta que mostra que a visita ainda vai acontecer
+                (cx-badge compartilha o visual das outras telas) */}
+            <span className={`cx-badge ${styles['vm-badge']} ${styles['vm-badge--agendada']}`}>
                 {visita.status || 'Cadastrado'}
             </span>
 

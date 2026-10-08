@@ -1,231 +1,502 @@
+/* ==================================================
+   TELA INICIAL DO PORTEIRO (DASHBOARD COM ABAS)
+   --------------------------------------------------
+   Composição: cabeçalho de página (overline + título +
+   ação principal) → abas em pílulas → seções com cards.
+
+   ATENÇÃO DE REUTILIZAÇÃO: este módulo também é importado
+   como `abasStyles` pelas telas de comunicados/regras/laudos
+   do Morador, que usam APENAS `tabs--group`, `tab--active`
+   e `tab--inactive` — por isso essas três classes seguem o
+   padrão de abas da spec (5.6) e nunca podem ser renomeadas
+   nem receber dependência do restante do arquivo.
+
+   O Porteiro não tem sidebar, então a margem interna é
+   responsabilidade deste container (o shell não reserva
+   padding) — por isso o próprio padding da página.
+
+   Padrões da spec: 5.1 raiz em coluna, 5.2 botões, 5.5
+   cards, 5.6 abas, 5.9 estado vazio, 6 responsividade.
+   ================================================== */
+
+/* Raiz da página: coluna com ritmo fixo (spec 5.1).
+   Em telas pequenas o padding encolhe, mas nunca some —
+   é ele que separa o conteúdo do header fixo. */
 .dashboard--container {
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 30px;
-  color: #111;
+  font-family: var(--cx-font);
+  color: var(--cx-text);
   width: 100%;
   box-sizing: border-box;
-  min-height: 100vh;
-  background-color: #f4f4f4;
+  min-height: calc(100vh - var(--cx-header-h)); /* desconta o header fixo */
+  background-color: var(--cx-bg); /* Mesmo fundo dos perfis Síndico e Morador */
+  padding: 28px 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-lg);
 }
 
+/* ---------- Cabeçalho da página ---------- */
+/* Texto à esquerda (overline + título + apoio) e a ação
+   principal à direita. flex-wrap garante que, apertando,
+   o botão desça para a própria linha em vez de espremer
+   o título (spec 6: cabeçalhos quebram em 2 linhas). */
 .header--section {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
+  align-items: flex-start;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
 }
 
-.tabs--group {
+.header--texto {
   display: flex;
-  gap: 15px;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  max-width: 72ch;
 }
 
-.tab--active {
-  background-color: #2b45a2; /* Azul escuro idêntico ao da aba ativa */
-  color: #ffffff;
-  border: none;
-  padding: 10px 45px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+/* ---------- Abas em pílulas (spec 5.6) ---------- */
+/* O grupo tem fundo rebaixado e a aba ativa "sobe" como uma
+   superfície branca — o mesmo padrão das telas do Morador,
+   que reaproveitam exatamente estas três classes. */
+.tabs--group {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--cx-surface-inset);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
+  align-self: flex-start; /* encolhe no tamanho das abas dentro do container em coluna */
 }
 
+/* Base comum das duas abas: mesmas medidas, só muda o estado */
+.tab--active,
 .tab--inactive {
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #e0e0e0;
-  padding: 10px 25px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  font-family: var(--cx-font);
   cursor: pointer;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+  transition: background-color var(--cx-dur) ease, color var(--cx-dur) ease,
+              box-shadow var(--cx-dur) ease;
 }
 
+/* Aba selecionada: superfície branca + texto azul (identidade
+   do sistema) — quem está olhando sabe em que aba está. */
+.tab--active {
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  box-shadow: var(--cx-shadow-xs);
+}
+
+/* Aba inativa: transparente sobre o fundo rebaixado */
+.tab--inactive {
+  background-color: transparent;
+  color: var(--cx-text-muted);
+}
+
+.tab--inactive:hover {
+  color: var(--cx-text-strong);
+}
+
+.tab--active:focus-visible,
+.tab--inactive:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ---------- Ação principal (spec 5.2 primary) ---------- */
 .btn--add {
-  background-color: #4b64c6; /* Azul levemente mais claro para o botão superior */
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: var(--cx-control);
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
+  box-shadow: 0 1px 2px rgba(11, 23, 51, 0.12);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--cx-dur) ease, transform var(--cx-dur-fast) ease;
+}
+
+.btn--add:hover {
+  background-color: var(--cx-primary-hover);
+}
+
+.btn--add:active {
+  background-color: var(--cx-primary-active);
+  transform: translateY(1px);
+}
+
+.btn--add:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ---------- Seções ---------- */
+/* Painel da aba ativa: coluna com o mesmo ritmo do container,
+   para as seções se revezarem sem margens acumulando */
+.abas-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-lg);
+}
+
+/* Coluna com ritmo fixo: o título, os cards e o estado vazio
+   se revezam sem margens acumulando (o gap do container já
+   separa uma seção da outra). */
+.list--section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-md);
+}
+
+/* Título de seção: igual ao cx-section-title + filete,
+   para marcar o início de cada bloco da lista. */
+.section--title {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-base);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+  letter-spacing: 0.01em;
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--cx-border);
+}
+
+/* ---------- Estado vazio / aviso (spec 5.9) ---------- */
+/* Mesma composição do cx-empty — ícone, texto centrado e
+   contorno tracejado — para as seções do porteiro falarem
+   a mesma linguagem das outras telas. */
+.empty--state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: var(--cx-space-xl) var(--cx-space-lg);
+  text-align: center;
+  border: 1px dashed var(--cx-border-strong);
+  border-radius: var(--cx-radius-lg);
+  background-color: var(--cx-surface-alt);
+  color: var(--cx-text-muted);
+  font-size: var(--cx-text-sm);
+  line-height: 1.6;
+}
+
+.empty--state__icone {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: 50%;
+  background-color: var(--cx-neutral-soft);
+  color: var(--cx-text-faint);
+}
+
+.empty--state__texto {
+  max-width: 56ch;
+}
+
+/* Variante de erro: vermelho é a cor de falha em todo o
+   sistema, então o aviso de API fora do ar não parece um
+   "estado vazio" comum. */
+.empty--state--erro {
+  border-style: solid;
+  border-color: var(--cx-danger-border);
+  background-color: var(--cx-danger-soft);
+  color: var(--cx-danger);
+}
+
+.empty--state--erro .empty--state__icone {
+  background-color: var(--cx-surface);
+  color: var(--cx-danger);
+}
+
+/* ---------- Cards de visitante e de encomenda (spec 5.5) ---------- */
+/* Mesma superfície em todos: branco, borda, raio grande e
+   sombra leve. min-width: 0 evita que textos longos (CPF,
+   descrição da encomenda) estourem a coluna do grid. */
+.card--item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 18px 20px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+  transition: border-color var(--cx-dur) ease, box-shadow var(--cx-dur) ease,
+              transform var(--cx-dur) ease;
+}
+
+/* Só o card clicável ganha elevação no hover (spec 5.5):
+   reforçar o cursor em cards parados criaria uma promessa
+   de ação que não existe. */
+.card--item--clicavel {
   cursor: pointer;
 }
 
-.list--section {
-  margin-bottom: 40px;
+.card--item--clicavel:hover {
+  border-color: var(--cx-primary-border);
+  box-shadow: var(--cx-shadow);
+  transform: translateY(-2px);
 }
 
-.section--title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 15px;
+/* Linha superior: nome à esquerda, pastilha de status à direita.
+   flex-wrap deixa a pastilha descer em telas estreitas. */
+.card--top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
 }
 
-/* Estado vazio exibido quando a seção não tem registros */
-.empty--state {
-  border: 1px dashed #dfdfdf;
-  border-radius: 8px;
-  background-color: #ffffff;
-  padding: 20px;
-  text-align: center;
-  font-size: 15px;
-  color: #777777;
+/* Nome do destinatário/visitante: o texto mais forte do card */
+.text--name {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-md);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+  line-height: 1.3;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* Linha de informações do card (bloco, apartamento, morador) */
+/* Variante botão: mesmo visual do título, só que clicável.
+   No card de encomenda o nome leva o MESMO onClick do card,
+   o que dá ao teclado o caminho que o mouse já tinha.
+   A tipografia continua vindo de .text--name — só as
+   propriedades de "controle" do <button> são neutralizadas. */
+.text--name--botao {
+  background: none;
+  border: 0;
+  margin: -4px;
+  padding: 4px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--cx-radius-sm);
+}
+
+.text--name--botao:hover {
+  color: var(--cx-primary);
+}
+
+.text--name--botao:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Pastilha de quem cadastrou o visitante.
+   Cores e medidas vêm do cx-badge global; esta classe só
+   garante que a pastilha não encolha no espaço da linha. */
+.badge--origem {
+  flex: none;
+}
+
+/* Pastilha de status da encomenda (pendente × retirada) */
+.badge--status {
+  flex: none;
+}
+
+/* Linha de metadados: hierarquia abaixo do título
+   (bloco/apartamento mais legível, datas e horários menores) */
 .card--info {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-bottom: 14px;
-}
-
-.card--item {
-  border: 1px solid #dfdfdf;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #ffffff;
-}
-
-.card--top {
-  display: flex;
-  align-items: baseline;
-  margin-bottom: 12px;
-}
-
-.text--name {
-  font-size: 16px;
-  font-weight: bold;
-  margin-right: 15px;
-}
-
-.text--date {
-  color: #888888;
-  font-size: 15px;
-}
-
-/* Selo que indica quem cadastrou o visitante (morador ou porteiro) */
-.badge--origem {
-  font-size: 12px;
-  font-weight: bold;
-  color: #2b45a2;
-  background-color: #e8ecfa;
-  border-radius: 10px;
-  padding: 3px 10px;
-}
-
-.card--bottom {
-  display: flex;
-  align-items: center;
+  min-width: 0;
 }
 
 .text--block {
-  font-size: 15px;
-  margin-right: 30px;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text);
+  line-height: 1.5;
 }
 
-.text--apt {
-  font-size: 15px;
+.text--date {
+  font-size: var(--cx-text-xs);
+  color: var(--cx-text-muted);
+  line-height: 1.5;
 }
 
+/* Rodapé do card: filete separa os dados da ação e alinha
+   o botão à direita — mesma leitura em todos os cards. */
 .card--active {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--cx-border);
 }
 
 .info--group {
   display: flex;
   flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 
+/* Ação do card (spec 5.2 secondary): a mesma ação de card é
+   a mesma ação do sistema — superfície branca, texto azul,
+   borda forte e halo de foco. */
 .btn--exit {
-  background-color: #2b45a2; /* Mesmo azul da aba ativa */
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--cx-control);
+  padding: 0 16px;
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  box-shadow: var(--cx-shadow-xs);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
   cursor: pointer;
+  white-space: nowrap;
   flex-shrink: 0; /* Impede que o botão seja espremido em telas estreitas */
+  transition: background-color var(--cx-dur) ease, border-color var(--cx-dur) ease,
+              transform var(--cx-dur-fast) ease;
 }
 
 .btn--exit:hover {
-  background-color: #203b8f;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
 }
 
-/* =========================
+.btn--exit:active {
+  transform: translateY(1px);
+}
+
+.btn--exit:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Linha de rodapé legado (bloco/apartamento) mantida para os
+   cards que ainda a usam */
+.card--bottom {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Bloco e apartamento quebram em telas estreitas */
+  gap: 6px 30px;
+}
+
+.text--apt {
+  font-size: var(--cx-text-sm);
+}
+
+/* ==================================================
    RESPONSIVIDADE
-========================= */
+   ================================================== */
 
-/* Tablets: as abas e o botão principal podem ficar lado a lado sem aperto */
-@media (max-width: 900px) {
-
-  .tab--active,
-  .tab--inactive {
-    padding: 10px 24px;
+/* Tablet: respiro menor e cabeçalho com menos altura — o
+   título não precisa da margem generosa do desktop. */
+@media (max-width: 1024px) {
+  .dashboard--container {
+    padding: 24px;
   }
 }
 
-/* Celulares: reduz o respiro e empilha a linha de ação do card */
+/* Celular: cabeçalho e abas viram colunas próprias, a ação
+   principal ocupa a linha toda e os cards param de se
+   apertar (spec 6). */
 @media (max-width: 640px) {
-
   .dashboard--container {
     padding: 16px;
+    gap: var(--cx-space-md);
   }
 
   .header--section {
-    flex-direction: column; /* Abas e botão ficam em linhas separadas */
-    align-items: stretch; /* Ocupa a largura toda para facilitar o toque */
-    gap: 12px; /* Espaço entre as abas e o botão */
-    margin-bottom: 28px; /* Reduz o espaço antes da primeira seção */
-  }
-
-  .tabs--group {
-    gap: 10px; /* Reduz o espaço entre as duas abas */
-  }
-
-  .tab--active,
-  .tab--inactive {
-    flex: 1 1 0; /* As duas abas dividem a largura igualmente */
-    padding: 10px 12px; /* Respiro menor para caber na tela estreita */
-    font-size: 15px; /* Reduz um pouco a fonte do texto das abas */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
   }
 
   .btn--add {
     width: 100%; /* O botão principal ocupa a linha inteira */
-    padding: 12px 16px; /* Respiro maior, com a altura boa para o dedo */
+    min-height: var(--cx-control);
+  }
+
+  /* Abas em largura total, dividindo o espaço igualmente:
+     dois alvos de toque largos em vez de um grupo centralizado */
+  .tabs--group {
+    display: flex;
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .tab--active,
+  .tab--inactive {
+    flex: 1 1 0;
+    height: 40px; /* alvo de toque confortável (spec 6) */
+    padding: 0 12px;
   }
 
   .card--item {
-    padding: 16px; /* Reduz o respiro interno do card */
+    padding: 16px;
   }
 
+  /* A ação desce para a linha própria, do tamanho da tela */
   .card--active {
-    flex-direction: column; /* O botão de ação desce para baixo das informações */
-    align-items: stretch; /* O botão ocupa a largura do card */
-    gap: 12px; /* Espaço entre as informações e o botão */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
   }
 
   .btn--exit {
-    width: 100%; /* Garante que o botão continue acessível no celular */
-    padding: 12px 16px;
-  }
-
-  .list--section {
-    margin-bottom: 28px; /* Reduz o espaço entre as seções */
+    width: 100%;
+    min-height: 40px;
   }
 }
 
-/* Celulares muito estreitos: evita que o nome do visitante quebre a linha de forma feia */
+/* Celulares muito estreitos: o nome do visitante menor para
+   não quebrar de forma feia ao lado da pastilha */
 @media (max-width: 380px) {
-
   .text--name {
-    font-size: 15px;
-    margin-right: 0;
+    font-size: var(--cx-text-base);
+  }
+}
+
+/* Movimento reduzido: as transições de hover/foco viram
+   troca instantânea (spec 7) */
+@media (prefers-reduced-motion: reduce) {
+  .card--item,
+  .btn--add,
+  .btn--exit,
+  .tab--active,
+  .tab--inactive {
+    transition: none;
+  }
+
+  .card--item--clicavel:hover,
+  .btn--add:active,
+  .btn--exit:active {
+    transform: none;
   }
 }

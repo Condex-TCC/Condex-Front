@@ -262,7 +262,7 @@ const route = createBrowserRouter([
                     //Tela inicial do morador
                     {
                         index: true, // Renderiza no caminho "/morador"
-                        element: <PaginaEmBreveMorador titulo="Início" descricao="Seja bem-vindo ao Cond e x, morador." />,
+                        element: <PaginaEmBreveMorador titulo="Início" descricao="Seja bem-vindo ao CONDEX, morador." />,
                     },
 
                     //Tela de visitantes do morador

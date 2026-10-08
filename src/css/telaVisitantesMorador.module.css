@@ -1,163 +1,368 @@
-/* TELA DE VISITANTES DO MORADOR */
+/* ==================================================
+   VISITANTES DO MORADOR
+   --------------------------------------------------
+   Telas que usam este módulo:
+   • telaVisitantesMorador.jsx      (lista de visitantes)
+   • telaCadastraVisitanteMorador?  → usa o módulo próprio
+   • cardProximaVisita.jsx / cardVisitanteAtivo.jsx
+   • telaEmBreveMorador.jsx         (estado de "em breve")
 
-/* Container principal da tela */
+   ATENÇÃO DE REUTILIZAÇÃO: este módulo também é importado
+   como `styles`/`telaStyles` pelas telas de comunicados,
+   regras e laudos do Morador. Elas usam apenas
+   `vm-container`, `vm-page-header`, `vm-page-title` e (em
+   uma delas) `vm-empty` — por isso essas classes nunca
+   podem ser renomeadas nem removidas; só reestilizadas.
+
+   O shell do Morador (shellLayout.module.css) já reserva a
+   margem da área de conteúdo, então aqui não há padding de
+   página: a coluna é centralizada e limitada a 720px, o
+   que mantém as linhas de texto com medida confortável.
+
+   Padrões da spec: 5.1 raiz em coluna, 5.5 cards, 5.9
+   estado vazio (cx-empty), 6 responsividade, 7 a11y.
+   ================================================== */
+
+/* Coluna da tela: largura limitada + centralizada.
+   O espaçamento vertical vem das margens de cada bloco
+   (e não de gap no container) porque os módulos que
+   compartilham esta classe já foram escritos assim. */
 .vm-container {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Mesma tipografia do header */
-  color: #001c3f; /* Azul marinho escuro usado como cor de texto em todo o app */
+  font-family: var(--cx-font);
+  color: var(--cx-text); /* Cor de corpo do sistema (o navy fica só nos títulos) */
   width: 100%;
   max-width: 720px; /* Limita a largura em telas grandes para o conteúdo não ficar esticado */
   margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
   padding-bottom: 8px; /* Pequeno respiro antes do menu inferior */
 }
 
-/* Cabeçalho da tela (título e descrição) */
+/* Cabeçalho da tela (overline de contexto, título e descrição) */
 .vm-page-header {
-  margin-bottom: 24px; /* Separa o cabeçalho do conteúdo */
+  margin-bottom: var(--cx-space-lg); /* Separa o cabeçalho do conteúdo */
 }
 
+/* Título: mesma escala e família do cx-page-title para o
+   Morador ver a mesma hierarquia em todas as telas */
 .vm-page-title {
-  font-size: 26px; /* Tamanho de título de tela */
-  font-weight: 700; /* Deixa o título mais forte */
-  line-height: 1.2; /* Reduz o espaçamento vertical do texto */
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--cx-text-strong);
+  margin: 0;
 }
 
+/* Texto de apoio: secundário por definição, com medida de
+   leitura limitada para não virar um parágrafo de 90ch */
 .vm-page-subtitle {
-  margin-top: 4px; /* Pequeno espaço abaixo do título */
-  font-size: 14px; /* Texto de apoio */
-  color: #7a87a7; /* Cinza azulado usado nos textos secundários do projeto */
+  margin-top: 6px;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text-muted);
+  line-height: 1.55;
+  max-width: 70ch;
 }
 
-/* Cada seção da tela (Visitantes ativos / Próximas visitas) */
+/* Cada seção da tela (Visitantes ativos / Visitantes cadastrados).
+   Coluna com ritmo fixo: título, cards e estado vazio se
+   revezam sem margens acumulando. */
 .vm-section {
-  margin-bottom: 28px; /* Respiro entre as seções */
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-md);
+  margin-bottom: var(--cx-space-xl); /* Respiro entre as seções */
 }
 
+/* Título de seção: igual ao cx-section-title + filete, para
+   marcar o início de cada bloco da lista. */
 .vm-section-title {
-  font-size: 16px; /* Tamanho dos títulos de seção */
-  font-weight: 700; /* Deixa o título em negrito */
-  color: #001c3f; /* Cor principal do projeto */
-  margin-bottom: 12px; /* Espaço entre o título e os cards */
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-base);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+  letter-spacing: 0.01em;
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--cx-border);
 }
 
-/* Estado vazio exibido quando a seção não tem registros */
+/* Estado vazio compacto (mantido para as telas que ainda o
+   usam; as listas novas preferem o bloco global cx-empty) */
 .vm-empty {
-  border: 1px dashed #d4d8e2; /* Contorno tracejado para diferenciar de um card real */
-  border-radius: 10px; /* Arredonda os cantos do estado vazio */
-  background-color: #ffffff; /* Fundo branco */
-  padding: 20px; /* Respiro interno */
-  text-align: center; /* Centraliza o texto */
-  font-size: 14px; /* Tamanho do texto */
-  color: #7a87a7; /* Cinza azulado, indicando que é apenas uma informação */
+  border: 1px dashed var(--cx-border-strong); /* Contorno tracejado para diferenciar de um card real */
+  border-radius: var(--cx-radius-lg);
+  background-color: var(--cx-surface-alt);
+  padding: var(--cx-space-lg);
+  text-align: center;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
+  line-height: 1.6;
 }
 
-/* Card de um visitante ou de uma visita */
+/* ==================================================
+   CARDS (spec 5.5)
+   Mesma superfície nos dois tipos; o que os distingue é
+   a varante aplicada no JSX: --ativo (quem está dentro)
+   e --agendada (quem ainda vai vir).
+   ================================================== */
 .vm-card {
-  display: flex; /* Coloca o avatar e as informações lado a lado */
-  align-items: center; /* Centraliza verticalmente o avatar em relação aos textos */
-  gap: 12px; /* Espaço entre o avatar e o bloco de textos */
-  background-color: #ffffff; /* Fundo branco do card */
-  border: 1px solid #eef0f4; /* Contorno claro, no mesmo tom da divisória do header */
-  border-radius: 10px; /* Arredonda os cantos do card */
-  padding: 14px; /* Respiro interno do card */
-  margin-bottom: 10px; /* Espaço entre os cards da lista */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra leve, igual aos cards do porteiro */
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0; /* Deixa textos longos encolherem em vez de estourar */
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-left-width: 3px; /* Filete de status do card */
+  border-radius: var(--cx-radius-lg);
+  padding: 16px;
+  box-shadow: var(--cx-shadow-sm);
+  transition: box-shadow var(--cx-dur) ease, border-color var(--cx-dur) ease;
+}
+
+.vm-card:hover {
+  box-shadow: var(--cx-shadow);
+}
+
+/* Visitante dentro do condomínio: filete verde = positivo,
+   mesma semântica de cor de todo o sistema */
+.vm-card--ativo {
+  border-left-color: var(--cx-success);
+}
+
+.vm-card--ativo .vm-avatar {
+  background-color: var(--cx-success-soft);
+  color: var(--cx-success);
+}
+
+/* Visita ainda prevista: filete azul = informação/agenda */
+.vm-card--agendada {
+  border-left-color: var(--cx-primary);
 }
 
 /* Avatar circular com as iniciais do visitante */
 .vm-avatar {
   flex-shrink: 0; /* Impede que o avatar seja espremido em telas estreitas */
-  width: 44px; /* Largura do círculo */
-  height: 44px; /* Altura igual à largura, formando o círculo perfeito */
-  border-radius: 50%; /* Transforma o quadrado em círculo */
-  background-color: #eef2ff; /* Fundo azul bem claro */
-  color: #2b45a2; /* Texto azul escuro, igual à cor das abas ativas do porteiro */
-  display: flex; /* Usa flexbox para centralizar o conteúdo */
-  align-items: center; /* Centraliza verticalmente */
-  justify-content: center; /* Centraliza horizontalmente */
-  font-size: 15px; /* Tamanho das iniciais */
-  font-weight: 700; /* Deixa as iniciais mais fortes */
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--cx-primary-soft); /* Fundo azul bem claro */
+  color: var(--cx-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-sm);
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 /* Bloco de textos do card */
 .vm-info {
   flex: 1; /* Ocupa o espaço restante da linha, empurrando a etiqueta para a direita */
-  min-width: 0; /* Permite que o texto encolha em telas estreitas */
+  min-width: 0;
 }
 
 .vm-name {
-  font-size: 15px; /* Tamanho do nome */
-  font-weight: 700; /* Nome em negrito */
-  color: #001c3f; /* Cor principal do projeto */
-  overflow: hidden; /* Esconde o excesso de texto */
-  text-overflow: ellipsis; /* Mostra reticências em vez de quebrar o layout */
-  white-space: nowrap; /* Mantém o nome em uma única linha */
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-md);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .vm-details {
-  margin-top: 4px; /* Espaço entre o nome e os detalhes */
-  font-size: 13px; /* Tamanho dos detalhes */
-  color: #7a87a7; /* Cinza azulado dos textos secundários */
-  line-height: 1.5; /* Deixa as linhas de detalhe mais respiradas */
+  margin-top: 4px;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
+  line-height: 1.55;
+  overflow-wrap: anywhere; /* Endereços e datas longos quebram em vez de vazar */
 }
 
-/* Etiqueta de status exibida à direita do card */
+/* Etiqueta de status à direita do card.
+   Medidas e o ponto de status vêm do cx-badge global; as
+   classes --ativo/--agendada é que dão a cor de cada estado. */
 .vm-badge {
-  flex-shrink: 0; /* Impede que a etiqueta seja espremida */
-  display: inline-block; /* Permite o uso de padding e border-radius */
-  padding: 4px 10px; /* Respiro interno da etiqueta */
-  border-radius: 20px; /* Formato de cápsula */
-  font-size: 11px; /* Texto pequeno da etiqueta */
-  font-weight: 700; /* Deixa o texto da etiqueta forte */
-  white-space: nowrap; /* Impede que o texto da etiqueta quebre de linha */
+  flex: none;
 }
 
 /* Etiqueta do visitante que está dentro do condomínio */
 .vm-badge--ativo {
-  background-color: #e4f7e8; /* Verde bem claro */
-  color: #1e7e34; /* Verde escuro, garantindo contraste */
+  background-color: var(--cx-success-soft);
+  color: var(--cx-success);
+  border-color: var(--cx-success-border);
 }
 
 /* Etiqueta da visita que ainda vai acontecer */
 .vm-badge--agendada {
-  background-color: #eef2ff; /* Azul bem claro */
-  color: #2b45a2; /* Azul escuro usado nas abas ativas */
+  background-color: var(--cx-primary-soft);
+  color: var(--cx-primary);
+  border-color: var(--cx-primary-border);
 }
 
-/* Área do botão de cadastro */
+/* Área da ação principal: agora o bloco vem logo abaixo do
+   cabeçalho (antes ficava no rodapé da página, escondido atrás
+   dos estados vazios). No desktop o botão alinha à direita e no
+   celular ocupa a largura toda; a margem inferior separa a ação
+   da primeira seção, já que o respiro não vem mais da última. */
 .vm-action {
-  margin-top: 8px; /* Respiro em relação à última seção */
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--cx-space-sm);
+  margin-top: 0;
+  margin-bottom: var(--cx-space-xl);
 }
 
-/* Botão principal que abre o formulário de pré cadastro */
+/* Botão principal que abre o formulário de pré cadastro
+   (spec 5.2 primary). Largura total como base — é o que atende
+   melhor o celular — e largura automática no desktop, onde ele
+   fica alinhado à direita dentro da área de ação. */
 .vm-btn-primary {
-  width: 100%; /* Ocupa toda a largura, o que facilita o toque no celular */
-  background-color: #2b45a2; /* Azul escuro, igual à aba ativa do porteiro */
-  color: #ffffff; /* Texto branco */
-  border: none; /* Remove a borda padrão do botão */
-  border-radius: 10px; /* Arredonda os cantos */
-  padding: 14px 20px; /* Respiro interno, grande o bastante para o toque */
-  font-size: 15px; /* Tamanho do texto do botão */
-  font-weight: 700; /* Deixa o texto em negrito */
-  cursor: pointer; /* Indica que o botão é clicável */
-  transition: background-color 0.2s ease-in-out; /* Suaviza a troca de cor ao passar o mouse */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--cx-control-lg);
+  padding: 0 26px;
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  box-shadow: 0 1px 2px rgba(11, 23, 51, 0.12);
+  font-size: var(--cx-text-md);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  cursor: pointer;
+  transition: background-color var(--cx-dur) ease, transform var(--cx-dur-fast) ease;
 }
 
 .vm-btn-primary:hover {
-  background-color: #203b8f; /* Escurece o azul ao passar o mouse, como nos outros botões do projeto */
+  background-color: var(--cx-primary-hover);
 }
 
 .vm-btn-primary:active {
-  transform: scale(0.99); /* Dá uma leve impressão de clique */
+  background-color: var(--cx-primary-active);
+  transform: translateY(1px);
 }
 
-/* Telas menores: a etiqueta desce para baixo do nome para não apertar o texto */
-@media (max-width: 420px) {
+.vm-btn-primary:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
 
+/* ==================================================
+   TELA EM DESENVOLVIMENTO (telaEmBreveMorador)
+   Bloco centralizado com ícone: mesma leitura de um
+   estado vazio, sem mudar a mensagem da tela.
+   ================================================== */
+.vm-em-breve {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: var(--cx-space-3xl) var(--cx-space-lg);
+  text-align: center;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+}
+
+.vm-em-breve__icone {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--cx-primary-soft);
+  color: var(--cx-primary);
+}
+
+.vm-em-breve__texto {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-lg);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+}
+
+/* Linha de apoio do cartão: estilo secundário (menor e esmaecido,
+   mesma medida do texto do cx-empty) para explicar o prazo sem
+   competir com o título "Tela em desenvolvimento" */
+.vm-em-breve__apoio {
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
+  line-height: 1.6;
+  max-width: 46ch;
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   ================================================== */
+
+/* Desktop (acima do breakpoint de 640px): a ação principal
+   deixa de ocupar a largura toda e passa a largura automática,
+   apoiada à direita dentro de .vm-action */
+@media (min-width: 641px) {
+  .vm-btn-primary {
+    width: auto;
+  }
+}
+
+/* Celular: cabeçalho e títulos menores; a tela usa a
+   largura toda com o respiro do shell em 14px */
+@media (max-width: 640px) {
+  .vm-page-title {
+    font-size: var(--cx-text-lg);
+  }
+
+  .vm-section {
+    margin-bottom: var(--cx-space-lg);
+  }
+}
+
+/* Telas muito estreitas: a etiqueta desce para baixo do nome
+   para não apertar o texto, e o card vira coluna */
+@media (max-width: 420px) {
   .vm-card {
-    flex-wrap: wrap; /* Permite que os itens quebrem de linha */
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px 12px;
+  }
+
+  .vm-info {
+    flex-basis: calc(100% - 56px); /* continua ao lado do avatar */
   }
 
   .vm-badge {
     margin-left: 56px; /* Alinha a etiqueta com o início dos textos, depois do avatar */
+  }
+
+  .vm-name {
+    white-space: normal; /* Nome longo quebra em vez de cortar no meio */
+  }
+
+  /* Alvos de toque: a ação principal garante 46px de altura */
+  .vm-btn-primary {
+    font-size: var(--cx-text-base);
+  }
+
+  .vm-em-breve {
+    padding: var(--cx-space-xl) var(--cx-space-md);
+  }
+}
+
+/* Movimento reduzido: transições viram troca instantânea (spec 7) */
+@media (prefers-reduced-motion: reduce) {
+  .vm-card,
+  .vm-btn-primary {
+    transition: none;
+  }
+
+  .vm-card:hover,
+  .vm-btn-primary:active {
+    transform: none;
   }
 }

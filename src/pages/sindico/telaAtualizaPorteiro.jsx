@@ -87,41 +87,64 @@ function PaginaAtualizaPorteiro(){
 
    return (
     <div className={styles.container}>
-      
-      {/* Cabeçalho da página */}
-      <div className={styles.header}>
 
-        <h2 className={styles.title}>Atualizar o porteiro Porteiro</h2>
+      {/* Cabeçalho da página: contexto (Usuários), ação concreta
+          e uma linha de apoio. O "voltar" é a ação secundária. */}
+      <header className={styles['cabecalho-pagina']}>
+
+        <div>
+          <p className="cx-overline">Usuários</p>
+          <h2 className="cx-page-title">Atualizar o porteiro Porteiro</h2>
+          <p className="cx-page-subtitle">
+            Revise os dados e defina a nova senha de acesso.
+          </p>
+        </div>
 
         {/* Usando o símbolo de flecha esquerda (&larr;) para o ícone de voltar */}
-        <button className={styles.btnVoltar} onClick={voltaUsuario}>&larr; voltar</button>
-      </div>
+        <button type="button" className={styles.btnVoltar} onClick={voltaUsuario}>&larr; voltar</button>
+      </header>
 
       {/* Corpo do formulário contendo as duas colunas */}
       <div className={styles.formContainer}>
-        
-        {/* Coluna da Esquerda: Campos de entrada de dados */}
+
+        {/* Coluna da Esquerda: Campos de entrada de dados.
+            Nome abre a linha inteira (é o identificador do
+            cadastro); e-mail e senha dividem a linha seguinte. */}
         <div className={styles.inputsColumn}>
-          <input 
-            type="text" 
-            placeholder="Nome completo" 
-            className={styles.inputField} 
-            value={name}
-            onChange={toogleNome}
-          />
-          <input 
-            type="email" 
-            placeholder="E-mail"
-            value={eamil}
-            className={styles.inputField} 
-            onChange={toogleEmail}
-          />
-          <input 
-            type="text" 
-            placeholder="Senha" 
-            className={styles.inputField} 
-            onChange={tooglePassword}
-          />
+          <div className={`${styles.campo} ${styles['campo--full']}`}>
+            <label className={styles['campo__label']} htmlFor="porteiro-nome">Nome completo</label>
+            <input
+              id="porteiro-nome"
+              type="text"
+              placeholder="Nome completo"
+              className={styles.inputField}
+              value={name}
+              onChange={toogleNome}
+            />
+          </div>
+
+          <div className={styles.campo}>
+            <label className={styles['campo__label']} htmlFor="porteiro-email">E-mail</label>
+            <input
+              id="porteiro-email"
+              type="email"
+              placeholder="E-mail"
+              value={eamil}
+              className={styles.inputField}
+              onChange={toogleEmail}
+            />
+          </div>
+
+          <div className={styles.campo}>
+            <label className={styles['campo__label']} htmlFor="porteiro-senha">Senha</label>
+            <input
+              id="porteiro-senha"
+              type="text"
+              placeholder="Senha"
+              className={styles.inputField}
+              onChange={tooglePassword}
+            />
+          </div>
         </div>
 
         {/* Coluna da Direita: Perfil estático conforme solicitado */}
@@ -129,14 +152,14 @@ function PaginaAtualizaPorteiro(){
           <span className={styles.profileLabel}>Perfil</span>
           <div className={styles.profileText}>Porteiro</div>
         </div>
-        
-      </div>
 
-      {/* Rodapé com o botão principal de envio */}
-      <div className={styles.footer}>
-        <button className={styles.btnCadastrar} onClick={updatePorteiro}>
-          Atualizar Porteiro
-        </button>
+        {/* Rodapé dentro do cartão: única ação primária, à direita */}
+        <div className={styles.footer}>
+          <button type="button" className={styles.btnCadastrar} onClick={updatePorteiro}>
+            Atualizar Porteiro
+          </button>
+        </div>
+
       </div>
 
     </div>

@@ -1,115 +1,354 @@
-/* PaginaCadastraPorteiro.module.css */
+/* ==================================================
+   FORMULÁRIO DE CADASTRO/EDIÇÃO DE USUÁRIO
+   (Porteiro) — reaproveitado pelas telas de cadastro
+   e de atualização do Síndico.
 
-/* Container principal da página */
+   Composição: cabeçalho de página + cartão branco com
+   duas colunas (campos | perfil), rodapé de ações com
+   uma única primária.
+
+   As colunas usam grid com minmax(0, ...): o campo nunca
+   estoura o pai, e abaixo de 720px tudo empilha — o perfil
+   passa para o topo, onde ainda dá para conferi-lo rápido.
+   ================================================== */
+
+/* Raiz da página: sem padding (o shell já reserva a margem)
+   e coluna flex para o espaçamento ser igual em ambas as
+   telas que usam este módulo. */
 .container {
-  padding: 24px;
-  font-family: sans-serif;
-  background-color: #ffffff;
-  max-width: 800px;
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-lg);
+  width: 100%;
+  max-width: 880px;
+  min-width: 0;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
-/* Cabeçalho contendo o título e o botão de voltar */
+/* Cabeçalho: texto (overline/título/subtítulo) à esquerda,
+   ação secundária à direita; quebra para a linha própria
+   quando não cabe. */
+.cabecalho-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+}
+
+/* Cabeçalho simples (título + botão), versão legada */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
 }
 
-/* Título da tela */
+/* Título de página: mesmo desenho de cx-page-title */
 .title {
-  font-size: 18px;
-  color: #333;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--cx-text-strong);
   margin: 0;
-  font-weight: 500;
+  min-width: 0;
 }
 
-/* Botão voltar no canto superior direito */
+/* ==================================================
+   BOTÕES
+   Secundário (voltar) e primário (cadastrar/atualizar)
+   seguem o item 5.2: mesma altura, mesmo raio, foco
+   com halo em todos eles.
+   ================================================== */
 .btnVoltar {
-  background-color: #274b8f; /* Azul escuro baseado na imagem */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: 14px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  height: var(--cx-control);
+  padding: 0 16px;
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  cursor: pointer;
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  white-space: nowrap;
+  transition: background-color var(--cx-dur) ease,
+              border-color var(--cx-dur) ease,
+              transform var(--cx-dur-fast) ease;
 }
 
-/* Container que divide os campos de input e o perfil */
+.btnVoltar:hover {
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+}
+
+.btnVoltar:active {
+  transform: translateY(1px);
+}
+
+.btnVoltar:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   CARTÃO DO FORMULÁRIO
+   Superfície branca padrão (item 5.5) dividida em
+   campos e perfil.
+   ================================================== */
 .formContainer {
-  display: flex;
-  gap: 40px; /* Espaço entre a coluna esquerda e direita */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px;
+  gap: var(--cx-space-lg);
+  padding: var(--cx-space-lg);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
 }
 
-/* Coluna principal com os campos de texto */
+/* ==================================================
+   TÍTULO DE SEÇÃO NO TOPO DO CARTÃO
+   Mesmo desenho do .form-secao__titulo da tela de regra
+   (módulo paginaCadastraRegra): título + filete. Aqui ele
+   ocupa as duas colunas do cartão (grid-column: 1 / -1),
+   para o filete atravessar o cabeçalho inteiro antes de
+   os campos e o perfil dividirem a linha seguinte.
+   ================================================== */
+.form-secao__titulo {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--cx-border);
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-base);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--cx-text-strong);
+  min-width: 0;
+}
+
+/* Coluna principal: grade responsiva. Nome e e-mail ficam
+   lado a lado quando há largura; a senha ocupa a linha
+   inteira (campo curto, mas de leitura crítica). */
 .inputsColumn {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--cx-space-md);
+  align-content: start;
+  min-width: 0;
+}
+
+/* Agrupador rótulo + controle (label associado por htmlFor) */
+.campo {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Espaço entre cada input */
-  flex: 1; /* Ocupa o maior espaço disponível */
-  max-width: 500px;
+  gap: 6px;
+  min-width: 0;
 }
 
-/* Estilo padrão para os inputs de texto */
+.campo--full {
+  grid-column: 1 / -1;
+}
+
+.campo__label {
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  color: var(--cx-text);
+  letter-spacing: 0.01em;
+}
+
+.campo__hint {
+  font-size: var(--cx-text-xs);
+  color: var(--cx-text-muted);
+  line-height: 1.5;
+}
+
+/* Estilo padrão dos campos: mesmo desenho de input,
+   select e textarea do resto do sistema (item 5.3). */
 .inputField {
-  padding: 12px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  font-size: 14px;
-  outline: none;
   width: 100%;
+  min-height: var(--cx-control);
+  padding: 10px 12px;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  font-size: var(--cx-text-base);
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  background-color: var(--cx-surface);
+  outline: none;
   box-sizing: border-box;
+  transition: border-color var(--cx-dur) ease, box-shadow var(--cx-dur) ease;
 }
 
 .inputField::placeholder {
-  color: #a0a0a0;
+  color: var(--cx-text-faint);
 }
 
-/* Coluna lateral indicando o perfil */
+.inputField:hover {
+  border-color: #bfc7d8;
+}
+
+.inputField:focus {
+  border-color: var(--cx-primary);
+  box-shadow: var(--cx-focus-halo);
+}
+
+.inputField[aria-invalid='true'] {
+  border-color: var(--cx-danger);
+}
+
+/* Coluna lateral: perfil é dado FIXO do cadastro (vem da
+   regra de negócio), por isso é caixa somente leitura e
+   não um select. */
 .profileColumn {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 150px;
+  min-width: 0;
+  padding-left: var(--cx-space-lg);
+  border-left: 1px solid var(--cx-border);
 }
 
-/* Rótulo "Perfil" */
+/* Rótulo "Perfil": mesmo peso dos demais rótulos do cartão */
 .profileLabel {
-  font-size: 14px;
-  color: #333;
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  color: var(--cx-text);
 }
 
-/* Texto estático "Porteiro" (Simulando uma caixa desabilitada/visual) */
+/* Texto estático do perfil: fundo rebaixado = não editável */
 .profileText {
-  font-size: 14px;
-  color: #555;
-  padding: 12px 16px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  background-color: #f9f9f9; 
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  color: var(--cx-text-strong);
+  padding: 10px 12px;
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-surface-alt);
+  overflow-wrap: anywhere;
 }
 
-/* Área do botão de cadastro */
+/* ==================================================
+   RODAPÉ DE AÇÕES
+   Filete separa o corpo das ações; a primária fica à
+   direita no desktop e vira largura total no celular.
+   Ocupa as duas colunas do cartão (o rodapé fecha o
+   formulário inteiro, não só a coluna de campos). */
 .footer {
+  grid-column: 1 / -1;
   display: flex;
-  justify-content: center;
-  margin-top: 48px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--cx-space-sm);
+  padding-top: var(--cx-space-md);
+  border-top: 1px solid var(--cx-border);
 }
 
-/* Botão principal de cadastrar usuário */
+/* Única ação primária: azul sólido, sem degradê */
 .btnCadastrar {
-  background: linear-gradient(to right, #3480eb, #12325c); /* Degradê azul parecido com o da imagem */
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 14px 24px;
-  font-size: 16px;
-  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--cx-control);
+  padding: 0 22px;
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
   cursor: pointer;
-  width: 100%;
-  max-width: 350px;
+  box-shadow: 0 1px 2px rgba(11, 23, 51, 0.12);
+  transition: background-color var(--cx-dur) ease,
+              transform var(--cx-dur-fast) ease;
+}
+
+.btnCadastrar:hover {
+  background-color: var(--cx-primary-hover);
+}
+
+.btnCadastrar:active {
+  background-color: var(--cx-primary-active);
+  transform: translateY(1px);
+}
+
+.btnCadastrar:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   ================================================== */
+
+/* Tablet: o cartão deixa de ter duas colunas — o perfil
+   desce para baixo dos campos sem sumir da tela. */
+@media (max-width: 720px) {
+  .formContainer {
+    grid-template-columns: 1fr;
+    gap: var(--cx-space-md);
+    padding: var(--cx-space-md);
+  }
+
+  .profileColumn {
+    padding-left: 0;
+    border-left: 0;
+    padding-top: var(--cx-space-md);
+    border-top: 1px solid var(--cx-border);
+  }
+}
+
+/* Celular: cabeçalho quebra em duas linhas e as ações
+   empilham com largura total (uma por linha). */
+@media (max-width: 640px) {
+  .container {
+    gap: var(--cx-space-md);
+  }
+
+  .cabecalho-pagina,
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .inputsColumn {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .btnVoltar,
+  .btnCadastrar {
+    width: 100%;
+    min-height: 44px; /* alvo de toque confortável */
+  }
+}
+
+/* Movimento reduzido: sem deslize nos botões */
+@media (prefers-reduced-motion: reduce) {
+  .btnVoltar,
+  .btnCadastrar {
+    transition: none;
+  }
+
+  .btnVoltar:active,
+  .btnCadastrar:active {
+    transform: none;
+  }
 }

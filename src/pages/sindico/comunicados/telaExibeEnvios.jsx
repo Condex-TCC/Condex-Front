@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import styles from "../../../css/paginaExibeRegrasLaudos.module.css";
 import listaStyles from "../../../css/paginaExibeEnvios.module.css";
 import cardStyles from "../../../css/cardRegrasLaudosSindico.module.css";
-import stylesTitle from '../../../css/paginaCadastraRegra.module.css';
 import CardResposta from "../../../components/sindico/comunicados/cardResposta";
 
 //Função auxiliar que converte a data do formato ISO para o padrão brasileiro (dd/mm/aaaa)
@@ -68,20 +67,31 @@ function PaginaExibeEnvios(){
         navigate('/sindico/comunicados')
     }
 
+    //Lista segura para renderizar (a API pode falhar e devolver undefined)
+    const listaEnvios = Array.isArray(envios) ? envios : []
+
     //Retorna os envios
     return (
 
         // Container principal que engloba tudo
         <div className={styles.container}>
 
-            {/* Barra superior com o titulo da tela e o botão de voltar */}
-            <div className={styles.topBar}>
+            {/* Cabeçalho da página: contexto, ação concreta e retorno.
+                O botão de voltar mora aqui porque é a ação do cabeçalho,
+                igual às demais telas da área interna. */}
+            <header className={styles['cabecalho-pagina']}>
 
-                <h1 className={stylesTitle.title}>Envios do comunicado</h1>
+                <div>
+                    <p className="cx-overline">Comunicação</p>
+                    <h2 className="cx-page-title">Envios do comunicado</h2>
+                    <p className="cx-page-subtitle">
+                        Veja para quem este comunicado foi enviado e o que cada morador respondeu.
+                    </p>
+                </div>
 
                 {/* Botão que retorna para a tela dos comunicados */}
-                <button className={styles.backButton} onClick={back}>&larr; Voltar</button>
-            </div>
+                <button type="button" className={styles.backButton} onClick={back}>&larr; Voltar</button>
+            </header>
 
             {/* Bloco com os dados do comunicado */}
             <div className={`${cardStyles.card} ${listaStyles.comunicado}`}>
@@ -91,7 +101,7 @@ function PaginaExibeEnvios(){
 
                     <h2 className={`${cardStyles.title} ${listaStyles.comunicadoTitulo}`}>{comunicado.titulo}</h2>
 
-                    <div className={cardStyles.timeInfo}>Total de envios: {envios.length}</div>
+                    <div className={cardStyles.timeInfo}>Total de envios: {listaEnvios.length}</div>
                 </header>
 
                 {/* Corpo do bloco com a descrição e a data de criação do comunicado */}
@@ -105,13 +115,29 @@ function PaginaExibeEnvios(){
                 </div>
             </div>
 
+            {/* Estado vazio: nenhum morador recebeu/respondeu ainda */}
+            {listaEnvios.length === 0 && (
+                <div className="cx-empty">
+                    <span className="cx-empty__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22 6 12 13 2 6"></polyline>
+                        </svg>
+                    </span>
+                    <p className="cx-empty__title">Nenhum envio registrado</p>
+                    <p className="cx-empty__text">
+                        Os envios deste comunicado e as respostas dos moradores aparecem aqui.
+                    </p>
+                </div>
+            )}
+
             {/*Div com os cards de Reposta (que já existem)*/}
-            <div className={listaStyles.listaEnvios}>
+            <div className={`${listaStyles.listaEnvios}`}>
 
                 {/* Cards com os envios dos moradores */}
                 {
                     // Interando e adicioando os cards
-                    envios.map((envio) => {
+                    listaEnvios.map((envio) => {
 
                         //Retorna o card de resposta com o envio do morador
                         return <CardResposta key={envio.id} resposta={envio} redirecionamento={"/sindico/comunicados/envios/" + id}></CardResposta>

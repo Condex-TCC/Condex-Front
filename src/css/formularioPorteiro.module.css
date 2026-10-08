@@ -1,84 +1,201 @@
-/* FORMULÁRIOS DO PORTEIRO (cadastro de encomenda e registro de retirada) */
-/* O cabeçalho azul escuro da tela vem do HeaderPorteiro, dentro do PorteiroLayout,
-   então aqui só entram o cartão branco, o formulário e os botões. */
+/* ==================================================
+   FORMULÁRIOS DO PORTEIRO
+   --------------------------------------------------
+   Telas que usam este módulo:
+   • RegistroVisitante.jsx        (cadastro de visitante)
+   • telaCadastraEncomenda.jsx    (cadastro de encomenda)
+   • telaDetalheEncomenda.jsx     (registro de retirada)
 
-/* Container com o fundo cinza claro que envolve a área branca */
+   Composição — o Porteiro NÃO possui sidebar (decisão do
+   projeto), então o header fixo ocupa o topo e a tela
+   cuida da própria margem: o shell do porteiro não reserva
+   padding nenhum, por isso o container tem padding próprio.
+
+     ┌─ header (fora deste módulo) ─────────────────┐
+     │  [container com fundo cinza]                 │
+     │     ┌─ [card branco centralizado] ─────────┐ │
+     │     │ voltar                               │ │
+     │     │ overline + título + texto de apoio   │ │
+     │     │ formulário em grade auto-fit         │ │
+     │     │ ação principal                       │ │
+     │     └──────────────────────────────────────┘ │
+     └──────────────────────────────────────────────┘
+
+   Padrões da spec aplicados aqui:
+   • 5.2 botões (primary / secondary, foco com halo)
+   • 5.3 campos (40px, borda, hover e foco padronizados)
+   • 5.4 grade de campos com auto-fit
+   • 7   acessibilidade (rótulos ocultos já existentes,
+         :focus-visible, movimento reduzido)
+   ================================================== */
+
+/* Container da tela: fundo do sistema + respiro próprio.
+   min-height desconta o header fixo (68px) para a página
+   não criar uma rolagem vazia extra no fim. */
 .fp-container {
   width: 100%;
-  min-height: 100vh;
-  background-color: #d3d3d3;
+  min-height: calc(100vh - var(--cx-header-h));
+  background-color: var(--cx-bg);
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 40px 16px;
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  padding: 32px 20px 48px;
 }
 
-/* Área principal branca, centralizada e com 656px de largura */
+/* Cartão branco centralizado — mesma superfície dos demais
+   cards do CONDEX (bordas, raio grande e sombra leve).
+   min() evita o corte em telas mais estreitas que a largura
+   máxima, sem precisar de media query. */
 .fp-main {
-  width: 656px;
-  max-width: 100%;
+  width: min(720px, 100%);
   margin: 0 auto;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  padding: 24px 32px 40px 32px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow);
+  padding: 24px 32px 36px;
   box-sizing: border-box;
 }
 
-/* Coluna do topo: botão voltar no canto e título logo abaixo, mais ao centro */
+/* ---------- Cabeçalho da tela ---------- */
+
+/* Linha do topo: identificação da tela à esquerda e "voltar" à
+   direita — o mesmo alinhamento do cabeçalho das telas de cadastro
+   do síndico e do morador. Em telas estreitas o bloco de texto
+   ocupa a primeira linha e o botão quebra para a linha seguinte. */
 .fp-header {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 32px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cx-space-md);
+  margin-bottom: var(--cx-space-lg);
 }
 
-/* Botão azul de retorno, alinhado ao canto superior esquerdo do cartão */
+/* Bloco de identificação da tela: overline (contexto),
+   título (ação concreta) e texto de apoio. O flex-basis garante
+   que ele ceda espaço apenas para o botão de retorno. */
+.fp-header__texto {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 240px;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* Botão secundário de retorno (padrão "Voltar" de todo o CONDEX):
+   superfície branca com borda e texto em azul principal. */
 .fp-btn-voltar {
   align-self: flex-start;
-  background-color: #2b45a2;
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: var(--cx-control);
+  padding: 0 16px;
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  box-shadow: var(--cx-shadow-xs);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
   cursor: pointer;
+  transition: background-color var(--cx-dur) ease,
+              border-color var(--cx-dur) ease,
+              transform var(--cx-dur-fast) ease;
 }
 
 .fp-btn-voltar:hover {
-  background-color: #203b8f;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
 }
 
-/* Título da tela, em preto e negrito */
+.fp-btn-voltar:active {
+  transform: translateY(1px);
+}
+
+.fp-btn-voltar:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Título da tela: mesma escala e família do cx-page-title
+   para o porteiro ver a mesma hierarquia das outras telas. */
 .fp-titulo {
-  color: #000000;
-  font-size: 24px;
-  font-weight: bold;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--cx-text-strong);
   margin: 0;
-  text-align: center;
 }
 
-/* Coluna do formulário, com a largura do campo "Destinatário" */
+/* Texto de apoio abaixo do título (cx-page-subtitle local,
+   porque o módulo não herda as margens do componente global) */
+.fp-lead {
+  font-size: var(--cx-text-base);
+  color: var(--cx-text-muted);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 62ch;
+}
+
+/* ---------- Formulário ---------- */
+
+/* Grade de campos (spec 5.4): auto-fit desce sozinho de duas
+   colunas para uma conforme a largura do card, e o gap mantém
+   o mesmo ritmo vertical em todas as telas deste módulo. */
 .fp-formulario {
-  width: 366px;
-  max-width: 100%;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--cx-space-md);
+  width: 100%;
 }
 
-/* Cada campo do formulário */
+/* Cada campo do formulário: coluna com rótulo, controle e erro */
 .fp-campo {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
+  gap: 6px;
+  min-width: 0; /* permite encolher dentro da célula do grid */
 }
 
-/* Rótulo visível, usado apenas no "Recebida :" */
+/* Célula que ocupa a linha inteira da grade (campo largo,
+   linha de endereço, linha de data/hora e a ação principal) */
+.fp-celula--larga {
+  grid-column: 1 / -1;
+}
+
+/* Rótulo visível usado pelo bloco "Recebida :" */
 .fp-label-visivel {
-  color: #111111;
-  font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 8px;
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  color: var(--cx-text-strong);
+}
+
+/* Rótulo visível de cada campo (spec 5.3: texto sm, peso 600,
+   cor forte). O placeholder não substitui rótulo: ele some quando
+   o usuário começa a digitar, e o campo fica sem identificação.
+   display:block empilha o rótulo sobre o input também dentro das
+   linhas internas (endereço e data), que não são colunas de flex;
+   a margem inferior repete o respiro de 6px dessas linhas. */
+.fp-rotulo {
+  display: block;
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  color: var(--cx-text-strong);
+  letter-spacing: 0.01em;
+  margin-bottom: 6px;
+}
+
+/* Nos campos diretos do grid o espaçamento já vem do gap do .fp-campo:
+   sem anular a margem, o respiro entre rótulo e input dobraria */
+.fp-campo > .fp-rotulo {
+  margin-bottom: 0;
 }
 
 /* Rótulo escondido visualmente, para leitores de tela manterem a
@@ -95,28 +212,34 @@
   border: 0;
 }
 
-/* Aparência base de todos os campos da referência */
+/* Aparência base de todos os campos (spec 5.3: 40px de altura,
+   borda neutra, hover discreto e foco com halo azul) */
 .fp-input {
-  height: 44px;
+  width: 100%;
+  height: var(--cx-control);
   box-sizing: border-box;
-  border: 1px solid #dddddd;
-  border-radius: 8px;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
   outline: none;
   padding: 0 12px;
-  font-size: 15px;
-  font-family: inherit;
-  color: #333333;
-  background-color: #ffffff;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: var(--cx-text-base);
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  background-color: var(--cx-surface);
+  transition: border-color var(--cx-dur) ease, box-shadow var(--cx-dur) ease;
 }
 
 .fp-input::placeholder {
-  color: #999999;
+  color: var(--cx-text-faint);
+}
+
+.fp-input:hover {
+  border-color: #bfc7d8;
 }
 
 .fp-input:focus {
-  border-color: #2b45a2;
-  box-shadow: 0 0 0 1px #2b45a2;
+  border-color: var(--cx-primary);
+  box-shadow: var(--cx-focus-halo);
 }
 
 /* Remove as setas dos campos numéricos, que não existem na referência */
@@ -131,22 +254,39 @@
   appearance: textfield;
 }
 
-/* Campo largo do destinatário */
+/* Campo largo (destinatário / nome do visitante): a largura vem
+   da célula do grid, não de uma medida fixa — assim o mesmo
+   campo serve a card de 720px e a tela de 320px. */
 .fp-input--destinatario {
-  width: 366px;
-  max-width: 100%;
+  width: 100%;
 }
 
-/* Linha que agrupa bloco e apartamento */
+/* Quando o campo é filho direto do .fp-campo ele está dentro de
+   uma célula do grid e ocupa a coluna inteira; as larguras próprias
+   (146px etc.) valem só para os campos agrupados na linha de
+   endereço. Sem esta regra o CPF e o ID do morador ficariam com a
+   medida do campo de apartamento. */
+.fp-campo > .fp-input--destinatario,
+.fp-campo > .fp-input--apartamento {
+  width: 100%;
+}
+
+/* Linha que agrupa bloco e apartamento.
+   flex-wrap garante que, em células estreitas, um campo desça
+   em vez de estourar a borda do card (nada rola na horizontal). */
 .fp-linha-endereco {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-/* Campo pequeno do bloco */
+/* Campo do bloco: 82px ficava apertado demais (cabeçalho, foco e
+   valor de 10 caracteres estouravam o campo); agora acompanha a
+   largura do apartamento para a linha de endereço ter os dois
+   campos no mesmo tamanho */
 .fp-input--bloco {
-  width: 82px;
+  width: 146px;
 }
 
 /* Campo do apartamento */
@@ -154,152 +294,253 @@
   width: 146px;
 }
 
-/* Linha que agrupa os campos de data e hora */
+/* Linha que agrupa os campos de data e hora: grid de colunas de
+   mesma largura, para dia, mês, ano e hora ficarem alinhados
+   (antes eram larguras fixas diferentes — 56px e 97px — e os
+   campos de data não batiam entre si). auto-fit rebaixa sozinho
+   para menos colunas quando a célula fica estreita. */
 .fp-linha-recebida {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  align-items: start;
+  gap: 12px;
 }
 
-/* Campos curtos de dia, mês e ano */
+/* Campos de dia, mês e ano: dentro do grid cada um ocupa a coluna
+   inteira, garantindo a mesma largura em todos */
 .fp-input--data {
-  width: 56px;
+  width: 100%;
   text-align: center;
 }
 
-/* Campo de horário, um pouco mais largo */
+/* Campo de horário: mesma largura da coluna dos campos de data */
 .fp-input--hora {
-  width: 97px;
+  width: 100%;
   text-align: center;
 }
 
-/* Aviso exibido quando um campo não passa na validação */
+/* Erro de campo: cor de erro + peso forte (spec 5.3).
+   margin-top cobre os campos agrupados em divs internas
+   (endereço e data), onde não há gap de flexbox. */
 .fp-erro {
-  color: #d9534f;
-  font-size: 12px;
-  margin-top: 6px;
+  color: var(--cx-danger);
+  font-size: var(--cx-text-xs);
+  font-weight: 600;
+  margin-top: 4px;
 }
 
-/* Aviso exibido quando o envio falha, por exemplo quando a API recusa o cadastro */
+/* Aviso exibido quando o envio falha, por exemplo quando a API
+   recusa o cadastro: caixa de erro, não só texto vermelho solto */
 .fp-erro-envio {
-  color: #d9534f;
-  font-size: 13px;
-  margin: 16px 0 0 0;
+  margin-top: var(--cx-space-md);
+  padding: 12px 14px;
+  background-color: var(--cx-danger-soft);
+  border: 1px solid var(--cx-danger-border);
+  border-radius: var(--cx-radius);
+  color: var(--cx-danger);
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  line-height: 1.5;
   text-align: center;
 }
 
 /* Texto de apoio usado pela tela de retirada */
 .fp-subtitulo {
-  color: #777777;
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 0 auto 24px;
-  max-width: 366px;
+  color: var(--cx-text-muted);
+  font-size: var(--cx-text-base);
+  line-height: 1.6;
+  margin: 0 0 var(--cx-space-md);
+  max-width: 62ch;
 }
 
-/* Cartão de resumo dos dados da encomenda (tela de retirada) */
+/* ---------- Resumo da encomenda (tela de retirada) ---------- */
+
+/* Painel rebaixado dentro do card: separa "o que está saindo"
+   do formulário sem brigar com o branco do cartão externo. */
 .fp-resumo {
-  background-color: #f4f6fb;
-  border: 1px solid #dfe3ee;
-  border-radius: 8px;
-  padding: 18px 20px;
-  margin: 0 auto 24px;
-  max-width: 366px;
+  background-color: var(--cx-surface-alt);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
+  padding: 16px 18px;
+  margin: 0 0 var(--cx-space-md);
 }
 
 .fp-resumo-titulo {
-  color: #2948a5;
-  font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 12px;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-base);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+  margin-bottom: 10px;
 }
 
+/* Linha rótulo/valor: filete entre as linhas organiza a leitura
+   em pares chave-valor, como nas fichas do sistema. */
 .fp-resumo-linha {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  font-size: 15px;
-  color: #555555;
-  padding: 4px 0;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--cx-border);
+}
+
+.fp-resumo-linha:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.fp-resumo-linha span:first-child {
+  flex: none;
 }
 
 .fp-resumo-linha span:last-child {
-  color: #111111;
-  font-weight: bold;
+  color: var(--cx-text);
+  font-weight: 600;
   text-align: right;
+  min-width: 0;
+  overflow-wrap: anywhere; /* descrições longas quebram em vez de vazar */
 }
 
-/* Área do botão de salvar */
+/* ---------- Ação principal ---------- */
+
+/* Área do botão de salvar: no desktop o botão tem largura
+   própria e fica centralizado; no celular ocupa a linha toda */
 .fp-area-salvar {
   display: flex;
   justify-content: center;
-  margin-top: 32px;
 }
 
-/* Botão principal que confirma a operação */
+/* Botão principal (spec 5.2 primary): mesma ação "SALVAR" do
+   resto do CONDEX — azul sólido, 40px e halo de foco. */
 .fp-btn-salvar {
-  width: 176px;
-  height: 35px;
-  border: none;
-  border-radius: 7px;
-  background: linear-gradient(90deg, #5d7ddd 0%, #0e287a 100%);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: bold;
-  font-family: inherit;
+  min-width: 184px;
+  height: var(--cx-control);
+  padding: 0 24px;
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
+  box-shadow: 0 1px 2px rgba(11, 23, 51, 0.12);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
   cursor: pointer;
+  transition: background-color var(--cx-dur) ease, transform var(--cx-dur-fast) ease;
 }
 
 .fp-btn-salvar:hover {
-  filter: brightness(1.08);
+  background-color: var(--cx-primary-hover);
+}
+
+.fp-btn-salvar:active {
+  background-color: var(--cx-primary-active);
+  transform: translateY(1px);
+}
+
+.fp-btn-salvar:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
 }
 
 .fp-btn-salvar:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
-/* Telas médias: o cartão deixa de ter largura fixa e respeita as bordas da tela */
+/* ==================================================
+   RESPONSIVIDADE
+   O card nunca passa da viewport: a largura é sempre
+   min(720px, 100%) e as linhas de campos quebram por
+   wrap, então a página não rola na horizontal.
+   ================================================== */
+
+/* Telas médias: o card deixa de ter padding largo e
+   encosta nas laterais da área de conteúdo. */
 @media (max-width: 720px) {
-
   .fp-main {
-    padding: 20px 20px 32px 20px;
+    padding: 22px 22px 30px;
   }
 }
 
-/* Celulares: os campos de endereço e de data passam a ocupar a linha inteira */
-@media (max-width: 480px) {
-
+/* Celulares: uma coluna garantida, respiro menor e a ação
+   principal ocupando a linha inteira (alvo de toque fácil). */
+@media (max-width: 560px) {
   .fp-container {
-    padding: 16px 12px;
+    padding: 16px 12px 32px;
   }
 
-  .fp-formulario,
-  .fp-resumo,
-  .fp-subtitulo {
-    max-width: 100%;
+  .fp-formulario {
+    grid-template-columns: 1fr;
   }
 
+  .fp-area-salvar {
+    display: block;
+  }
+
+  .fp-btn-salvar {
+    width: 100%;
+  }
+
+  .fp-btn-voltar {
+    min-height: 40px; /* alvo de toque confortável no celular */
+  }
+
+  .fp-titulo {
+    font-size: var(--cx-text-xl);
+  }
+}
+
+/* Celulares muito estreitos: os campos de endereço e de data
+   empilham para nenhum input ficar menor que o dedo */
+@media (max-width: 420px) {
   .fp-linha-endereco,
   .fp-linha-recebida {
-    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .fp-input--bloco,
   .fp-input--apartamento {
-    flex: 1 1 0;
+    flex: 1 1 120px;
     min-width: 82px;
+    width: auto;
   }
 
-  .fp-input--data {
-    flex: 1 1 56px;
-  }
-
+  /* A linha de data/hora virou grid: as propriedades de flex não
+     valem aqui, e width:auto devolveria a largura intrínseca do
+     input — quebrando a igualdade das colunas. Mantém o preenchimento
+     da coluna, que já é a mesma largura para todos os quatro campos */
+  .fp-input--data,
   .fp-input--hora {
-    flex: 1 1 97px;
+    width: 100%;
   }
 
   .fp-titulo {
-    font-size: 20px;
+    font-size: var(--cx-text-lg);
+  }
+
+  .fp-resumo-linha {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .fp-resumo-linha span:last-child {
+    text-align: left;
+  }
+}
+
+/* Movimento reduzido: transições de hover/foco viram troca
+   instantânea (spec 7) */
+@media (prefers-reduced-motion: reduce) {
+  .fp-btn-voltar,
+  .fp-input,
+  .fp-btn-salvar {
+    transition: none;
+  }
+
+  .fp-btn-voltar:active,
+  .fp-btn-salvar:active {
+    transform: none;
   }
 }

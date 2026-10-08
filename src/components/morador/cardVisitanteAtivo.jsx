@@ -10,7 +10,7 @@ function CardVisitanteAtivo({ visitante }) {
     //Retorna o componente
     return (
 
-        <div className={styles['vm-card']}>
+        <div className={`${styles['vm-card']} ${styles['vm-card--ativo']}`}>
 
             {/* Avatar com as iniciais do visitante */}
             <div className={styles['vm-avatar']} aria-hidden="true">
@@ -27,8 +27,9 @@ function CardVisitanteAtivo({ visitante }) {
                 </div>
             </div>
 
-            {/* Etiqueta que mostra que o visitante está dentro do condomínio */}
-            <span className={`${styles['vm-badge']} ${styles['vm-badge--ativo']}`}>
+            {/* Etiqueta que mostra que o visitante está dentro do condomínio
+                (cx-badge compartilha o visual das outras telas) */}
+            <span className={`cx-badge ${styles['vm-badge']} ${styles['vm-badge--ativo']}`}>
                 {visitante.status || 'Em andamento'}
             </span>
 

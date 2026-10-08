@@ -9,8 +9,8 @@
   box-sizing: border-box; /* Inclui o padding dentro da largura total */
   flex-shrink: 0; /* Impede que a barra encolha quando o conteúdo da tela é grande */
   padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); /* Respiro interno, com folga extra para celulares que têm notch */
-  background-color: #ffffff; /* Fundo branco para destacar do conteúdo da tela */
-  border-top: 2px solid #eef0f4; /* Linha divisória clara no topo, no mesmo tom usado no header */
+  background-color: var(--cx-surface); /* Fundo branco para destacar do conteúdo da tela */
+  border-top: 2px solid var(--cx-border); /* Linha divisória clara no topo, no mesmo tom usado no header */
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Mesma tipografia do header do morador */
 }
 
@@ -27,20 +27,20 @@
   border: none; /* Remove a borda padrão dos botões */
   border-radius: 10px; /* Arredonda os cantos do item */
   background: transparent; /* Fundo transparente no estado normal */
-  color: #7a87a7; /* Cor do ícone e do texto no estado inativo */
+  color: var(--cx-text-muted); /* Cor do ícone e do texto no estado inativo */
   cursor: pointer; /* Muda o cursor para indicar que o item é clicável */
   transition: all 0.2s ease-in-out; /* Suaviza a troca de cor do item ativo */
 }
 
 /* Efeito ao passar o mouse ou o dedo sobre o item */
 .mi-item:hover {
-  color: #2b45a2; /* Escurece levemente o ícone ao interagir */
+  color: var(--cx-primary); /* Escurece levemente o ícone ao interagir */
 }
 
 /* Item que representa a aba atualmente aberta */
 .mi-item--ativo {
-  color: #2b45a2; /* Destaca a aba selecionada com o azul usado no resto do app */
-  background-color: #eef2ff; /* Leve fundo azul para reforçar a seleção */
+  color: var(--cx-primary); /* Destaca a aba selecionada com o azul usado no resto do app */
+  background-color: var(--cx-primary-soft); /* Leve fundo azul para reforçar a seleção */
 }
 
 /* Tamanho do ícone de cada item */

@@ -1,0 +1,624 @@
+/* ==================================================
+   CONDEX — SISTEMA DE DESIGN GLOBAL
+   --------------------------------------------------
+   Este arquivo é a fonte única de verdade da identidade
+   visual do produto. Ele é importado em main.jsx ANTES
+   de qualquer outro estilo, para que as variáveis de
+   :root estejam disponíveis também dentro dos
+   *.module.css (variáveis CSS não respeitam o escopo
+   dos CSS Modules).
+
+   COMO USAR
+   --------------------------------------------------
+   1. Cores, sombras, raios e espaços: SEMPRE via token.
+      Nunca reescreva um hex se já existir variável.
+   2. Componentes globais (.cx-*): são a camada de base
+      de um produto administrativo. Aplicando a classe
+      no JSX você já herda o padrão visual; o CSS Module
+      da tela pode sobrescrever pontualmente (o módulo é
+      importado depois e ganha por ordem).
+   3. Alterações de identidade acontecem SÓ neste arquivo.
+
+   FUNÇÃO DE CADA FAMÍLIA DE COR (teoria das cores)
+   --------------------------------------------------
+   Azul-marinho -> confiança, segurança, estrutura.
+                   Sidebar, títulos fortes, marca.
+   Azul         -> ação e identidade (cor primária).
+                   Botão primário, link, foco, aba ativa.
+   Ciano        -> destaque tecnológico da marca (o "X").
+   Verde        -> sucesso / confirmado / disponível.
+   Vermelho     -> erro / exclusão / recusar.
+   Âmbar        -> alerta / pendência / aguardando.
+   Cinza        -> neutros: fundo, borda, texto de apoio.
+   ================================================== */
+
+:root {
+
+  /* ---------- Azul-marinho (estrutura / identidade) ---------- */
+  --cx-navy: #001c3f;            /* Texto forte, marca, sidebar */
+  --cx-navy-surface: #0b1a38;    /* Base da sidebar */
+  --cx-navy-border: #1b2a52;     /* Borda sutil sobre superfícies escuras */
+  --cx-navy-deep: #061229;       /* Fim do degradê da sidebar */
+  --cx-navy-soft: #16264a;       /* Item ativo/hover sobre escuro */
+
+  /* ---------- Azul principal (ação primária) ---------- */
+  --cx-primary: #2b45a2;
+  --cx-primary-hover: #203b8f;
+  --cx-primary-active: #1a3174;
+  --cx-primary-soft: #eef2ff;    /* Fundo azul claro (badges, hover) */
+  --cx-primary-soft-hover: #e2e9ff;
+  --cx-primary-border: #c8d3f5;
+  --cx-primary-rgb: 43, 69, 162; /* Para rgba() de foco/halo */
+
+  /* ---------- Ciano / azul claro (destaque secundário) ---------- */
+  --cx-blue-light: #8bb3eb;
+  --cx-blue-light-hover: #79a1d9;
+  --cx-blue-light-soft: #e0f2fe;
+  --cx-brand-cyan: #33c3f0;      /* "X" da logomarca e balão sobre escuro */
+  --cx-brand-blue: #1f8fd6;      /* Balão sobre fundos claros (contraste AA) */
+
+  /* ---------- Verde (sucesso / positivo) ---------- */
+  --cx-success: #12805c;
+  --cx-success-hover: #0e6b4d;
+  --cx-success-soft: #e3f5ec;
+  --cx-success-border: #b9e3d0;
+
+  /* ---------- Vermelho (erro / destrutivo) ---------- */
+  --cx-danger: #c0392b;
+  --cx-danger-hover: #a93125;
+  --cx-danger-soft: #fdeceb;
+  --cx-danger-border: #f5c8c3;
+
+  /* ---------- Âmbar (alerta / pendência) ---------- */
+  --cx-warning: #b7791f;
+  --cx-warning-soft: #fdf3d8;
+  --cx-warning-border: #f3e0ac;
+
+  /* ---------- Neutros ---------- */
+  --cx-bg: #f2f5fa;              /* Fundo padrão das áreas de conteúdo */
+  --cx-surface: #ffffff;         /* Cards, headers, campos */
+  --cx-surface-alt: #f8fafd;     /* Blocos internos, linhas alternadas */
+  --cx-surface-inset: #f4f7fb;   /* Áreas rebaixadas (busca, filtros) */
+  --cx-border: #e4e8f0;          /* Borda padrão de cards */
+  --cx-border-strong: #d3d9e6;   /* Borda de inputs e divisórias */
+  --cx-text: #26324a;            /* Texto de corpo */
+  --cx-text-strong: #0e1c39;     /* Títulos */
+  --cx-text-muted: #61708b;      /* Texto secundário */
+  --cx-text-faint: #94a0b8;      /* Placeholders e apoio */
+  --cx-neutral-soft: #eef1f7;    /* Fundo de badge neutro */
+  --cx-neutral-border: #dde3ee;
+  --cx-on-primary: #ffffff;      /* Texto sobre fundo sólido */
+  --cx-on-dark: #e9f0fb;         /* Texto principal sobre escuro */
+  --cx-on-dark-muted: #9fb2d4;   /* Texto secundário sobre escuro */
+
+  /* ---------- Elevação (sombras em camadas) ---------- */
+  --cx-shadow-xs: 0 1px 2px rgba(11, 23, 51, 0.05);
+  --cx-shadow-sm: 0 1px 2px rgba(11, 23, 51, 0.05), 0 1px 3px rgba(11, 23, 51, 0.05);
+  --cx-shadow: 0 4px 12px rgba(11, 23, 51, 0.07), 0 1px 3px rgba(11, 23, 51, 0.04);
+  --cx-shadow-md: 0 8px 24px rgba(11, 23, 51, 0.10), 0 2px 6px rgba(11, 23, 51, 0.05);
+  --cx-shadow-lg: 0 18px 44px rgba(11, 23, 51, 0.16);
+  --cx-focus-halo: 0 0 0 3px rgba(var(--cx-primary-rgb), 0.18);
+
+  /* ---------- Raios de borda ---------- */
+  --cx-radius-sm: 6px;
+  --cx-radius: 8px;
+  --cx-radius-md: 10px;
+  --cx-radius-lg: 14px;
+  --cx-radius-xl: 18px;
+  --cx-radius-pill: 999px;
+
+  /* ---------- Espaçamento (escala de 4px) ---------- */
+  --cx-space-2xs: 2px;
+  --cx-space-xs: 4px;
+  --cx-space-sm: 8px;
+  --cx-space-md: 16px;
+  --cx-space-lg: 24px;
+  --cx-space-xl: 32px;
+  --cx-space-2xl: 40px;
+  --cx-space-3xl: 56px;
+
+  /* ---------- Alturas de controle (toque confortável) ---------- */
+  --cx-control-sm: 32px;
+  --cx-control: 40px;
+  --cx-control-lg: 46px;
+
+  /* ---------- Marca CONDEX ---------- */
+  --cx-marca-grad: linear-gradient(120deg, var(--cx-primary) 0%, var(--cx-brand-cyan) 100%);
+  --cx-marca-grad-escuro: linear-gradient(120deg, var(--cx-blue-light) 0%, var(--cx-brand-cyan) 100%);
+  --cx-marca-grad-icone: linear-gradient(150deg, #001c3f 0%, #1f5fbf 78%, #33c3f0 100%);
+  --cx-marca-grad-icone-escuro: linear-gradient(150deg, #ffffff 0%, #bfe6fb 70%, #33c3f0 100%);
+
+  /* ---------- Tipografia ---------- */
+  --cx-font: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --cx-font-display: 'Manrope', 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --cx-text-2xs: 11px;   /* Overlines e tags */
+  --cx-text-xs: 12px;    /* Texto auxiliar, legenda */
+  --cx-text-sm: 13px;    /* Metadados, tabela densa */
+  --cx-text-base: 14px;  /* Padrão de corpo de produto */
+  --cx-text-md: 15px;    /* Corpo confortável */
+  --cx-text-lg: 17px;    /* Título de seção */
+  --cx-text-xl: 21px;    /* Título de página */
+  --cx-text-2xl: 27px;   /* Destaque numérico */
+  --cx-text-3xl: 34px;   /* KPI grande / hero pequeno */
+
+  /* ---------- Dimensões do shell ---------- */
+  --cx-sidebar-w: 264px;
+  --cx-header-h: 68px;
+
+  /* ---------- Movimento ---------- */
+  --cx-ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --cx-dur-fast: 0.15s;
+  --cx-dur: 0.2s;
+}
+
+
+/* ==================================================
+   BASE TIPOGRÁFICA
+   Hierarquia usada em todas as telas. Aplicadas por
+   classe global onde o JSX permite; nos módulos,
+   repita os mesmos valores para manter a coerência.
+   ================================================== */
+
+.cx-overline {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cx-text-muted);
+}
+
+.cx-page-title {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cx-text-strong);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.cx-page-subtitle {
+  font-size: var(--cx-text-base);
+  color: var(--cx-text-muted);
+  line-height: 1.55;
+  margin: 6px 0 0;
+}
+
+.cx-section-title {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-base);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+/* ==================================================
+   BOTÕES — hierarquia única de ações
+   --------------------------------------------------
+   primário  -> ação principal da tela (1 por tela)
+   secondary -> ação de apoio / voltar / cancelar
+   ghost     -> ação discreta sobre superfície clara
+   soft      -> ação secundária com leve destaque
+   success   -> confirmar / aprovar / concluir
+   warning   -> aguardar / retomar / pendência
+   danger    -> excluir / recusar / deslogar
+
+   A MESMA ação deve ter o MESMO estilo em todo o
+   sistema. Não crie variações locais novas.
+   ================================================== */
+
+.cx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: var(--cx-control);
+  padding: 0 18px;
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color var(--cx-dur) ease, border-color var(--cx-dur) ease,
+              color var(--cx-dur) ease, box-shadow var(--cx-dur) ease,
+              transform var(--cx-dur-fast) ease;
+}
+
+.cx-btn:active { transform: translateY(1px); }
+
+.cx-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+.cx-btn:disabled,
+.cx-btn[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Tamanhos */
+.cx-btn--sm { height: var(--cx-control-sm); padding: 0 12px; font-size: var(--cx-text-sm); border-radius: var(--cx-radius-sm); }
+.cx-btn--lg { height: var(--cx-control-lg); padding: 0 26px; font-size: var(--cx-text-md); }
+.cx-btn--block { width: 100%; }
+
+/* Variantes */
+.cx-btn--primary { background-color: var(--cx-primary); color: var(--cx-on-primary); box-shadow: 0 1px 2px rgba(11,23,51,.12); }
+.cx-btn--primary:hover { background-color: var(--cx-primary-hover); }
+
+.cx-btn--secondary { background-color: var(--cx-surface); color: var(--cx-primary); border-color: var(--cx-border-strong); box-shadow: var(--cx-shadow-xs); }
+.cx-btn--secondary:hover { background-color: var(--cx-primary-soft); border-color: var(--cx-primary-border); }
+
+.cx-btn--soft { background-color: var(--cx-primary-soft); color: var(--cx-primary); }
+.cx-btn--soft:hover { background-color: var(--cx-primary-soft-hover); }
+
+.cx-btn--ghost { background-color: transparent; color: var(--cx-text-muted); }
+.cx-btn--ghost:hover { background-color: var(--cx-neutral-soft); color: var(--cx-text-strong); }
+
+.cx-btn--success { background-color: var(--cx-success); color: var(--cx-on-primary); }
+.cx-btn--success:hover { background-color: var(--cx-success-hover); }
+
+.cx-btn--warning { background-color: var(--cx-warning); color: var(--cx-on-primary); }
+.cx-btn--warning:hover { filter: brightness(0.94); }
+
+.cx-btn--danger { background-color: var(--cx-danger); color: var(--cx-on-primary); }
+.cx-btn--danger:hover { background-color: var(--cx-danger-hover); }
+
+/* Botão só de ícone (ações de linha em tabelas e cards) */
+.cx-btn--icon {
+  width: var(--cx-control);
+  padding: 0;
+  border-radius: var(--cx-radius);
+}
+.cx-btn--icon.cx-btn--sm { width: var(--cx-control-sm); }
+
+/* ==================================================
+   CAMPOS DE FORMULÁRIO
+   --------------------------------------------------
+   Base compartilhada por input, select e textarea.
+   Aplique .cx-field no agrupador para obter label +
+   controle + mensagem de erro já espaçados.
+   ================================================== */
+
+.cx-field { display: flex; flex-direction: column; gap: 7px; }
+
+.cx-label {
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  color: var(--cx-text-strong);
+  letter-spacing: 0.01em;
+}
+
+.cx-label .cx-obrig { color: var(--cx-danger); margin-left: 3px; }
+
+.cx-input,
+.cx-select,
+.cx-textarea {
+  width: 100%;
+  min-height: var(--cx-control);
+  padding: 10px 13px;
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  outline: none;
+  transition: border-color var(--cx-dur) ease, box-shadow var(--cx-dur) ease,
+              background-color var(--cx-dur) ease;
+}
+
+.cx-textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
+
+/* Sem mouse (toque) o redimensionador só ocupa o canto do campo
+   sem servir para nada — some em telas estreitas/dispositivos de toque. */
+@media (hover: none), (max-width: 640px) {
+  .cx-textarea { resize: none; }
+}
+
+.cx-input::placeholder,
+.cx-textarea::placeholder { color: var(--cx-text-faint); }
+
+.cx-input:hover,
+.cx-select:hover,
+.cx-textarea:hover { border-color: #bfc7d8; }
+
+.cx-input:focus,
+.cx-select:focus,
+.cx-textarea:focus {
+  border-color: var(--cx-primary);
+  box-shadow: var(--cx-focus-halo);
+  background-color: var(--cx-surface);
+}
+
+/* Estados inválidos (usar junto com a mensagem de erro) */
+.cx-input[aria-invalid='true'],
+.cx-select[aria-invalid='true'],
+.cx-textarea[aria-invalid='true'] { border-color: var(--cx-danger); }
+.cx-input[aria-invalid='true']:focus,
+.cx-textarea[aria-invalid='true']:focus { box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.16); }
+
+.cx-hint { font-size: var(--cx-text-xs); color: var(--cx-text-muted); line-height: 1.5; }
+.cx-error-text { font-size: var(--cx-text-xs); font-weight: 600; color: var(--cx-danger); }
+
+/* ==================================================
+   SUPERFÍCIES (cards e painéis)
+   ================================================== */
+
+.cx-card {
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+}
+
+.cx-card--pad { padding: var(--cx-space-lg); }
+
+.cx-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cx-space-md);
+  padding: 18px var(--cx-space-lg);
+  border-bottom: 1px solid var(--cx-border);
+}
+
+.cx-card__body { padding: var(--cx-space-lg); }
+
+.cx-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--cx-space-sm);
+  padding: 16px var(--cx-space-lg);
+  border-top: 1px solid var(--cx-border);
+  background-color: var(--cx-surface-alt);
+  border-radius: 0 0 var(--cx-radius-lg) var(--cx-radius-lg);
+}
+
+/* ==================================================
+   BADGES DE STATUS
+   Fundo suave + texto saturado = legível e discreto.
+   Sempre com o significado global da cor.
+   ================================================== */
+
+.cx-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--cx-radius-pill);
+  font-size: var(--cx-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.cx-badge--neutral { background-color: var(--cx-neutral-soft); color: var(--cx-text-muted); border-color: var(--cx-neutral-border); }
+.cx-badge--info    { background-color: var(--cx-primary-soft); color: var(--cx-primary); border-color: var(--cx-primary-border); }
+.cx-badge--success { background-color: var(--cx-success-soft); color: var(--cx-success); border-color: var(--cx-success-border); }
+.cx-badge--warning { background-color: var(--cx-warning-soft); color: var(--cx-warning); border-color: var(--cx-warning-border); }
+.cx-badge--danger  { background-color: var(--cx-danger-soft); color: var(--cx-danger); border-color: var(--cx-danger-border); }
+
+/* Ponto de status antes do texto (sem depender de imagem) */
+.cx-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.75;
+}
+
+/* ==================================================
+   ESTADO VAZIO
+   Padrão único quando não há registros: o usuário
+   precisa entender que está vazio e o que fazer.
+   ================================================== */
+
+.cx-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: var(--cx-space-2xl) var(--cx-space-lg);
+  text-align: center;
+  border: 1px dashed var(--cx-border-strong);
+  border-radius: var(--cx-radius-lg);
+  background-color: var(--cx-surface-alt);
+  color: var(--cx-text-muted);
+}
+
+.cx-empty__icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background-color: var(--cx-neutral-soft);
+  color: var(--cx-text-faint);
+}
+
+.cx-empty__title { font-weight: 700; color: var(--cx-text); font-size: var(--cx-text-base); }
+.cx-empty__text { font-size: var(--cx-text-sm); max-width: 46ch; line-height: 1.6; }
+
+/* ==================================================
+   ÁREA DE CONTEÚDO
+   ================================================== */
+
+.cx-page {
+  background-color: var(--cx-bg);
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+}
+
+.cx-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--cx-space-lg);
+}
+
+.cx-divider { height: 1px; background-color: var(--cx-border); border: 0; margin: var(--cx-space-lg) 0; }
+
+/* ==================================================
+   MARCA CONDEX
+   --------------------------------------------------
+   Componente: src/components/marca/marcaCondex.jsx
+   (reaproveitado na tela inicial, no login, nos três
+   cabeçalhos e nas duas sidebars).
+
+   A marca é a referência visual original do CONDEX:
+   prédios em ascensão + balão de conversa + wordmark
+   com "X" em degradê azul -> ciano.
+
+   REGRA DE TAMANHO
+   Ícone, nome e selo usam unidades `em`: o tamanho é
+   definido pelo contexto (font-size do título da tela).
+
+   REGRA DE PERFIL
+   O selo (Síndico/Morador/Porteiro) é SEMPRE
+   informação secundária — menor, com opacidade e
+   separado por um filete. Nunca compete com a marca.
+   ================================================== */
+
+.cx-marca {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3em;
+  line-height: 1;
+  color: var(--cx-navy);
+}
+
+/* Linha do logotipo: [ícone] CONDEX  │  papel.
+   Em uso normal tudo cabe numa linha; a variante
+   vertical empilha o ícone sobre o nome. */
+.cx-marca-linha {
+  display: inline-flex;
+  align-items: center;
+}
+
+.cx-marca-nome {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--cx-font-display);
+  font-weight: 600;
+  font-size: 1em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  /* Compensa o espaço que o letter-spacing cria depois do "X"
+     para a marca continuar centrada em contextos simétricos. */
+  margin-right: -0.14em;
+}
+
+/* Ícone (prédios + balão): proporção do viewBox 118 x 76 */
+.cx-marca-icone {
+  display: block;
+  width: 1.72em;
+  height: 1.11em;
+  margin-right: 0.5em;
+  flex: none;
+}
+
+/* Variante vertical (ícone acima do nome): hero e painel do login */
+.cx-marca--vertical .cx-marca-linha {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+}
+.cx-marca--vertical .cx-marca-icone { margin-right: 0; width: 3.3em; height: 2.13em; }
+
+/* "X" final com degradê azul -> ciano */
+.cx-marca-x {
+  background-image: var(--cx-marca-grad);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+}
+
+/* Selo do papel: secundário por definição.
+   Filete vertical + caixa alta pequena: aparece sempre
+   DEPOIS do nome, nunca no mesmo peso da marca. O corpo
+   (0.48em) é o menor valor que mantém o selo legível a
+   100% de zoom — abaixo disso o texto vira borrado. */
+.cx-marca-papel {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--cx-font-display);
+  font-size: 0.48em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cx-text-muted);
+  margin-left: 0.62em;
+  padding-left: 0.62em;
+  border-left: 1px solid var(--cx-border-strong);
+}
+
+/* Balão de conversa: destaque tecnológico da marca.
+   A cor pinta as reticências; o traço usa o degradê. */
+.cx-marca-balao { color: var(--cx-brand-blue); }
+
+/* Variação com o selo ABAIXO do wordmark (sidebar).
+   A linha quebra, o selo ocupa a largura toda e passa a
+   ter filete superior — assim a marca cabe em barras
+   estreitas sem encolher o nome. */
+.cx-marca--papel-abaixo .cx-marca-linha { flex-wrap: wrap; }
+.cx-marca--papel-abaixo .cx-marca-papel {
+  flex-basis: 100%;
+  margin-left: 0;
+  padding-left: 0;
+  margin-top: 0.3em;
+  padding-top: 0.3em;
+  border-left: none;
+  border-top: 1px solid var(--cx-border-strong);
+}
+
+/* O balão passa por cima do prédio e precisa "cortar" o traço
+   atrás de si — por isso é preenchido com a cor do fundo.
+   Em superfícies escuras (sidebar, painel, hero) a máscara
+   vira azul-marinho e some no fundo. */
+.cx-marca-balao-traco { fill: #ffffff; }
+
+/* Degradês do prédio alto e do balão por variante de fundo.
+   (IDs fixos definidos no <defs> do ícone; referências
+   duplicadas são inofensivas porque são idênticas.) */
+.cx-marca-bloco { stroke: url(#cx-grad-bloco-claro); }
+.cx-marca-balao-traco { stroke: url(#cx-grad-balao-claro); }
+
+/* ---------- Variações sobre fundo escuro ---------- */
+.cx-marca--escuro { color: var(--cx-on-dark); }
+.cx-marca--escuro .cx-marca-x { background-image: var(--cx-marca-grad-escuro); }
+.cx-marca--escuro .cx-marca-balao { color: var(--cx-brand-cyan); }
+.cx-marca--escuro .cx-marca-balao-traco { fill: var(--cx-navy-surface); }
+.cx-marca--escuro .cx-marca-bloco { stroke: url(#cx-grad-bloco-escuro); }
+.cx-marca--escuro .cx-marca-balao-traco { stroke: url(#cx-grad-balao-escuro); }
+.cx-marca--escuro .cx-marca-papel {
+  color: var(--cx-on-dark-muted);
+  border-left-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Selo abaixo do nome, sobre fundo escuro: filete superior claro */
+.cx-marca--escuro.cx-marca--papel-abaixo .cx-marca-papel {
+  border-top-color: rgba(255, 255, 255, 0.22);
+  border-left-color: transparent;
+}

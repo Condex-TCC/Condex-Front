@@ -1,61 +1,181 @@
-/* SucessoCadastro.module.css */
+/* ==================================================
+   MENSAGEM DE SUCESSO (tela de retorno pós-ação)
+   --------------------------------------------------
+   Tela de estado: o sistema confirma o que aconteceu e
+   oferece um único caminho de volta. Composição:
 
-/* Container principal para centralizar os itens na tela */
+     overline + título (cabeçalho padrão das telas internas)
+     + ícone de status (verde = confirmado)
+     + título (a mensagem vinda da tela anterior)
+     + texto de apoio explicando o passo seguinte
+     + botão secundário "Voltar"
+
+   A mensagem NÃO vem deste módulo: ela é passada por
+   navigate(..., { state }) e exibida como está.
+   ================================================== */
+
+/* Container principal: centraliza os itens na tela.
+   Sem padding extra — o shell já reserva a margem. */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  font-family: sans-serif;
+  gap: var(--cx-space-lg);
+  width: 100%;
+  min-width: 0;
+  font-family: var(--cx-font);
+  color: var(--cx-text);
 }
 
-/* Caixa com fundo verde de sucesso */
-.messageBox {
-  background-color: #c6e0cc; /* Verde claro baseado na imagem */
-  padding: 32px 40px;
-  border-radius: 6px;
-  position: relative; /* Necessário para posicionar o detalhe azul de forma absoluta */
-  margin-bottom: 32px;
+/* Cabeçalho da tela: overline de contexto + título, o mesmo par
+   de classes globais das outras telas internas (cx-overline e
+   cx-page-title). Centralizado para conviver com a composição
+   centrada desta tela de estado; o cartão de confirmação e o
+   botão continuam abaixo, na mesma ordem de sempre. */
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   text-align: center;
-  min-width: 300px;
 }
 
-/* Detalhe vazado azul no canto superior esquerdo */
+/* Cartão de confirmação: superfície branca com borda na
+   cor de sucesso (o verde já aparece antes de ler). */
+.messageBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 520px;
+  padding: var(--cx-space-xl) var(--cx-space-lg);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-success-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+  text-align: center;
+  position: relative; /* âncora para o detalhe .blueAccent */
+}
+
+/* Ícone de status em pastilha: verde = confirmado em
+   todo o sistema (mesma leitura dos badges de sucesso). */
+.messageIcone {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border-radius: 50%;
+  background-color: var(--cx-success-soft);
+  color: var(--cx-success);
+}
+
+/* Título da tela: a própria mensagem, com o peso de
+   cx-page-title para ser lida primeiro. */
+.messageText {
+  margin: 4px 0 0;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--cx-text-strong);
+  overflow-wrap: anywhere;
+}
+
+/* Texto de apoio: diz o que fazer em seguida, em cinza
+   legível — nunca compete com a mensagem. */
+.messageApoio {
+  margin: 0;
+  font-size: var(--cx-text-base);
+  line-height: 1.55;
+  color: var(--cx-text-muted);
+}
+
+/* Detalhe decorativo azul no canto superior esquerdo do
+   cartão (mantido por compatibilidade com o layout original;
+   aplicado quando a tela o renderiza). */
 .blueAccent {
   position: absolute;
-  top: -10px; /* Sobe o elemento para fora da caixa */
-  left: -10px; /* Puxa para a esquerda fora da caixa */
+  top: -10px;
+  left: -10px;
   width: 45px;
   height: 12px;
-  border: 2px solid #0088ff; /* Borda azul clara */
-  border-radius: 4px;
-  background-color: white; /* Fundo branco para cobrir a borda da caixa verde */
+  border: 2px solid var(--cx-primary);
+  border-radius: var(--cx-radius-sm);
+  background-color: var(--cx-surface);
 }
 
-/* Texto de sucesso dentro da caixa */
-.messageText {
-  color: #1a1a1a;
-  font-size: 16px;
-  margin: 0;
-  font-weight: 400;
-}
-
-/* Estilo do botão de voltar */
+/* Botão de retorno: mesmo padrão secundário do resto do
+   sistema (Voltar é ação de apoio, nunca primária). */
 .btnVoltar {
-  background-color: #9cb6c9; /* Azul/cinza claro baseado na imagem */
-  color: #1a1a1a;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 32px;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px; /* Espaçamento entre a seta e o texto */
+  justify-content: center;
+  gap: 8px;
+  height: var(--cx-control);
+  padding: 0 26px;
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--cx-dur) ease,
+              border-color var(--cx-dur) ease,
+              transform var(--cx-dur-fast) ease;
 }
 
-/* Efeito leve ao passar o mouse (opcional) */
 .btnVoltar:hover {
-  background-color: #8aa6ba;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+}
+
+.btnVoltar:active {
+  transform: translateY(1px);
+}
+
+.btnVoltar:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   ================================================== */
+
+/* Celular: cartão ocupa a largura toda e o botão vira
+   alvo de toque de largura total. */
+@media (max-width: 480px) {
+  .container {
+    gap: var(--cx-space-md);
+  }
+
+  .messageBox {
+    padding: var(--cx-space-lg) var(--cx-space-md);
+  }
+
+  .messageText {
+    font-size: var(--cx-text-lg);
+  }
+
+  .btnVoltar {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+/* Movimento reduzido: sem deslize no botão */
+@media (prefers-reduced-motion: reduce) {
+  .btnVoltar {
+    transition: none;
+  }
+
+  .btnVoltar:active {
+    transform: none;
+  }
 }

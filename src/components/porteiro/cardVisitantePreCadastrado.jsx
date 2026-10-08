@@ -36,11 +36,12 @@ function CardVisitantePreCadastrado({ autorizacao, renderiza }){
 
     //Retorna o componente
     return (
-        <div className={styles["card--item"]}>
+        <article className={styles["card--item"]}>
 
-            {/* Linha superior com o nome do visitante */}
+            {/* Linha superior: nome + pastilha de status da autorização */}
             <div className={styles["card--top"]}>
                 <span className={styles["text--name"]}>{ouSimbolo(nomeVisitante)}</span>
+                <span className={`cx-badge cx-badge--info ${styles["badge--origem"]}`}>Autorizado</span>
             </div>
 
             {/* Linha de informações: apartamento e morador responsável */}
@@ -55,12 +56,17 @@ function CardVisitantePreCadastrado({ autorizacao, renderiza }){
                     <span className={styles["text--block"]}>Autorizado em: {ouSimbolo(dataAutorizacao)}</span>
                 </div>
 
-                <button className={styles["btn--exit"]} onClick={registrarEntrada}>
+                <button
+                    type="button"
+                    className={styles["btn--exit"]}
+                    onClick={registrarEntrada}
+                    aria-label={`Registrar entrada de ${nomeVisitante ?? 'visitante'}`}
+                >
                     Registrar entrada
                 </button>
             </div>
 
-        </div>
+        </article>
     )
 }
 

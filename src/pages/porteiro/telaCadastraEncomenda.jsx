@@ -300,21 +300,32 @@ export default function PaginaCadastraEncomenda() {
 
             <main className={styles['fp-main']}>
 
-                {/* Botão de retorno no canto e título logo abaixo */}
+                {/* Botão de retorno no canto e bloco de identificação logo abaixo */}
                 <div className={styles['fp-header']}>
+                    {/* Contexto + ação concreta + texto de apoio (padrão cx-page-header) */}
+                    <div className={styles['fp-header__texto']}>
+                        <p className="cx-overline">Encomendas</p>
+                        <h1 className={styles['fp-titulo']}>Cadastrar encomenda</h1>
+                        <p className={styles['fp-lead']}>
+                            Registre o que foi recebido na portaria e a quem a encomenda é destinada.
+                        </p>
+                    </div>
+
+                    {/* Retorno alinhado à direita do título, no mesmo padrão das
+                        telas de cadastro do síndico e do morador */}
                     <button type="button" className={styles['fp-btn-voltar']} onClick={back}>
                         &larr; voltar
                     </button>
-
-                    <h1 className={styles['fp-titulo']}>Cadastrar encomenda</h1>
                 </div>
 
                 {/* Formulário */}
                 <form className={styles['fp-formulario']} onSubmit={salvar} noValidate>
 
-                    {/* Campo do destinatário */}
-                    <div className={styles['fp-campo']}>
-                        <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-destinatario">Destinatário</label>
+                    {/* Campo do destinatário: linha inteira da grade, por ser o dado principal.
+                        Rótulos VISÍVEIS em todos os campos: o placeholder some ao digitar,
+                        e ele permanece apenas como exemplo do formato esperado */}
+                    <div className={`${styles['fp-campo']} ${styles['fp-celula--larga']}`}>
+                        <label className={styles['fp-rotulo']} htmlFor="encomenda-destinatario">Destinatário</label>
                         <input
                             id="encomenda-destinatario"
                             className={`${styles['fp-input']} ${styles['fp-input--destinatario']}`}
@@ -328,7 +339,7 @@ export default function PaginaCadastraEncomenda() {
 
                     {/* Campo do morador destinatário: a API vincula a encomenda pelo id do morador */}
                     <div className={styles['fp-campo']}>
-                        <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-id-morador">ID do morador</label>
+                        <label className={styles['fp-rotulo']} htmlFor="encomenda-id-morador">ID do morador</label>
                         <input
                             id="encomenda-id-morador"
                             className={`${styles['fp-input']} ${styles['fp-input--apartamento']}`}
@@ -347,7 +358,7 @@ export default function PaginaCadastraEncomenda() {
                         <div className={styles['fp-linha-endereco']}>
 
                             <div>
-                                <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-bloco">Bloco</label>
+                                <label className={styles['fp-rotulo']} htmlFor="encomenda-bloco">Bloco</label>
                                 <input
                                     id="encomenda-bloco"
                                     className={`${styles['fp-input']} ${styles['fp-input--bloco']}`}
@@ -361,7 +372,7 @@ export default function PaginaCadastraEncomenda() {
                             </div>
 
                             <div>
-                                <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-apartamento">Apartamento</label>
+                                <label className={styles['fp-rotulo']} htmlFor="encomenda-apartamento">Apartamento</label>
                                 <input
                                     id="encomenda-apartamento"
                                     className={`${styles['fp-input']} ${styles['fp-input--apartamento']}`}
@@ -377,14 +388,14 @@ export default function PaginaCadastraEncomenda() {
                         </div>
                     </div>
 
-                    {/* Área da data e hora em que a encomenda foi recebida */}
-                    <div className={styles['fp-campo']}>
+                    {/* Área da data e hora em que a encomenda foi recebida (linha inteira) */}
+                    <div className={`${styles['fp-campo']} ${styles['fp-celula--larga']}`}>
                         <span className={styles['fp-label-visivel']}>Recebida :</span>
 
                         <div className={styles['fp-linha-recebida']}>
 
                             <div>
-                                <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-dia">Dia</label>
+                                <label className={styles['fp-rotulo']} htmlFor="encomenda-dia">Dia</label>
                                 <input
                                     id="encomenda-dia"
                                     className={`${styles['fp-input']} ${styles['fp-input--data']}`}
@@ -399,7 +410,7 @@ export default function PaginaCadastraEncomenda() {
                             </div>
 
                             <div>
-                                <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-mes">Mês</label>
+                                <label className={styles['fp-rotulo']} htmlFor="encomenda-mes">Mês</label>
                                 <input
                                     id="encomenda-mes"
                                     className={`${styles['fp-input']} ${styles['fp-input--data']}`}
@@ -414,7 +425,7 @@ export default function PaginaCadastraEncomenda() {
                             </div>
 
                             <div>
-                                <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-ano">Ano</label>
+                                <label className={styles['fp-rotulo']} htmlFor="encomenda-ano">Ano</label>
                                 <input
                                     id="encomenda-ano"
                                     className={`${styles['fp-input']} ${styles['fp-input--data']}`}
@@ -429,7 +440,7 @@ export default function PaginaCadastraEncomenda() {
                             </div>
 
                             <div>
-                                <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-hora">Hora</label>
+                                <label className={styles['fp-rotulo']} htmlFor="encomenda-hora">Hora</label>
                                 <input
                                     id="encomenda-hora"
                                     className={`${styles['fp-input']} ${styles['fp-input--hora']}`}
@@ -446,8 +457,8 @@ export default function PaginaCadastraEncomenda() {
                         </div>
                     </div>
 
-                    {/* Botão de salvar */}
-                    <div className={styles['fp-area-salvar']}>
+                    {/* Botão de salvar: ocupa a linha inteira da grade */}
+                    <div className={`${styles['fp-area-salvar']} ${styles['fp-celula--larga']}`}>
                         <button type="submit" className={styles['fp-btn-salvar']} disabled={salvando}>
                             {salvando ? 'Salvando...' : 'SALVAR'}
                         </button>

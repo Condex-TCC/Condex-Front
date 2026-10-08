@@ -30,45 +30,50 @@ function CardMorador({ morador, renderiza, moradoresSelecionados }) {
             //Atualiza o array do componente pai
             renderiza(novoArray)
         }
-
-        // //Verifica se o elemento já foi selecionado | Adidiona o elemento
-        // if(!moradoresSelecionados.includes(morador.id)){
-
-        //     //Spread Array
-        //     let novoArray = [...moradoresSelecionados]
-
-        //     //Adicionando o novo elemetno
-        //     novoArray.push(morador.id)
-
-        //     //Atualiza o array do componente pai
-        //     renderiza(novoArray)
-
-        // }
     }
 
+    //Estado de seleção deste morador (derivado do array do pai)
+    const selecionado = moradoresSelecionados.includes(morador.id)
+
     // Retorna o componente | Card
+    //
+    // O card inteiro é o alvo de marcação, então ele é um
+    // <button> com aria-pressed: o leitor de tela anuncia
+    // "pressionado/não pressionado" e o estado não depende
+    // só da cor de fundo.
     return (
-        <div className={cardStyles.card} onClick={addMorador}>
+        <button
+            type="button"
+            className={`${cardStyles.card} ${cardStyles['card--clicavel']} ${selecionado ? cardStyles['card--selecionado'] : ""}`}
+            onClick={addMorador}
+            aria-pressed={selecionado}
+        >
 
             {/* Cabeçalho do card com o nome do morador e a unidade */}
-            <header className={cardStyles.header}>
-                <h3 className={cardStyles.titulo}>{morador.nome}</h3>
+            <span className={cardStyles.header}>
+                <span className={cardStyles.titulo}>{morador.nome}</span>
                 <span className={cardStyles.unidade}>
                     {morador.unidade?.bloco} - Apto {morador.unidade?.numero}
                 </span>
-            </header>
+            </span>
 
             {/* Bloco com os dados de contato do morador */}
-            <div className={cardStyles.contexto}>
-                <p className={cardStyles.contextoItem}><strong>Telefone:</strong> {morador.telefone}</p>
-                <p className={cardStyles.contextoItem}><strong>E-mail:</strong> {morador.email}</p>
-            </div>
+            <span className={cardStyles.contexto}>
+                <span className={cardStyles.contextoItem}><strong>Telefone:</strong> {morador.telefone}</span>
+                <span className={cardStyles.contextoItem}><strong>E-mail:</strong> {morador.email}</span>
+            </span>
 
-            {/* Texto provisódio para o morador selecionado */}
-            {moradoresSelecionados.includes(morador.id) &&
-                <h1>Morador selecionado</h1>
+            {/* Marcador de seleção: pastilha com ícone, visível mesmo
+                em impressão ou para quem não distingue as cores */}
+            {selecionado &&
+                <span className={cardStyles.selecionado}>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Morador selecionado
+                </span>
             }
-        </div>
+        </button>
     );
 }
 

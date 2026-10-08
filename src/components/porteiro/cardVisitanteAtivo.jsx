@@ -18,11 +18,12 @@ function CardVisitanteAtivo({ visitante, aoRegistrarSaida }){
 
     //Retorna o componente
     return (
-        <div className={styles["card--item"]}>
+        <article className={styles["card--item"]}>
 
-            {/* Linha superior com o nome do visitante */}
+            {/* Linha superior: nome + pastilha de quem está dentro */}
             <div className={styles["card--top"]}>
                 <span className={styles["text--name"]}>{ouSimbolo(nome)}</span>
+                <span className={`cx-badge cx-badge--success ${styles["badge--origem"]}`}>Dentro do condomínio</span>
             </div>
 
             {/* Linha de informações: apartamento e morador responsável */}
@@ -43,13 +44,18 @@ function CardVisitanteAtivo({ visitante, aoRegistrarSaida }){
                     //A API ainda não expõe o registro de saída, então o botão só
                     //aparece quando a tela tiver o método de saída disponível
                     aoRegistrarSaida &&
-                    <button className={styles["btn--exit"]} onClick={() => aoRegistrarSaida(visitante)}>
+                    <button
+                        type="button"
+                        className={styles["btn--exit"]}
+                        onClick={() => aoRegistrarSaida(visitante)}
+                        aria-label={`Registrar saída de ${nome ?? 'visitante'}`}
+                    >
                         Registrar saída
                     </button>
                 }
             </div>
 
-        </div>
+        </article>
     )
 }
 

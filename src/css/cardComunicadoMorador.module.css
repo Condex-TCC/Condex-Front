@@ -1,108 +1,231 @@
-/* =========================================
+/* ==================================================
    CARD DE COMUNICADO DO MORADOR
-   ========================================= */
+   --------------------------------------------------
+   Mesma superfície é usada em dois contextos:
 
-/* Card com o resumo do comunicado que foi enviado para o morador */
+   • LISTA (não visualizados / histórico) — o card é um
+     <button> inteiro: clicar em qualquer ponto abre os
+     detalhes, exatamente como no div onClick anterior,
+     mas agora alcançável pelo teclado e nomeado para
+     leitores de tela;
+   • DETALHE — o mesmo painel, sem ação, servindo de
+     superfície de leitura com os blocos rotulados.
+
+   Hierarquia interna (padrão 5.5):
+   título > metadados (remetente/data) > mensagem >
+   status em cx-badge (cor global, mesmo significado
+   em todo o sistema: verde = visualizado, cinza = não).
+
+   Os blocos usam gap no flex em vez de margens soltas,
+   para que o respiro continue uniforme quando um bloco
+   some (ex.: comunicado ainda sem pergunta).
+   ================================================== */
+
+/* Superfície do card: branca, borda sutil e raio do sistema */
 .cm-card {
-  background-color: #ffffff; /* Fundo branco do card */
-  border: 1px solid #eef0f4; /* Contorno claro, no mesmo tom da divisória do header */
-  border-radius: 10px; /* Arredonda os cantos do card */
-  padding: 14px; /* Respiro interno do card */
-  margin-bottom: 10px; /* Espaço entre os cards da lista */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra leve, igual aos cards de visitante */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  min-width: 0; /* Filhos de grid/flex nunca estouram a coluna */
+  margin-bottom: 12px; /* Espaço entre os cards da lista (a lista não tem gap) */
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+  /* Font-size/line-height explícitos: o UA do <button> traz a própria
+     escala tipográfica e ela não deve vazar para os filhos. */
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+  line-height: 1.5;
+  color: var(--cx-text);
 }
 
-/* Cabeçalho alinhando o título do comunicado e a data de criação */
+/* Quando o card é o botão da lista, neutraliza o visual nativo do
+   <button> para ele herdar exatamente a mesma superfície dos
+   demais cards — só o cursor e o foco denunciam a ação. */
+button.cm-card {
+  appearance: none;
+  -webkit-appearance: none;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--cx-dur) ease, box-shadow var(--cx-dur) ease,
+              transform var(--cx-dur) ease;
+}
+
+/* Elevação só no card clicável (o painel de leitura fica estável) */
+button.cm-card:hover {
+  border-color: var(--cx-primary-border);
+  box-shadow: var(--cx-shadow);
+  transform: translateY(-2px);
+}
+
+button.cm-card:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo), var(--cx-shadow);
+}
+
+/* Cabeçalho: título à esquerda, metadado curto à direita.
+   flex-wrap faz a data descer sozinha em telas estreitas. */
 .cm-header {
-  display: flex; /* Coloca o título e a data na mesma linha */
-  justify-content: space-between; /* Joga o título para a esquerda e a data para a direita */
-  align-items: flex-start; /* Alinha os dois pelo topo */
-  gap: 8px; /* Espaço entre o título e a data */
-  flex-wrap: wrap; /* Em telas muito estreitas a data desce para a linha de baixo */
-  margin-bottom: 8px; /* Espaço entre o cabeçalho e a descrição */
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 12px;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
-/* Título do comunicado */
+/* Título do comunicado: elemento mais forte do card */
 .cm-titulo {
   margin: 0;
-  font-size: 15px; /* Tamanho do título do card */
-  font-weight: 700; /* Deixa o título em negrito */
-  line-height: 1.3; /* Deixa o título mais compacto */
-  color: #001c3f; /* Cor principal do projeto */
-  min-width: 0; /* Permite que o título encolha em telas estreitas */
+  min-width: 0;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-lg);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--cx-text-strong);
 }
 
-/* Data de criação do comunicado exibida como etiqueta */
+/* Data de criação em cápsula: metadado rápido, não compete com o título */
 .cm-data {
-  flex-shrink: 0; /* Impede que a etiqueta seja espremida */
-  padding: 4px 10px; /* Respiro interno da etiqueta */
-  border-radius: 20px; /* Formato de cápsula */
-  background-color: #eef2ff; /* Azul bem claro */
-  color: #2b45a2; /* Azul escuro usado nas abas ativas */
-  font-size: 11px; /* Texto pequeno da etiqueta */
-  font-weight: 700; /* Deixa o texto da etiqueta forte */
-  white-space: nowrap; /* Impede que a data quebre de linha */
+  flex: none;
+  padding: 4px 10px;
+  border: 1px solid var(--cx-primary-border);
+  border-radius: var(--cx-radius-pill);
+  background-color: var(--cx-primary-soft);
+  color: var(--cx-primary);
+  font-size: var(--cx-text-2xs);
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-/* Descrição do comunicado */
+/* Descrição / mensagem do comunicado */
 .cm-descricao {
   margin: 0;
-  font-size: 13px; /* Tamanho do texto de apoio */
-  line-height: 1.5; /* Deixa as linhas da descrição mais respiradas */
-  color: #7a87a7; /* Cinza azulado dos textos secundários */
+  font-size: var(--cx-text-base);
+  line-height: 1.65;
+  color: var(--cx-text);
+  overflow-wrap: anywhere; /* URL ou palavra longa nunca estoura o card */
 }
 
-/* Etiqueta que informa se o morador já visualizou o comunicado */
-.cm-status {
-  display: inline-block; /* Permite o uso de padding e border-radius */
-  margin-top: 10px; /* Respiro em relação à descrição */
-  padding: 4px 10px; /* Respiro interno da etiqueta */
-  border-radius: 20px; /* Formato de cápsula */
-  font-size: 11px; /* Texto pequeno da etiqueta */
-  font-weight: 700; /* Deixa o texto da etiqueta forte */
-  white-space: nowrap; /* Impede que o texto da etiqueta quebre de linha */
+/* ---------- Blocos rotulados (somente na tela de detalhes) ---------- */
+
+/* Faixa rebaixada com os metadados do comunicado: rótulo em cima,
+   valor embaixo, exatamente como nas tabelas do sistema. */
+.cm-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px 16px;
+  padding: 12px 14px;
+  background-color: var(--cx-surface-alt);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
 }
 
-/* Etiqueta do comunicado que o morador ainda não visualizou */
-.cm-status--naoVisualizado {
-  background-color: #f4f5f9; /* Cinza bem claro */
-  color: #55628b; /* Cinza azulado escuro */
-}
-
-/* Etiqueta do comunicado que o morador já visualizou */
-.cm-status--visualizado {
-  background-color: #e4f7e8; /* Verde bem claro */
-  color: #1e7e34; /* Verde escuro, garantindo contraste */
-}
-
-/* Bloco com a pergunta do morador e a resposta do síndico */
-.cm-conversa {
-  display: flex; /* Empilha a pergunta e a resposta */
+.cm-meta__item {
+  display: flex;
   flex-direction: column;
-  gap: 8px; /* Espaço entre a pergunta e a resposta */
-  margin-top: 12px; /* Separa o bloco da descrição */
+  gap: 4px;
+  min-width: 0;
+  margin: 0;
 }
 
-/* Pergunta feita pelo morador */
+.cm-meta__valor {
+  margin: 0;
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  color: var(--cx-text-strong);
+  overflow-wrap: anywhere;
+}
+
+/* Bloco rotulado (mensagem, respostas): o rótulo usa a classe global
+   cx-overline e o conteúdo entra abaixo com respiro uniforme. */
+.cm-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Superfície secundária: formulário de pergunta e bloco de respostas.
+   margin-top separa os blocos, já que o contêiner da tela é estático. */
+.cm-secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-md);
+  margin-top: var(--cx-space-md);
+  padding: 20px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+  min-width: 0;
+}
+
+/* Etiqueta de status: só o espaçamento é local — a aparência vem de
+   cx-badge + cx-badge--success/neutral (idêntica em todo o CONDEX). */
+.cm-status {
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+/* Bloco de conversa (pergunta do morador + resposta do síndico) */
+.cm-conversa {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* Pergunta feita pelo morador: filete neutro à esquerda */
 .cm-pergunta {
   margin: 0;
-  padding: 10px 12px; /* Respiro interno do bloco */
-  border-left: 3px solid #8b93b8; /* Marca visual da pergunta */
-  border-radius: 6px; /* Arredonda os cantos */
-  background-color: #f4f5f9; /* Fundo cinza claro */
-  font-size: 13px;
-  line-height: 1.5;
-  color: #001c3f; /* Cor principal do projeto */
+  padding: 12px 14px;
+  border-left: 3px solid var(--cx-border-strong);
+  border-radius: 0 var(--cx-radius-sm) var(--cx-radius-sm) 0;
+  background-color: var(--cx-surface-inset);
+  font-size: var(--cx-text-base);
+  line-height: 1.6;
+  color: var(--cx-text);
 }
 
-/* Resposta enviada pelo síndico */
+/* Resposta enviada pelo síndico: filete azul, mesma linguagem do sistema */
 .cm-resposta {
   margin: 0;
-  padding: 10px 12px; /* Respiro interno do bloco */
-  border-left: 3px solid #2b45a2; /* Azul escuro já usado nas abas ativas */
-  border-radius: 6px; /* Arredonda os cantos */
-  background-color: #eef2ff; /* Azul bem claro */
-  font-size: 13px;
-  line-height: 1.5;
-  color: #001c3f; /* Cor principal do projeto */
+  padding: 12px 14px;
+  border-left: 3px solid var(--cx-primary);
+  border-radius: 0 var(--cx-radius-sm) var(--cx-radius-sm) 0;
+  background-color: var(--cx-primary-soft);
+  font-size: var(--cx-text-base);
+  line-height: 1.6;
+  color: var(--cx-text);
+}
+
+.cm-pergunta strong,
+.cm-resposta strong {
+  color: var(--cx-text-strong);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   ================================================== */
+
+/* Celular: respiro menor e alvo de toque preservado (o card inteiro
+   continua sendo a área de clique, com altura muito acima de 40px). */
+@media (max-width: 640px) {
+  .cm-card,
+  .cm-secao {
+    padding: 16px;
+  }
+
+  .cm-titulo {
+    font-size: var(--cx-text-base);
+  }
+
+  .cm-meta {
+    grid-template-columns: 1fr; /* Metadados empilhados: rótulo + valor legíveis */
+  }
 }

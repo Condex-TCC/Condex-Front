@@ -1,0 +1,110 @@
+/* ==================================================
+   SHELL DO CONDEX (SÍNDICO E MORADOR)
+   --------------------------------------------------
+   Estrutura visual comum aos dois perfis que possuem
+   menu lateral:
+
+       ┌────────────┬──────────────────────────┐
+       │  sidebar   │  header (sticky)         │
+       │  (264px)   ├──────────────────────────┤
+       │            │  main  (área rolável)    │
+       └────────────┴──────────────────────────┘
+
+   Por que este arquivo existe
+   --------------------------------------------------
+   O layout já era flex, mas o estilo vivia *inline* no
+   JSX — e estilos inline não aceitam @media. Aqui o
+   layout pode responder à viewport (padding, drawer,
+   backdrop) sem tocar em rota, contexto ou regra.
+
+   DOIS MODOS DE MENU (definidos só por CSS)
+   --------------------------------------------------
+   >= 900px : sidebar persistente, empurra o conteúdo.
+   <  900px : sidebar vira drawer flutuante sobre o
+              conteúdo, com fundo escurecido (backdrop)
+              para fechar tocando fora.
+
+   O estado (aberto/fechado) continua vindo do
+   MenuLateralContext — nada de lógica nova aqui.
+   ================================================== */
+
+/* Container do shell: ocupa a viewport inteira e não
+   gera rolagem horizontal (width:100% em vez de 100vw,
+   que contaria a largura da barra de rolagem). */
+.shell {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh; /* Altura real no mobile (barra do navegador retrátil) */
+  overflow: hidden;
+  background-color: var(--cx-bg);
+}
+
+/* Coluna direita: header em cima, conteúdo rolando embaixo.
+   min-width: 0 é essencial: sem ele, uma tabela larga
+   estoura o flex e a página inteira vira rolável na
+   horizontal em vez de a tabela ter rolagem própria. */
+.shell__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Área de conteúdo: respiração generosa no desktop,
+   mais compacta conforme a tela encolhe. */
+.shell__main {
+  flex: 1;
+  padding: 26px 28px 40px;
+}
+
+/* ==================================================
+   BACKDROP DO DRAWER (só abaixo de 900px)
+   Camada escurecida por cima do conteúdo, abaixo da
+   sidebar (z-index 50) e acima do header (z-index 20),
+   para que o drawer seja o único elemento tocável.
+   ================================================== */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  background-color: rgba(4, 14, 34, 0.55);
+  backdrop-filter: blur(2px);
+  animation: cx-fundo-entrada 0.18s ease-out;
+}
+
+@keyframes cx-fundo-entrada {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Em telas de desktop o menu empurra o conteúdo,
+   então o fundo escurecido não faz sentido. */
+@media (min-width: 901px) {
+  .backdrop { display: none; }
+}
+
+/* ==================================================
+   RESPONSIVIDADE DO SHELL
+   ================================================== */
+
+/* Tablet: encolhe a lateral e aproxima o conteúdo */
+@media (max-width: 900px) {
+  .shell__main {
+    padding: 18px 18px 32px;
+  }
+}
+
+/* Celular: respiro mínimo confortável, sem espremer */
+@media (max-width: 480px) {
+  .shell__main {
+    padding: 14px 14px 28px;
+  }
+}
+
+/* Movimento reduzido: drawer e fundo aparecem sem animação */
+@media (prefers-reduced-motion: reduce) {
+  .backdrop { animation: none; }
+}

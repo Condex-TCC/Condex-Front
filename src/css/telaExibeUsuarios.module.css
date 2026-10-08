@@ -1,125 +1,345 @@
+/* ==================================================
+   TABELA DE USUÁRIOS DO SÍNDICO
+   --------------------------------------------------
+   Padrão único de tabela do CONDEX. Este módulo serve
+   de referência para as demais tabelas do sistema:
+
+   • container  = tela inteira (sem padding extra, pois
+                  o shell já reserva a margem);
+   • cabecalho  = título + ação principal;
+   • toolbar    = filtro à esquerda, contagem à direita;
+   • tabela     = superfície branca arredondada, cabeçalho
+                  em texto pequeno/caixa alta sobre fundo
+                  rebaixado (em vez do bloco azul sólido),
+                  linhas com 46px, hover e ações em botões;
+   • responsivo = rolagem horizontal contida em .tabela-scroll,
+                  nunca estourando a página.
+   ================================================== */
+
 /* Classe contêiner principal para envolver a tabela e os botões */
 .container {
-  /* Define a largura do contêiner para ocupar todo o espaço pai */
   width: 100%;
-  /* Define a família de fontes como sem-serifa, padrão para interfaces modernas */
-  font-family: sans-serif;
-  /* Aplica um espaçamento interno ao redor de todo o bloco principal */
-  padding: 20px;
-}
-
-/* Classe para a área superior que contém o seletor e o botão */
-.headerControls {
-  /* Transforma a div num contêiner flexível para alinhar os itens horizontalmente */
+  font-family: var(--cx-font);
   display: flex;
-  /* Empurra os itens para as extremidades (um para a esquerda, outro para a direita) */
+  flex-direction: column;
+  gap: var(--cx-space-md);
+}
+
+/* Cabeçalho da página: texto à esquerda, ação à direita */
+.cabecalho-pagina {
+  display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  /* Alinha verticalmente os elementos (botão e select) no centro da linha */
-  align-items: center;
-  /* Adiciona um espaço abaixo dos controles para separá-los da tabela */
-  margin-bottom: 12px;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
 }
 
-/* Classe de estilo aplicada ao elemento <select> */
+/* Barra de filtros acima da tabela */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+}
+
+.filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filtro__rotulo {
+  font-size: var(--cx-text-xs);
+  font-weight: 600;
+  color: var(--cx-text-muted);
+}
+
+/* Contagem de registros: texto auxiliar, nunca compete com a tabela */
+.contagem {
+  font-size: var(--cx-text-xs);
+  color: var(--cx-text-muted);
+  padding-bottom: 10px;
+}
+
+/* Filtro de perfil: mesmo visual dos demais selects do sistema */
 .selectBox {
-  /* Aplica espaçamento interno de 8px no topo/baixo e 12px nas laterais */
-  padding: 8px 12px;
-  /* Define o tamanho da fonte da caixa de seleção */
-  font-size: 14px;
-  /* Define uma borda fina e cinza clara para a caixa de seleção */
-  border: 1px solid #e0e0e0;
-  /* Arredonda os cantos da borda da caixa de seleção */
-  border-radius: 6px;
-  /* Garante que o fundo da caixa de seleção seja branco */
-  background-color: #ffffff;
-  /* Define a cor do texto interno como um cinza escuro */
-  color: #333333;
-  /* Remove a aparência nativa padrão do sistema operacional em alguns navegadores */
+  min-height: var(--cx-control);
+  padding: 8px 34px 8px 12px; /* 34px à direita reservam o espaço da seta */
+  font-size: var(--cx-text-base);
+  font-family: var(--cx-font);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-surface);
+  color: var(--cx-text);
   outline: none;
+  cursor: pointer;
+  transition: border-color var(--cx-dur) ease, box-shadow var(--cx-dur) ease;
+
+  /* Seta desenhada em SVG (mesma receita do .select dos formulários):
+     remove a seta NATIVA do sistema, que tinha outro visual, e deixa
+     o campo idêntico aos demais inputs do CONDEX em qualquer SO. */
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2361708b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
 }
 
-/* Classe de estilo aplicada ao botão de cadastrar novo usuário */
+.selectBox:hover {
+  border-color: #bfc7d8;
+}
+
+.selectBox:focus {
+  border-color: var(--cx-primary);
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Botão de cadastrar novo usuário (ação principal da tela) */
 .addButton {
-  /* Aplica espaçamento interno vertical de 8px e horizontal de 16px */
-  padding: 8px 16px;
-  /* Define o tamanho da fonte do botão */
-  font-size: 14px;
-  /* Define a borda cinza, correspondendo ao padrão visual da imagem */
-  border: 1px solid #e0e0e0;
-  /* Arredonda os cantos do botão */
-  border-radius: 6px;
-  /* Aplica a cor branca ao fundo do botão */
-  background-color: #ffffff;
-  /* Define a cor do texto do botão */
-  color: #333333;
-  /* Muda o cursor do mouse para o ícone de 'mãozinha' indicando interatividade */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--cx-control);
+  padding: 0 18px;
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
   cursor: pointer;
+  box-shadow: 0 1px 2px rgba(11, 23, 51, 0.12);
+  transition: background-color var(--cx-dur) ease, transform var(--cx-dur-fast) ease;
 }
 
-/* Classe principal para o elemento <table> */
-.table {
-  /* Força a tabela a esticar e ocupar 100% da largura do seu contêiner pai */
+.addButton:hover {
+  background-color: var(--cx-primary-hover);
+}
+
+.addButton:active {
+  background-color: var(--cx-primary-active);
+  transform: translateY(1px);
+}
+
+.addButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ---------- Carregando ---------- */
+.carregando {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 28px var(--cx-space-lg);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  color: var(--cx-text-muted);
+  font-size: var(--cx-text-sm);
+}
+
+/* Anel girando: dá retorno imediato de que a lista está chegando */
+.carregando__anel {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid var(--cx-primary-border);
+  border-top-color: var(--cx-primary);
+  animation: usuarios-girar 0.7s linear infinite;
+}
+
+@keyframes usuarios-girar {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carregando__anel { animation-duration: 1.6s; }
+}
+
+/* ---------- Tabela ---------- */
+
+/* Contêiner de rolagem: a tabela pode ser mais larga que a
+   tela, mas a PÁGINA nunca rola na horizontal. */
+.tabela-scroll {
   width: 100%;
-  /* Faz as bordas das células se mesclarem, removendo espaços duplos entre elas */
-  border-collapse: collapse;
-  /* Define o tamanho padrão da fonte para todo o conteúdo dentro da tabela */
-  font-size: 13px;
-  /* Adiciona uma borda externa em toda a tabela, de cor cinza */
-  border: 1px solid #d4d4d4;
+  overflow-x: auto;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
 }
 
-/* Classe padrão para as células de cabeçalho <th> */
-.th {
-  /* Aplica o fundo azul característico dos cabeçalhos vistos na referência */
-  background-color: #215ca0;
-  /* Define a cor do texto do cabeçalho como branca para gerar contraste com o azul */
-  color: #ffffff;
-  /* Alinha o texto do cabeçalho à esquerda da célula */
-  text-align: left;
-  /* Cria um espaçamento interno de 12px ao redor do texto no cabeçalho */
-  padding: 12px;
-  /* Remove o negrito padrão forte e aplica um peso médio à fonte do cabeçalho */
-  font-weight: 500;
-  /* Cria linhas cinzas claras entre os cabeçalhos para separação visual */
-  border: 1px solid #d4d4d4;
+.tabela-scroll::-webkit-scrollbar {
+  height: 8px;
 }
 
-/* Classe para células de cabeçalho <th> que exigem texto centralizado (Editar e Apagar) */
+.tabela-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--cx-border-strong);
+  border-radius: var(--cx-radius-pill);
+}
+
+/* Dica de rolagem: a tabela só não cabe no celular — acima de 640px ela
+   ocupa a largura toda e a mensagem só poluiria o desktop. */
+.dicaTabela {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .dicaTabela {
+    display: block;
+    margin-top: 10px;
+    font-size: var(--cx-text-sm);
+    color: var(--cx-text-muted);
+    text-align: center;
+  }
+
+  /* No celular a tabela já rola na horizontal: manter cada célula em UMA
+     linha evita CPF, telefone e nomes quebrados em 2–3 linhas (alturas
+     irregulares) — a largura extra é absorvida pela própria rolagem. */
+  .td,
+  .tdCenter {
+    white-space: nowrap;
+  }
+}
+
+/* Tabela de usuários */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--cx-text-sm);
+}
+
+/* Cabeçalho: fundo rebaixado + rótulo curto em caixa alta.
+   Lê como rótulo de coluna, não como botão (era o efeito do
+   bloco azul sólido do layout anterior). */
+.th,
 .thCenter {
-  /* Reaplica o fundo azul do cabeçalho padrão */
-  background-color: #215ca0;
-  /* Reaplica o texto branco */
-  color: #ffffff;
-  /* Centraliza o texto das colunas finais */
-  text-align: center;
-  /* Mantém o mesmo espaçamento interno das outras células do cabeçalho */
-  padding: 12px;
-  /* Define o peso médio para a fonte */
-  font-weight: 500;
-  /* Mantém as divisões das bordas */
-  border: 1px solid #d4d4d4;
-}
-
-/* Classe de estilo para as células de dados normais <td> */
-.td {
-  /* Define o espaçamento interno das células de dados para não ficarem grudadas na borda */
-  padding: 12px;
-  /* Define as bordas (linhas e colunas) das células internas com cor cinza clara */
-  border: 1px solid #d4d4d4;
-  /* Força o alinhamento do texto padrão à esquerda */
+  background-color: var(--cx-surface-alt);
+  color: var(--cx-text-muted);
+  padding: 12px 16px;
+  font-size: var(--cx-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   text-align: left;
-  /* Aplica a cor cinza escuro para o texto da linha de dados */
-  color: #333333;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--cx-border-strong);
 }
 
-/* Classe para as células de dados <td> que exigem conteúdo centralizado (como os ícones) */
-.tdCenter {
-  /* Mantém o espaçamento interno, seguindo o padrão das células normais */
-  padding: 12px;
-  /* Mantém a borda divisória padrão em todas as direções da célula */
-  border: 1px solid #d4d4d4;
-  /* Centraliza o conteúdo (usado especificamente para alinhar os ícones de ação no meio) */
+/* Alinhamento à esquerda para dados, centralizado para ações */
+.thCenter {
   text-align: center;
-  /* Transforma o ícone em algo clicável visualmente (cursor de apontar) */
+}
+
+/* Células de dados: 46px de altura, separadas só por linha */
+.td,
+.tdCenter {
+  padding: 12px 16px;
+  color: var(--cx-text);
+  border-bottom: 1px solid var(--cx-border);
+  vertical-align: middle;
+  transition: background-color var(--cx-dur) ease;
+}
+
+.td {
+  text-align: left;
+}
+
+/* Célula de ação (botões de editar/apagar) */
+.tdCenter {
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Última linha sem divisor: fecha a tabela limpa */
+.tabela-scroll tbody tr:last-child .td,
+.tabela-scroll tbody tr:last-child .tdCenter {
+  border-bottom: none;
+}
+
+/* Hover de linha: orienta o olhar em tabelas largas */
+.tabela-scroll tbody tr:hover .td,
+.tabela-scroll tbody tr:hover .tdCenter {
+  background-color: var(--cx-surface-inset);
+}
+
+/* Primeira coluna mais forte: é o identificador da linha */
+.td:first-child {
+  font-weight: 600;
+  color: var(--cx-text-strong);
+}
+
+/* Botão de ação da linha: quadrado discreto que só ganha
+   cor no hover — a tabela fica limpa, mas a ação é óbvia
+   quando o usuário procura por ela. */
+.acaoBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  background: transparent;
+  color: var(--cx-text-muted);
   cursor: pointer;
+  transition: background-color var(--cx-dur) ease, color var(--cx-dur) ease,
+              border-color var(--cx-dur) ease;
+}
+
+.acaoBtn:hover {
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+  color: var(--cx-primary);
+}
+
+.acaoBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Ação destrutiva: vermelho representa exclusão em todo o sistema */
+.acaoBtn--perigo:hover {
+  background-color: var(--cx-danger-soft);
+  border-color: var(--cx-danger-border);
+  color: var(--cx-danger);
+}
+
+/* Toque: alvo de 40px no celular, mesmo com o botão visual de 32px */
+@media (max-width: 720px) {
+  .acaoBtn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   Em telas pequenas a tabela rola horizontalmente
+   dentro do seu contêiner em vez de quebrar o layout.
+   ================================================== */
+@media (max-width: 720px) {
+  .table {
+    min-width: 620px;
+  }
+
+  .cabecalho-pagina,
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .addButton {
+    width: 100%; /* Ação principal ocupa a linha toda no celular */
+  }
+
+  .contagem {
+    padding-bottom: 0;
+  }
 }

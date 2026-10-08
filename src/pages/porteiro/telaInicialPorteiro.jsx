@@ -10,9 +10,37 @@ import CardVisitanteCadastrado from "../../components/porteiro/cardVisitanteCada
 import CardEncomenda from "../../components/porteiro/cardEncomenda"
 
 //Componente de estado vazio, reaproveitado por todas as seções da tela
-function EstadoVazio({ children }){
+//tipo="erro" troca só o visual (mesma estrutura) para o aviso de API fora do ar
+function EstadoVazio({ children, tipo = 'vazio' }){
 
-    return <p className={styles['empty--state']}>{children}</p>
+    //Define se o bloco fala de "sem registros" ou de "falha ao carregar"
+    const ehErro = tipo === 'erro'
+
+    return (
+        <div
+            className={ehErro ? `${styles['empty--state']} ${styles['empty--state--erro']}` : styles['empty--state']}
+            role={ehErro ? 'alert' : 'status'}
+        >
+            {/* Ícone decorativo: reforça a mensagem sem duplicar texto */}
+            <span className={styles['empty--state__icone']} aria-hidden="true">
+                {
+                    ehErro ?
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                            <path d="M12 9v4"></path>
+                            <path d="M12 17h.01"></path>
+                        </svg>
+                    :
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M22 12h-6l-2 3h-4l-2-3H2"></path>
+                            <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+                        </svg>
+                }
+            </span>
+
+            <p className={styles['empty--state__texto']}>{children}</p>
+        </div>
+    )
 }
 
 //Página inicial do porteiro
@@ -157,110 +185,164 @@ function PaginainicialPorteiro(){
     return (
     <div className={styles['dashboard--container']}>
 
-      <div className={styles['header--section']}>
-        <div className={styles['tabs--group']}>
-          <button
-            className={abaAtiva === "visitantes" ? styles['tab--active'] : styles['tab--inactive']}
-            onClick={() => setAbaAtiva("visitantes")}
-          >
-            Visitantes
-          </button>
-          <button
-            className={abaAtiva === "encomendas" ? styles['tab--active'] : styles['tab--inactive']}
-            onClick={() => setAbaAtiva("encomendas")}
-          >
-            Encomendas
-          </button>
+      {/* Cabeçalho da página: contexto (overline), ação concreta
+          (título) e a ação principal no canto — padrão
+          cx-page-header usado em todo o sistema */}
+      <header className={styles['header--section']}>
+        <div className={styles['header--texto']}>
+          <p className="cx-overline">{abaAtiva === "visitantes" ? "Visitantes" : "Encomendas"}</p>
+
+          <h2 className="cx-page-title">
+            {abaAtiva === "visitantes" ? "Registrar e acompanhar visitas" : "Receber e entregar encomendas"}
+          </h2>
+
+          <p className="cx-page-subtitle">
+            {
+              abaAtiva === "visitantes"
+                ? "Veja quem foi cadastrado para entrar no condomínio e quem ainda está autorizado."
+                : "Acompanhe o que está na portaria e o que já foi retirado pelos moradores."
+            }
+          </p>
         </div>
 
         {
           //Botão muda de acordo com a aba selecionada
           abaAtiva === "visitantes" ?
             <button
+              type="button"
               className={styles['btn--add']}
               onClick={registrarVisitante}
+              aria-label="Registrar visitante"
             >
               + Registrar visitante
             </button>
           :
-            <button className={styles['btn--add']} onClick={abrirCadastroEncomenda}>
+            <button
+              type="button"
+              className={styles['btn--add']}
+              onClick={abrirCadastroEncomenda}
+              aria-label="Cadastrar encomenda"
+            >
               + Cadastrar encomenda
             </button>
         }
+      </header>
+
+      {/* Abas em pílulas: escolhem o tipo de registro exibido
+          abaixo (mesmo padrão das telas do Morador, que
+          reaproveitam estas classes) */}
+      <div className={styles['tabs--group']} role="tablist" aria-label="Tipo de registro">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={abaAtiva === "visitantes"}
+          className={abaAtiva === "visitantes" ? styles['tab--active'] : styles['tab--inactive']}
+          onClick={() => setAbaAtiva("visitantes")}
+        >
+          Visitantes
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={abaAtiva === "encomendas"}
+          className={abaAtiva === "encomendas" ? styles['tab--active'] : styles['tab--inactive']}
+          onClick={() => setAbaAtiva("encomendas")}
+        >
+          Encomendas
+        </button>
       </div>
 
       {
-        //Aviso exibido quando alguma lista não pôde ser carregada da API
+        //Aviso exibido quando alguma lista não pôde ser carregada da API.
+        //Enquanto ele existir, os estados vazios das seções abaixo ficam
+        //escondidos: "Nenhum visitante cadastrado" ao lado do aviso de
+        //falha contradiz a própria mensagem de erro
         erroCarga &&
-        <p className={styles['empty--state']}>{erroCarga}</p>
+        <EstadoVazio tipo="erro">{erroCarga}</EstadoVazio>
       }
 
-      {
-        abaAtiva === "visitantes" ?
-          <>
-            <div className={styles['list--section']}>
-              <h2 className={styles['section--title']}>Visitantes cadastrados</h2>
+      {/* Conteúdo da aba: as seções do tipo de registro
+          escolhido — o painel referencia a aba ativa */}
+      <div
+        className={styles['abas-conteudo']}
+        role="tabpanel"
+        aria-label={abaAtiva === "visitantes" ? "Visitantes" : "Encomendas"}
+      >
+        {/* Com erro de carga as seções somem por completo: deixar títulos
+            como "Visitantes cadastrados" órfãos sobre o aviso de falha
+            também parece uma listagem vazia quebrada */}
+        {!erroCarga && (
+          abaAtiva === "visitantes" ?
+            <>
+              <div className={styles['list--section']}>
+                <h2 className={styles['section--title']}>Visitantes cadastrados</h2>
 
-              {
-                //Os visitantes cadastrados pelo morador (sem porteiro) e pelo
-                //porteiro (com porteiro) são todos válidos e aparecem na lista
-                visitantes.length === 0 ?
-                  <EstadoVazio>Nenhum visitante cadastrado</EstadoVazio>
-                :
-                  visitantes.map((visitante) => (
-                    <CardVisitanteCadastrado key={visitante.id} visitante={visitante} />
-                  ))
-              }
-            </div>
+                {
+                  //Os visitantes cadastrados pelo morador (sem porteiro) e pelo
+                  //porteiro (com porteiro) são todos válidos e aparecem na lista
+                  visitantes.length === 0 ?
+                    (erroCarga ? null : <EstadoVazio>Nenhum visitante cadastrado</EstadoVazio>)
+                  :
+                    visitantes.map((visitante) => (
+                      <CardVisitanteCadastrado key={visitante.id} visitante={visitante} />
+                    ))
+                }
+              </div>
 
-            <div className={styles['list--section']}>
-              <h2 className={styles['section--title']}>Visitantes ativos</h2>
+              <div className={styles['list--section']}>
+                <h2 className={styles['section--title']}>Visitantes ativos</h2>
 
-              {/* A API não possui endpoint de entrada, saída ou visitantes ativos,
-                  então não há como listar quem está dentro do condomínio */}
-              <EstadoVazio>
-                O registro de entrada e saída ainda não está disponível na API,
-                por isso não é possível listar os visitantes ativos.
-              </EstadoVazio>
-            </div>
-          </>
-        :
-          <>
-            <div className={styles['list--section']}>
-              <h2 className={styles['section--title']}>Pendentes</h2>
+                {/* A API não possui endpoint de entrada, saída ou visitantes ativos,
+                    então não há como listar quem está dentro do condomínio.
+                    Também fica escondido enquanto houver erro de carga, para a
+                    tela mostrar só o aviso de falha */}
+                {
+                  !erroCarga &&
+                  <EstadoVazio>
+                    O registro de entrada e saída ainda não está disponível na API,
+                    por isso não é possível listar os visitantes ativos.
+                  </EstadoVazio>
+                }
+              </div>
+            </>
+          :
+            <>
+              <div className={styles['list--section']}>
+                <h2 className={styles['section--title']}>Pendentes</h2>
 
-              {
-                encomendasPendentes.length === 0 ?
-                  <EstadoVazio>Nenhuma encomenda pendente</EstadoVazio>
-                :
-                  encomendasPendentes.map((encomenda) => (
-                    <CardEncomenda
-                      key={encomenda.id}
-                      encomenda={encomenda}
-                      atualizaLista={recarregarEncomendas}
-                    />
-                  ))
-              }
-            </div>
+                {
+                  encomendasPendentes.length === 0 ?
+                    (erroCarga ? null : <EstadoVazio>Nenhuma encomenda pendente</EstadoVazio>)
+                  :
+                    encomendasPendentes.map((encomenda) => (
+                      <CardEncomenda
+                        key={encomenda.id}
+                        encomenda={encomenda}
+                        atualizaLista={recarregarEncomendas}
+                      />
+                    ))
+                }
+              </div>
 
-            <div className={styles['list--section']}>
-              <h2 className={styles['section--title']}>Retiradas</h2>
+              <div className={styles['list--section']}>
+                <h2 className={styles['section--title']}>Retiradas</h2>
 
-              {
-                encomendasRetiradas.length === 0 ?
-                  <EstadoVazio>Nenhuma encomenda retirada</EstadoVazio>
-                :
-                  encomendasRetiradas.map((encomenda) => (
-                    <CardEncomenda
-                      key={encomenda.id}
-                      encomenda={encomenda}
-                      atualizaLista={recarregarEncomendas}
-                    />
-                  ))
-              }
-            </div>
-          </>
-      }
+                {
+                  encomendasRetiradas.length === 0 ?
+                    (erroCarga ? null : <EstadoVazio>Nenhuma encomenda retirada</EstadoVazio>)
+                  :
+                    encomendasRetiradas.map((encomenda) => (
+                      <CardEncomenda
+                        key={encomenda.id}
+                        encomenda={encomenda}
+                        atualizaLista={recarregarEncomendas}
+                      />
+                    ))
+                }
+              </div>
+            </>
+        )}
+      </div>
 
     </div>
   )

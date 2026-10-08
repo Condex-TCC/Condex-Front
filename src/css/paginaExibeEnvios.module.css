@@ -1,18 +1,37 @@
-/* Lista que empilha os cards de resposta (o espaçamento entre eles vem do próprio card) */
+/* ==================================================
+   LISTA DE ENVIOS / RESPOSTAS
+   --------------------------------------------------
+   Módulo complementar da tela de "Envios do comunicado":
+   cuida do bloco de dados do comunicado e do
+   empilhamento dos cards de resposta.
+
+   .listaEnvios também é reaproveitado pelas telas do
+   MORADOR (comunicados, regras e laudos) como contêiner
+   de lista — por isso ele é genérico: só empilha, sem
+   assumir nada sobre os filhos.
+   ================================================== */
+
+/* Lista que empilha os cards (o espaçamento entre eles vem do
+   próprio card). min-width:0 impede que um texto longo estique
+   a coluna e faça a página rolar na horizontal. */
 .listaEnvios {
   display: flex;
   flex-direction: column;
-  margin-top: 16px; /* Separa a lista do bloco de dados do comunicado */
+  min-width: 0;
+  margin-top: var(--cx-space-md); /* Separa a lista do bloco de dados do comunicado */
 }
 
-/* Bloco de destaque com os dados do comunicado */
+/* Bloco de destaque com os dados do comunicado: filete azul
+   à esquerda identifica "isto é o comunicado de origem",
+   diferenciando-o dos cards de conversa abaixo. */
 .comunicado {
-  border-left: 4px solid #1e3a8a; /* Azul escuro já usado nos botões da tela */
+  border-left: 4px solid var(--cx-primary);
 }
 
-/* Título do comunicado com corpo maior para ganhar destaque sobre os cards */
+/* Título do comunicado com corpo maior para ganhar destaque
+   sobre os cards de resposta */
 .comunicado .comunicadoTitulo {
-  font-size: 20px;
+  font-size: var(--cx-text-lg);
 }
 
 /* Espaçamento maior entre a descrição e a data de criação */
@@ -22,6 +41,27 @@
 
 /* Descrição do comunicado com corpo maior que o dos cards de resposta */
 .comunicado .comunicadoDescricao {
-  font-size: 14px;
-  color: #333;
+  font-size: var(--cx-text-base);
+  line-height: 1.6;
+  color: var(--cx-text);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   O bloco do comunicado perde o filete grosso no celular
+   (ele come largura útil) e a lista mantém o respiro
+   menor — os cards já têm padding próprio.
+   ================================================== */
+@media (max-width: 640px) {
+  .listaEnvios {
+    margin-top: var(--cx-space-md);
+  }
+
+  .comunicado {
+    border-left-width: 3px;
+  }
+
+  .comunicado .comunicadoTitulo {
+    font-size: var(--cx-text-md);
+  }
 }

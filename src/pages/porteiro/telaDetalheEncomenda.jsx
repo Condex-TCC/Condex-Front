@@ -56,7 +56,11 @@ export default function PaginaDetalheEncomenda() {
                             &larr; voltar
                         </button>
 
-                        <h1 className={styles['fp-titulo']}>Registrar retirada</h1>
+                        {/* Contexto + ação concreta, mesmo padrão das outras telas do porteiro */}
+                        <div className={styles['fp-header__texto']}>
+                            <p className="cx-overline">Encomendas</p>
+                            <h1 className={styles['fp-titulo']}>Registrar retirada</h1>
+                        </div>
                     </div>
 
                     <p className={styles['fp-subtitulo']}>
@@ -75,13 +79,20 @@ export default function PaginaDetalheEncomenda() {
 
             <main className={styles['fp-main']}>
 
-                {/* Linha superior com o botão voltar e o título */}
+                {/* Linha superior com o botão voltar e a identificação da tela */}
                 <div className={styles['fp-header']}>
                     <button type="button" className={styles['fp-btn-voltar']} onClick={back}>
                         &larr; voltar
                     </button>
 
-                    <h1 className={styles['fp-titulo']}>Registrar retirada</h1>
+                    {/* Contexto + ação concreta + apoio (padrão cx-page-header) */}
+                    <div className={styles['fp-header__texto']}>
+                        <p className="cx-overline">Encomendas</p>
+                        <h1 className={styles['fp-titulo']}>Registrar retirada</h1>
+                        <p className={styles['fp-lead']}>
+                            Confira os dados abaixo e confirme a entrega ao morador.
+                        </p>
+                    </div>
                 </div>
 
                 {/* Resumo da encomenda que está sendo retirada */}
@@ -111,9 +122,15 @@ export default function PaginaDetalheEncomenda() {
                     automaticamente pelo servidor.
                 </p>
 
-                {/* Botão de confirmar a retirada */}
-                <div className={styles['fp-area-salvar']}>
-                    <button type="button" className={styles['fp-btn-salvar']} onClick={retirar}>
+                {/* Botão de confirmar a retirada (rótulo acessível mais
+                    descritivo que o texto visual "SALVAR") */}
+                <div className={`${styles['fp-area-salvar']} ${styles['fp-celula--larga']}`}>
+                    <button
+                        type="button"
+                        className={styles['fp-btn-salvar']}
+                        onClick={retirar}
+                        aria-label="Confirmar retirada da encomenda"
+                    >
                         SALVAR
                     </button>
                 </div>

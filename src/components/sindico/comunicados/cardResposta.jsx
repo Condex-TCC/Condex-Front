@@ -63,8 +63,11 @@ function CardResposta({ resposta, redirecionamento }) {
             <div className={cardStyles.footer}>
                 <div className={cardStyles.statusContainer}>
                     <span className={cardStyles.statusLabel}>Status:</span>
-                    <span 
-                        className={visualizado ? cardStyles.statusVisualizado : cardStyles.statusPendente}
+
+                    {/* Badge global: âmbar = pendência, verde = confirmado.
+                        Mesmo significado de cor em todo o sistema. */}
+                    <span
+                        className={visualizado ? "cx-badge cx-badge--success" : "cx-badge cx-badge--warning"}
                     >
                         {visualizado ? "Visualizado" : "Pendente"}
                     </span>
@@ -73,7 +76,7 @@ function CardResposta({ resposta, redirecionamento }) {
                 {/* Exibe o botão de respota apenas se existir resposta e a contra resposta for nula */}
                 {(perguntaMorador != null && contra_resposta == null) && 
                     <div className={cardStyles.actionGroup}>
-                        <button className={cardStyles.actionButton} onClick={responderPerunta}>
+                        <button type="button" className={cardStyles.actionButton} onClick={responderPerunta}>
                             Responder
                         </button>
                     </div>

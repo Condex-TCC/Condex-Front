@@ -49,19 +49,25 @@ export function ApertamentoCardSelecionadoUpdade( {apertamento, idMorador}) {
 
 
   return (
-    <div className={styles.card} onClick={hendleClick}>
+    // O card inteiro é um <button>: a troca de apartamento
+    // passa a ser alcançável pelo teclado e anunciada por
+    // leitor de tela, com exatamente o mesmo onClick de antes.
+    <button
+      type="button"
+      className={`${styles.card} ${styles['card--botao']}`}
+      onClick={hendleClick}
+    >
 
-      <header className={styles.header}>
+      {/* Título do card: identificação da unidade */}
+      <span className={styles['card__titulo']}>
+        {apertamento.bloco} - N° {apertamento.numero}
+      </span>
 
-        <h3 className={styles.title}>{apertamento.bloco} - N° {apertamento.numero}</h3> 
+      {/* Metadado: descrição da unidade, em cinza secundário */}
+      <span className={styles['card__resumo']}>
+        {apertamento.descricao == null ? "Sem descrição" : apertamento.descricao}
+      </span>
 
-      </header>
-
-      <div className={styles.content}>
-        <p className={styles.description}>
-          {apertamento.descricao == null ? "Sem descrição" : apertamento.descricao}
-        </p>
-      </div>
-    </div>
+    </button>
   );
 }

@@ -1,10 +1,10 @@
 .container {
   width: 100%;
   min-height: 100vh;
-  background-color: #d3d3d3;
+  background-color: var(--cx-bg);
   box-sizing: border-box;
   padding: 15px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--cx-font);
 }
 
 
@@ -14,7 +14,7 @@
 
 .header {
   height: 80px;
-  background-color: #14286b;
+  background-color: var(--cx-navy-surface);
 
   display: flex;
   align-items: center;
@@ -37,7 +37,7 @@
 }
 
 .logo span {
-  color: #36a9e1;
+  color: var(--cx-brand-cyan);
 }
 
 
@@ -60,7 +60,7 @@
 }
 
 .iconePesquisa {
-  color: #999;
+  color: var(--cx-text-faint);
 
   font-size: 26px;
 
@@ -75,11 +75,11 @@
 
   font-size: 13px;
 
-  color: #555;
+  color: var(--cx-text-muted);
 }
 
 .pesquisa input::placeholder {
-  color: #aaa;
+  color: var(--cx-text-faint);
 }
 
 
@@ -91,9 +91,9 @@
 
   border-radius: 50%;
 
-  background-color: #edf4f8;
+  background-color: var(--cx-primary-soft);
 
-  color: #111;
+  color: var(--cx-text);
 
   display: flex;
   align-items: center;
@@ -104,7 +104,7 @@
 
   margin-left: auto;
 
-  border: 1px solid #aaa;
+  border: 1px solid var(--cx-text-faint);
 }
 
 
@@ -140,7 +140,7 @@
 
   border-radius: 10px;
 
-  background-color: #2948a5;
+  background-color: var(--cx-primary);
 
   color: white;
 
@@ -159,7 +159,7 @@
 }
 
 .btnVoltar:hover {
-  background-color: #203b8f;
+  background-color: var(--cx-primary-hover);
 }
 
 
@@ -172,7 +172,7 @@
 
   margin: 16px 0 50px 0;
 
-  color: #2948a5;
+  color: var(--cx-primary);
 
   font-size: 26px;
   font-weight: 600;
@@ -206,7 +206,7 @@
 }
 
 .campo label {
-  color: #777;
+  color: var(--cx-text-muted);
 
   font-size: 18px;
 
@@ -220,7 +220,7 @@
 
   box-sizing: border-box;
 
-  border: 1px solid #aaa;
+  border: 1px solid var(--cx-text-faint);
 
   border-radius: 11px;
 
@@ -230,13 +230,13 @@
 
   font-size: 18px;
 
-  color: #555;
+  color: var(--cx-text-muted);
 }
 
 .campo input:focus {
-  border-color: #2948a5;
+  border-color: var(--cx-primary);
 
-  box-shadow: 0 0 0 1px #2948a5;
+  box-shadow: var(--cx-focus-halo);
 }
 
 
@@ -257,7 +257,7 @@
 
 .chegada label,
 .saida label {
-  color: #111;
+  color: var(--cx-text);
 
   margin-left: 0;
 }
@@ -271,7 +271,7 @@
 
 .chegada input::placeholder,
 .saida input::placeholder {
-  color: #777;
+  color: var(--cx-text-muted);
   opacity: 1;
 }
 
@@ -330,22 +330,19 @@
 
   border: none;
 
-  border-radius: 11px;
+  border-radius: var(--cx-radius-lg);
 
-  background: linear-gradient(
-    90deg,
-    #5d7ddd 0%,
-    #0e287a 100%
-  );
+  /* Cor sólida do padrão primário do CONDEX (sem degradê) */
+  background-color: var(--cx-primary);
 
   color: white;
 
-  font-size: 25px;
+  font-size: 18px;
   font-weight: bold;
 
   cursor: pointer;
 }
 
 .btnSalvar:hover {
-  filter: brightness(1.08);
+  background-color: var(--cx-primary-hover);
 }

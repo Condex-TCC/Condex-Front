@@ -1,178 +1,181 @@
-/* Dashboard.css */
+/* ==================================================
+   TELA INICIAL DO SÍNDICO (PAINEL DE RESUMO)
+   --------------------------------------------------
+   Composição: cabeçalho de página + grade de dois
+   painéis (indicadores | comunicados). Os dois blocos
+   dividem a largura em vez de ficarem centralizados em
+   uma coluna estreita com muito espaço vazio ao redor.
 
-.dashboard--principal {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  padding: 24px;
-  background-color: #ffffff;
-  max-width: 600px;
-  margin: 0 auto;
+   As cores de status seguem os tokens globais para
+   terem o mesmo significado em todos os perfis:
+   âmbar = atenção, azul = informação, verde = positivo,
+   vermelho = crítico.
+
+   Os títulos usam as classes globais cx-overline,
+   cx-page-title e cx-page-subtitle (condexTokens.css),
+   para que toda a área interna tenha a mesma hierarquia.
+   ================================================== */
+
+.pagina {
+  font-family: var(--cx-font);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-lg);
 }
 
-.titulo--reclamacoes {
-  font-size: 12px;
-  font-weight: 600;
-  color: #333333;
-  margin-bottom: 8px;
+/* Cabeçalho: bloco de texto à esquerda; a ação principal da
+   tela (quando existir) entra à direita, na mesma linha. */
+.cabecalho-pagina {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
 }
 
+/* Grade principal: indicadores à esquerda, comunicação à
+   direita. minmax(0, ...) impede que o conteúdo estoure a
+   coluna; stretch mantém os dois painéis com a MESMA altura,
+   o que dá compostura mesmo quando um tem menos conteúdo. */
+.grade-painel {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--cx-space-md);
+  align-items: stretch;
+}
+
+/* Painel: superfície branca com cabeçalho próprio */
+.painel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-md);
+  padding: var(--cx-space-lg);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+  min-width: 0;
+}
+
+.painel__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cx-space-sm);
+}
+
+.painel__titulo {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-base);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+  margin: 0;
+}
+
+/* Linha de cartões de resumo (indicadores).
+   flex:1 dá ao bloco a altura que sobra dentro do painel (o .painel
+   já é uma coluna flex com o cabeçalho fixo no topo) e
+   align-content:center centraliza os indicadores nessa altura — é o
+   que eliminava os ~110px de vazio abaixo dos mini-stats enquanto o
+   painel vizinho ficava preenchido. Sem espaço livre (celular) a
+   regra não tem efeito e o bloco mantém a altura do conteúdo. */
 .container--resumo {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.cartao--resumo {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 12px 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--cx-space-sm);
   flex: 1;
+  align-content: center;
+}
+
+/* Indicador: painel aninhado (fundo rebaixado, sem sombra)
+   para não brigar com a superfície do painel externo. */
+.cartao--resumo {
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  gap: 6px;
+  padding: 14px;
+  background-color: var(--cx-surface-alt);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
+  transition: border-color var(--cx-dur) ease, transform var(--cx-dur) ease;
 }
 
-.titulo--cartao--resumo {
-  font-size: 10px;
-  color: #888888;
-  font-weight: 600;
-  margin-bottom: 8px;
+.cartao--resumo:hover {
+  border-color: var(--cx-border-strong);
+  transform: translateY(-2px); /* leve elevação ao passar o mouse */
+}
+
+.cartao--resumo__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cx-space-sm);
+}
+
+.cartao--resumo__rotulo {
+  font-size: var(--cx-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--cx-text-muted);
 }
 
-.conteudo--cartao--resumo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Ícone em pastilha: dá cor ao indicador sem depender do emoji */
+.cartao--resumo__icone {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  border-radius: 9px;
 }
 
-.valor--resumo {
-  font-size: 28px;
-  font-weight: bold;
-  color: #000000;
+.cartao--resumo__icone--alerta {
+  background-color: var(--cx-warning-soft);
+  color: var(--cx-warning);
 }
 
-.icone--resumo {
-  font-size: 24px;
+.cartao--resumo__icone--info {
+  background-color: var(--cx-primary-soft);
+  color: var(--cx-primary);
 }
 
-.titulo--data {
-  font-size: 16px;
-  font-weight: bold;
-  color: #000000;
-  margin-top: 24px;
-  margin-bottom: 12px;
+.cartao--resumo__icone--ok {
+  background-color: var(--cx-success-soft);
+  color: var(--cx-success);
 }
 
-.cartao--atividade {
-  border: 1px solid #d9d9d9;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* Número do indicador: o elemento mais forte do cartão */
+.cartao--resumo__valor {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-2xl);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--cx-text-strong);
 }
 
-.cabecalho--atividade {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Legenda secundária: explica o número sem competir com ele */
+.cartao--resumo__nota {
+  font-size: var(--cx-text-xs);
+  color: var(--cx-text-muted);
 }
 
-.grupo--titulo--prioridade {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+/* ==================================================
+   RESPONSIVIDADE
+   ================================================== */
+
+/* Tablet: os dois painéis passam a empilhar, já que a
+   largura não sustenta mais duas colunas confortáveis. */
+@media (max-width: 1024px) {
+  .grade-painel {
+    grid-template-columns: 1fr;
+  }
 }
 
-.titulo--atividade {
-  font-size: 15px;
-  font-weight: bold;
-  color: #000000;
-}
-
-.titulo--atividade--inativo {
-  font-size: 15px;
-  font-weight: bold;
-  color: #a0a0a0;
-}
-
-/* Tags de Prioridade */
-.tag--prioridade {
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.tag--prioridade--alta {
-  background-color: #ffcccc;
-  color: #e65c5c;
-}
-
-.tag--prioridade--media--inativa {
-  background-color: #f5f5f5;
-  color: #cccccc;
-  font-style: italic;
-}
-
-.tag--prioridade--media {
-  background-color: #fce8b2;
-  color: #d4a017;
-}
-
-/* Tags de Status (Canto direito) */
-.tag--status {
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.tag--status--pendente {
-  background-color: #e0e0e0;
-  color: #666666;
-}
-
-.tag--status--concluida {
-  background-color: #c8e6c9;
-  color: #388e3c;
-}
-
-.tag--status--andamento {
-  background-color: #bbdefb;
-  color: #1976d2;
-}
-
-/* Rodapé dos Cartões */
-.rodape--atividade {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  color: #777777;
-}
-
-.info--local {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.info--tempo--pessoa {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.info--tempo {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.nao-tem-comunicados{
-    font-weight: bold;
+/* Celular: respiro menor e indicadores em uma coluna quando
+   não cabe nem dois lado a lado. */
+@media (max-width: 420px) {
+  .container--resumo {
+    grid-template-columns: 1fr;
+  }
 }

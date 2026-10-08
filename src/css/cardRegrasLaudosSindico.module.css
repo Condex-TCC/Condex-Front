@@ -1,51 +1,186 @@
+/* ==================================================
+   CARDS DO SÍNDICO (REGRAS, LAUDOS, APARTAMENTOS,
+   ÁREAS COMUNS E UNIDADES)
+   --------------------------------------------------
+   Módulo compartilhado por todos os cards de listagem
+   administrativos: mantém borda, raio, tipografia e
+   botões de ação idênticos entre eles.
+
+   Hierarquia interna de todo card:
+     título (forte, Manrope) > metadados/descrição
+     (cinza secundário) > status/rodapé (filete).
+
+   Superfície: padrão do item 5.5 — branca, borda suave,
+   raio grande e sombra discreta. Só ganha elevação no
+   hover quem É clicável (.card--botao): em cards de
+   leitura, mover o mouse não deve sacudir a lista.
+
+   ATENÇÃO: este módulo também é usado pelas telas de
+   comunicados (card, header, title, timeInfo,
+   horarioContent e description) — todas as classes
+   existentes foram mantidas e apenas redesenhadas.
+   ================================================== */
+
 /* =========================================
-   ESTILOS COMPARTILHADOS (COMUNS AOS DOIS)
-========================================= */
+   ESTILO COMPARTILHADO (COMUM AOS CARDS)
+   ========================================= */
 .card {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 16px;
-  background-color: #ffffff;
-  font-family: sans-serif;
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  padding: 18px 20px;
+  background-color: var(--cx-surface);
+  box-shadow: var(--cx-shadow-sm);
+  font-family: var(--cx-font);
+  margin-bottom: 12px; /* respiro uniforme entre os itens da lista */
+  transition: box-shadow var(--cx-dur) ease,
+              border-color var(--cx-dur) ease,
+              transform var(--cx-dur) ease;
 }
 
+/* Cabeçalho do card: título à esquerda, ações à direita.
+   align-items:flex-start para títulos longos quebrarem
+   sem empurrar os botões para fora do card. */
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
+/* Título: o elemento mais forte do card */
 .title {
   margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: #1a1a1a;
+  min-width: 0;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-base);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--cx-text-strong);
+  overflow-wrap: anywhere;
 }
 
-.iconButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
+/* Grupo de ações de ícone (editar/excluir) */
+.actions {
   display: flex;
   align-items: center;
+  gap: 4px;
+  flex: none;
+}
+
+/* Botão de ícone (editar, excluir): quadrado discreto que
+   só ganha cor no hover — o card fica limpo, mas a ação é
+   óbvia quando o usuário procura por ela. */
+.iconButton {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  color: #333;
-  transition: opacity 0.2s;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  color: var(--cx-text-muted);
+  cursor: pointer;
+  transition: background-color var(--cx-dur) ease,
+              color var(--cx-dur) ease,
+              border-color var(--cx-dur) ease;
 }
 
 .iconButton:hover {
-  opacity: 0.7;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+  color: var(--cx-primary);
 }
 
+.iconButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Exclusão: cor reservada para ações destrutivas */
 .deleteBtn {
-  color: #a72828;
+  color: var(--cx-danger);
+}
+
+.deleteBtn:hover {
+  background-color: var(--cx-danger-soft);
+  border-color: var(--cx-danger-border);
+  color: var(--cx-danger);
+}
+
+/* Corpo do card: metadados/descrição abaixo do título */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* Descrição: apoio em cinza secundário, nunca compete
+   com o título. */
+.description {
+  margin: 0;
+  font-size: var(--cx-text-sm);
+  line-height: 1.55;
+  color: var(--cx-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+   CARD COMO ALVO DE SELEÇÃO
+   Usado na escolha de apartamentos: o card inteiro é um
+   <button> (teclado e leitor de tela alcançam a mesma
+   ação do clique do mouse). Por isso ele tem cursor,
+   elevação no hover e halo de foco. */
+.card--botao {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
+  cursor: pointer;
+}
+
+.card--botao:hover {
+  border-color: var(--cx-primary-border);
+  box-shadow: var(--cx-shadow);
+  transform: translateY(-2px); /* elevação: sinal de que é clicável */
+}
+
+.card--botao:focus-visible {
+  outline: none;
+  border-color: var(--cx-primary);
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Título e resumo em blocos dentro do botão (span não
+   empilha sozinho, e <p>/<header> não podem existir
+   dentro de um <button>). */
+.card__titulo {
+  display: block;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-base);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--cx-text-strong);
+  overflow-wrap: anywhere;
+}
+
+.card__resumo {
+  display: block;
+  margin-top: 6px;
+  font-size: var(--cx-text-sm);
+  line-height: 1.55;
+  color: var(--cx-text-muted);
+  overflow-wrap: anywhere;
 }
 
 /* =========================================
    ESPECÍFICOS: REGRAS
-========================================= */
+   ========================================= */
 .horarioActions {
   display: flex;
   gap: 12px;
@@ -55,80 +190,187 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 0;
 }
 
 .timeInfo {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: #333;
-}
-
-.description {
-  margin: 0;
-  font-size: 13px;
-  color: #555;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text);
+  min-width: 0;
 }
 
 /* =========================================
    ESPECÍFICOS: LAUDOS
-========================================= */
+   ========================================= */
 .statusContainer {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
 }
 
 .statusLabel {
-  color: #333;
+  color: var(--cx-text-muted);
 }
 
+/* Valor positivo (laudo aprovado/concluído) */
 .statusValue {
-  color: #2e7d32;
+  font-weight: 600;
+  color: var(--cx-success);
 }
 
 .laudoContent {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  min-width: 0;
 }
 
 .laudoContent p {
   margin: 0;
-  font-size: 13px;
-  color: #1a1a1a;
+  font-size: var(--cx-text-sm);
+  line-height: 1.55;
+  color: var(--cx-text);
+  overflow-wrap: anywhere;
 }
 
+/* =========================================
+   RODAPÉ DO CARD
+   Filete separa o corpo das ações; quebra em duas
+   linhas quando os botões não cabem lado a lado. */
 .footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--cx-border);
+}
+
+.leftActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rightActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .actionGroup {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
+/* ==================================================
+   BOTÃO SECUNDÁRIO DE AÇÃO
+   Usado em "Visualizar": superfície branca, texto em
+   azul principal e borda — mesmo desenho do "Voltar"
+   das telas de formulário (ação de apoio, nunca
+   primária).
+   ================================================== */
 .actionButton {
-  background-color: #8bb3eb;
-  color: #000000;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  height: var(--cx-control-sm);
+  padding: 0 12px;
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius-sm);
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  font-family: var(--cx-font);
   cursor: pointer;
-  transition: background-color 0.2s;
+  white-space: nowrap;
+  transition: background-color var(--cx-dur) ease,
+              border-color var(--cx-dur) ease;
 }
 
 .actionButton:hover {
-  background-color: #79a1d9;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+}
+
+.actionButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   ================================================== */
+
+/* Tablet: o título pode ocupar a linha inteira; as ações
+   de ícone descem para baixo dele em vez de espremer. */
+@media (max-width: 640px) {
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  /* Rodapé empilha com a ação de texto em largura total */
+  .footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .leftActions {
+    justify-content: flex-end;
+  }
+
+  .rightActions,
+  .actionGroup {
+    width: 100%;
+  }
+
+  .actionButton {
+    flex: 1;
+  }
+}
+
+/* Celular: alvo de toque de 40px, mesmo com o botão
+   visual de 32px (o padding negativo mantém o desenho). */
+@media (max-width: 480px) {
+  .card {
+    padding: 16px;
+  }
+
+  .iconButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .actionButton {
+    height: 40px;
+    justify-content: center;
+  }
+}
+
+/* Movimento reduzido: cards e botões não deslizam */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .iconButton,
+  .actionButton {
+    transition: none;
+  }
+
+  .card--botao:hover {
+    transform: none;
+  }
 }

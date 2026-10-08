@@ -24,16 +24,41 @@ function PaginaMenssagem() {
 
   return (
     <div className={styles.container}>
-      
-      {/* Caixa principal da mensagem */}
-      <div className={styles.messageBox}>
-        
-        {/* Texto de confirmação */}
-        <p className={styles.messageText}>{menssagem}</p>
-      </div>
 
-      {/* Botão para retornar à página anterior */}
-      <button className={styles.btnVoltar} onClick={backPage}>
+      {/* Cabeçalho padrão das telas internas: overline (contexto) +
+          título (o que a tela entrega). Era a única tela da área
+          interna sem essa hierarquia; o par entra no topo do conteúdo
+          e o alinhamento central preserva a composição da página. */}
+      <header className={styles.cabecalho}>
+        <p className="cx-overline">Confirmação</p>
+        <h2 className="cx-page-title">Mensagem de confirmação</h2>
+      </header>
+
+      {/* Cartão de confirmação: ícone de status, a mensagem
+          recebida da tela anterior e o texto dizendo o passo
+          seguinte. role=status anuncia a conclusão para os
+          leitores de tela assim que a página abre. */}
+      <section className={styles.messageBox} role="status" aria-live="polite">
+
+        {/* Ícone decorativo: verde = operação confirmada */}
+        <span className={styles.messageIcone} aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </span>
+
+        {/* Texto de confirmação (título da tela) */}
+        <p className={styles.messageText}>{menssagem}</p>
+
+        {/* Apoio: orienta o usuário sem competir com a mensagem */}
+        <p className={styles.messageApoio}>
+          Use o botão abaixo para seguir para a próxima tela.
+        </p>
+      </section>
+
+      {/* Botão para retornar à página anterior: ação secundária */}
+      <button type="button" className={styles.btnVoltar} onClick={backPage}>
         {/* Usando o símbolo de flecha esquerda (&larr;) */}
         &larr; VOLTAR
       </button>

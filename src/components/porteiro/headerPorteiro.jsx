@@ -1,6 +1,7 @@
 //Local das importações
 import { useNavigate } from "react-router-dom";
 import styles from "../../css/headerPorteiro.module.css"
+import MarcaCondex from "../marca/marcaCondex"
 import { useState } from "react"
 import * as CookieService from '../../service/cookie'
 
@@ -40,16 +41,10 @@ function HeaderPorteiro(){
             
             {/* Div com todos os itens da logo */}
             <div className={styles["logo-container"]}>
-                {/* Inicia o container para agrupar o título e o subtítulo da marca */}
-                    
-                {/* Cria a tag de título de maior hierarquia para o nome principal */}
+                {/* Marca do CONDEX (componente compartilhado) com o papel do porteiro */}
                 <h1 className={styles["logo-title"]}>
-                    {/* Escreve o texto com a letra 'x' isolada para destaque */}
-                    Cond<span className={styles["logo-e"]}>e</span><span className={styles["logo-x"]}>x</span>
+                    <MarcaCondex papel="Porteiro" />
                 </h1>
-
-                {/* Insere o subtítulo que fica abaixo da logomarca */}
-                <span className={styles["logo-subtitle"]}>Porteiro</span>
             </div>
             
             {/* Barra de busca */}
@@ -77,13 +72,14 @@ function HeaderPorteiro(){
              {/* Abre a seção direita do cabeçalho, focada no usuário */}
             <div className={styles["right-section"]} onClick={AlteraMenu}>
 
-                {/* Botão de deslogar */}
-                <div className={styles.avatar} onClick={AlteraMenu}>
+                {/* Avatar circular: mesma linguagem visual do Síndico e do Morador */}
+                <div className={styles.avatar} role="button" tabIndex={0} aria-label="Menu do perfil" aria-expanded={menuLogout}
+                     onKeyDown={(evento) => { if (evento.key === 'Enter' || evento.key === ' ') { evento.preventDefault(); AlteraMenu(); } }}>
                 
-                {/* Desenha o boneco do botão do usuário para o SVG */}
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> 
-                        <circle cx="12" cy="8" r="4" stroke="#7A87A7" strokeWidth="1.2" />
-                        <path d="M5 20C5 16.5 7.5 14 12 14C16.5 14 19 16.5 19 20" stroke="#7A87A7" strokeWidth="1.2" strokeLinecap="round" />
+                {/* Desenha o boneco do botão do usuário (cor herdada do CSS) */}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> 
+                        <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.6" />
+                        <path d="M5 20C5 16.5 7.5 14 12 14C16.5 14 19 16.5 19 20" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
                     </svg>
 
                 </div>

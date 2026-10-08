@@ -60,37 +60,69 @@ function PaginaExibeComunicados(){
 
     }, [])
 
+    //Lista segura para renderizar (o serviço pode devolver
+    //undefined quando a API falha — a tela não quebra por isso)
+    const lista = Array.isArray(cards) ? cards : []
+
     //Retona o componente
     return(
         // Container principal que engloba tudo
         <div className={styles.container}>
 
-            {/* Barra superior contendo as abas e o botão de ação principal */}
-            <div className={styles.topBar}>
-
-                {/* Espaçamento entre os botões de abas */}
-                <div className={styles.tabs}>
-
-                    {/* Botão de aba que leva para os comunicados */}
-                    <button className={styles.tabButton} onClick={navegaComunicados}>Comunicados</button>
-
-                    {/* Botão de aba que leva para as respostas dos moradores */}
-                    <button className={styles.tabButton} onClick={navegaRespostas}>Respostas</button>
+            {/* Cabeçalho da página: contexto + ação concreta + ação principal */}
+            <header className={styles['cabecalho-pagina']}>
+                <div>
+                    <p className="cx-overline">Comunicação</p>
+                    <h2 className="cx-page-title">Comunicados</h2>
+                    <p className="cx-page-subtitle">
+                        Publique avisos para os moradores e acompanhe o que eles respondem.
+                    </p>
                 </div>
 
                 {/* Botão para cadastrar um novo comunicado */}
-                <button className={styles.primaryButton} onClick={navegaEnvio}>+ Cadastrar comunicado</button>
+                <button type="button" className={styles.primaryButton} onClick={navegaEnvio}>+ Cadastrar comunicado</button>
+            </header>
+
+            {/* Barra com as abas de Comunicação */}
+            <div className={styles.topBar}>
+
+                {/* Espaçamento entre os botões de abas */}
+                <div className={styles.tabs} role="tablist" aria-label="Comunicação">
+
+                    {/* Aba corrente desta tela (Comunicados) destacada */}
+                    <button type="button" role="tab" aria-selected={true} className={`${styles.tabButton} ${styles["tabButton--ativo"]}`} onClick={navegaComunicados}>Comunicados</button>
+
+                    {/* Botão de aba que leva para as respostas dos moradores */}
+                    <button type="button" role="tab" aria-selected={false} className={styles.tabButton} onClick={navegaRespostas}>Respostas</button>
+                </div>
             </div>
 
-            <h1 className={stylesTitle.title} style={{ marginBottom: "26px", marginTop: "36px" }}>Página exibe os comunicados</h1>
+            {/* Título da lista, rebaixado a rótulo de seção pelo módulo
+                (o cabeçalho da página já carrega o título da tela) */}
+            <h1 className={`${stylesTitle.title} ${stylesTitle['title--list']} ${styles.listaTitulo}`}>Página exibe os comunicados</h1>
+
+            {/* Estado vazio: explica como publicar o primeiro comunicado */}
+            {lista.length === 0 && (
+                <div className="cx-empty">
+                    <span className="cx-empty__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </span>
+                    <p className="cx-empty__title">Nenhum comunicado publicado</p>
+                    <p className="cx-empty__text">
+                        Use o botão “+ Cadastrar comunicado” acima para enviar o primeiro aviso aos moradores.
+                    </p>
+                </div>
+            )}
 
             {/*div com os cards */}
-            <div>
+            <div className={styles.lista}>
 
                 {/* Cards com os comunicados */}
                 {
                     // Interando e adicioando os cards
-                    cards.map((comunicado) => {
+                    lista.map((comunicado) => {
                         //Retorna o card de comunicado
                         return <CardComunicado comunicado={comunicado}></CardComunicado>
                     } )

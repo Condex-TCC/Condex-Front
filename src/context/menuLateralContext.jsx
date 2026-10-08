@@ -7,7 +7,16 @@ const MenuLateralContext = createContext();
 const MenuLateralProvider = ({children}) => {
 
     //Criando a informação vamos trabalhar
-    const [menuLateral, setMenuLateral] = useState('fechado')
+    //ESTADO INICIAL POR VIEWPORT (apenas apresentação)
+    //No desktop o menu lateral é persistente — é assim que
+    //produtos administrativos se comportam e evita que o
+    //síndico/morador reabra o menu a cada navegação.
+    //No celular/tablet (<= 900px) ele começa fechado para
+    //não cobrir o conteúdo. O ponto de corte é o mesmo do
+    //shellLayout.module.css e do drawer da sidebar.
+    const [menuLateral, setMenuLateral] = useState(() =>
+        typeof window !== 'undefined' && window.innerWidth > 900 ? 'aberto' : 'fechado'
+    )
 
     //Retornando um componente, permitindo o comportalhamento entre todos os elementos filhos
     return(

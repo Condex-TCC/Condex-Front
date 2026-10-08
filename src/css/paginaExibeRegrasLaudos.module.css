@@ -1,141 +1,417 @@
-/* Container que centraliza e limita a largura da interface */
+/* ==================================================
+   LISTAGENS DO SÍNDICO (REGRAS, LAUDOS, APARTAMENTOS,
+   RESERVAS, COMUNICADOS E SELEÇÃO DE UNIDADES)
+   --------------------------------------------------
+   Módulo compartilhado pelas telas de listagem do
+   síndico — é a REFERÊNCIA do padrão "aba + lista" do
+   CONDEX. Concentra, portanto:
+
+   • cabecalho-pagina = overline (contexto) + título
+     (ação concreta) + subtítulo, com a ação principal
+     à direita;
+   • topBar           = linha de abas + botão de ação;
+   • tabs/tabButton   = pílulas (ink bar) com
+     aria-selected, nunca botões soltos com borda;
+   • lista            = empilhamento vertical dos cards,
+     com min-width:0 para nada estourar a coluna;
+   • card             = superfície padrão 5.5 (usada
+     também pelas telas de seleção de apartamento);
+   • backButton       = variante secundária do sistema.
+
+   O shell (shellLayout.module.css) já reserva a margem
+   da área de conteúdo, então a raiz NÃO repete padding.
+   ================================================== */
+
+/* Raiz da tela: coluna única com respiro constante entre
+   os blocos (cabeçalho, abas, lista). width/min-width
+   garantem que a listagem use a largura toda sem estourar. */
 .container {
-  font-family: Arial, Helvetica, sans-serif; /* Fonte base padrão */
-  max-width: 800px;
-  margin: 20px auto;
-  color: #111;
+  width: 100%;
+  min-width: 0;
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-lg);
 }
 
-/* Alinhamento da barra superior separando as abas do botão principal */
+/* Cabeçalho da página: bloco de texto à esquerda, ação
+   principal à direita. Igual ao das telas exemplares
+   (Início e Usuários) para a hierarquia ser idêntica em
+   toda a área interna. */
+.cabecalho-pagina {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap; /* no celular o botão desce para a própria linha */
+}
+
+/* Linha de abas + ação: alinhada ao centro porque os dois
+   elementos têm alturas parecidas; quebra em telas estreitas. */
 .topBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
 }
 
-/* Espaçamento entre os botões de abas */
+/* ---------- Abas em pílulas (5.6) ----------
+   O trilho (surface-inset + borda) dá o contexto de
+   "grupo de abas"; a pílula ativa sobe com sombra clara.
+   O trilho é um único alvo visual — por isso os botões
+   perdem a borda individual. */
 .tabs {
-  display: flex;
-  gap: 8px;
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--cx-surface-inset);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
+  max-width: 100%;
+  min-width: 0;
 }
 
-/* Estado inicial dos botões das abas (Não selecionado / Branco) */
 .tabButton {
-  padding: 8px 16px;
-  border: 1px solid #d1d5db;
-  background-color: #ffffff;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  color: #374151;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-/* Efeito ao passar o mouse por cima das abas (Muda para azul claro) */
-.tabButton:hover {
-  background-color: #e0f2fe;
-  border-color: #bae6fd;
-}
-
-/* Estilo para o botão de "+ Nova Regra" */
-.primaryButton {
-  background-color: #1e3a8a; /* Azul escuro da imagem */
-  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 16px;
   border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
+  background-color: transparent;
+  border-radius: var(--cx-radius);
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  color: var(--cx-text-muted);
+  white-space: nowrap;
   cursor: pointer;
-  font-size: 14px;
+  transition: background-color var(--cx-dur) ease, color var(--cx-dur) ease,
+              box-shadow var(--cx-dur) ease;
 }
 
-/* Estilo do título "Regras do condomínio (12)" */
+.tabButton:hover {
+  color: var(--cx-text-strong);
+}
+
+.tabButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Aba ativa: fundo branco + texto na cor primária.
+   aria-selected é a fonte da verdade (acessibilidade) e a
+   classe --ativo acompanha o mesmo estado no JSX, para as
+   telas antigas continuarem legíveis. */
+.tabButton[aria-selected='true'],
+.tabButton--ativo {
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  box-shadow: var(--cx-shadow-xs);
+}
+
+/* Botão de "+ Novo ...": ação principal da tela, mesmo
+   padrão do botão primário do sistema. */
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--cx-control);
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(11, 23, 51, 0.12);
+  transition: background-color var(--cx-dur) ease, transform var(--cx-dur-fast) ease;
+}
+
+.primaryButton:hover {
+  background-color: var(--cx-primary-hover);
+}
+
+.primaryButton:active {
+  background-color: var(--cx-primary-active);
+  transform: translateY(1px);
+}
+
+.primaryButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Título usado pelas telas de seleção (apartamento) que
+   herdam este módulo: mesma escala do cx-page-title. */
+.title {
+  margin: 0;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--cx-text-strong);
+}
+
+/* Rótulo curto acima da lista (ex.: total de registros da
+   aba corrente). Secundário por definição: menor e cinza. */
 .sectionTitle {
-  font-size: 13px;
-  font-weight: normal;
-  margin-bottom: 12px;
-  color: #4b5563;
+  margin: 0 0 var(--cx-space-md);
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  color: var(--cx-text-muted);
 }
 
-/* Estilo estrutural principal do card */
+/* Título de lista herdado das telas de cadastro (ex.:
+   "Página exibe os comunicados"). Nas telas que já têm o
+   cabeçalho completo ele passa a ser rótulo de SEÇÃO da
+   lista: menor, cinza e sem respiro próprio — o texto é
+   preservado, mas não briga mais com o cx-page-title.
+   O seletor duplicado garante precedência sobre o .title
+   do módulo de formulários, qualquer que seja a ordem de
+   importação dos CSS. */
+.container .listaTitulo {
+  margin: 0;
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--cx-text-muted);
+}
+
+/* Linha do título de lista: rótulo de seção à esquerda,
+   contagem discreta de registros à direita (mesma leitura
+   do "0 registros · Moradores" da tela de Usuários).
+   O wrap evita que o número empurre o título em telas
+   estreitas; o respiro vertical continua vindo do gap da
+   raiz, já que este bloco é filho direto do .container. */
+.listaTituloLinha {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--cx-space-sm) var(--cx-space-md);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+/* Contagem de registros da seção: auxiliar por definição —
+   menor e cinza, nunca briga com o título da lista. */
+.listaContagem {
+  font-size: var(--cx-text-xs);
+  font-weight: 600;
+  color: var(--cx-text-muted);
+  white-space: nowrap;
+}
+
+/* Empilhamento dos cards da lista. min-width:0 é o que
+   impede textos longos de esticarem a coluna e a página
+   de rolar na horizontal. */
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-md);
+  min-width: 0;
+}
+
+/* Dentro da lista o respiro já vem do gap — anula a
+   margem do card para não somar 16 + 16 entre itens. */
+.lista > .card {
+  margin-bottom: 0;
+}
+
+/* ---------- Card de item (superfície 5.5) ---------- */
 .card {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  min-width: 0;
   padding: 16px 20px;
-  background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+  margin-bottom: var(--cx-space-md);
+  transition: box-shadow var(--cx-dur) ease, border-color var(--cx-dur) ease;
 }
 
-/* Layout horizontal do cabeçalho do card */
+.card:hover {
+  box-shadow: var(--cx-shadow);
+  border-color: var(--cx-primary-border);
+}
+
+/* Cabeçalho do card: título à esquerda, ações à direita */
 .cardHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
 .cardTitle {
   margin: 0;
-  font-size: 16px;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-md);
   font-weight: 700;
+  color: var(--cx-text-strong);
 }
 
-/* Grupo de ícones alinhados à direita */
+/* Grupo de ações do card (editar/excluir) */
 .cardActions {
   display: flex;
-  gap: 16px;
+  gap: var(--cx-space-sm);
 }
 
-/* Removemos o estilo padrão do botão para deixar só o SVG visível */
+/* Botão de ícone: alvo de 32px, cor discreta que só
+   aparece no hover — a ação é óbvia quando procurada. */
 .iconButton {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  color: var(--cx-text-muted);
+  cursor: pointer;
+  transition: background-color var(--cx-dur) ease, color var(--cx-dur) ease,
+              border-color var(--cx-dur) ease;
 }
 
 .iconButton:hover {
-  opacity: 0.6;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+  color: var(--cx-primary);
 }
 
-/* Organização vertical do horário e descrição */
+.iconButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Exclusão: vermelho é a cor de ação destrutiva em todo o sistema */
+.iconButton--danger {
+  color: var(--cx-danger);
+}
+
+.iconButton--danger:hover {
+  background-color: var(--cx-danger-soft);
+  border-color: var(--cx-danger-border);
+  color: var(--cx-danger);
+}
+
+/* Corpo do card: metadados empilhados sob o título */
 .cardBody {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-/* Alinhamento lateral do ícone de relógio com o texto */
+/* Linha de metadado (horário, unidade...) com ícone alinhado */
 .timeInfo {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: #111;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
 }
 
-/* Texto de baixo recuado para alinhar com o horário, pulando o ícone */
+/* Descrição: recuo para alinhar opticamente com o texto do
+   metadado acima, pulando o ícone. */
 .description {
   margin: 0;
-  font-size: 13px;
-  color: #4b5563;
   margin-left: 24px;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
+  line-height: 1.55;
 }
 
+/* ==================================================
+   BOTÃO VOLTAR
+   Mesma variante secundária usada nos formulários:
+   superfície branca, texto em azul, borda neutra.
+   ================================================== */
 .backButton {
-  background-color: #274092;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--cx-control);
+  padding: 0 18px;
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  box-shadow: var(--cx-shadow-xs);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--cx-dur) ease, border-color var(--cx-dur) ease;
+}
+
+.backButton:hover {
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+}
+
+.backButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   As abas QUEBRAM LINHA quando não cabem lado a lado
+   (em 390px a 3ª aba, "Apartamentos", era cortada pela
+   borda direita do trilho) e a ação principal passa a
+   ocupar a linha toda. Nenhuma aba é cortada até 320px.
+   ================================================== */
+@media (max-width: 640px) {
+  .topBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tabs {
+    width: 100%;
+    /* Em vez de uma linha rolável que esconde a última aba,
+       o trilho passa a quebrar linha: cada aba mantém a
+       largura do rótulo e desce para a próxima linha quando
+       não sobra espaço. O gap de 4px vale também entre linhas. */
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow-x: auto; /* folga: só rola se uma aba sozinha não couber */
+    scrollbar-width: thin;
+  }
+
+  .tabButton {
+    /* Encolhe/esticar só depois de formada a linha: o texto
+       nunca é apertado (a quebra acontece antes do corte). */
+    flex: 1 1 auto;
+  }
+
+  .primaryButton,
+  .backButton {
+    width: 100%; /* ação principal em linha própria no celular */
+  }
+}
+
+/* Alvos de toque confortáveis em telas pequenas */
+@media (max-width: 480px) {
+  .tabButton {
+    height: 40px;
+  }
+
+  .iconButton {
+    width: 40px;
+    height: 40px;
+  }
 }

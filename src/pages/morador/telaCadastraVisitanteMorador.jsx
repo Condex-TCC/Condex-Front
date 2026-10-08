@@ -61,20 +61,27 @@ function TelaCadastraVisitanteMorador(){
 
         <div className={styles['cv-container']}>
 
-            {/* Cabeçalho com o botão de voltar */}
-            <div className={styles['cv-header']}>
+            {/* Cabeçalho da tela: contexto + ação concreta + apoio à esquerda
+                e o "Voltar" à direita, na mesma linha (mesma composição do
+                cx-page-header usada pelas telas de cadastro do síndico). */}
+            <header className={styles['cv-cabecalho-pagina']}>
+                <div className={styles['cv-cabecalho-texto']}>
+                    <p className="cx-overline">Visitantes</p>
+                    <h1 className={styles['cv-title']}>Novo visitante</h1>
+                    <p className={styles['cv-subtitle']}>
+                        Preencha o nome e o CPF para deixar este visitante cadastrado para o porteiro.
+                    </p>
+                </div>
+
                 <button type="button" className={styles['cv-btn-voltar']} onClick={voltarParaVisitantes}>
                     ← Voltar
                 </button>
-                <h1 className={styles['cv-title']}>Novo visitante</h1>
-            </div>
+            </header>
 
-            <p className={styles['cv-subtitle']}>
-                Preencha o nome e o CPF para deixar este visitante cadastrado para o porteiro.
-            </p>
-
-            {/* Formulário */}
-            <form className={styles['cv-form']} onSubmit={salvarVisitante}>
+            {/* Formulário: o próprio elemento recebe o card branco do padrão
+                cx-card, igual às outras telas de cadastro, para os campos
+                não ficarem soltos sobre o fundo cinza da página */}
+            <form className={`${styles['cv-form']} cx-card cx-card--pad`} onSubmit={salvarVisitante}>
 
                 {/* Nome */}
                 <div className={`${styles['cv-field']} ${styles['cv-field--full']}`}>
@@ -107,9 +114,13 @@ function TelaCadastraVisitanteMorador(){
                     campos ficaram fora do formulário até o backend criá-los.
                 */}
 
-                {/* Botão de salvar */}
+                {/* Botão de salvar: largura automática alinhada à direita no
+                    pé do card (desktop); no celular continua largura total */}
                 <div className={`${styles['cv-action']} ${styles['cv-field--full']}`}>
-                    <button type="submit" className={styles['cv-btn-salvar']}>
+                    <button
+                        type="submit"
+                        className={`${styles['cv-btn-salvar']} ${styles['cv-btn-salvar--auto']}`}
+                    >
                         Salvar visitante
                     </button>
                 </div>

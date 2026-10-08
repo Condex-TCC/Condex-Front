@@ -17,12 +17,13 @@ function CardVisitanteCadastrado({ visitante }){
 
     //Retorna o componente
     return (
-        <div className={styles["card--item"]}>
+        <article className={styles["card--item"]}>
 
-            {/* Linha superior com o nome do visitante */}
+            {/* Linha superior: nome do visitante + pastilha de origem
+                (cx-badge compartilha o visual das outras telas) */}
             <div className={styles["card--top"]}>
                 <span className={styles["text--name"]}>{ouSimbolo(visitante.nome)}</span>
-                <span className={styles["badge--origem"]}>{origem}</span>
+                <span className={`cx-badge cx-badge--info ${styles["badge--origem"]}`}>{origem}</span>
             </div>
 
             {/* Linha de informações: CPF e morador responsável */}
@@ -33,7 +34,7 @@ function CardVisitanteCadastrado({ visitante }){
                 <span className={styles["text--date"]}>Morador (ID): {ouSimbolo(visitante.moradorId)}</span>
             </div>
 
-        </div>
+        </article>
     )
 }
 

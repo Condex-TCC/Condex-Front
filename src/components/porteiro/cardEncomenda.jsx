@@ -52,11 +52,39 @@ function CardEncomenda({ encomenda, atualizaLista }){
 
     //Retorna o componente
     return (
-        <div className={styles["card--item"]} onClick={verDetalhe}>
+        //O card inteiro continua clicável para o mouse; o acesso por
+        //teclado é o botão do título logo abaixo, que executa a MESMA
+        //ação. A classe --clicavel só existe para o hover não prometer
+        //clique em cards que não abrem nada (spec 5.5)
+        <article
+            className={`${styles["card--item"]} ${styles["card--item--clicavel"]}`}
+            onClick={verDetalhe}
+        >
 
-            {/* Linha superior com o nome do destinatário */}
+            {/* Linha superior: destinatário (clicável, mesmo onClick do
+                card) + pastilha de status da encomenda */}
             <div className={styles["card--top"]}>
-                <span className={styles["text--name"]}>{ouSimbolo(destinatario)}</span>
+                <button
+                    type="button"
+                    className={`${styles["text--name"]} ${styles["text--name--botao"]}`}
+                    onClick={(evento) => {
+
+                        //O clique já navega pelo próprio botão; parar a
+                        //propagação evita disparar o onClick do card duas
+                        // vezes e criar um histórico duplicado
+                        evento.stopPropagation()
+                        verDetalhe()
+                    }}
+                    aria-label={`Abrir a encomenda de ${destinatario ?? 'destinatário'}`}
+                >
+                    {ouSimbolo(destinatario)}
+                </button>
+
+                {/* Status derivado do próprio dado: segue pendente
+                    enquanto a data de retirada for nula (cx-badge) */}
+                <span className={`cx-badge ${jaRetirada ? 'cx-badge--success' : 'cx-badge--warning'} ${styles["badge--status"]}`}>
+                    {jaRetirada ? 'Retirada' : 'Pendente'}
+                </span>
             </div>
 
             {/* Linha de informações: bloco, apartamento e recebimento */}
@@ -98,13 +126,18 @@ function CardEncomenda({ encomenda, atualizaLista }){
 
                 {
                     !jaRetirada &&
-                    <button className={styles["btn--exit"]} onClick={registrarRetirada}>
+                    <button
+                        type="button"
+                        className={styles["btn--exit"]}
+                        onClick={registrarRetirada}
+                        aria-label={`Registrar retirada da encomenda de ${destinatario ?? 'destinatário'}`}
+                    >
                         Registrar retirada
                     </button>
                 }
             </div>
 
-        </div>
+        </article>
     )
 }
 

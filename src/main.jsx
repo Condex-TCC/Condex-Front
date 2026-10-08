@@ -2,6 +2,11 @@ import { StrictMode } from 'react' //Ferreamento do react que ajuda a encontrar 
 import { createRoot } from 'react-dom/client' //Cria a principal div do projeto
 import { MenuLateralProvider } from './context/menuLateralContext'
 
+/* Tokens visuais globais do CONDEX (cores, sombras, raios e tipografia).
+   Precisa ser o primeiro IMPORT DE ESTILO do projeto para que as variáveis
+   de :root estejam disponíveis em todos os *.module.css da aplicação. */
+import './css/condexTokens.css'
+
 //Importando o elemento que analizar a URL e criar os componentes apartir daí 
 import { RouterProvider } from 'react-router-dom'
 

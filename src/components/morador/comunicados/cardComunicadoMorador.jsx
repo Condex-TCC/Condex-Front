@@ -42,7 +42,15 @@ function CardComunicadoMorador({ envio, back }) {
     //Retorna o componente
     return (
 
-        <div className={styles['cm-card']} onClick={detalhesComunicado}>
+        // O card inteiro é um <button> com o MESMO onClick de antes:
+        // agora a ação também é alcançável pelo teclado (Tab + Enter)
+        // e recebe um nome acessível que descreve para onde ele leva.
+        <button
+            type="button"
+            className={styles['cm-card']}
+            onClick={detalhesComunicado}
+            aria-label={`Abrir detalhes do comunicado: ${envio.comunicado?.titulo ?? ""}`}
+        >
 
             {/* Cabeçalho do card com o título do comunicado e a data de criação */}
             <header className={styles['cm-header']}>
@@ -55,8 +63,10 @@ function CardComunicadoMorador({ envio, back }) {
             {/* Descrição do comunicado */}
             <p className={styles['cm-descricao']}>{envio.comunicado?.descricao}</p>
 
-            {/* Etiqueta que informa se o morador já visualizou o comunicado */}
-            <span className={`${styles['cm-status']} ${envio.visualizado ? styles['cm-status--visualizado'] : styles['cm-status--naoVisualizado']}`}>
+            {/* Etiqueta que informa se o morador já visualizou o comunicado.
+                A aparência vem das classes globais cx-badge, para ter o mesmo
+                significado de cor em todo o sistema (verde = positivo). */}
+            <span className={`cx-badge ${envio.visualizado ? 'cx-badge--success' : 'cx-badge--neutral'} ${styles['cm-status']}`}>
                 {envio.visualizado ? "Visualizado" : "Não visualizado"}
             </span>
 
@@ -77,7 +87,7 @@ function CardComunicadoMorador({ envio, back }) {
                     </p>
                 }
             </div>
-        </div>
+        </button>
     )
 }
 

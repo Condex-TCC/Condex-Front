@@ -1,160 +1,301 @@
-/* =========================================
-   CARD DE RESPOSTA (ENVIO DO MORADOR)
-   ========================================= */
+/* ==================================================
+   CARD DE RESPOSTA / COMUNICADO / MORADOR (SÍNDICO)
+   --------------------------------------------------
+   Módulo compartilhado por três superfícies da área de
+   Comunicação:
 
-/* Card com destaque lateral e sombra para separar os envios da lista */
+   • cardComunicado  → item da lista de comunicados
+                       (card clicável);
+   • cardResposta    → conversa morador ↔ síndico, com
+                       status e botão "Responder";
+   • cardMorador     → item SELECIONÁVEL da tela de
+                       escolha de destinatários.
+
+   Por isso a base é neutra (superfície padrão 5.5) e as
+   variações ficam em modificadores:
+   - .card--clicavel     = vira <button>, eleva no hover;
+   - .card--selecionado  = estado marcado (fundo azul
+     claro + borda + etiqueta com ícone — nunca só cor).
+
+   Os status usam as classes globais cx-badge, para o
+   significado da cor ser o mesmo em todo o CONDEX.
+   ================================================== */
+
+/* Base: superfície branca, borda 1px, raio grande, sombra
+   leve. min-width:0 evita que textos longos estiquem a coluna. */
 .card {
-  border: 1px solid #e0e0e0;
-  border-left: 4px solid #1e3a8a; /* Azul escuro já usado nos botões da tela */
-  border-radius: 8px;
-  padding: 16px;
-  background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  font-family: sans-serif;
-  margin-bottom: 16px; /* Espaçamento entre os cards, mesmo padrão do cardReserva */
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 20px var(--cx-space-lg);
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+  margin-bottom: var(--cx-space-md);
+  transition: box-shadow var(--cx-dur) ease, border-color var(--cx-dur) ease,
+              background-color var(--cx-dur) ease;
 }
 
-/* Cabeçalho alinhando o nome do morador e a unidade */
+/* ---------- Variação clicável ----------
+   Quando a ação é o card inteiro (abrir o comunicado,
+   marcar o morador) ele recebe <button>: mesmos handlers,
+   porém com foco visível, teclado e nome acessível. */
+.card--clicavel {
+  text-align: left;
+  cursor: pointer;
+  transition: box-shadow var(--cx-dur) ease, border-color var(--cx-dur) ease,
+              background-color var(--cx-dur) ease, transform var(--cx-dur-fast) ease;
+}
+
+.card--clicavel:hover {
+  border-color: var(--cx-primary-border);
+  box-shadow: var(--cx-shadow);
+  transform: translateY(-2px);
+}
+
+.card--clicavel:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+.card--clicavel:active {
+  transform: translateY(0);
+}
+
+/* ---------- Variação selecionada ----------
+   Marcado = fundo azul claro + borda azul + etiqueta com
+   ícone de confirmação (o texto continua visível). Três
+   sinais, para não depender apenas da cor. */
+.card--selecionado {
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+  box-shadow: inset 0 0 0 1px var(--cx-primary-border);
+}
+
+.card--selecionado:hover {
+  background-color: var(--cx-primary-soft);
+}
+
+/* Cabeçalho: identificação à esquerda, etiqueta de unidade
+   à direita. Quebra em duas linhas no celular. */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: var(--cx-space-md);
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
-/* Nome do morador com corpo maior para destacar quem enviou */
+/* Nome/título: o texto mais forte do card */
 .titulo {
   margin: 0;
-  font-size: 18px;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-md);
   font-weight: 700;
-  color: #1a1a1a;
+  color: var(--cx-text-strong);
+  min-width: 0;
 }
 
-/* Unidade do morador exibida como etiqueta ao lado do nome */
+/* Etiqueta de unidade/data: discreta, com borda, nunca
+   compete com o nome. */
 .unidade {
-  font-size: 13px;
+  font-size: var(--cx-text-xs);
   font-weight: 600;
-  color: #374151;
-  background-color: #f9fafb;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  color: var(--cx-text-muted);
+  background-color: var(--cx-neutral-soft);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-sm);
   padding: 4px 8px;
   white-space: nowrap;
 }
 
-/* Bloco com os dados de contato e o comunicado de referência */
+/* Bloco de metadados (contato, comunicado de referência):
+   fundo rebaixado para separar do corpo da conversa. */
 .contexto {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  padding: 12px;
-  margin-bottom: 16px;
+  gap: 6px;
+  min-width: 0;
+  background-color: var(--cx-surface-alt);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius);
+  padding: 12px 14px;
+  margin-bottom: var(--cx-space-md);
 }
 
-/* Texto dos dados de contato e do comunicado de referência */
 .contextoItem {
   margin: 0;
-  font-size: 13px;
-  color: #555;
+  font-size: var(--cx-text-sm);
+  line-height: 1.55;
+  color: var(--cx-text-muted);
+  overflow-wrap: anywhere; /* e-mails e títulos longos quebram em vez de estourar */
 }
 
-/* Bloco principal com a pergunta do morador e a resposta do síndico */
+.contextoItem strong {
+  color: var(--cx-text);
+}
+
+/* Conversa: pergunta e resposta empilhadas, na ordem em
+   que aconteceram. */
 .conversa {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: var(--cx-space-md);
 }
 
-/* Pergunta do morador */
+/* Fala do morador: bloco neutro com filete cinza */
 .pergunta {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #1a1a1a;
+  font-size: var(--cx-text-base);
+  line-height: 1.6;
+  color: var(--cx-text);
+  background-color: var(--cx-surface-alt);
+  border-left: 3px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  padding: 10px 14px;
 }
 
-/* Resposta do síndico destacada em um bloco próprio */
+/* Resposta do síndico: bloco em destaque azul — a ação do
+   síndico é o que precisa saltar aos olhos. */
 .resposta {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #1a1a1a;
-  background-color: #e0f2fe;
-  border-left: 3px solid #1e3a8a;
-  border-radius: 6px;
-  padding: 10px 12px;
+  font-size: var(--cx-text-base);
+  line-height: 1.6;
+  color: var(--cx-text);
+  background-color: var(--cx-primary-soft);
+  border-left: 3px solid var(--cx-primary);
+  border-radius: var(--cx-radius);
+  padding: 10px 14px;
+  overflow-wrap: anywhere;
 }
 
-/* Rodapé separando o status e o botão de ação */
+/* Descrição do comunicado (filho direto do card da lista):
+   leitura corrida, sem o bloco de destaque da conversa */
+.card > .resposta {
+  display: block;
+  background-color: transparent;
+  border-left: none;
+  padding: 0;
+  color: var(--cx-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* Rodapé: status à esquerda, ação à direita */
 .footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #e5e7eb;
-  padding-top: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--cx-border);
+  padding-top: var(--cx-space-md);
 }
 
-/* Status do envio (pendente ou visualizado) */
 .statusContainer {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
+  gap: 8px;
+  font-size: var(--cx-text-sm);
 }
 
 .statusLabel {
-  color: #333;
+  color: var(--cx-text-strong);
   font-weight: 600;
 }
 
-/* Base da etiqueta de status, muda apenas a cor conforme a situação */
-.statusPendente,
-.statusVisualizado {
-  font-weight: 600;
-  background-color: #f9fafb;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 4px 8px;
-}
-
-/* Cor do status quando o morador ainda não visualizou */
-.statusPendente {
-  color: #a72828;
-}
-
-/* Cor do status quando o morador já visualizou */
-.statusVisualizado {
-  color: #2e7d32;
-}
-
-/* Grupo que alinha o botão de resposta */
+/* Grupo de ações do rodapé */
 .actionGroup {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* Botão de responder */
-.actionButton {
-  background-color: #8bb3eb;
-  color: #000000;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 14px;
-  font-size: 14px;
-  font-weight: 600;
-  display: flex;
+/* ---------- Etiqueta de seleção (card de morador) ----------
+   Substitui o marcador grande por uma pastilha com ícone:
+   leve, legível e independente da cor de fundo. */
+.selecionado {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: var(--cx-radius-pill);
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
+  font-size: var(--cx-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.selecionado svg {
+  flex: none;
+}
+
+/* ==================================================
+   BOTÃO DE AÇÃO (Responder / Visualizar)
+   Mesma variante secundária do sistema: superfície
+   branca, texto em azul principal e borda neutra.
+   ================================================== */
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: var(--cx-control);
+  padding: 0 16px;
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  box-shadow: var(--cx-shadow-xs);
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  font-family: var(--cx-font);
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color var(--cx-dur) ease, border-color var(--cx-dur) ease;
 }
 
 .actionButton:hover {
-  background-color: #79a1d9;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+}
+
+.actionButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   Rodapé e cabeçalho viram coluna; a ação principal
+   ocupa a linha toda (alvo de toque ≥40px no celular).
+   ================================================== */
+@media (max-width: 480px) {
+  .card {
+    padding: 16px;
+  }
+
+  .header,
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .actionGroup {
+    width: 100%;
+  }
+
+  .actionButton {
+    width: 100%;
+    min-height: var(--cx-control);
+  }
 }

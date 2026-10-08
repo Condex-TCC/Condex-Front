@@ -50,32 +50,58 @@ function PaginaSelecionaApertamentoUpdate(){
     return (
             // Container principal que engloba tudo
             <div className={styles.container}>
-              
-              {/* Barra superior contendo as abas e o botão de ação principal */}
-              <div className={styles.topBar}>
-                
-                <h1 className={styles.title}>Substituir o apartamento</h1>
 
-                <button className={styles.backButton} onClick={back}>
+              {/* Cabeçalho da página: contexto (Usuários), ação concreta
+                  e uma linha dizendo o que escolher. O botão de retorno
+                  é a ação secundária e usa o padrão do módulo de listagem. */}
+              <header className="cx-page-header">
+
+                <div>
+                  <p className="cx-overline">Usuários</p>
+                  <h2 className="cx-page-title">Substituir o apartamento</h2>
+                  <p className="cx-page-subtitle">
+                    Escolha a nova unidade que passará a ficar vinculada ao morador.
+                  </p>
+                </div>
+
+                <button type="button" className={styles.backButton} onClick={back}>
                           &larr; Voltar
                 </button>
 
-              </div>
-    
+              </header>
+
+              {/* Enquanto a API não devolve unidades, o estado vazio
+                  padrão do CONDEX explica o que vai aparecer aqui. */}
+              {cards.length === 0 && (
+                <div className="cx-empty">
+                  <span className="cx-empty__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 21h18"></path>
+                      <path d="M5 21V7l7-4 7 4v14"></path>
+                      <path d="M9 21v-6h6v6"></path>
+                    </svg>
+                  </span>
+                  <p className="cx-empty__title">Nenhum apertamento disponível</p>
+                  <p className="cx-empty__text">
+                    Assim que as unidades forem cadastradas, elas aparecem aqui para escolha.
+                  </p>
+                </div>
+              )}
+
               <div>
-               
+
                {/* Exibindo os card do apertamento */}
                {
                   //Percorrendo o array com os cards que serão exibidos
                   cards.map((elemento) => {
-                    
+
                     //Retorna o card de apartamentos
-                    return <ApertamentoCardSelecionadoUpdade key={elemento.id} apertamento={elemento} idMorador={idMorador}></ApertamentoCardSelecionadoUpdade>                 
+                    return <ApertamentoCardSelecionadoUpdade key={elemento.id} apertamento={elemento} idMorador={idMorador}></ApertamentoCardSelecionadoUpdade>
                   })
                }
-                  
+
               </div>
-    
+
             </div>
           )
 }

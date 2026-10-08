@@ -1,103 +1,268 @@
-/* Reservas.module.css */
+/* ==================================================
+   TELA DE RESERVAS DE ÁREAS COMUNS (SÍNDICO)
+   --------------------------------------------------
+   Composição: cabeçalho de página (overline/título/
+   subtítulo + ação "configurar áreas") + duas colunas —
+   calendário à esquerda e painel de solicitações/próximas
+   reservas à direita.
+
+   O shell já reserva a margem da área de conteúdo, então
+   a raiz NÃO repete padding; o respiro vem do gap.
+   ================================================== */
+
 .container {
-  font-family: sans-serif;
-  padding: 32px;
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;
+  min-width: 0;
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-lg);
 }
 
+/* Linha de cabeçalho: título e ação de configuração */
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
+  align-items: flex-start; /* o bloco de texto fica no topo, igual aos demais títulos */
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
 }
 
-.title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #000;
-  margin: 0;
-}
-
+/* Ação principal da tela: mesmo azul dos demais botões primários */
 .configButton {
-  background-color: #55628b;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--cx-control);
+  padding: 0 18px;
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  box-shadow: 0 1px 2px rgba(11, 23, 51, 0.12);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  white-space: nowrap;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color var(--cx-dur) ease, transform var(--cx-dur-fast) ease;
 }
 
 .configButton:hover {
-  background-color: #3f4969;
+  background-color: var(--cx-primary-hover);
 }
 
+.configButton:active {
+  background-color: var(--cx-primary-active);
+  transform: translateY(1px);
+}
+
+.configButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Grade de duas colunas: calendário ocupa o que sobra,
+   painel lateral tem largura fixa. minmax(0,...) é o que
+   impede o conteúdo de estourar a coluna. */
 .content {
   display: flex;
-  gap: 40px;
+  gap: var(--cx-space-xl);
+  min-width: 0;
 }
 
+/* Espaço reservado para o calendário: componente ainda não
+   renderizado, tratado como estado vazio — tracejado, fundo
+   rebaixado e texto centralizado, sem fingir que há dados. */
 .calendarPlaceholder {
   flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f9fafb;
-  border: 1px dashed #d1d5db;
-  border-radius: 12px;
   min-height: 380px;
-  color: #6b7280;
-  font-size: 16px;
+  padding: var(--cx-space-lg);
+  background-color: var(--cx-surface-alt);
+  border: 1px dashed var(--cx-border-strong);
+  border-radius: var(--cx-radius-lg);
+  color: var(--cx-text-muted);
+  font-size: var(--cx-text-md);
 }
 
-.sidebar {
-  width: 320px;
+/* Estado vazio do calendário: ícone em pastilha + título +
+   uma linha curta dizendo que a visão em calendário ainda não
+   existe nesta versão. Largura máxima para o texto não virar
+   uma linha comprida em telas largas. */
+.calendarVazio {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  align-items: center;
+  gap: 10px;
+  max-width: 44ch;
+  text-align: center;
 }
 
+.calendarVazio__icone {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border-radius: 50%;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  color: var(--cx-text-muted);
+}
+
+.calendarVazio__titulo {
+  margin: 0;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-md);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+}
+
+.calendarVazio__texto {
+  margin: 0;
+  font-size: var(--cx-text-sm);
+  line-height: 1.55;
+  color: var(--cx-text-muted);
+}
+
+/* Painel lateral: uma coluna com os dois blocos de status.
+   space-between distribui os blocos pela altura da coluna
+   principal: o bloco superior fica no topo e o inferior
+   encosta no rodapé, fechando o "buraco" que sobrava ao
+   lado do calendário (as duas alturas passam a terminar
+   juntas). Em telas estreitas a coluna fica com altura de
+   conteúdo e a regra não tem efeito. */
+.sidebar {
+  width: 320px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--cx-space-lg);
+  min-width: 0;
+}
+
+/* Cada bloco (solicitações / próximas) é uma seção com
+   título próprio — leitores de tela anunciam a troca. */
+.bloco {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-sm);
+  min-width: 0;
+}
+
+/* Rótulo do bloco: secundário, sempre acima dos cards */
 .sectionTitle {
-  font-size: 16px;
-  font-weight: 500;
-  margin: 0 0 12px 0;
-  color: #374151;
+  margin: 0;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cx-text-muted);
 }
 
+/* Card de reserva do painel: superfície padrão 5.5 */
 .card {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 16px 20px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  background-color: #ffffff;
+  align-items: center; /* pastilha de status alinhada ao miolo do card */
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+  min-width: 0;
+  padding: 14px 16px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
+  box-shadow: var(--cx-shadow-sm);
+}
+
+.cardContent {
+  min-width: 0;
 }
 
 .cardContent h4 {
   margin: 0 0 4px 0;
-  font-size: 18px;
-  font-weight: 400;
-  color: #111827;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-md);
+  font-weight: 700;
+  color: var(--cx-text-strong);
 }
 
 .cardContent p {
   margin: 0;
-  font-size: 14px;
-  color: #374151;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
+}
+
+/* Status em pastilha: fundo suave + borda na cor do
+   significado (âmbar = pendência, verde = confirmado),
+   com o texto sempre legível por cima.
+   flex:none + min-height garantem que a palavra inteira
+   ("Pendente...") seja desenhada: a pastilha nunca
+   encolhe ao lado do título nem é cortada na vertical. */
+.statusPending,
+.statusAccepted {
+  display: inline-flex;
+  align-items: center;
+  flex: none; /* largura do conteúdo: nada aperta o texto */
+  min-height: 24px;
+  padding: 4px 12px; /* respiro lateral para o texto não encostar na borda */
+  border-radius: var(--cx-radius-pill);
+  border: 1px solid transparent;
+  font-size: var(--cx-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-overflow: clip; /* nunca transforma o final da palavra em reticências */
+  overflow-wrap: normal;
 }
 
 .statusPending {
-  color: #9ca3af;
-  font-size: 14px;
+  color: var(--cx-warning);
+  background-color: var(--cx-warning-soft);
+  border-color: var(--cx-warning-border);
 }
 
 .statusAccepted {
-  color: #4ade80;
-  font-size: 14px;
-  font-weight: 500;
+  color: var(--cx-success);
+  background-color: var(--cx-success-soft);
+  border-color: var(--cx-success-border);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   Em telas estreitas a coluna lateral desce abaixo
+   do calendário e ocupa toda a largura.
+   ================================================== */
+@media (max-width: 860px) {
+  .content {
+    flex-direction: column;
+    gap: var(--cx-space-lg);
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .configButton {
+    width: 100%; /* Ação principal ocupa a linha toda no celular */
+  }
+
+  .calendarPlaceholder {
+    min-height: 220px;
+  }
 }

@@ -1,33 +1,81 @@
-/* Bloco em destaque com a pergunta do morador */
-.perguntaDestaque {
-  border-left: 4px solid #1e3a8a; /* Azul escuro já usado nos botões da tela */
-  background-color: #e0f2fe;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
+/* ==================================================
+   DESTAQUES DO FORMULÁRIO DE COMUNICADO (SÍNDICO)
+   --------------------------------------------------
+   Blocos de apoio do fluxo de resposta/contra-resposta:
+   cabeçalho da página, pergunta do morador em destaque e
+   agrupador rótulo + campo. Os campos em si (input e
+   textarea) vêm do módulo de formulários padrão.
+   ================================================== */
+
+/* Cabeçalho da página: contexto + ação concreta à esquerda,
+   retorno à direita. Mesma composição das demais telas. */
+.cabecalho-pagina {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
 }
 
-/* Rótulo dos campos da tela (Pergunta do morador e Sua resposta) */
+/* Bloco em destaque com a pergunta do morador.
+   Filete à esquerda + fundo azul claro: o que o morador
+   perguntou é a referência da tela, então ganha o próprio
+   fundo em vez de competir com o restante. */
+.perguntaDestaque {
+  border-left: 4px solid var(--cx-primary);
+  background-color: var(--cx-primary-soft);
+  border-radius: var(--cx-radius);
+  padding: var(--cx-space-md);
+  margin-bottom: var(--cx-space-md);
+  min-width: 0;
+}
+
+/* Rótulo dos campos e do destaque (Pergunta do morador,
+   Sua resposta, Título, Descrição): etiqueta curta em
+   CAIXA NORMAL — mesmo padrão dos rótulos das demais
+   telas de cadastro (ex.: "Nome completo"). O
+   letter-spacing mantém a etiqueta leve e legível. */
 .rotulo {
   display: block;
-  font-size: 13px;
+  font-size: var(--cx-text-2xs);
   font-weight: 700;
-  color: #374151;
+  letter-spacing: 0.06em;
+  color: var(--cx-text-muted);
   margin-bottom: 8px;
 }
 
-/* Texto da pergunta do morador exibido em corpo maior */
+/* Texto da pergunta do morador: corpo confortável, é o
+   que o síndico precisa ler com atenção. */
 .perguntaTexto {
   margin: 0;
-  font-size: 18px;
-  line-height: 1.5;
-  color: #1a1a1a;
+  font-size: var(--cx-text-md);
+  line-height: 1.6;
+  color: var(--cx-text-strong);
+  overflow-wrap: anywhere;
 }
 
 /* Bloco que alinha o rótulo e o campo de resposta do síndico */
 .campoResposta {
   display: flex;
   flex-direction: column;
+  gap: 6px;
   max-width: 600px; /* Mesma largura usada pelos campos das telas de cadastro */
-  margin-bottom: 16px;
+  margin-bottom: var(--cx-space-md);
+  min-width: 0;
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   Em telas estreitas o destaque perde o filete grosso
+   (encolhe junto com o padding) e o campo usa a largura
+   toda da coluna.
+   ================================================== */
+@media (max-width: 640px) {
+  .campoResposta {
+    max-width: 100%;
+  }
+
+  .perguntaDestaque {
+    padding: var(--cx-space-sm) var(--cx-space-md);
+  }
 }

@@ -1,50 +1,143 @@
-/* EventCard.module.css */
-.card {
-  border: 1px solid #b0b0b0;
-  border-radius: 8px;
-  padding: 16px 20px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  max-width: 1000px;
-  background-color: #ffffff;
-  color: #1a1a1a;
-  box-sizing: border-box;
+/* ==================================================
+   CARD DE RESERVA (SÍNDICO)
+   --------------------------------------------------
+   Cartão clicável da lista "Gerenciar reservas": ao ser
+   acionado leva para a tela de autorização da reserva.
+   Como a ação inteira mora no card, ele é um <button>
+   estilizado — por isso o reset de tipografia/borda e o
+   :focus-visible com halo, para navegar por teclado.
 
-    margin-bottom: 16px;
+   Segue a superfície padrão 5.5 do sistema: branca, borda
+   1px, raio grande e sombra leve, elevando só no hover
+   (sinal de que é clicável).
+   ================================================== */
+
+.card {
+  display: block;
+  width: 100%;
+  max-width: 1000px;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 16px 20px;
+  text-align: left;
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+  cursor: pointer;
+  transition: box-shadow var(--cx-dur) ease, border-color var(--cx-dur) ease,
+              transform var(--cx-dur) ease;
 }
 
+.card:hover {
+  box-shadow: var(--cx-shadow);
+  border-color: var(--cx-primary-border);
+  transform: translateY(-2px); /* só o card clicável eleva */
+}
+
+.card:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+.card:active {
+  transform: translateY(0);
+}
+
+/* Linha superior: área • evento. flex-wrap mantém o par
+   quebrando em duas linhas sem estourar no celular. */
 .header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: var(--cx-text-md);
 }
 
+/* Identificadores da reserva: é o texto mais forte do card */
 .title {
-  font-weight: 500;
+  font-family: var(--cx-font-display);
+  font-weight: 700;
+  color: var(--cx-text-strong);
 }
 
+/* Separador tipográfico: discreto e ignorado pelo leitor de tela */
 .separator {
-  font-weight: bold;
+  color: var(--cx-text-faint);
+  font-weight: 700;
 }
 
+/* Bloco inferior: dados à esquerda, solicitante à direita */
 .content {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
+/* Datas da reserva com ícone alinhado ao texto */
 .details {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 15px;
-  color: #333333;
+  gap: 6px;
+  min-width: 0;
 }
 
+.detailItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
+}
+
+.detailItem svg {
+  flex: none;
+  color: var(--cx-text-muted); /* ícone é apoio, nunca concorre com o dado */
+}
+
+/* Quem solicitou: nome em destaque, unidade como etiqueta */
 .footer {
   display: flex;
-  gap: 16px;
-  font-size: 13px;
-  color: #444444;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cx-space-sm);
+  min-width: 0;
+}
+
+.solicitante {
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  color: var(--cx-text);
+}
+
+/* Unidade: mesma etiqueta neutra usada nos cards de morador */
+.unidade {
+  font-size: var(--cx-text-xs);
+  font-weight: 600;
+  color: var(--cx-text-muted);
+  background-color: var(--cx-neutral-soft);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-sm);
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   Abaixo de 640px o card vira coluna: identificação em
+   cima, dados e solicitante empilhados embaixo, sempre
+   com alvo de toque folgado.
+   ================================================== */
+@media (max-width: 640px) {
+  .content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 }

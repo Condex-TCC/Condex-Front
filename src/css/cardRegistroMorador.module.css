@@ -1,62 +1,120 @@
-/* =========================================
-   CARDS DE LAUDOS E REGRAS DO MORADOR
-   ========================================= */
+/* ==================================================
+   CARDS DE REGRAS E LAUDOS DO MORADOR
+   --------------------------------------------------
+   Dois cards que compartilham a mesma superfície
+   (padrão 5.5) e a mesma hierarquia interna:
 
-/* Card com os dados de uma regra ou de um laudo */
+   • regra → ícone + título + descrição;
+   • laudo → ícone + título + ação "Abrir laudo".
+
+   Nenhum dos dois é clicável por inteiro — a única ação
+   é o link do laudo — por isso o card NÃO eleva no
+   hover (a elevação só é usada em superfícies
+   clicáveis); o feedback fica no link, que segue o
+   estilo secondary do sistema.
+   ================================================== */
+
+/* Superfície comum dos dois cards */
 .cr-card {
-  background-color: #ffffff; /* Fundo branco do card */
-  border: 1px solid #eef0f4; /* Contorno claro, no mesmo tom da divisória do header */
-  border-radius: 10px; /* Arredonda os cantos do card */
-  padding: 14px; /* Respiro interno do card */
-  margin-bottom: 10px; /* Espaço entre os cards da lista */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra leve, igual aos cards do morador */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0; /* Títulos longos quebram em vez de estourar a lista */
+  margin-bottom: 12px; /* Espaço entre os cards (a lista não tem gap) */
+  padding: 20px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
 }
 
-/* Cabeçalho do card com o nome da regra ou do laudo */
+/* Cabeçalho: pastilha de ícone + título na mesma linha */
 .cr-header {
-  display: flex; /* Coloca o nome e os demais elementos na mesma linha */
-  justify-content: space-between; /* Joga o nome para a esquerda */
-  align-items: flex-start; /* Alinha os elementos pelo topo */
-  gap: 8px; /* Espaço entre os elementos */
-  flex-wrap: wrap; /* Em telas muito estreitas os elementos descem de linha */
-  margin-bottom: 8px; /* Espaço entre o cabeçalho e o conteúdo do card */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
 }
 
-/* Nome da regra ou do laudo */
+/* Ícone em pastilha: identifica o tipo de registro à distância e
+   traz a cor da marca sem depender de emoji ou imagem. */
+.cr-icone {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-primary-soft);
+  color: var(--cx-primary);
+}
+
+/* Título da regra ou do laudo */
 .cr-titulo {
   margin: 0;
-  font-size: 15px; /* Tamanho do título do card */
-  font-weight: 700; /* Deixa o título em negrito */
-  line-height: 1.3; /* Deixa o título mais compacto */
-  color: #001c3f; /* Cor principal do projeto */
-  min-width: 0; /* Permite que o título encolha em telas estreitas */
+  min-width: 0;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-base);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--cx-text-strong);
 }
 
-/* Descrição da regra */
+/* Descrição da regra (corpo do card) */
 .cr-descricao {
   margin: 0;
-  font-size: 13px; /* Tamanho do texto de apoio */
-  line-height: 1.5; /* Deixa as linhas da descrição mais respiradas */
-  color: #7a87a7; /* Cinza azulado dos textos secundários */
+  font-size: var(--cx-text-base);
+  line-height: 1.65;
+  color: var(--cx-text-muted);
+  overflow-wrap: anywhere;
 }
 
-/* Link que abre o documento do laudo, no mesmo estilo do botão de visualizar do sindico */
+/* Ação do laudo: botão secondary do sistema (fundo claro, texto azul,
+   borda forte) — mesma ação = mesmo estilo em todo o CONDEX. */
 .cr-link {
-  display: inline-flex; /* Permite o uso de padding e alinhamento interno */
-  align-items: center; /* Centraliza o conteúdo verticalmente */
-  gap: 6px; /* Espaço entre o ícone e o texto */
-  margin-top: 12px; /* Respiro em relação ao nome do laudo */
-  padding: 8px 14px; /* Respiro interno do botão */
-  border-radius: 6px; /* Arredonda os cantos */
-  background-color: #8bb3eb; /* Azul claro usado no botão de visualizar do sindico */
-  color: #000000; /* Texto preto */
-  font-size: 14px; /* Tamanho do texto do link */
-  font-weight: 600; /* Deixa o texto em negrito */
-  text-decoration: none; /* Remove o sublinhado padrão dos links */
-  cursor: pointer; /* Indica que o elemento é clicável */
-  transition: background-color 0.2s; /* Suaviza a troca de cor ao passar o mouse */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: flex-start; /* Ocupa só o necessário, alinhado ao texto */
+  min-height: var(--cx-control);
+  margin-top: 2px;
+  padding: 0 18px;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-surface);
+  box-shadow: var(--cx-shadow-xs);
+  color: var(--cx-primary);
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--cx-dur) ease, border-color var(--cx-dur) ease,
+              color var(--cx-dur) ease;
 }
 
 .cr-link:hover {
-  background-color: #79a1d9; /* Escurece o azul ao passar o mouse */
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+}
+
+/* Mesmo halo de foco dos demais botões: o link é alcançável por Tab */
+.cr-link:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   ================================================== */
+
+/* Celular: respiro menor, mantendo o link com alvo de toque de 40px */
+@media (max-width: 640px) {
+  .cr-card {
+    padding: 16px;
+  }
 }

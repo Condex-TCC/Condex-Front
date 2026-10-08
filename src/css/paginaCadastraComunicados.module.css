@@ -1,33 +1,125 @@
-/* Linha que informa para quem o comunicado será enviado e traz o botão de seleção à direita */
+/* ==================================================
+   SELEÇÃO DE DESTINATÁRIOS DO COMUNICADO (SÍNDICO)
+   --------------------------------------------------
+   Módulo usado pelas duas telas do fluxo de envio:
+   - telaCadastraComunicados  → linha "para quem vai
+     enviar" + botão de seleção;
+   - telaSelecionaMorador     → cabeçalho, barra com a
+     contagem e o "Selecionar todos".
+
+   O padrão da barra é o da toolbar do sistema (item 5.8):
+   informação à esquerda, ação à direita, quebrando em
+   coluna no celular.
+   ================================================== */
+
+/* Cabeçalho da página: bloco de texto à esquerda, retorno
+   à direita. Igual ao das demais telas internas. */
+.cabecalho-pagina {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+}
+
+/* Barra de ação da seleção: contagem + "selecionar todos".
+   align-items:flex-end alinha a linha de texto com a base
+   do botão, mesmo com alturas diferentes. */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+}
+
+/* Contagem de selecionados: auxiliar discreto, nunca briga
+   com os cards da lista. aria-live no JSX avisa a mudança. */
+.contagem {
+  font-size: var(--cx-text-xs);
+  color: var(--cx-text-muted);
+  font-weight: 600;
+}
+
+/* Linha que informa para quem o comunicado será enviado e traz o
+   botão de seleção à direita. Vira "chip" de destinatário: fundo
+   rebaixado + borda, para ler como um resumo e não como texto solto. */
 .destinatario {
   display: flex; /* Coloca o texto e o botão na mesma linha */
   justify-content: space-between; /* Joga o texto para a esquerda e o botão para a direita */
   align-items: center; /* Centraliza os dois verticalmente */
-  margin-bottom: 16px; /* Respiro em relação ao primeiro campo */
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+  min-width: 0;
+  padding: 12px 14px;
+  margin-bottom: var(--cx-space-md); /* Respiro em relação ao primeiro campo */
+  background-color: var(--cx-surface-alt);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius);
 }
 
-/* Texto que mostra se o comunicado vai para todos ou para os moradores selecionados */
+/* Texto que mostra se o comunicado vai para todos ou para os
+   moradores selecionados. Etiqueta em caixa alta curta — é
+   rótulo de estado, não frase. */
 .destinatarioTexto {
-  font-size: 13px;
+  font-size: var(--cx-text-2xs);
   font-weight: 700;
-  color: #374151;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cx-primary);
 }
 
-/* Botão secundário que leva para a seleção dos moradores */
+/* Botão secundário que leva para a seleção dos moradores
+   (mesmo estilo do botão secundário do sistema) */
 .botaoSelecionar {
-  background-color: #ffffff;
-  color: #274092; /* Mesmo azul do botão de voltar da tela */
-  border: 1px solid #274092;
-  border-radius: 6px;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--cx-control);
+  padding: 0 18px;
+  background-color: var(--cx-surface);
+  color: var(--cx-primary); /* Mesmo azul do botão de voltar da tela */
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  box-shadow: var(--cx-shadow-xs);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--cx-dur) ease, border-color var(--cx-dur) ease;
 }
 
 .botaoSelecionar:hover {
-  background-color: #eef2ff;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
+}
+
+.botaoSelecionar:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   Abaixo de 720px a linha de destinatário e a barra de
+   ação viram coluna, e os botões ocupam a linha toda
+   (alvo de toque ≥40px).
+   ================================================== */
+@media (max-width: 720px) {
+  .cabecalho-pagina,
+  .toolbar,
+  .destinatario {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contagem {
+    order: -1; /* a contagem fica acima do botão quando empilham */
+  }
+
+  .botaoSelecionar {
+    width: 100%;
+  }
 }

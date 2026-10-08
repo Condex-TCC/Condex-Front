@@ -33,23 +33,31 @@ function CardComunicados({ comunicado }) {
     }
 
     // Retorna o componente | Card
+    //
+    // O card inteiro abre os envios, então ele é um <button>:
+    // mesmo onClick, mas com foco visível, teclado e nome
+    // acessível formado pelo próprio conteúdo (título + data).
     return (
         /* Card do comunicado */
-        <div className={cardStyles.card} onClick={detalhesComunicados}>
+        <button
+            type="button"
+            className={`${cardStyles.card} ${cardStyles['card--clicavel']}`}
+            onClick={detalhesComunicados}
+        >
         
             {/* Cabeçalho do card com o título do comunicado e a data de criação */}
-            <header className={cardStyles.header}>
-                <h3 className={cardStyles.titulo}>{comunicado.titulo}</h3>
+            <span className={cardStyles.header}>
+                <span className={cardStyles.titulo}>{comunicado.titulo}</span>
                 <span className={cardStyles.unidade}>
                     {formatarData(comunicado.criado_em)}
                 </span>
-            </header>
+            </span>
         
             {/* Descrição do comunicado em destaque */}
-            <p className={cardStyles.resposta}>
+            <span className={cardStyles.resposta}>
                 {comunicado.descricao}
-            </p>
-        </div>
+            </span>
+        </button>
     );
 }
 

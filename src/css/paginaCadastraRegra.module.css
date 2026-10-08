@@ -1,172 +1,645 @@
+/* ==================================================
+   FORMULÁRIOS PADRÃO DO CONDEX (MÓDULO CENTRAL)
+   --------------------------------------------------
+   Este é o módulo de REFERÊNCIA de formulário do
+   sistema. Ele é reaproveitado por várias telas:
+   regras, moradores, porteiros, apertamentos, áreas
+   comuns, autorização de reserva e comunicação.
+
+   Composição esperada de cada tela:
+
+     .cabecalho-pagina   overline (contexto) + cx-page-title
+                         (ação concreta) + cx-page-subtitle,
+                         com a ação secundária à direita;
+     .form               cartão branco que envolve o formulário;
+     .form-secao         bloco interno com título + filete;
+     .form-grid          campos em grade responsiva;
+     .campo              rótulo + controle + dica/erro;
+     .submitContainer    rodapé de ações (1 primária, à direita);
+
+   IMPORTANTE: este módulo é compartilhado com outras telas
+   do produto, portanto todas as classes já existentes são
+   reaproveitadas aqui — nenhuma foi removida ou renomeada.
+   O que mudou foi o DESENHO, para que cada tela fale a
+   mesma língua visual (tokens de condexTokens.css).
+
+   Responsividade: as grades desmancham em 1024px, e abaixo
+   de 640px cabeçalho, campos e ações empilham com largura
+   total — alvo de toque confortável no celular.
+   ================================================== */
+
+/* --------------------------------------------------
+   RAIZ DA PÁGINA
+   Sem padding interno: o shell (shellLayout.module.css)
+   já reserva a margem da área de conteúdo. A coluna flex
+   com gap dá o mesmo respiro entre cabeçalho, cartão e
+   ações em todas as telas que usam este módulo.
+   -------------------------------------------------- */
 .container {
-  font-family: sans-serif;
-  max-width: 800px;
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-lg);
+  width: 100%;
+  max-width: 880px; /* formulário é texto curto: coluna estreita lê melhor */
+  min-width: 0;     /* evita que filhos largos estourem o flex */
   margin: 0 auto;
-  padding: 2rem;
 }
 
+/* --------------------------------------------------
+   CABEÇALHO DA PÁGINA
+   Texto (contexto -> título -> apoio) à esquerda e a
+   ação da tela à direita. flex-wrap garante que, em
+   telas estreitas, a ação desça para a linha própria.
+   -------------------------------------------------- */
+.cabecalho-pagina {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+}
+
+/* Cabeçalho simples (título + botão). É a versão usada
+   pelas telas que ainda montam o título com .title e,
+   dentro do formulário, como cabeçalho de seção com ação
+   (ex.: "Escolher outro apartamento"). Sem margem inferior:
+   o espaçamento vem do gap do container. */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
+/* Título de página: mesmo desenho de cx-page-title
+   (Manrope 800, 21px, azul-marinho) para que as telas
+   legadas continuem com a hierarquia do novo padrão. */
 .title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #000;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--cx-text-strong);
   margin: 0;
-  text-decoration: underline;
-  text-decoration-color: #0088ff;
-  text-decoration-thickness: 3px;
-  text-underline-offset: 4px;
+  min-width: 0;
 }
 
+/* Variação do título usada como cabeçalho de listas
+   (ex.: abas de Comunicados/Respostas). Mantém o respiro
+   vertical do padrão em vez de estilos inline. */
+.title--list {
+  margin-top: var(--cx-space-lg);
+  margin-bottom: var(--cx-space-md);
+}
+
+/* ==================================================
+   BOTÕES
+   Mesma ação = mesmo estilo (item 5.2 da spec).
+   ================================================== */
+
+/* Secundário: Voltar / Cancelar / ações de apoio.
+   Superfície branca com borda e texto em azul principal. */
 .backButton {
-  background-color: #274092;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1.2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 8px;
+  height: var(--cx-control);
+  padding: 0 16px;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--cx-dur) ease,
+              border-color var(--cx-dur) ease,
+              transform var(--cx-dur-fast) ease;
 }
 
 .backButton:hover {
-  background-color: #1e3375;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
 }
 
+.backButton:active {
+  transform: translateY(1px);
+}
+
+.backButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   CARTÃO DO FORMULÁRIO
+   Superfície padrão do item 5.5: branca, borda suave,
+   raio grande e sombra discreta. O formulário inteiro é
+   um cartão — os campos ficam protegidos dentro dele.
+   ================================================== */
 .form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--cx-space-lg);
+  padding: var(--cx-space-lg);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
+  min-width: 0;
 }
 
-.inputTitle, .inputDescription {
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 0.8rem 1rem;
-  font-size: 1rem;
+/* ==================================================
+   SEÇÕES INTERNAS DO FORMULÁRIO
+   Título de seção + filete separam blocos de sentido
+   diferente (dados pessoais x unidade, por exemplo)
+   sem exigir um formulário novo.
+   ================================================== */
+.form-secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-md);
+  min-width: 0;
+}
+
+/* Filete da seção: separa visualmente sem caixa pesada */
+.form-secao__titulo {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-base);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--cx-text-strong);
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--cx-border);
+  min-width: 0;
+}
+
+/* Variante com ação à direita (ex.: trocar de apartamento):
+   o filete passa para o contêiner e o título não desce sozinho. */
+.form-secao__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cx-space-sm);
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--cx-border);
+}
+
+.form-secao__topo .form-secao__titulo {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+/* ==================================================
+   GRADE DE CAMPOS (item 5.4)
+   auto-fit + minmax(220px) dá colunas conforme a
+   largura disponível e já cai para 1 coluna sozinho;
+   o @media de 1024px reforça a regra do produto.
+   ================================================== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--cx-space-md);
+}
+
+/* Grade de exatamente DOIS campos (campo curto + campo longo,
+   ex.: "Título" e "Descrição" da regra / nome e descrição da
+   área comum): o primeiro ocupa a linha inteira. Sem isto ele
+   ficava preso em 1/3 da grade, com a borda direita do input
+   desalinhada em relação ao textarea e ao filete da seção.
+   Grades com mais campos (morador, apertamento) continuam
+   com as colunas lado a lado. */
+.form-grid > .campo:first-child:nth-last-child(2) {
+  grid-column: 1 / -1;
+}
+
+/* Agrupador de campo: rótulo, controle e mensagem na
+   mesma coluna, com min-width:0 para textos longos
+   quebrarem em vez de estourar a célula. */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* Campo longo (descrição, observação) ocupa a linha toda */
+.campo--full {
+  grid-column: 1 / -1;
+}
+
+.campo__label {
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  color: var(--cx-text);
+  letter-spacing: 0.01em;
+}
+
+/* Obrigatório: asterisco na cor de erro, se a tela usar */
+.campo__obrig {
+  color: var(--cx-danger);
+  margin-left: 3px;
+}
+
+/* Dica auxiliar: apoia sem competir com o rótulo */
+.campo__hint {
+  font-size: var(--cx-text-xs);
+  color: var(--cx-text-muted);
+  line-height: 1.5;
+}
+
+/* Erro: vermelho, pequeno e forte — legível ao lado do campo */
+.campo__error {
+  font-size: var(--cx-text-xs);
+  font-weight: 600;
+  color: var(--cx-danger);
+}
+
+/* ==================================================
+   CONTROLES (item 5.3)
+   Input, select e textarea com o MESMO desenho para
+   que a troca de tipo nunca mude a altura nem a borda.
+   ================================================== */
+.inputTitle,
+.inputDescription,
+.select {
+  width: 100%;
+  min-height: var(--cx-control);
+  padding: 10px 12px;
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
   outline: none;
-  color: #333;
+  transition: border-color var(--cx-dur) ease, box-shadow var(--cx-dur) ease;
 }
 
-.inputTitle::placeholder, .inputDescription::placeholder {
-  color: #b8b8b8;
-  font-weight: 500;
+.inputTitle::placeholder,
+.inputDescription::placeholder {
+  color: var(--cx-text-faint);
 }
 
-.inputTitle:focus, .inputDescription:focus {
-  border-color: #0088ff;
+.inputTitle:hover,
+.inputDescription:hover,
+.select:hover {
+  border-color: #bfc7d8;
 }
 
-/* O input de título é visivelmente menor na imagem */
-.inputTitle {
-  max-width: 350px; 
+.inputTitle:focus,
+.inputDescription:focus,
+.select:focus {
+  border-color: var(--cx-primary);
+  box-shadow: var(--cx-focus-halo);
+  background-color: var(--cx-surface);
 }
 
-/* A descrição é mais larga e alta */
+/* Estado inválido: borda vermelha + halo na mesma cor */
+.inputTitle[aria-invalid='true'],
+.inputDescription[aria-invalid='true'],
+.select[aria-invalid='true'] {
+  border-color: var(--cx-danger);
+}
+
+.inputTitle[aria-invalid='true']:focus,
+.inputDescription[aria-invalid='true']:focus {
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.16);
+}
+
+/* Textarea: altura mínima confortável e redimensionamento
+   apenas na vertical (a largura é responsiva do sistema). */
 .inputDescription {
-  max-width: 600px;
-  min-height: 150px;
+  min-height: 120px;
+  padding: 10px 12px;
+  line-height: 1.6;
   resize: vertical;
 }
 
-.submitContainer {
-  max-width: 600px; /* Alinha o botão ao centro em relação à textarea */
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+/* Em telas de toque o "grip" de redimensionamento fica no canto
+   do campo sem função prática (não há mouse): some até voltar
+   a haver um ponteiro preciso. */
+@media (hover: none), (max-width: 640px) {
+  .inputDescription {
+    resize: none;
+  }
 }
 
-.submitButton {
-  background: linear-gradient(to right, #3476d6, #0d1e50);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 0.75rem 3.5rem;
-  font-size: 1rem;
-  font-weight: bold;
+/* Select: seta desenhada em SVG para o controle parecer
+   idêntico em todos os navegadores e em toda a tela. */
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 34px;
   cursor: pointer;
-  transition: opacity 0.2s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2361708b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
 }
 
-.submitButton:hover {
-  opacity: 0.9;
+/* Fora de uma grade, o rótulo de título continua limitado
+   (páginas legadas empilham os campos em coluna estreita).
+   DENTRO de .campo o controle ocupa a célula inteira. */
+.inputTitle {
+  max-width: 350px;
 }
 
-/* ======== NOVAS CLASSES ADICIONADAS PARA OS RADIO BUTTONS ======== */
-
-.radioGroup {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+.inputDescription {
   max-width: 600px;
 }
 
+.campo .inputTitle,
+.campo .inputDescription,
+.campo .select {
+  max-width: none;
+}
+
+/* ==================================================
+   RODAPÉ DE AÇÕES
+   Uma única primária, à direita no desktop; no celular
+   empilha com largura total. O filete superior fecha o
+   corpo do formulário antes das ações.
+   ================================================== */
+.submitContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--cx-space-sm);
+  flex-wrap: wrap;
+  padding-top: var(--cx-space-md);
+  border-top: 1px solid var(--cx-border);
+}
+
+/* Única ação primária da tela: azul sólido, sem degradê */
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: var(--cx-control);
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(11, 23, 51, 0.12);
+  transition: background-color var(--cx-dur) ease,
+              transform var(--cx-dur-fast) ease;
+}
+
+.submitButton:hover {
+  background-color: var(--cx-primary-hover);
+}
+
+.submitButton:active {
+  background-color: var(--cx-primary-active);
+  transform: translateY(1px);
+}
+
+.submitButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   CAMPOS DE OPÇÃO (RADIO)
+   Em painel rebaixado: a pergunta ("Requer autorização?")
+   lê como grupo, não como mais um campo solto.
+   ================================================== */
+.radioGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  background-color: var(--cx-surface-alt);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius);
+}
+
 .radioTitle {
-  font-weight: 500;
-  color: #333;
-  font-size: 1rem;
+  font-size: var(--cx-text-sm);
+  font-weight: 600;
+  color: var(--cx-text-strong);
 }
 
 .radioLabel {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
-  color: #333;
+  gap: 8px;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
   cursor: pointer;
 }
 
 .radioInput {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--cx-primary); /* cor principal nos navegadores que suportam */
   cursor: pointer;
-  accent-color: #0088ff; /* Deixa o radio com a cor principal do tema, dependendo do browser */
-  width: 1.1rem;
-  height: 1.1rem;
 }
 
-
-/* ======== NOVAS CLASSES PARA OS BOTÕES DE APROVAR/RECUSAR ======== */
-
+/* ==================================================
+   AÇÕES DE APROVAR / RECUSAR (e o envio das telas que
+   reaproveitam este bloco)
+   Verde = confirmação. Vermelho = destrutiva. As duas
+   têm o MESMO tamanho: nenhuma "ganha" por ser maior.
+   ================================================== */
 .actionsContainer {
   display: flex;
-  gap: 3rem; /* Aumentei o espaçamento entre os botões */
-  justify-content: center; /* Centraliza os botões horizontalmente no formulário */
-  margin-top: 2rem;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--cx-space-sm);
+  flex-wrap: wrap;
   width: 100%;
+  padding-top: var(--cx-space-md);
+  border-top: 1px solid var(--cx-border);
 }
 
-.buttonAprovar, .buttonRecusar {
-  color: white;
-  border: none;
-  border-radius: 8px;
-  /* Aumentei o padding vertical e horizontal para deixar os botões maiores */
-  padding: 1rem 4rem; 
-  font-size: 1.25rem; /* Aumentei o tamanho da fonte */
-  font-weight: bold;
+.buttonAprovar,
+.buttonRecusar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 170px;
+  height: var(--cx-control);
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s ease;
-  min-width: 200px; /* Garante que os botões fiquem com um tamanho robusto e simétrico */
+  transition: background-color var(--cx-dur) ease,
+              transform var(--cx-dur-fast) ease;
 }
 
 .buttonAprovar {
-  background-color: #7ab973;
+  background-color: var(--cx-success);
+  color: var(--cx-on-primary);
 }
 
 .buttonAprovar:hover {
-  opacity: 0.85;
+  background-color: var(--cx-success-hover);
 }
 
 .buttonRecusar {
-  background-color: #d14649;
+  background-color: var(--cx-danger);
+  color: var(--cx-on-primary);
 }
 
 .buttonRecusar:hover {
-  opacity: 0.85;
+  background-color: var(--cx-danger-hover);
+}
+
+.buttonAprovar:active,
+.buttonRecusar:active {
+  transform: translateY(1px);
+}
+
+.buttonAprovar:focus-visible,
+.buttonRecusar:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* ==================================================
+   CAIXA DE INFORMAÇÃO SOMENTE LEITURA
+   Usada para dados vindos da API que o usuário vê,
+   mas não digita (unidade do morador, por exemplo).
+   Fundo rebaixado separa "mostrado" de "editável".
+   ================================================== */
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  background-color: var(--cx-surface-alt);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius);
+}
+
+.infoBox p {
+  margin: 0;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
+  line-height: 1.5;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.infoBox p + p {
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   ================================================== */
+
+/* Tablet: grades de 2+ colunas voltam a uma coluna,
+   porque o formulário perde largura útil ao lado do
+   menu (o shell já entra em modo drawer abaixo de 900px). */
+@media (max-width: 1024px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Celular: cabeçalho quebra em duas linhas, cartão mais
+   justo e TODAS as ações com largura total (uma por
+   linha, na ordem em que a mão alcança). */
+@media (max-width: 640px) {
+  .container {
+    gap: var(--cx-space-md);
+  }
+
+  .cabecalho-pagina,
+  .header,
+  .form-secao__topo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form {
+    padding: var(--cx-space-md);
+    gap: var(--cx-space-md);
+  }
+
+  .inputTitle,
+  .inputDescription {
+    max-width: 100%;
+  }
+
+  .backButton,
+  .submitButton,
+  .buttonAprovar,
+  .buttonRecusar {
+    width: 100%;
+  }
+
+  /* Empilha com a principal em cima: é ela que conclui a tela */
+  .submitContainer,
+  .actionsContainer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .buttonAprovar,
+  .buttonRecusar {
+    min-width: 0;
+  }
+
+  .radioGroup {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--cx-space-sm);
+  }
+
+  .radioLabel {
+    min-height: 40px; /* alvo de toque */
+  }
+}
+
+/* Celular pequeno: respiro mínimo sem espremer o texto */
+@media (max-width: 480px) {
+  .form {
+    padding: 16px 14px;
+  }
+
+  .container {
+    gap: var(--cx-space-md);
+  }
+}
+
+/* Movimento reduzido: botões deixam de deslizar */
+@media (prefers-reduced-motion: reduce) {
+  .backButton,
+  .submitButton,
+  .buttonAprovar,
+  .buttonRecusar {
+    transition: none;
+  }
+
+  .backButton:active,
+  .submitButton:active,
+  .buttonAprovar:active,
+  .buttonRecusar:active {
+    transform: none;
+  }
 }

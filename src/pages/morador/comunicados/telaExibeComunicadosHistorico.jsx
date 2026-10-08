@@ -54,10 +54,16 @@ function PaginaExibeComunicadosHistorico(){
         // Container principal da tela
         <div className={styles['vm-container']}>
 
-            {/* Cabeçalho da tela com o título do histórico de comunicados */}
-            <div className={styles['vm-page-header']}>
-                <h1 className={styles['vm-page-title']}>Histórico de comunicados</h1>
-            </div>
+            {/* Cabeçalho da página: contexto, título concreto e linha de apoio.
+                Usa as classes globais para manter a mesma hierarquia de toda
+                a área interna do CONDEX (overline > título > subtítulo). */}
+            <header className="cx-page-header">
+                <div>
+                    <p className="cx-overline">Comunicação</p>
+                    <h2 className="cx-page-title">Histórico</h2>
+                    <p className="cx-page-subtitle">Todos os comunicados enviados para você, inclusive os já visualizados.</p>
+                </div>
+            </header>
 
             {/*Div com os botões de navegação entre as telas de comunicados*/}
             <div className={abasStyles['tabs--group']}>
@@ -71,14 +77,34 @@ function PaginaExibeComunicadosHistorico(){
                     Não visualizados
                 </button>
 
-                {/* Botão da tela atual, por isso não navega para lugar nenhum */}
-                <button type="button" className={abasStyles['tab--active']}>
+                {/* Botão da tela atual, por isso não navega para lugar nenhum.
+                    aria-current marca para leitores de tela qual aba está ativa. */}
+                <button type="button" className={abasStyles['tab--active']} aria-current="page">
                     Histórico
                 </button>
             </div>
 
             {/*Div que irá exibir os cards de todos os comunicados*/}
             <div className={listaStyles.listaEnvios}>
+
+                {/* Estado vazio padrão do CONDEX: sem registros a tela explica
+                    o que esperar em vez de deixar só o cabeçalho. O wrapper da
+                    lista é mantido porque é ele que reserva o espaço acima. */}
+                {comunicados.length === 0 && (
+
+                    <div className="cx-empty">
+                        <span className="cx-empty__icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M3 11l18-5v12L3 14v-3z"></path>
+                                <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+                            </svg>
+                        </span>
+                        <p className="cx-empty__title">Nenhum comunicado no histórico</p>
+                        <p className="cx-empty__text">
+                            Quando o condomínio enviar um comunicado para você, ele fica guardado aqui.
+                        </p>
+                    </div>
+                )}
 
                 {/* Cards com todos os comunicados do morador */}
                 {

@@ -1,95 +1,250 @@
+/* ==================================================
+   SIDEBAR DO CONDEX (SÍNDICO E MORADOR)
+   Este módulo é reaproveitado pelos dois perfis que
+   possuem menu lateral, garantindo que a barra tenha
+   exatamente a mesma aparência nos dois casos.
+   A sidebar do Porteiro não existe por decisão de
+   projeto (o perfil possui apenas dois módulos).
+
+   ANATOMIA DA BARRA
+   --------------------------------------------------
+   1. Marca (CONDEX + selo do perfil) com botão de
+      recolher o menu — só no desktop, onde ele empurra
+      o conteúdo.
+   2. Navegação agrupada por seção (overline) para que
+      o olhar encontre a área desejada sem ler tudo.
+   3. Assinatura da marca no rodapé: fecha a composição
+      e reforça a identidade sem competir com o menu.
+
+   ITEM ATIVO
+   --------------------------------------------------
+   Fundo levemente clara + barra ciano à esquerda +
+   peso maior: três sinais (foco, cor e tipografia) para
+   quem tem baixa visão não depender só da cor.
+
+   RESPONSIVIDADE
+   --------------------------------------------------
+   Abaixo de 900px a barra vira drawer flutuante
+   (position: fixed) sobre o conteúdo, com fundo
+   escurecido fornecido pelo shellLayout.module.css.
+   ================================================== */
+
 /* CONTAINER PRINCIPAL DA SIDEBAR */
-.sd-wrapper { 
-  width: 250px; 
-  height: 100vh; 
-  background-color: #111827; /* Azul ultra escuro ajustado */
-  display: flex; 
-  flex-direction: column; 
-  padding: 20px; 
-  box-sizing: border-box; 
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-  color: #ffffff; 
-  /* REMOVIDO: position: absolute; - Para que o Flexbox do LayoutSindico funcione corretamente */
-  border-right: 1px solid #1f2937; /* Leve borda na direita */
+.sd-wrapper {
+  width: var(--cx-sidebar-w);      /* Largura fixa compartilhada com o token */
+  height: 100%;
+  background-color: var(--cx-navy-surface); /* Azul-marinho da identidade CONDEX */
+  display: flex;
+  flex-direction: column;
+  padding: 16px 14px 14px;
+  box-sizing: border-box;
+  font-family: var(--cx-font);
+  color: var(--cx-on-dark);
+  border-right: 1px solid var(--cx-navy-border);
+  flex-shrink: 0; /* Evita que o menu seja espremido pelo conteúdo */
+  position: relative;
+  z-index: 50;   /* Acima do backdrop do drawer */
+  animation: sd-entrada 0.22s var(--cx-ease); /* Entrada suave ao abrir o menu */
 }
 
-/* CABEÇALHO E BOTÃO DE MENU */
-.sd-header { 
-  display: flex; 
-  justify-content: flex-start; 
-  margin-bottom: 30px; 
-} 
+@keyframes sd-entrada {
+  from { transform: translateX(-18px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
 
-.sd-menu-btn { 
-  background-color: #3b4661; 
-  border: none; 
-  border-radius: 12px; /* Ajustado para parecer mais retangular igual na imagem */
-  padding: 8px 12px; 
-  cursor: pointer; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-} 
+/* CABEÇALHO: marca à esquerda, botão de recolher à direita */
+.sd-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 6px 0;
+  margin-bottom: 22px;
+}
 
-/* ÁREA DA LOGOMARCA */
-.sd-brand-box { 
-  text-align: center; 
-  margin-bottom: 40px; 
-} 
+/* Botão de recolher o menu (só faz sentido onde o menu empurra
+   o conteúdo — no drawer mobile ele também fecha o menu). */
+.sd-menu-btn {
+  background-color: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--cx-radius);
+  width: 32px;
+  height: 32px;
+  flex: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cx-on-dark-muted);
+  transition: background-color var(--cx-dur) ease, color var(--cx-dur) ease;
+}
 
-.sd-brand-title { 
-  font-size: 32px; 
-  font-weight: 700; 
-  margin: 0; 
-  color: #ffffff; 
-  letter-spacing: 0.5px; 
-  line-height: 1; 
-} 
+.sd-menu-btn:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: var(--cx-on-dark);
+}
 
-.sd-brand-e { color: #ffffff; } 
-.sd-brand-x { color: #2cb3ff; } /* Azul claro da letra X */
+.sd-menu-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(51, 195, 240, 0.35);
+}
 
-.sd-brand-sub { 
-  font-size: 14px; 
-  font-weight: 400; 
-  color: #c4ccda; 
-  display: block; 
-  margin-top: 4px; 
-} 
+/* ÁREA DA LOGOMARCA
+   O conteúdo (nome + selo do papel) vem do componente MarcaCondex
+   na versão escura, usado sobre o azul-marinho da sidebar.
+   O selo vem ABAIXO do nome (papelAbaixo) para que a marca
+   caiba na largura da barra sem disputar espaço com o botão. */
+.sd-brand-box {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.sd-brand-title {
+  font-size: 19px;      /* Tamanho base da marca; ícone e selo escalam em em */
+  font-weight: 400;
+  margin: 0;
+  color: var(--cx-on-dark);
+  line-height: 1;
+}
 
 /* ÁREA DE NAVEGAÇÃO E LISTA */
-.sd-nav-area { width: 100%; } 
-
-.sd-nav-list { 
-  list-style-type: none; 
-  padding: 0; 
-  margin: 0; 
-  display: flex; 
-  flex-direction: column; 
-  gap: 8px; /* Respiro entre os botões */
-} 
-
-/* ITENS DO MENU E ÍCONES */
-.sd-nav-item { 
-  display: flex; 
-  align-items: center; 
-  padding: 12px 18px; 
-  border-radius: 10px; 
-  cursor: pointer; 
-  color: #f1f5f9; 
-  transition: all 0.2s ease-in-out; 
-} 
-
-.sd-nav-item:hover {
-  background-color: #3b82f6; /* Fundo azul exato do item selecionado na imagem */
-  color: #ffffff;
+.sd-nav-area {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;      /* Em telas baixas o menu rola sozinho */
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
 }
 
-.sd-icon { 
-  margin-right: 18px; 
-} 
+.sd-nav-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px; /* Itens quase encostados: o grupo é que dá o respiro */
+}
 
-.sd-label { 
-  font-size: 16px; 
-  font-weight: 500; 
+/* RÓTULO DE GRUPO (ex.: Principal, Comunidade, Condomínio)
+   É puramente visual: não navega e não altera rota.
+   Ambos os perfis importam este módulo, então os dois
+   recebem exatamente o mesmo nome de classe gerado. */
+.sd-group {
+  font-family: var(--cx-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(159, 178, 212, 0.72);
+  padding: 18px 12px 8px;
+}
+
+/* Primeiro rótulo não precisa de tanto respiro acima */
+.sd-nav-list > .sd-group:first-child {
+  padding-top: 4px;
+}
+
+/* ITENS DO MENU E ÍCONES */
+.sd-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 42px;          /* Alvo de toque confortável no mobile */
+  padding: 0 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #b7c4dd;        /* Texto secundário sobre azul-marinho (contraste AA) */
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  transition: background-color var(--cx-dur) ease, color var(--cx-dur) ease;
+}
+
+.sd-nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+  color: var(--cx-on-dark);
+}
+
+.sd-nav-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(51, 195, 240, 0.35);
+}
+
+/* Item selecionado
+   Usado pelo Síndico (sd-item-active) e pelo Morador
+   (sd-item--ativo, módulo deles) — mesmo resultado visual. */
+.sd-nav-item--ativo,
+.sd-item-active,
+.sd-item--ativo {
+  background-color: rgba(255, 255, 255, 0.10);
+  color: var(--cx-on-dark);
+  font-weight: 600;
+  /* Barra de destaque à esquerda: reforça a seleção sem depender só da cor */
+  box-shadow: inset 3px 0 0 var(--cx-brand-cyan);
+}
+
+.sd-nav-item--ativo:hover,
+.sd-item-active:hover,
+.sd-item--ativo:hover {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+.sd-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.92;
+}
+
+.sd-label {
+  font-size: 14px;
+  font-weight: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* RODAPÉ: assinatura da marca.
+   margin-top:auto o emprega para a base mesmo quando a
+   lista de menu é curta, dando ancoragem visual à barra. */
+.sd-footer {
+  margin-top: auto;
+  padding: 14px 12px 2px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--cx-font-display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(159, 178, 212, 0.6);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   Em telas estreitas o menu abre sobre o conteúdo
+   (drawer), então ele sai do fluxo flex e passa a
+   flutuar, com o fundo escurecido vindo do layout.
+   ================================================== */
+@media (max-width: 900px) {
+  .sd-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: min(82vw, 300px); /* Respeita a viewport mas não passa de 300px */
+    box-shadow: var(--cx-shadow-lg);
+    animation: sd-drawer-entrada 0.24s var(--cx-ease);
+  }
+}
+
+@keyframes sd-drawer-entrada {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+/* Movimento reduzido: o menu aparece sem deslizar */
+@media (prefers-reduced-motion: reduce) {
+  .sd-wrapper { animation: none; }
 }

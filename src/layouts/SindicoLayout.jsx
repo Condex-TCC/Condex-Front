@@ -4,6 +4,7 @@ import HeaderSindico from '../components/sindico/headerSindoc';
 import { MenuLateralContext } from '../context/menuLateralContext';
 import { useContext } from 'react';
 import SidebarSindico from '../components/sindico/sidebarSindico';
+import styles from '../css/shellLayout.module.css'; // Layout comum aos perfis com menu lateral
 
 //Layout do sindico
 
@@ -11,30 +12,43 @@ import SidebarSindico from '../components/sindico/sidebarSindico';
 function LayoutSindico(){
 
     //Pegando as ações adicionadas no provider
+    //menuLateral = 'aberto' | 'fechado' (apresentação do menu, sem relação com regra de negócio)
     const {menuLateral, setMenuLateral} = useContext(MenuLateralContext);
 
     //Retorna o componente
     return(
         <div id="div-root">
-            
+             
             {/* Container raiz ocupando 100% da tela em modo Flex */}
-            <div style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden', backgroundColor: '#f8f9fa' }}>
-                    
+            <div className={styles.shell}>
+
+                {/* Fundo escurecido atrás do drawer.
+                    Existe só enquanto o menu está aberto; no desktop
+                    o CSS o esconde (o menu empurra o conteúdo lá).
+                    Clicar fora fecha o menu — mesma ação do botão ≡. */}
+                {menuLateral === 'aberto' && (
+                    <div
+                        className={styles.backdrop}
+                        onClick={() => setMenuLateral('fechado')}
+                        aria-hidden="true"
+                    />
+                )}
+
                 {/* Renderiza a Sidebar lateral se estiver aberto */}
                 {menuLateral === 'aberto' && <SidebarSindico />}
 
                 {/* Container Principal (Header + Conteúdo) que assume o resto do espaço */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
-                        
+                <div className={styles['shell__body']}>
+                         
                     <HeaderSindico />
 
                     {/* Permite renderizar outros componentes dentro desse layout */}
-                    <main style={{ padding: '24px' }}>
-                        
+                    <main className={styles['shell__main']}>
+                         
                         {/* Local onde será inserido outros elementos */}
                         <Outlet />
                     </main>
-                        
+                         
                 </div>
             </div>
 

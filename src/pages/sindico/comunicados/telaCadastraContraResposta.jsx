@@ -76,13 +76,19 @@ function PaginaCadastraContraResposta(){
         // Container principal que engloba tudo
         <div className={styles.container}>
 
-            {/* Cabeçalho com o título da tela e o botão de voltar */}
-            <header className={styles.header}>
+            {/* Cabeçalho da página: contexto, ação concreta e retorno */}
+            <header className={destaqueStyles['cabecalho-pagina']}>
 
-                <h1 className={styles.title}>Respondendo o morador</h1>
+                <div>
+                    <p className="cx-overline">Comunicação</p>
+                    <h2 className="cx-page-title">Respondendo o morador</h2>
+                    <p className="cx-page-subtitle">
+                        Reli a pergunta do morador e registre a resposta do síndico.
+                    </p>
+                </div>
 
                 {/* Botão que retorna para a tela anterior */}
-                <button className={styles.backButton} onClick={back}>
+                <button type="button" className={styles.backButton} onClick={back}>
                     &larr; Voltar
                 </button>
             </header>

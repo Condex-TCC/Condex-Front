@@ -1,47 +1,76 @@
-/* ESTOS EXTRAS DO HEADER DO MORADOR */
-/* O header do morador reaproveita headerSindico.module.css. Aqui ficam apenas
-   as classes novas desta tela, para não alterar nada do cabeçalho do síndico. */
+/* ==================================================
+   ESTILOS EXTRAS DO HEADER DO MORADOR
+   --------------------------------------------------
+   O header do morador reaproveita headerSindico.module.css;
+   aqui ficam apenas as classes novas desta tela (botões de
+   ação e indicador de notificação).
 
-/* Botões de ação (configurações e notificações) que ficam ao lado do perfil */
+   Mantidas coerentes com o shell: mesmo raio, mesma borda
+   neutra e o halo de foco global. Nenhum botão novo foi
+   criado — estas classes continuam sendo apoio para os
+   controles já existentes no cabeçalho.
+   ================================================== */
+
+/* Botões de ação (configurações e notificações) ao lado do perfil.
+   44px já garante alvo de toque confortável no celular, por isso
+   o único ajuste responsivo é encolher levemente em telas estreitas. */
 .hm-action-btn {
-  position: relative; /* Permite posicionar o aviso de notificação em relação ao botão */
-  width: 44px; /* Mesma largura do botão de perfil, para os ícones ficarem alinhados */
-  height: 44px; /* Mesma altura do botão de perfil */
-  margin-right: 12px; /* Espaço entre os botões de ação e o avatar */
-  background: transparent; /* Remove o fundo cinza padrão dos botões */
-  border: 1px solid #C4CBE0; /* Contorno fino, no mesmo tom usado no botão de perfil */
-  border-radius: 50%; /* Transforma o botão em um círculo perfeito */
-  color: #7A87A7; /* Cor do ícone, igual à cor do ícone de perfil */
-  display: flex; /* Usa flexbox para centralizar o ícone */
-  align-items: center; /* Centraliza verticalmente */
-  justify-content: center; /* Centraliza horizontalmente */
-  cursor: pointer; /* Indica que o botão é clicável */
-  transition: border-color 0.2s ease-in-out; /* Suaviza a troca de cor da borda */
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin-right: 12px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: 50%;
+  color: var(--cx-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--cx-dur) ease, background-color var(--cx-dur) ease,
+              color var(--cx-dur) ease, box-shadow var(--cx-dur) ease;
 }
 
 .hm-action-btn:hover {
-  border-color: #7A87A7; /* Escurece a borda ao passar o mouse */
+  border-color: var(--cx-primary);
+  background-color: var(--cx-primary-soft);
+  color: var(--cx-primary);
 }
 
-/* Bolinha vermelha que indica que existem notificações não lidas */
+/* Mesmo halo de foco do restante do sistema: o controle é
+   alcançável por teclado e precisa deixar isso visível. */
+.hm-action-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Bolinha vermelha que indica notificações não lidas.
+   O anel branco a separa do ícone por baixo, mantendo-a legível
+   tanto sobre o fundo transparente quanto sobre o hover azul. */
 .hm-notification-dot {
-  position: absolute; /* Tira o selo do fluxo normal e o gruda no canto do botão */
-  top: 9px; /* Distância do selo em relação ao topo do botão */
-  right: 10px; /* Distância do selo em relação à lateral direita do botão */
-  width: 8px; /* Largura do selo */
-  height: 8px; /* Altura igual à largura, formando um círculo */
-  border-radius: 50%; /* Deixa o selo redondo */
-  background-color: #d9534f; /* Vermelho, a mesma cor usada no botão de deslogar */
-  border: 2px solid #ffffff; /* Contorno branco que separa o selo do ícone */
-  box-sizing: border-box; /* Inclui a borda dentro do tamanho definido */
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--cx-danger);
+  border: 2px solid var(--cx-on-primary);
+  box-sizing: border-box;
 }
 
-/* Em telas menores, reduz o tamanho dos botões de ação para não apertar o cabeçalho */
+/* Em telas menores, reduz os botões de ação para não apertar o
+   cabeçalho — ainda acima do alvo mínimo de 40px do celular. */
 @media (max-width: 480px) {
-
   .hm-action-btn {
-    width: 38px; /* Deixa o botão um pouco menor */
-    height: 38px; /* Mantém o formato redondo */
-    margin-right: 8px; /* Reduz o espaço entre os botões */
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+  }
+
+  .hm-notification-dot {
+    top: 7px;
+    right: 8px;
   }
 }

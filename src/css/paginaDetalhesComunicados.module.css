@@ -1,13 +1,36 @@
-/* =========================================
-   TELA DE DETALHES DO COMUNICADO DO MORADOR
-   ========================================= */
+/* ==================================================
+   TELA DE DETALHES DO COMUNICADO (PERFIL MORADOR)
+   --------------------------------------------------
+   Módulo dedicado a esta tela: hoje concentra a faixa de
+   cabeçalho que separa o título da tela do botão voltar,
+   no mesmo alinhamento das demais telas internas
+   (texto à esquerda, ação à direita).
 
-/* Cabeçalho com o título da tela e o botão de voltar */
+   Mantenha os outros blocos (card do comunicado, campo de
+   pergunta e botão) nos módulos que já os definem — este
+   arquivo serve só ao arranjo superior da tela.
+   ================================================== */
+
+/* Faixa do cabeçalho: título à esquerda, retorno à direita */
 .dc-header {
-  display: flex; /* Coloca o título e o botão de voltar na mesma linha */
-  justify-content: space-between; /* Joga o título para a esquerda e o botão para a direita */
+  display: flex;
+  justify-content: space-between;
   align-items: center; /* Centraliza os dois verticalmente */
-  gap: 12px; /* Espaço entre o título e o botão */
-  flex-wrap: wrap; /* Em telas muito estreitas o botão desce para a linha de baixo */
-  margin-bottom: 20px; /* Separa o cabeçalho do conteúdo */
+  gap: var(--cx-space-md);
+  flex-wrap: wrap; /* Em telas estreitas o botão desce para a linha de baixo */
+  min-width: 0;
+  margin-bottom: var(--cx-space-lg);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   Abaixo de 640px o cabeçalho vira coluna e o botão de
+   voltar ocupa a linha toda (alvo de toque ≥40px),
+   coerente com os demais formulários do CONDEX.
+   ================================================== */
+@media (max-width: 640px) {
+  .dc-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }

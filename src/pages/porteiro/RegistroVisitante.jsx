@@ -101,17 +101,30 @@ export default function RegistroVisitante() {
             <main className={styles['fp-main']}>
 
                 <div className={styles['fp-header']}>
+                    {/* Identificação da tela: contexto (overline) + ação concreta + texto de apoio,
+                        na mesma hierarquia de cx-page-header usada no resto do CONDEX */}
+                    <div className={styles['fp-header__texto']}>
+                        <p className="cx-overline">Visitantes</p>
+                        <h1 className={styles['fp-titulo']}>Registrar visitante</h1>
+                        <p className={styles['fp-lead']}>
+                            Cadastre quem vai entrar no condomínio e informe o ID do morador responsável.
+                        </p>
+                    </div>
+
+                    {/* Retorno alinhado à direita do título, no mesmo padrão das
+                        telas de cadastro do síndico e do morador */}
                     <button type="button" className={styles['fp-btn-voltar']} onClick={() => navigate('/porteiro')}>
                         &larr; voltar
                     </button>
-
-                    <h1 className={styles['fp-titulo']}>Registrar visitante</h1>
                 </div>
 
                 <form className={styles['fp-formulario']} onSubmit={salvar} noValidate>
 
-                    <div className={styles['fp-campo']}>
-                        <label className={styles['fp-rotulo-oculto']} htmlFor="visitante-nome">Nome</label>
+                    {/* Nome ocupa a linha inteira da grade: é o campo principal da tela.
+                        O rótulo é VISÍVEL porque o placeholder some quando o porteiro
+                        começa a digitar; o placeholder segue como exemplo auxiliar */}
+                    <div className={`${styles['fp-campo']} ${styles['fp-celula--larga']}`}>
+                        <label className={styles['fp-rotulo']} htmlFor="visitante-nome">Nome</label>
                         <input
                             id="visitante-nome"
                             className={`${styles['fp-input']} ${styles['fp-input--destinatario']}`}
@@ -125,7 +138,7 @@ export default function RegistroVisitante() {
                     </div>
 
                     <div className={styles['fp-campo']}>
-                        <label className={styles['fp-rotulo-oculto']} htmlFor="visitante-cpf">CPF</label>
+                        <label className={styles['fp-rotulo']} htmlFor="visitante-cpf">CPF</label>
                         <input
                             id="visitante-cpf"
                             className={`${styles['fp-input']} ${styles['fp-input--apartamento']}`}
@@ -140,7 +153,7 @@ export default function RegistroVisitante() {
 
                     {/* A API vincula o visitante ao morador pelo id (campo "morador") */}
                     <div className={styles['fp-campo']}>
-                        <label className={styles['fp-rotulo-oculto']} htmlFor="visitante-id-morador">ID do morador</label>
+                        <label className={styles['fp-rotulo']} htmlFor="visitante-id-morador">ID do morador</label>
                         <input
                             id="visitante-id-morador"
                             className={`${styles['fp-input']} ${styles['fp-input--apartamento']}`}
@@ -154,7 +167,8 @@ export default function RegistroVisitante() {
                         {erros.idMorador && <span className={styles['fp-erro']}>{erros.idMorador}</span>}
                     </div>
 
-                    <div className={styles['fp-area-salvar']}>
+                    {/* Ação principal ocupa a linha inteira da grade */}
+                    <div className={`${styles['fp-area-salvar']} ${styles['fp-celula--larga']}`}>
                         <button type="submit" className={styles['fp-btn-salvar']} disabled={salvando}>
                             {salvando ? 'Salvando...' : 'SALVAR'}
                         </button>

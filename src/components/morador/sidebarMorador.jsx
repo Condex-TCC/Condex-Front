@@ -1,17 +1,22 @@
-import { useContext } from 'react'; // Importa o hook de contexto do React
+import { Fragment, useContext } from 'react'; // Importa o hook de contexto do React
 import styles from '../../css/sidebarSindico.module.css'; // Importa o arquivo de folha de estilos CSS com as classes
 import stylesMorador from '../../css/sidebarMorador.module.css'; // Importa as classes extras desta tela
+import MarcaCondex from '../marca/marcaCondex'; // Marca compartilhada do CONDEX
 import { MenuLateralContext } from '../../context/menuLateralContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
-// Lista de itens da sidebar com a rota de destino de cada um
+// Define os nomes apresentados no menu lateral do Morador.
+// Os textos seguem a nomenclatura oficial do CONDEX e valem
+// apenas para a apresentação: rotas, arquivos e funções
+// continuam com os nomes originais (/morador/reservas, etc.).
 const ITENS_SIDEBAR = [
 
-    // Home
+    // Início (rota continua sendo /morador)
     {
         chave: 'inicio',
-        rotulo: 'Home',
+        grupo: 'Principal',
+        rotulo: 'Início',
         path: '/morador',
         icone: (
             <>
@@ -21,10 +26,11 @@ const ITENS_SIDEBAR = [
         )
     },
 
-    // Reservas
+    // Áreas comuns (rota interna continua sendo /morador/reservas)
     {
         chave: 'reservas',
-        rotulo: 'Reservas',
+        grupo: 'Comunidade',
+        rotulo: 'Áreas comuns',
         path: '/morador/reservas',
         icone: (
             <>
@@ -36,10 +42,11 @@ const ITENS_SIDEBAR = [
         )
     },
 
-    // Comunicados
+    // Comunicação (mantém a rota /morador/comunicados/exibe)
     {
         chave: 'comunicados',
-        rotulo: 'Comunicados',
+        grupo: 'Comunidade',
+        rotulo: 'Comunicação',
         path: '/morador/comunicados/exibe',
         icone: (
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -49,6 +56,7 @@ const ITENS_SIDEBAR = [
     // Visitantes
     {
         chave: 'visitantes',
+        grupo: 'Condomínio',
         rotulo: 'Visitantes',
         path: '/morador/visitantes',
         icone: (
@@ -59,10 +67,11 @@ const ITENS_SIDEBAR = [
         )
     },
 
-    // Regras e Laudos
+    // Condomínio (regras e laudos — rota continua /morador/registros/...)
     {
         chave: 'regrasLaudos',
-        rotulo: 'Regras e Laudos',
+        grupo: 'Condomínio',
+        rotulo: 'Condomínio',
         path: '/morador/registros/regras',
         icone: (
             <>
@@ -105,6 +114,13 @@ const SidebarMorador = () => {
             return true
         }
 
+        //A rota /morador/mensagens faz parte da área de comunicação,
+        //então ela acende o item "Comunicação" (nenhuma outra condição mudou)
+        if(item.chave === 'comunicados' && pathname.startsWith('/morador/mensagens')){
+
+            return true
+        }
+
         return pathname === item.path
     }
 
@@ -114,68 +130,85 @@ const SidebarMorador = () => {
         //Navega para a rota do item
         navigate(item.path)
 
-        //Fecha a sidebar para que o morador veja a tela em um celular
-        setMenuLateral('fechado')
+        //Fecha o menu apenas no modo drawer (<= 900px), onde ele cobre o
+        //conteúdo. No desktop o menu lateral permanece aberto para que o
+        //morador navegue entre telas sem reabrir o menu a cada clique.
+        if (typeof window !== 'undefined' && window.innerWidth <= 900) {
+
+            setMenuLateral('fechado')
+        }
     }
 
   return (
     // Container principal de toda a barra lateral
     <div className={styles['sd-wrapper']}>
 
-      {/* Cabeçalho que alinha o botão do menu */}
-      <div className={styles['sd-header']} onClick={toogleMenuLarateral}>
-        {/* Botão interativo que contém o ícone do menu (hambúrguer) */}
-        <button className={styles['sd-menu-btn']}>
-          {/* Inicia o SVG do menu sanduíche */}
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> 
-            {/* Desenha as três linhas horizontais arredondadas */}
-            <path d="M4 6H20" stroke="#cdd5e0" strokeWidth="2" strokeLinecap="round" />
-            <path d="M4 12H20" stroke="#cdd5e0" strokeWidth="2" strokeLinecap="round" />
-            <path d="M4 18H20" stroke="#cdd5e0" strokeWidth="2" strokeLinecap="round" />
-          </svg> 
+      {/* Cabeçalho da barra: marca à esquerda, recolher à direita */}
+      <div className={styles['sd-header']}>
+
+        {/* Container da marca, em versão sobre fundo escuro (sidebar).
+            O selo do perfil vem abaixo do nome para caber na largura
+            da barra sem disputar espaço com o botão de recolher. */}
+        <div className={styles['sd-brand-box']}>
+          <h1 className={styles['sd-brand-title']}>
+            <MarcaCondex papel="Morador" escuro papelAbaixo />
+          </h1>
+        </div>
+
+        {/* Recolhe (desktop) ou fecha (drawer) o menu lateral */}
+        <button
+          type="button"
+          className={styles['sd-menu-btn']}
+          onClick={toogleMenuLarateral}
+          aria-label="Recolher menu lateral"
+          title="Recolher menu"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </button>
       </div>
 
-      {/* Container para agrupar o título e o subtítulo da marca */}
-      <div className={styles['sd-brand-box']}>
-        {/* Título de maior hierarquia para o nome principal */}
-        <h1 className={styles['sd-brand-title']}>
-          {/* Texto principal com letras isoladas para destaque de cor */}
-          Cond<span className={styles['sd-brand-e']}>e</span><span className={styles['sd-brand-x']}>x</span>
-        </h1>
-        {/* Subtítulo que fica posicionado logo abaixo da marca principal */}
-        <span className={styles['sd-brand-sub']}>Morador</span>
-      </div>
-
       {/* Área semântica de Navegação */}
-      <nav className={styles['sd-nav-area']}>
+      <nav className={styles['sd-nav-area']} aria-label="Menu principal">
         {/* Lista não ordenada que agrupa os links do menu */}
         <ul className={styles['sd-nav-list']}>
 
-          {/* Cada item navega para a sua rota e é destacado quando a tela está aberta */}
-          {ITENS_SIDEBAR.map((item) => (
+          {/* Cada item navega para a sua rota e é destacado quando a tela está aberta.
+              O rótulo de grupo aparece quando o grupo do item muda (só apresentação). */}
+          {ITENS_SIDEBAR.map((item, indice) => (
 
-            <li
-              key={item.chave}
-              className={`${styles['sd-nav-item']} ${estaAtivo(item) ? stylesMorador['sd-item--ativo'] : ''}`}
-              onClick={() => irPara(item)}
-            >
+            <Fragment key={item.chave}>
 
-              {/* Ícone SVG do item, montado a partir dos traçados definidos na lista */}
-              <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className={styles['sd-icon']}>
-                {item.icone}
-              </svg>
+              {(indice === 0 || ITENS_SIDEBAR[indice - 1].grupo !== item.grupo) && (
+                <li className={styles['sd-group']} aria-hidden="true">{item.grupo}</li>
+              )}
 
-              {/* Texto descritivo do botão */}
-              <span className={styles['sd-label']}>{item.rotulo}</span>
+              <li
+                className={`${styles['sd-nav-item']} ${estaAtivo(item) ? stylesMorador['sd-item--ativo'] : ''}`}
+                onClick={() => irPara(item)}
+              >
 
-            </li>
+                {/* Ícone SVG do item, montado a partir dos traçados definidos na lista */}
+                <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className={styles['sd-icon']} aria-hidden="true">
+                  {item.icone}
+                </svg>
+
+                {/* Texto descritivo do botão */}
+                <span className={styles['sd-label']}>{item.rotulo}</span>
+
+              </li>
+
+            </Fragment>
 
           ))}
 
         </ul> 
       </nav> 
-      
+
+      {/* Assinatura da marca: ânchora visual do rodapé da barra */}
+      <div className={styles['sd-footer']}>Comunicação que conecta</div>
+
     </div>
   )
 };

@@ -112,70 +112,85 @@ function PaginaCadastraComunicados(){
         // Container principal que engloba tudo
         <div className={styles.container}>
 
-            {/* Cabeçalho com o título da tela e o botão de voltar */}
-            <header className={styles.header}>
+            {/* Cabeçalho da página: contexto, ação concreta e retorno */}
+            <header className={selecaoStyles['cabecalho-pagina']}>
 
-                <h1 className={styles.title}>Cadastrar comunicado</h1>
+                <div>
+                    <p className="cx-overline">Comunicação</p>
+                    <h2 className="cx-page-title">Cadastrar comunicado</h2>
+                    <p className="cx-page-subtitle">
+                        Escreva o aviso, escolha os destinatários e envie para os moradores.
+                    </p>
+                </div>
 
                 {/* Botão que retorna para a tela dos comunicados */}
-                <button className={styles.backButton} onClick={back}>
+                <button type="button" className={styles.backButton} onClick={back}>
                     &larr; Voltar
                 </button>
             </header>
 
-            {/* Linha que mostra o destinatário do comunicado e o botão de seleção na outra extremidade */}
-            <div className={selecaoStyles.destinatario}>
+            {/* Formulário em cartão branco, mesmo padrão das demais
+                telas de cadastro (classe .form do módulo central):
+                o card protege os campos do fundo cinza e padroniza
+                a largura útil de todo o conteúdo. */}
+            <div className={styles.form}>
 
-                {/* Texto que muda conforme existam moradores selecionados ou não */}
-                <span className={selecaoStyles.destinatarioTexto}>
-                    {moradoresSelecionados.length > 0 ? "Moradores selecionados" : "Todos os moradores"}
-                </span>
+                {/* Linha que mostra o destinatário do comunicado e o botão de seleção na outra extremidade */}
+                <div className={selecaoStyles.destinatario}>
 
-                {/* Botão que leva para a tela de seleção dos moradores */}
-                <button className={selecaoStyles.botaoSelecionar} onClick={selectMorador}>
-                    Selecionar morador
-                </button>
-            </div>
+                    {/* Texto que muda conforme existam moradores selecionados ou não */}
+                    <span className={selecaoStyles.destinatarioTexto}>
+                        {moradoresSelecionados.length > 0 ? "Moradores selecionados" : "Todos os moradores"}
+                    </span>
 
-            {/* Bloco com o campo onde o síndico escreve o título do comunicado */}
-            <div className={destaqueStyles.campoResposta}>
+                    {/* Botão que leva para a tela de seleção dos moradores */}
+                    <button type="button" className={selecaoStyles.botaoSelecionar} onClick={selectMorador}>
+                        Selecionar morador
+                    </button>
+                </div>
 
-                <label className={destaqueStyles.rotulo} htmlFor="tituloComunicado">Título</label>
+                {/* Bloco com o campo onde o síndico escreve o título do comunicado.
+                    Usa o agrupador padrão .campo para o input ocupar a mesma
+                    largura do resto do cartão (igual ao destinatário). */}
+                <div className={styles.campo}>
 
-                <input
-                    id="tituloComunicado"
-                    type="text"
-                    className={styles.inputTitle}
-                    placeholder="Digite o título do comunicado..."
-                    value={titulo}
-                    onChange={(evento) => setTiulo(evento.target.value)}
-                />
-            </div>
+                    <label className={destaqueStyles.rotulo} htmlFor="tituloComunicado">Título</label>
 
-            {/* Bloco com o campo onde o síndico escreve a descrição do comunicado */}
-            <div className={destaqueStyles.campoResposta}>
+                    <input
+                        id="tituloComunicado"
+                        type="text"
+                        className={styles.inputTitle}
+                        placeholder="Digite o título do comunicado..."
+                        value={titulo}
+                        onChange={(evento) => setTiulo(evento.target.value)}
+                    />
+                </div>
 
-                <label className={destaqueStyles.rotulo} htmlFor="descricaoComunicado">Descrição</label>
+                {/* Bloco com o campo onde o síndico escreve a descrição do comunicado */}
+                <div className={styles.campo}>
 
-                <textarea
-                    id="descricaoComunicado"
-                    className={styles.inputDescription}
-                    placeholder="Escreva aqui o conteúdo do comunicado..."
-                    value={descricao}
-                    onChange={(evento) => setDescricao(evento.target.value)}
-                />
-            </div>
+                    <label className={destaqueStyles.rotulo} htmlFor="descricaoComunicado">Descrição</label>
 
-            {/* Botão verde de envio do comunicado, centralizado na tela */}
-            <div className={styles.actionsContainer}>
+                    <textarea
+                        id="descricaoComunicado"
+                        className={styles.inputDescription}
+                        placeholder="Escreva aqui o conteúdo do comunicado..."
+                        value={descricao}
+                        onChange={(evento) => setDescricao(evento.target.value)}
+                    />
+                </div>
 
-                <button
-                    type="button"
-                    className={styles.buttonAprovar}
-                    onClick={CadastrarEnvioComunicado}
-                >
-                    Enviar novo comunicado
-                </button>
+                {/* Botão verde de envio do comunicado, centralizado na tela */}
+                <div className={styles.actionsContainer}>
+
+                    <button
+                        type="button"
+                        className={styles.buttonAprovar}
+                        onClick={CadastrarEnvioComunicado}
+                    >
+                        Enviar novo comunicado
+                    </button>
+                </div>
             </div>
         </div>
     );

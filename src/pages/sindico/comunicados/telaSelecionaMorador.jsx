@@ -82,40 +82,39 @@ function PaginaSelecionaMoradorComunicado(){
         setMoradoresSelecionado(idsMoradores)
     }
 
+    //Lista segura para renderizar (a API pode falhar e devolver undefined)
+    const listaMoradores = Array.isArray(moradoes) ? moradoes : []
+
     //Função que cria o componente
     return(
 
         // Container principal que engloba tudo
         <div className={styles.container}>
 
-            {/* Cabeçalho com o título da tela e o botão de voltar */}
-            <header className={styles.header}>
+            {/* Cabeçalho da página: contexto, ação concreta e retorno */}
+            <header className={selecaoStyles['cabecalho-pagina']}>
 
-                <h1 className={styles.title}>Selecionar moradores</h1>
+                <div>
+                    <p className="cx-overline">Comunicação</p>
+                    <h2 className="cx-page-title">Selecionar moradores</h2>
+                    <p className="cx-page-subtitle">
+                        Marque quem vai receber este comunicado e confirme a seleção.
+                    </p>
+                </div>
 
                 {/* Botão que retorna para a tela de cadastro de comunicados */}
-                <button className={styles.backButton} onClick={back}>
+                <button type="button" className={styles.backButton} onClick={back}>
                     &larr; Voltar
                 </button>
             </header>
 
-            {/*Div que agrupa os cards dos moradores*/}
-            <div className={listaStyles.listaEnvios}>
-
-                {/* Cards com os moradores que podem ser selecionados */}
-                {
-                    // Iterando e adicionando os cards
-                    moradoes.map((morador) => {
-
-                        //Retorna o card do morador
-                        return <CardMorador key={morador.id} morador={morador}
-                         renderiza={setMoradoresSelecionado} moradoresSelecionados={moradoesSelecionados} ></CardMorador>
-                    } )
-                }
-            </div>
-
-            {/* Área de ação com o botão que seleciona todos e o botão verde de confirmação */}
-            <div className={styles.actionsContainer}>
+            {/* Barra de ação da seleção: contagem à esquerda, "selecionar todos"
+                à direita. A contagem vem do próprio estado — o síndico sabe de
+                imediato quantos destinatários já marcou. */}
+            <div className={selecaoStyles.toolbar}>
+                <span className={selecaoStyles.contagem} aria-live="polite">
+                    {moradoesSelecionados.length} de {listaMoradores.length} selecionados
+                </span>
 
                 {/* Botão que seleciona todos os moradores de uma só vez */}
                 <button
@@ -125,6 +124,43 @@ function PaginaSelecionaMoradorComunicado(){
                 >
                     Selecionar todos
                 </button>
+            </div>
+
+            {/* Estado vazio: a seleção só faz sentido com a lista de moradores */}
+            {listaMoradores.length === 0 && (
+                <div className="cx-empty">
+                    <span className="cx-empty__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </span>
+                    <p className="cx-empty__title">Nenhum morador disponível</p>
+                    <p className="cx-empty__text">
+                        Assim que os moradores estiverem cadastrados, eles aparecem aqui para seleção.
+                    </p>
+                </div>
+            )}
+
+            {/*Div que agrupa os cards dos moradores*/}
+            <div className={listaStyles.listaEnvios}>
+
+                {/* Cards com os moradores que podem ser selecionados */}
+                {
+                    // Iterando e adicionando os cards
+                    listaMoradores.map((morador) => {
+
+                        //Retorna o card do morador
+                        return <CardMorador key={morador.id} morador={morador}
+                         renderiza={setMoradoresSelecionado} moradoresSelecionados={moradoesSelecionados} ></CardMorador>
+                    } )
+                }
+            </div>
+
+            {/* Área de ação com a confirmação da seleção */}
+            <div className={styles.actionsContainer}>
 
                 {/* Botão verde de confirmação da seleção, centralizado na tela */}
                 <button

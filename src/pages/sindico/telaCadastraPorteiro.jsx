@@ -60,39 +60,69 @@ function PaginaCadastraPorteiro(){
 
    return (
     <div className={styles.container}>
-      
-      {/* Cabeçalho da página */}
-      <div className={styles.header}>
 
-        <h2 className={styles.title}>Cadastrar um novo Porteiro</h2>
+      {/* Cabeçalho da página: contexto (Usuários), ação concreta
+          e uma linha de apoio. O "voltar" é a ação secundária. */}
+      <header className={styles['cabecalho-pagina']}>
+
+        <div>
+          <p className="cx-overline">Usuários</p>
+          <h2 className="cx-page-title">Cadastrar um novo Porteiro</h2>
+          <p className="cx-page-subtitle">
+            Cadastre o porteiro com nome, e-mail e senha de acesso.
+          </p>
+        </div>
 
         {/* Usando o símbolo de flecha esquerda (&larr;) para o ícone de voltar */}
-        <button className={styles.btnVoltar} onClick={voltaUsuario}>&larr; voltar</button>
-      </div>
+        <button type="button" className={styles.btnVoltar} onClick={voltaUsuario}>&larr; voltar</button>
+      </header>
 
       {/* Corpo do formulário contendo as duas colunas */}
       <div className={styles.formContainer}>
-        
-        {/* Coluna da Esquerda: Campos de entrada de dados */}
+
+        {/* Título de seção + filete no topo do cartão, no mesmo
+            padrão do .form-secao da tela de regra. Ocupa as duas
+            colunas, para o filete fechar o cabeçalho inteiro. */}
+        <h3 className={styles['form-secao__titulo']}>
+          Dados do porteiro
+        </h3>
+
+        {/* Coluna da Esquerda: Campos de entrada de dados.
+            Nome abre a linha inteira (é o identificador do
+            cadastro); e-mail e senha dividem a linha seguinte. */}
         <div className={styles.inputsColumn}>
-          <input 
-            type="text" 
-            placeholder="Nome completo" 
-            className={styles.inputField} 
-            onChange={toogleNome}
-          />
-          <input 
-            type="email" 
-            placeholder="E-mail" 
-            className={styles.inputField} 
-            onChange={toogleEmail}
-          />
-          <input 
-            type="text" 
-            placeholder="Senha" 
-            className={styles.inputField} 
-            onChange={tooglePassword}
-          />
+          <div className={`${styles.campo} ${styles['campo--full']}`}>
+            <label className={styles['campo__label']} htmlFor="porteiro-nome">Nome completo</label>
+            <input
+              id="porteiro-nome"
+              type="text"
+              placeholder="Nome completo"
+              className={styles.inputField}
+              onChange={toogleNome}
+            />
+          </div>
+
+          <div className={styles.campo}>
+            <label className={styles['campo__label']} htmlFor="porteiro-email">E-mail</label>
+            <input
+              id="porteiro-email"
+              type="email"
+              placeholder="E-mail"
+              className={styles.inputField}
+              onChange={toogleEmail}
+            />
+          </div>
+
+          <div className={styles.campo}>
+            <label className={styles['campo__label']} htmlFor="porteiro-senha">Senha</label>
+            <input
+              id="porteiro-senha"
+              type="text"
+              placeholder="Senha"
+              className={styles.inputField}
+              onChange={tooglePassword}
+            />
+          </div>
         </div>
 
         {/* Coluna da Direita: Perfil estático conforme solicitado */}
@@ -100,14 +130,14 @@ function PaginaCadastraPorteiro(){
           <span className={styles.profileLabel}>Perfil</span>
           <div className={styles.profileText}>Porteiro</div>
         </div>
-        
-      </div>
 
-      {/* Rodapé com o botão principal de envio */}
-      <div className={styles.footer}>
-        <button className={styles.btnCadastrar} onClick={cadastraPorteiro}>
-          Cadastrar Porteiro
-        </button>
+        {/* Rodapé dentro do cartão: única ação primária, à direita */}
+        <div className={styles.footer}>
+          <button type="button" className={styles.btnCadastrar} onClick={cadastraPorteiro}>
+            Cadastrar Porteiro
+          </button>
+        </div>
+
       </div>
 
     </div>

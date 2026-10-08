@@ -1,63 +1,141 @@
-/* FORMULÁRIO DE PRÉ CADASTRO DE VISITANTE DO MORADOR */
+/* ==================================================
+   PRÉ-CADASTRO DE VISITANTE DO MORADOR
+   --------------------------------------------------
+   Coluna única (720px) com cabeçalho: texto (overline + título
+   + apoio) à esquerda e "voltar" à direita → grade de campos
+   dentro de um card branco (cx-card) → ação no pé do card.
+
+   ATENÇÃO DE REUTILIZAÇÃO: `cv-btn-voltar`, `cv-field` e
+   `cv-btn-salvar` também são usados pela tela de detalhes
+   de comunicado do Morador (telaDetalhesComunicados.jsx),
+   então as três classes continuam genéricas: servem para
+   botão de retorno, agrupador label+controle e botão de
+   envio de largura total — nada de depender dos outros
+   seletores deste arquivo.
+
+   O shell do Morador já reserva a margem da área de
+   conteúdo, por isso o container não tem padding.
+
+   Padrões da spec: 5.2 botões, 5.3 campos, 5.4 grade,
+   6 responsividade, 7 acessibilidade.
+   ================================================== */
 
 .cv-container {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Mesma tipografia do header */
-  color: #001c3f; /* Azul marinho escuro usado como cor de texto em todo o app */
+  font-family: var(--cx-font);
+  color: var(--cx-text); /* Cor de corpo do sistema (o navy fica só nos títulos) */
   width: 100%;
   max-width: 720px; /* Limita a largura em telas grandes */
   margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
   padding-bottom: 8px; /* Pequeno respiro antes do menu inferior */
 }
 
-/* Cabeçalho com o botão de voltar e o título */
+/* Linha do retorno: classe mantida para compatibilidade, mas o
+   botão "Voltar" hoje vive dentro de .cv-cabecalho-pagina, na
+   mesma linha do título (padrão das telas de cadastro do síndico) */
 .cv-header {
-  display: flex; /* Coloca o botão e o título lado a lado */
-  align-items: center; /* Centraliza verticalmente */
-  gap: 12px; /* Espaço entre o botão e o título */
-  margin-bottom: 20px; /* Separa o cabeçalho do formulário */
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--cx-space-md);
 }
 
-/* Botão de voltar para a lista de visitantes */
+/* Botão de voltar para a lista de visitantes (spec 5.2
+   secondary — mesma ação de retorno de todo o CONDEX) */
 .cv-btn-voltar {
-  flex-shrink: 0; /* Impede que o botão seja espremido */
-  background-color: #ffffff; /* Fundo branco */
-  border: 1px solid #d4d8e2; /* Contorno claro */
-  border-radius: 8px; /* Arredonda os cantos */
-  color: #2b45a2; /* Texto azul, igual à cor das abas ativas do porteiro */
-  font-size: 14px; /* Tamanho do texto */
-  font-weight: 700; /* Deixa o texto em negrito */
-  padding: 8px 12px; /* Respiro interno */
-  cursor: pointer; /* Indica que o botão é clicável */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: var(--cx-control);
+  padding: 0 16px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  box-shadow: var(--cx-shadow-xs);
+  color: var(--cx-primary);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  cursor: pointer;
+  transition: background-color var(--cx-dur) ease,
+              border-color var(--cx-dur) ease,
+              transform var(--cx-dur-fast) ease;
 }
 
 .cv-btn-voltar:hover {
-  background-color: #eef2ff; /* Leve fundo azul ao passar o mouse */
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
 }
 
+.cv-btn-voltar:active {
+  transform: translateY(1px);
+}
+
+.cv-btn-voltar:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Bloco de identificação da tela: texto (overline = contexto,
+   título = ação concreta e texto de apoio) à esquerda e a ação
+   secundária de retorno à direita — mesma composição do
+   cx-page-header. flex-wrap garante que, em telas estreitas,
+   o "Voltar" desça para a linha própria. */
+.cv-cabecalho-pagina {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--cx-space-lg);
+  min-width: 0;
+}
+
+/* Coluna de textos do cabeçalho: hierarquia overline → título → apoio */
+.cv-cabecalho-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* Título: mesma escala e família do cx-page-title */
 .cv-title {
-  font-size: 22px; /* Tamanho do título da tela */
-  font-weight: 700; /* Deixa o título em negrito */
-  line-height: 1.2; /* Reduz o espaçamento vertical do texto */
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--cx-text-strong);
+  margin: 0;
 }
 
 /* Texto de apoio que explica o que a tela faz */
 .cv-subtitle {
-  margin: -14px 0 20px 0; /* Sobe o texto para ficar logo abaixo do título */
-  font-size: 14px; /* Tamanho do texto */
-  color: #7a87a7; /* Cinza azulado dos textos secundários do projeto */
+  font-size: var(--cx-text-base);
+  color: var(--cx-text-muted);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 62ch;
 }
 
-/* Área que agrupa todos os campos do formulário */
+/* Área que agrupa todos os campos do formulário. No JSX ela
+   também recebe as classes globais `cx-card` + `cx-card--pad`,
+   virando a superfície branca que protege os campos (mesma
+   leitura do card das outras telas de cadastro).
+   Grade auto-fit (spec 5.4): cabe em duas colunas quando há
+   campos estreitos e desce para uma sozinha no celular. */
 .cv-form {
-  display: grid; /* Usa grid para organizar os campos em duas colunas */
-  grid-template-columns: 1fr 1fr; /* Duas colunas de largura igual */
-  gap: 16px; /* Espaço entre os campos */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--cx-space-md);
 }
 
-/* Cada campo do formulário */
+/* Cada campo do formulário: coluna rótulo → controle */
 .cv-field {
-  display: flex; /* Empilha o rótulo e o input */
-  flex-direction: column; /* Coloca o rótulo acima do input */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0; /* Deixa o campo encolher dentro da célula do grid */
 }
 
 /* Campo que ocupa a linha inteira (usado no nome e no documento) */
@@ -66,61 +144,144 @@
 }
 
 .cv-field label {
-  font-size: 13px; /* Tamanho do rótulo */
-  font-weight: 600; /* Deixa o rótulo com um pouco mais de destaque */
-  color: #001c3f; /* Cor principal do projeto */
-  margin-bottom: 6px; /* Espaço entre o rótulo e o campo */
+  font-size: var(--cx-text-sm); /* Mesma medida de rótulo do sistema */
+  font-weight: 600;
+  color: var(--cx-text-strong);
+  letter-spacing: 0.01em;
 }
 
+/* Controle (spec 5.3): 40px, borda neutra, hover discreto e
+   foco com halo azul — igual aos inputs do resto do CONDEX.
+   O seletor é input (e não input/textarea/select) porque a
+   única textarea deste agrupador vive na tela de detalhes
+   de comunicado, que é estilizada pelo módulo dela. */
 .cv-field input {
-  height: 46px; /* Altura confortável para o toque no celular */
-  box-sizing: border-box; /* Inclui a borda dentro da altura definida */
-  border: 1px solid #d4d8e2; /* Contorno claro, no tom usado na busca do header */
-  border-radius: 8px; /* Arredonda os cantos do campo */
-  outline: none; /* Remove o contorno padrão ao clicar */
-  padding: 0 12px; /* Respiro interno do texto */
-  font-size: 14px; /* Tamanho do texto digitado */
-  color: #001c3f; /* Cor do texto digitado */
-  background-color: #ffffff; /* Fundo branco do campo */
-  width: 100%; /* Ocupa toda a largura da coluna */
+  width: 100%;
+  min-height: var(--cx-control);
+  box-sizing: border-box;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  outline: none;
+  padding: 0 12px;
+  font-size: var(--cx-text-base);
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  background-color: var(--cx-surface);
+  transition: border-color var(--cx-dur) ease, box-shadow var(--cx-dur) ease;
+}
+
+.cv-field input::placeholder {
+  color: var(--cx-text-faint);
+}
+
+.cv-field input:hover {
+  border-color: #bfc7d8;
 }
 
 .cv-field input:focus {
-  border-color: #2b45a2; /* Destaca o campo que está sendo editado */
-  box-shadow: 0 0 0 1px #2b45a2; /* Reforça o destaque com um halo azul */
+  border-color: var(--cx-primary);
+  box-shadow: var(--cx-focus-halo);
+  background-color: var(--cx-surface);
 }
 
-/* Área do botão de salvar */
+/* Área do botão de salvar: célula larga da grade. No desktop a
+   ação principal fica alinhada à direita no pé do card (largura
+   automática, regra .cv-btn-salvar--auto); no celular o botão
+   ocupa a largura toda, que é a variante original. */
 .cv-action {
-  margin-top: 24px; /* Respiro em relação ao último campo */
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--cx-space-sm);
+  margin-top: var(--cx-space-sm); /* Folga extra antes da ação principal */
 }
 
-/* Botão principal que confirma o cadastro */
+/* Botão principal (spec 5.2 primary, variante --lg): largura
+   total, porque no celular é a ação mais fácil de alcançar */
 .cv-btn-salvar {
-  width: 100%; /* Ocupa toda a largura, o que facilita o toque no celular */
-  background-color: #2b45a2; /* Azul escuro, igual à aba ativa do porteiro */
-  color: #ffffff; /* Texto branco */
-  border: none; /* Remove a borda padrão do botão */
-  border-radius: 10px; /* Arredonda os cantos */
-  padding: 14px 20px; /* Respiro interno, grande o bastante para o toque */
-  font-size: 15px; /* Tamanho do texto do botão */
-  font-weight: 700; /* Deixa o texto em negrito */
-  cursor: pointer; /* Indica que o botão é clicável */
-  transition: background-color 0.2s ease-in-out; /* Suaviza a troca de cor ao passar o mouse */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--cx-control-lg);
+  padding: 0 26px;
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  box-shadow: 0 1px 2px rgba(11, 23, 51, 0.12);
+  font-size: var(--cx-text-md);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  cursor: pointer;
+  transition: background-color var(--cx-dur) ease, transform var(--cx-dur-fast) ease;
 }
 
 .cv-btn-salvar:hover {
-  background-color: #203b8f; /* Escurece o azul ao passar o mouse */
+  background-color: var(--cx-primary-hover);
 }
 
-/* Telas estreitas: os campos passam a ocupar uma coluna por vez */
-@media (max-width: 560px) {
+.cv-btn-salvar:active {
+  background-color: var(--cx-primary-active);
+  transform: translateY(1px);
+}
 
+.cv-btn-salvar:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+.cv-btn-salvar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Variante usada só nesta tela: largura automática no desktop,
+   alinhada à direita no pé do card. A regra base de largura
+   total continua valendo para as outras telas que reutilizam
+   cv-btn-salvar (ex.: telaDetalhesComunicados.jsx). */
+@media (min-width: 561px) {
+  .cv-btn-salvar--auto {
+    width: auto;
+  }
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   ================================================== */
+
+/* Celulares: os campos passam a ocupar uma coluna por vez e
+   a ação principal ganha altura confortável para o toque */
+@media (max-width: 560px) {
   .cv-form {
     grid-template-columns: 1fr; /* Uma única coluna */
   }
 
   .cv-field--full {
     grid-column: auto; /* Deixa de ocupar duas linhas, já que existe só uma coluna */
+  }
+
+  .cv-title {
+    font-size: var(--cx-text-lg);
+  }
+
+  .cv-btn-salvar,
+  .cv-btn-voltar {
+    min-height: 44px; /* Alvo de toque ≥ 40px (spec 6) */
+  }
+}
+
+/* Movimento reduzido: transições viram troca instantânea (spec 7) */
+@media (prefers-reduced-motion: reduce) {
+  .cv-btn-voltar,
+  .cv-btn-salvar,
+  .cv-field input {
+    transition: none;
+  }
+
+  .cv-btn-voltar:active,
+  .cv-btn-salvar:active {
+    transform: none;
   }
 }

@@ -1,9 +1,13 @@
-/* ESTOS EXTRAS DA SIDEBAR DO MORADOR */
-/* A sidebar do morador reaproveita sidebarSindico.module.css. Aqui fica apenas
-   a classe de item selecionado, para não alterar o visual da sidebar do síndico. */
+/* ESTILOS EXTRAS DA SIDEBAR DO MORADOR
+   A sidebar do morador reaproveita sidebarSindico.module.css.
+   Aqui ficam apenas as classes exclusivas deste perfil,
+   para manter a estrutura comum intacta.
 
-/* Item do menu que corresponde à tela que está aberta */
+   Item do menu que corresponde à tela aberta.
+   Em vez de repetir o CSS, esta classe COMPOE a do módulo
+   compartilhado: qualquer ajuste no visual do item ativo
+   (fundo, barra ciano, tipografia) vale automaticamente
+   para os dois perfis que têm menu lateral. */
 .sd-item--ativo {
-  background-color: #3b82f6; /* Fundo azul, igual ao item selecionado da sidebar do síndico */
-  color: #ffffff; /* Texto branco para destacar da cor padrão dos itens */
+  composes: sd-item-active from './sidebarSindico.module.css';
 }

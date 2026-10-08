@@ -59,21 +59,28 @@ export default function PaginaAutorizaRerva() {
   return (
     <div className={styles.container}>
 
-      <header className={styles.header}>
-        <h1 className={styles.title}>Autorizar reserva</h1>
+      {/* Cabeçalho da página: contexto (Áreas comuns), ação e apoio */}
+      <header className={styles['cabecalho-pagina']}>
+        <div>
+          <p className="cx-overline">Áreas comuns</p>
+          <h2 className="cx-page-title">Autorizar reserva</h2>
+          <p className="cx-page-subtitle">
+            Confira o pedido antes de aprovar ou recusar a reserva.
+          </p>
+        </div>
 
-        <button className={styles.backButton} onClick={back}>
+        <button type="button" className={styles.backButton} onClick={back}>
           &larr; Voltar
         </button>
-
       </header>
 
       <form className={styles.form} onSubmit={(e) => { e.preventDefault();}}>
-        
+
         {/* Passar os dados aqui */}
         <CardReservaAutorizacao></CardReservaAutorizacao>
-        
-        {/* NOVO CONTAINER COM OS BOTÕES LADO A LADO */}
+
+        {/* Ações da decisão: confirmação (verde) e destrutiva
+            (vermelho), alinhadas à direita no desktop. */}
         <div className={styles.actionsContainer}>
           <button 
             type="button" 

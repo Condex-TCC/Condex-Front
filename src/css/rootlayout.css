@@ -1,12 +1,65 @@
-/* Estilo geral da página */
-*{
+/* ==================================================
+   RESET BASE DO CONDEX
+   Zera margens e paddings do navegador para que todas
+   as telas partam da mesma medida e nenhum estilo
+   padrão quebre o alinhamento dos layouts.
+
+   Também assume o box-sizing e a fonte em nível global:
+   antes essa regra vivia no módulo do login e vazava
+   para o resto do aplicação sem estar documentada.
+   Centraliz aqui, o comportamento continua o mesmo e a
+   responsabilidade fica clara.
+   ================================================== */
+* {
     padding: 0px;
     margin: 0px;
     border: 0px;
+    box-sizing: border-box;
+    font-family: var(--cx-font);
 }
 
-/* Estilo da tiv root */
-#div-root{
+/* ==================================================
+   BASE TIPOGRÁFICA E DE COR
+   Define a fonte padrão do sistema e a cor do texto
+   em nível global, evitando que cada tela precise
+   repetir font-family/color.
+   ================================================== */
+html,
+body {
+    font-family: var(--cx-font);
+    color: var(--cx-text);
+    background-color: var(--cx-bg);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Estilo da div raiz ocupando toda a viewport */
+#div-root {
     width: 100%;
     height: 100vh;
+}
+
+/* Raiz do layout do porteiro: ele não possui sidebar,
+   então a altura é construída pelo conteúdo + header. */
+#div-root-porteiro {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--cx-bg);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==================================================
+   FOCUS VISUAL PADRÃO
+   Indicador de foco único para elementos navegáveis
+   por teclado, usado nos três perfis. Os inputs têm
+   tratamento próprio (borda + halo) em cada módulo,
+   por isso ficam fora desta regra para não duplicar
+   o anel de foco.
+   ================================================== */
+button:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--cx-primary);
+    outline-offset: 2px;
 }
