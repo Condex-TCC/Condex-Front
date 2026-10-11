@@ -1,0 +1,81 @@
+/* =========================================
+   CARD DE RESERVA PENDENTE (AUTORIZAÇÃO)
+   Segue o padrão visual dos cards do síndico
+========================================= */
+
+/* Estrutura principal do card */
+.card {
+  position: relative;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px 20px;
+  background-color: #ffffff;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  overflow: hidden;
+  margin-bottom: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Barra lateral de destaque na cor principal do projeto */
+.card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #274092;
+}
+
+/* Efeito sutil ao passar o mouse por cima */
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalho com o nome do espaço */
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* Nome do espaço em destaque */
+.title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1a1a1a;
+  overflow-wrap: break-word;
+}
+
+/* Área central do card */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Detalhes da reserva: data e horário */
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 15px;
+  color: #333333;
+}
+
+/* Rodapé com os dados do morador, separado por uma linha divisória */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 12px;
+  font-size: 13px;
+  color: #555555;
+}
