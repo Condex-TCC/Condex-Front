@@ -1,0 +1,145 @@
+/* =========================================
+   TELA DE RESERVAS DE ÁREAS COMUNS (SÍNDICO)
+   Segue o padrão visual das telas do síndico
+========================================= */
+
+/* Container principal que envolve toda a tela */
+.container {
+  font-family: sans-serif;
+  padding: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Cabeçalho com o título e as ações da página */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+/* Título da página */
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+  margin: 0;
+  text-decoration: underline;
+  text-decoration-color: #0088ff;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+/* Grupo de botões de ação */
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Botão de ação da página */
+.configButton {
+  background-color: #274092;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Efeito ao passar o mouse por cima do botão */
+.configButton:hover {
+  background-color: #1e3375;
+}
+
+/* Área principal com o calendário e a barra lateral */
+.content {
+  display: flex;
+  gap: 40px;
+}
+
+/* Local reservado para o calendário */
+.calendarPlaceholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+  min-height: 380px;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+/* Barra lateral com as solicitações e próximas reservas */
+.sidebar {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Título das seções da barra lateral */
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 12px 0;
+  color: #374151;
+}
+
+/* Card com o resumo de uma reserva */
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background-color: #ffffff;
+}
+
+/* Nome do espaço no card */
+.cardContent h4 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: 400;
+  color: #111827;
+}
+
+/* Informação do dia no card */
+.cardContent p {
+  margin: 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Status de reserva pendente */
+.statusPending {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Status de reserva aceita */
+.statusAccepted {
+  color: #4ade80;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Ajuste para telas menores */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+}

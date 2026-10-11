@@ -1,6 +1,6 @@
 // Reservas.jsx
 import { useNavigate } from 'react-router-dom';
-import styles from '../../../css/PaginaExibeReserva.module.css';
+import styles from '../../../css/paginaExibeReservasSindico.module.css';
 
 export default function PaginaExibeReserva() {
 
@@ -24,10 +24,13 @@ export default function PaginaExibeReserva() {
       <header className={styles.header}>
         <h1 className={styles.title}>Reservas de áreas comuns</h1>
 
-        {/* Botão que redireciona para outra tela */}
-        <button className={styles.configButton} onClick={redirecionaGerencia}>Áreas comuns</button>
+        <div className={styles.actions}>
 
-        <button className={styles.configButton} onClick={redirecinaAprovadas}>Gerenciar reservas</button>
+          {/* Botão que redireciona para outra tela */}
+          <button className={styles.configButton} onClick={redirecionaGerencia}>Áreas comuns</button>
+
+          <button className={styles.configButton} onClick={redirecinaAprovadas}>Gerenciar reservas</button>
+        </div>
       </header>
 
       <main className={styles.content}>
