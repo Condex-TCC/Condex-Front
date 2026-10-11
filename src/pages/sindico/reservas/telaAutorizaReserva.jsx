@@ -1,4 +1,5 @@
 import styles from '../../../css/paginaCadastraRegra.module.css';
+import stylesDados from '../../../css/paginaAutorizaReserva.module.css';
 
 import React, { use, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -74,8 +75,88 @@ export default function PaginaAutorizaRerva() {
 
       <form className={styles.form} onSubmit={(e) => { e.preventDefault();}}>
         
-        {/* Adicionar aqui um div que irá exibir os dados da reserva e do morador */}
-        
+        {/* Div com os dados da reserva */}
+        <div className={stylesDados.dadosBloco}>
+
+          {/* Título do bloco */}
+          <h3 className={stylesDados.blocoTitle}>Dados da reserva</h3>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Espaço:</span>
+            <span className={stylesDados.valor}>{dadosReserva.espaco?.nome}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Descrição:</span>
+            <span className={stylesDados.valor}>{dadosReserva.espaco?.descricao}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Data:</span>
+            <span className={stylesDados.valor}>{dadosReserva.data?.split("-").reverse().join("/")}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Início:</span>
+            <span className={stylesDados.valor}>{dadosReserva.inicio?.split(":").slice(0, 2).join(":")}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Fim:</span>
+            <span className={stylesDados.valor}>{dadosReserva.fim?.split(":").slice(0, 2).join(":")}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Status:</span>
+            <span className={stylesDados.valor}>{dadosReserva.status}</span>
+          </div>
+
+        </div>
+
+        {/* Div com os dados do morador */}
+        <div className={stylesDados.dadosBloco}>
+
+          {/* Título do bloco */}
+          <h3 className={stylesDados.blocoTitle}>Dados do morador</h3>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Nome:</span>
+            <span className={stylesDados.valor}>{dadosReserva.morador?.nome}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>CPF:</span>
+            <span className={stylesDados.valor}>{dadosReserva.morador?.cpf}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>E-mail:</span>
+            <span className={stylesDados.valor}>{dadosReserva.morador?.email}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Telefone:</span>
+            <span className={stylesDados.valor}>{dadosReserva.morador?.telefone}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Unidade:</span>
+            <span className={stylesDados.valor}>{dadosReserva.morador?.unidade?.bloco} - Apto {dadosReserva.morador?.unidade?.numero}</span>
+          </div>
+
+        </div>
+
         {/* NOVO CONTAINER COM OS BOTÕES LADO A LADO */}
         <div className={styles.actionsContainer}>
           <button 
