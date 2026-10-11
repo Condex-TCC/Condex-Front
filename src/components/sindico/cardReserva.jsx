@@ -6,14 +6,14 @@ import styles from '../../css/cardReservaAutorizacao.module.css';
 //Função que cria o componente
 function CardReservaAutorizacao({ id, espaco, data, inicio, fim, morador }) {
 
-
   //Hook que realiza a navegação
   const navigate = useNavigate()
 
   //Função que realiza o redirecionamento para a tela e visualiar reserva
   const aprovarReserva = () => {
 
-    //TODO: Funcionalidade irá ser feito mais tarde
+    //Realizando a navegação para a págian de reservas
+    navigate("/sindico/reservas/gerenciamento/autorizacao/" + id)
   }
 
   //Função que formata a data para o padrão brasileiro

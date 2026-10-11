@@ -16,6 +16,7 @@ function PaginaExibeAprovaReservas(){
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
+    
 
     //Função que redireciona para a tela de acesso rápido
     const back = () => {
@@ -34,7 +35,6 @@ function PaginaExibeAprovaReservas(){
 
         //Definindo o estado com array de reservas
         setCards(reservas)
-        console.log(reservas)
     }
 
     //useEffect para é chamado quando a página carrega

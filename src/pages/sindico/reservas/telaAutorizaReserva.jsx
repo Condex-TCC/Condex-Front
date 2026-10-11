@@ -1,10 +1,14 @@
 import styles from '../../../css/paginaCadastraRegra.module.css';
 
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import CardReservaAutorizacao from '../../../components/sindico/cardReserva';
+import { showReserva } from '../../../service/Reservas';
 
 export default function PaginaAutorizaRerva() {
+
+  //Hook que irá armazenar o objeto da reserva
+  const [dadosReserva, setDadosReserva] = useState({})
 
   //Hook que realiza a navegação
   const navigate = useNavigate()
@@ -16,45 +20,45 @@ export default function PaginaAutorizaRerva() {
   const back = () => {
 
     //Navega para a tela que exibe os laudos
-    navigate("/sindico/reservas/gerenciamento")
+    navigate("/sindico/reservas/exibe/aprovadas")
   }
+
+  //Função que obtem uma reserva especifica
+  const obtemReserva = async () => {
+
+    //Chamando a reserva
+    const response = await showReserva(id)
+
+    //Desestruturando o objeto do Json
+    const { reserva } = await response
+
+    //Alterando o estado da reserva
+    setDadosReserva(reserva)
+  }
+
+  //useEffect que é executado uma vez quando a página é renderizda
+  useEffect(() => {
+
+    //Chama a função que obtem os dados
+    obtemReserva()
+  }, [])
 
   //Função que será chamada para autorizar a reserva
   const AutorizarRerva = async () => {
     
-    // //Chama a função que cadastra as regras
-    // let message = await insertRegraAPI(nome, descricao)
+    //TODO: Fazer aqui lógica aqui, mas tarde
+    console.log(true)
 
-    // //Chama a tela de menssagem
-    // navigate('/sindico/mensagem', {
-    //   //Realiza a passagem de valores para a página
-    //   state: {
-    //     menssagem: "Regra Criada com sucesso!" ,
-    //     redirecionamento: '/sindico/condominio/regrasLaudos'
-    //   }
-    // });
-    alert("Fazer aqui a lógica para autroizar reserva")
   }
 
-  //Função que será chamada para recuser a reserva
-  const recusarReserva= async () => {
+   //Função que será chamada para negar a reserva
+  const NegarRerva = async () => {
     
-    // //Chama a função que cadastra as regras
-    // let message = await insertRegraAPI(nome, descricao)
+    //TODO: Fazer aqui lógica aqui, mais tarde
+    console.log(false)
 
-    // //Chama a tela de menssagem
-    // navigate('/sindico/mensagem', {
-    //   //Realiza a passagem de valores para a página
-    //   state: {
-    //     menssagem: "Regra Criada com sucesso!" ,
-    //     redirecionamento: '/sindico/condominio/regrasLaudos'
-    //   }
-    // });
-    alert("Fazer aqui a lógica para autroizar reserva")
   }
 
-  //TODO: Fazer uma função que recupera os dados da reserva especifica 
-  //TODO: Use effect para carregar os dados da reserva
 
   return (
     <div className={styles.container}>
@@ -70,8 +74,7 @@ export default function PaginaAutorizaRerva() {
 
       <form className={styles.form} onSubmit={(e) => { e.preventDefault();}}>
         
-        {/* Passar os dados aqui */}
-        <CardReservaAutorizacao></CardReservaAutorizacao>
+        {/* Adicionar aqui um div que irá exibir os dados da reserva e do morador */}
         
         {/* NOVO CONTAINER COM OS BOTÕES LADO A LADO */}
         <div className={styles.actionsContainer}>
@@ -86,7 +89,7 @@ export default function PaginaAutorizaRerva() {
           <button 
             type="button" 
             className={styles.buttonRecusar} 
-            onClick={recusarReserva}
+            onClick={NegarRerva}
           >
             Recusar
           </button>
