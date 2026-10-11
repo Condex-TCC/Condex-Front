@@ -19,7 +19,9 @@ export default function PaginaExibeReserva() {
         <h1 className={styles.title}>Reservas de áreas comuns</h1>
 
         {/* Botão que redireciona para outra tela */}
-        <button className={styles.configButton} onClick={redirecionaGerencia}>configurar áreas</button>
+        <button className={styles.configButton} onClick={redirecionaGerencia}>Áreas comuns</button>
+
+        <button className={styles.configButton}>Gerenciar reservas</button>
       </header>
 
       <main className={styles.content}>
