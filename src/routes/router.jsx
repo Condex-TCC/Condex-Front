@@ -54,6 +54,7 @@ import PaginaExibeComunicadosHistorico from '../pages/morador/comunicados/telaEx
 import PaginaDetalhesComunicados from '../pages/morador/comunicados/telaDetalhesComunicados';
 import PaginaExibeRegrasMorador from '../pages/morador/RegrasLaudos/telaExibeRegrasMorador';
 import PaginaExibeLaudosMorador from '../pages/morador/RegrasLaudos/telaExibeLaudosMorador';
+import PaginaExibeAprovaReservas from '../pages/sindico/reservas/telaAprovaReserva';
 
 
 //Componente que será utilizado para analisar a URL
@@ -213,6 +214,12 @@ const route = createBrowserRouter([
                     {
                         path: "reservas/gerenciamento/autorizacao/:id",
                         element: <PaginaAutorizaRerva></PaginaAutorizaRerva>
+                    },
+
+                    //Tela para visualiar as reservas que precisão de aprovação
+                    {
+                        path: "reservas/exibe/aprovadas",
+                        element: <PaginaExibeAprovaReservas></PaginaExibeAprovaReservas>
                     },
 
                     //Tela do comunicados

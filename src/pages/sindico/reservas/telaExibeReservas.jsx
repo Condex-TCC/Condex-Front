@@ -10,7 +10,13 @@ export default function PaginaExibeReserva() {
     //Função que realiza o redirecionamento
     const redirecionaGerencia = () => {
 
-        navigate("gerenciamento")
+      navigate("gerenciamento")
+    }
+
+    //Função que realiza o redirecinamento para a tela que exibe as reservas que vão ser aprovadas
+    const redirecinaAprovadas= () => {
+
+      navigate("/sindico/reservas/exibe/aprovadas")
     }
 
   return (
@@ -21,7 +27,7 @@ export default function PaginaExibeReserva() {
         {/* Botão que redireciona para outra tela */}
         <button className={styles.configButton} onClick={redirecionaGerencia}>Áreas comuns</button>
 
-        <button className={styles.configButton}>Gerenciar reservas</button>
+        <button className={styles.configButton} onClick={redirecinaAprovadas}>Gerenciar reservas</button>
       </header>
 
       <main className={styles.content}>

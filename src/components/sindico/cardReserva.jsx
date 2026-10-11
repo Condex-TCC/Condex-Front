@@ -13,8 +13,7 @@ function CardReservaAutorizacao() {
   //Função que realiza o redirecionamento para a tela e visualiar reserva
   const aprovarReserva = () => {
 
-    //TODO: Adicionar navegação por parametro
-    navigate("autorizacao/" + 1)
+    //TODO: Funcionalidade irá ser feito mais tarde
   }
 
 
