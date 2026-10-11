@@ -4,7 +4,7 @@ import stylesDados from '../../../css/paginaAutorizaReserva.module.css';
 import React, { use, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import CardReservaAutorizacao from '../../../components/sindico/cardReserva';
-import { showReserva } from '../../../service/Reservas';
+import { aprovaReserva, showReserva } from '../../../service/Reservas';
 
 export default function PaginaAutorizaRerva() {
 
@@ -47,16 +47,28 @@ export default function PaginaAutorizaRerva() {
   //Função que será chamada para autorizar a reserva
   const AutorizarRerva = async () => {
     
-    //TODO: Fazer aqui lógica aqui, mas tarde
-    console.log(true)
+    //Chama a função que autoriza a reserva
+    let resposta = await aprovaReserva(id, true)
+
+    //Exibe a resposta
+    alert(resposta)
+
+    //Chama a função que realiza o redirecionamento
+    back()
 
   }
 
    //Função que será chamada para negar a reserva
   const NegarRerva = async () => {
     
-    //TODO: Fazer aqui lógica aqui, mais tarde
-    console.log(false)
+    //Chama a função que reprova a reserva
+    let resposta = await aprovaReserva(id, false)
+
+    //Exibe a resposta
+    alert(resposta)
+
+    //Chama a função que realiza o redirecionamento
+    back()
 
   }
 

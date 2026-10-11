@@ -1,6 +1,6 @@
 //Arquivo responsável por tratar as requisições da api
 
-import { getReservasPendentesAPI, showReservaAPI } from "../api/ReservasAPI"
+import { aprovaReservaAPI, getReservasPendentesAPI, showReservaAPI } from "../api/ReservasAPI"
 
 
 //Função que obtem todas as reservas que precisan se aprovação
@@ -66,6 +66,40 @@ export async function showReserva(id) {
 
         //Exibe um alerta na tela
         console.error("Erro ao buscar a reserva selecionada na API:", erro)
+
+    }
+
+}
+
+//Função que autoriza a reserva para o morador
+export async function aprovaReserva(id, aprovada) {
+    
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await aprovaReservaAPI(id,aprovada)
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { message, status, data} = json
+
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
+
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
+
+        //Retornando a menssagem
+        return message
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao autorizar a reserva na API:", erro)
 
     }
 
