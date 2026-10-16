@@ -1,47 +1,103 @@
 //Arquivo responsavel por solicitar a requisição e trata-la
 
 import { getEncomendasAPI, insertEncomendaAPI, withdrawEncomendaAPI } from "../api/EncomendaApi"
-import { lerJson, montarMensagemErro } from "../utils/erroApi"
 
 //Mensagem exibida quando o frontend não consegue falar com o servidor
 const MENSAGEM_SEM_CONEXAO = "Não foi possível conectar à API. Verifique se o servidor está no ar."
+
+//Lê o corpo da resposta como JSON sem estourar quando o corpo não é JSON
+//Isso acontece quando o servidor está fora do ar ou devolve uma página de erro
+async function lerJson(response) {
+
+    try {
+        return await response.json()
+    }
+    catch {
+        return {}
+    }
+}
+
+//Monta a mensagem de erro a partir da resposta da API
+//Os erros de validação vêm em { message, errors: [ { campo: [mensagens] } ] }
+//e os erros do próprio Laravel (401, 403, 404, 500) vêm apenas com { message }
+function montarMensagemErro(json, statusHttp, mensagemPadrao, mensagemServidor) {
+
+    //Guarda as mensagens de cada campo que não passou na validação
+    let detalhes = ""
+
+    if (Array.isArray(json?.errors)) {
+
+        detalhes = json.errors
+
+            .map((erro) => typeof erro === "object" && erro !== null
+                ? Object.values(erro).flat().join(" ")
+                : String(erro))
+
+            .join(" ")
+    }
+
+    //Sessão expirada ou token inválido
+    if (statusHttp === 401) {
+        return "Sua sessão expirou. Faça login novamente."
+    }
+
+    //Usuário logado sem permissão para essa ação
+    if (statusHttp === 403) {
+        return "Você não tem permissão para realizar essa ação."
+    }
+
+    //Registro que não existe mais na API
+    if (statusHttp === 404) {
+        return `${mensagemPadrao} Registro não encontrado.`
+    }
+
+    //Erro interno do servidor, como a violação de uma chave estrangeira no banco
+    //O texto do Laravel é técnico e pode expor o SQL, então nunca é exibido na tela
+    if (statusHttp >= 500) {
+        return mensagemServidor || `${mensagemPadrao} O servidor recusou os dados enviados.`
+    }
+
+    //Demais casos, usa a mensagem da API e os detalhes dos campos
+    return `${json?.message || mensagemPadrao} ${detalhes}`.trim()
+}
+
+//Função que normaliza um item de encomenda vindo da API (EncomendaResources)
+function normalizarEncomenda(item) {
+
+    if (!item) return item
+
+    return {
+        ...item,
+        data: item.data ?? item.data_retirada ?? item.retirada_em ?? null,
+        data_retirada: item.data_retirada ?? item.data ?? null,
+        recebida: item.recebida ?? item.data_recebimento ?? null,
+        nome: item.nome ?? item.nome_encomenda ?? null,
+        descricao: item.descricao ?? item.descricao_encomenda ?? null,
+        moradorId: item.moradorId ?? item.morador?.id ?? item.fk_id_morador_encomenda ?? null,
+        moradorNome: item.moradorNome ?? item.morador?.nome ?? null,
+    }
+}
 
 //Função que obtem todas as encomendas
 //Devolve a lista quando a API responde com sucesso e null quando a requisição
 //falha, para a tela conseguir diferenciar "sem encomendas" de "erro ao buscar"
 export async function getEncomendas() {
 
-    //Tendanto executar a requisição
-    try{
-
-        //Chamando a função que realiza a requisição no API
+    try {
         let response = await getEncomendasAPI()
-
-        //Convertendo o JSON para objetos no JS
         let json = await lerJson(response)
 
-        //Verifica se houve algum erro na requisição
-        //O status HTTP é usado porque os erros do Laravel (401, 403, 500)
-        //não trazem o campo "status" no corpo da resposta
-        if(!response.ok){
-
-            //Para a execução do try e lança um erro para o catch
-            throw(montarMensagemErro(json, response.status, "Não foi possível buscar as encomendas."))
+        if (!response.ok) {
+            throw (montarMensagemErro(json, response.status, "Não foi possível buscar as encomendas."))
         }
 
-        //Retornando a lista de encomendas
-        return json.data
+        const lista = Array.isArray(json.data) ? json.data : []
+        return lista.map(normalizarEncomenda)
     }
-    //Casso aconteça algum erro na requisição, cai nesse bloco
-    catch(erro){
-
-        //Exibe o erro no console para depuração
+    catch (erro) {
         console.error("Erro ao buscar as encomendas na API:", erro)
-
-        //Sinaliza a falha para a tela
         return null
     }
-
 }
 
 //Função que cadastra uma nova encomenda
@@ -53,18 +109,11 @@ export async function getEncomendas() {
 //mostrar o erro devolvido pela API
 export async function cadastrarEncomenda(nome, descricao, idMorador, detalhes = {}) {
 
-    //Tendanto executar a requisição
-    try{
-
-        //Chamando a função que realiza a requisição no API
+    try {
         let response = await insertEncomendaAPI(nome, descricao, idMorador, detalhes)
-
-        //Convertendo o JSON para objetos no JS
         let json = await lerJson(response)
 
-        //Verifica se houve algum erro na requisição
-        if(!response.ok){
-
+        if (!response.ok) {
             return {
                 sucesso: false,
                 mensagem: montarMensagemErro(
@@ -77,25 +126,12 @@ export async function cadastrarEncomenda(nome, descricao, idMorador, detalhes = 
             }
         }
 
-        //Retornando o sucesso com a menssagem da API
-        return {
-            sucesso: true,
-            mensagem: json.message
-        }
+        return { sucesso: true, mensagem: json.message }
     }
-    //Casso aconteça algum erro na requisição, cai nesse bloco
-    catch(erro){
-
-        //Exibe o erro no console para depuração
+    catch (erro) {
         console.error("Erro ao cadastrar a encomenda na API:", erro)
-
-        //Devolve uma mensagem amigável para a tela exibir
-        return {
-            sucesso: false,
-            mensagem: MENSAGEM_SEM_CONEXAO
-        }
+        return { sucesso: false, mensagem: MENSAGEM_SEM_CONEXAO }
     }
-
 }
 
 //Função que registra a retirada de uma encomenda
@@ -103,41 +139,21 @@ export async function cadastrarEncomenda(nome, descricao, idMorador, detalhes = 
 //como "Esta encomenda já foi retirada!"
 export async function registrarRetiradaEncomenda(id) {
 
-    //Tendanto executar a requisição
-    try{
-
-        //Chamando a função que realiza a requisição no API
+    try {
         let response = await withdrawEncomendaAPI(id)
-
-        //Convertendo o JSON para objetos no JS
         let json = await lerJson(response)
 
-        //Verifica se houve algum erro na requisição
-        if(!response.ok){
-
+        if (!response.ok) {
             return {
                 sucesso: false,
                 mensagem: montarMensagemErro(json, response.status, "Não foi possível registrar a retirada da encomenda.")
             }
         }
 
-        //Retornando o sucesso com a menssagem da API
-        return {
-            sucesso: true,
-            mensagem: json.message
-        }
+        return { sucesso: true, mensagem: json.message }
     }
-    //Casso aconteça algum erro na requisição, cai nesse bloco
-    catch(erro){
-
-        //Exibe o erro no console para depuração
+    catch (erro) {
         console.error("Erro ao registrar a retirada da encomenda na API:", erro)
-
-        //Devolve uma mensagem amigável para a tela exibir
-        return {
-            sucesso: false,
-            mensagem: MENSAGEM_SEM_CONEXAO
-        }
+        return { sucesso: false, mensagem: MENSAGEM_SEM_CONEXAO }
     }
-
 }

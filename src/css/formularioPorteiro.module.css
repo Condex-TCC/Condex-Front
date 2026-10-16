@@ -137,6 +137,19 @@
   max-width: 100%;
 }
 
+/* Campo de seleção (escolha do morador), ocupa a largura do formulário */
+.fp-select {
+  width: 366px;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+.fp-select:disabled {
+  background-color: #f2f2f2;
+  color: #999999;
+  cursor: not-allowed;
+}
+
 /* Linha que agrupa bloco e apartamento */
 .fp-linha-endereco {
   display: flex;
@@ -186,6 +199,18 @@
   font-size: 13px;
   margin: 16px 0 0 0;
   text-align: center;
+}
+
+/* Botão discreto para tentar carregar a lista de moradores de novo */
+.fp-btn-retry {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #2b45a2;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 /* Texto de apoio usado pela tela de retirada */
