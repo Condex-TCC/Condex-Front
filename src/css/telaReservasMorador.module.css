@@ -1,0 +1,198 @@
+/* TELA DE RESERVAS DO MORADOR (HISTÓRICO E CANCELAMENTO) */
+
+/* Container principal da tela */
+.rm-container {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Mesma tipografia do header */
+  color: #001c3f; /* Azul marinho escuro usado como cor de texto em todo o app */
+  width: 100%;
+  max-width: 720px; /* Limita a largura em telas grandes */
+  margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
+  padding-bottom: 8px; /* Pequeno respiro no final da tela */
+}
+
+/* Cabeçalho da tela (título e descrição) */
+.rm-page-header {
+  margin-bottom: 24px; /* Separa o cabeçalho do conteúdo */
+}
+
+.rm-page-title {
+  font-size: 26px; /* Tamanho de título de tela */
+  font-weight: 700; /* Deixa o título mais forte */
+  line-height: 1.2; /* Reduz o espaçamento vertical do texto */
+}
+
+.rm-page-subtitle {
+  margin-top: 4px; /* Pequeno espaço abaixo do título */
+  font-size: 14px; /* Texto de apoio */
+  color: #7a87a7; /* Cinza azulado usado nos textos secundários do projeto */
+}
+
+/* Cada seção da tela (Reservas ativas / Histórico) */
+.rm-section {
+  margin-bottom: 28px; /* Respiro entre as seções */
+}
+
+.rm-section-title {
+  font-size: 16px; /* Tamanho dos títulos de seção */
+  font-weight: 700; /* Deixa o título em negrito */
+  margin-bottom: 12px; /* Espaço entre o título e os cards */
+}
+
+/* Estado vazio, de carregamento e de erro */
+.rm-empty {
+  border: 1px dashed #d4d8e2; /* Contorno tracejado para diferenciar de um card real */
+  border-radius: 10px; /* Arredonda os cantos */
+  background-color: #ffffff; /* Fundo branco */
+  padding: 20px; /* Respiro interno */
+  text-align: center; /* Centraliza o texto */
+  font-size: 14px; /* Tamanho do texto */
+  color: #7a87a7; /* Cinza azulado, indicando que é apenas uma informação */
+}
+
+/* Estado de erro ao carregar as reservas */
+.rm-error {
+  border: 1px solid #f3c6c6; /* Contorno vermelho claro */
+  border-radius: 10px; /* Arredonda os cantos */
+  background-color: #fdecec; /* Fundo vermelho bem claro */
+  color: #a12626; /* Vermelho escuro, garantindo contraste */
+  padding: 16px; /* Respiro interno */
+  font-size: 14px; /* Tamanho do texto */
+  margin-bottom: 16px; /* Separa das seções abaixo */
+}
+
+/* Botão de tentar novamente dentro do erro */
+.rm-btn-retry {
+  display: block; /* Coloca o botão em uma linha própria */
+  margin-top: 10px; /* Separa o botão do texto */
+  background-color: #ffffff; /* Fundo branco */
+  border: 1px solid #a12626; /* Contorno vermelho escuro */
+  border-radius: 8px; /* Arredonda os cantos */
+  color: #a12626; /* Texto vermelho escuro */
+  font-size: 13px; /* Tamanho do texto */
+  font-weight: 700; /* Texto em negrito */
+  padding: 6px 12px; /* Respiro interno */
+  cursor: pointer; /* Indica que o botão é clicável */
+}
+
+/* Mensagem de sucesso ou erro após uma ação */
+.rm-feedback {
+  border-radius: 10px; /* Arredonda os cantos */
+  padding: 12px 14px; /* Respiro interno */
+  font-size: 14px; /* Tamanho do texto */
+  margin-bottom: 16px; /* Separa do conteúdo abaixo */
+}
+
+.rm-feedback--sucesso {
+  background-color: #e4f7e8; /* Verde bem claro */
+  color: #1e7e34; /* Verde escuro */
+}
+
+.rm-feedback--erro {
+  background-color: #fdecec; /* Vermelho bem claro */
+  color: #a12626; /* Vermelho escuro */
+}
+
+/* Card de uma reserva */
+.rm-card {
+  background-color: #ffffff; /* Fundo branco do card */
+  border: 1px solid #eef0f4; /* Contorno claro */
+  border-radius: 10px; /* Arredonda os cantos do card */
+  padding: 14px; /* Respiro interno do card */
+  margin-bottom: 10px; /* Espaço entre os cards da lista */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra leve, igual aos outros cards do morador */
+}
+
+/* Linha de cima do card: nome do espaço e etiqueta de status */
+.rm-card-top {
+  display: flex; /* Coloca nome e etiqueta lado a lado */
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: space-between; /* Empurra a etiqueta para a direita */
+  gap: 12px; /* Espaço mínimo entre nome e etiqueta */
+}
+
+.rm-name {
+  font-size: 15px; /* Tamanho do nome */
+  font-weight: 700; /* Nome em negrito */
+  min-width: 0; /* Permite que o texto encolha em telas estreitas */
+  overflow: hidden; /* Esconde o excesso de texto */
+  text-overflow: ellipsis; /* Mostra reticências em vez de quebrar o layout */
+}
+
+.rm-details {
+  margin-top: 6px; /* Espaço entre o nome e os detalhes */
+  font-size: 13px; /* Tamanho dos detalhes */
+  color: #7a87a7; /* Cinza azulado dos textos secundários */
+  line-height: 1.5; /* Deixa as linhas mais respiradas */
+}
+
+/* Etiqueta de status */
+.rm-badge {
+  flex-shrink: 0; /* Impede que a etiqueta seja espremida */
+  display: inline-block; /* Permite o uso de padding e border-radius */
+  padding: 4px 10px; /* Respiro interno */
+  border-radius: 20px; /* Formato de cápsula */
+  font-size: 11px; /* Texto pequeno */
+  font-weight: 700; /* Texto forte */
+  white-space: nowrap; /* Impede que o texto quebre de linha */
+}
+
+.rm-badge--pendente {
+  background-color: #fff4d6; /* Amarelo bem claro */
+  color: #8a6100; /* Amarelo escuro */
+}
+
+.rm-badge--confirmada {
+  background-color: #e4f7e8; /* Verde bem claro */
+  color: #1e7e34; /* Verde escuro */
+}
+
+.rm-badge--cancelada {
+  background-color: #eceef3; /* Cinza claro */
+  color: #5b6784; /* Cinza azulado escuro */
+}
+
+/* Botão de cancelar a reserva */
+.rm-btn-cancelar {
+  margin-top: 12px; /* Separa o botão dos detalhes */
+  background-color: #ffffff; /* Fundo branco */
+  border: 1px solid #d64545; /* Contorno vermelho */
+  border-radius: 8px; /* Arredonda os cantos */
+  color: #d64545; /* Texto vermelho */
+  font-size: 13px; /* Tamanho do texto */
+  font-weight: 700; /* Texto em negrito */
+  padding: 8px 14px; /* Respiro interno, confortável para o toque */
+  cursor: pointer; /* Indica que o botão é clicável */
+  transition: background-color 0.2s ease-in-out; /* Suaviza a troca de cor */
+}
+
+.rm-btn-cancelar:hover:not(:disabled) {
+  background-color: #fdecec; /* Fundo vermelho claro ao passar o mouse */
+}
+
+.rm-btn-cancelar:disabled {
+  opacity: 0.6; /* Indica que o botão está bloqueado */
+  cursor: not-allowed; /* Mostra que não é possível clicar */
+}
+
+/* Área do botão de nova reserva */
+.rm-action {
+  margin-top: 8px; /* Respiro em relação à última seção */
+}
+
+/* Botão principal que abre o formulário de nova reserva */
+.rm-btn-primary {
+  width: 100%; /* Ocupa toda a largura, o que facilita o toque no celular */
+  background-color: #2b45a2; /* Azul escuro, padrão dos botões do morador */
+  color: #ffffff; /* Texto branco */
+  border: none; /* Remove a borda padrão do botão */
+  border-radius: 10px; /* Arredonda os cantos */
+  padding: 14px 20px; /* Respiro interno */
+  font-size: 15px; /* Tamanho do texto do botão */
+  font-weight: 700; /* Deixa o texto em negrito */
+  cursor: pointer; /* Indica que o botão é clicável */
+  transition: background-color 0.2s ease-in-out; /* Suaviza a troca de cor */
+}
+
+.rm-btn-primary:hover {
+  background-color: #203b8f; /* Escurece o azul ao passar o mouse */
+}

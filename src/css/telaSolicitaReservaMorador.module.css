@@ -1,0 +1,208 @@
+/* FORMULÁRIO DE SOLICITAÇÃO DE RESERVA DO MORADOR */
+
+.sr-container {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Mesma tipografia do header */
+  color: #001c3f; /* Azul marinho escuro usado como cor de texto em todo o app */
+  width: 100%;
+  max-width: 720px; /* Limita a largura em telas grandes */
+  margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
+  padding-bottom: 8px; /* Pequeno respiro no final da tela */
+}
+
+/* Cabeçalho com o botão de voltar e o título */
+.sr-header {
+  display: flex; /* Coloca o botão e o título lado a lado */
+  align-items: center; /* Centraliza verticalmente */
+  gap: 12px; /* Espaço entre o botão e o título */
+  margin-bottom: 20px; /* Separa o cabeçalho do formulário */
+}
+
+/* Botão de voltar para a lista de reservas */
+.sr-btn-voltar {
+  flex-shrink: 0; /* Impede que o botão seja espremido */
+  background-color: #ffffff; /* Fundo branco */
+  border: 1px solid #d4d8e2; /* Contorno claro */
+  border-radius: 8px; /* Arredonda os cantos */
+  color: #2b45a2; /* Texto azul */
+  font-size: 14px; /* Tamanho do texto */
+  font-weight: 700; /* Deixa o texto em negrito */
+  padding: 8px 12px; /* Respiro interno */
+  cursor: pointer; /* Indica que o botão é clicável */
+}
+
+.sr-btn-voltar:hover {
+  background-color: #eef2ff; /* Leve fundo azul ao passar o mouse */
+}
+
+.sr-title {
+  font-size: 22px; /* Tamanho do título da tela */
+  font-weight: 700; /* Deixa o título em negrito */
+  line-height: 1.2; /* Reduz o espaçamento vertical do texto */
+}
+
+/* Texto de apoio que explica o que a tela faz */
+.sr-subtitle {
+  margin: -14px 0 20px 0; /* Sobe o texto para ficar logo abaixo do título */
+  font-size: 14px; /* Tamanho do texto */
+  color: #7a87a7; /* Cinza azulado dos textos secundários do projeto */
+}
+
+/* Estado vazio ou de carregamento */
+.sr-empty {
+  border: 1px dashed #d4d8e2; /* Contorno tracejado */
+  border-radius: 10px; /* Arredonda os cantos */
+  background-color: #ffffff; /* Fundo branco */
+  padding: 20px; /* Respiro interno */
+  text-align: center; /* Centraliza o texto */
+  font-size: 14px; /* Tamanho do texto */
+  color: #7a87a7; /* Cinza azulado */
+}
+
+/* Área que agrupa todos os campos do formulário */
+.sr-form {
+  display: grid; /* Usa grid para organizar os campos em duas colunas */
+  grid-template-columns: 1fr 1fr; /* Duas colunas de largura igual */
+  gap: 16px; /* Espaço entre os campos */
+}
+
+/* Cada campo do formulário */
+.sr-field {
+  display: flex; /* Empilha o rótulo e o input */
+  flex-direction: column; /* Coloca o rótulo acima do input */
+}
+
+/* Campo que ocupa a linha inteira */
+.sr-field--full {
+  grid-column: 1 / -1; /* Estende o campo de ponta a ponta da grade */
+}
+
+.sr-field label {
+  font-size: 13px; /* Tamanho do rótulo */
+  font-weight: 600; /* Deixa o rótulo com um pouco mais de destaque */
+  margin-bottom: 6px; /* Espaço entre o rótulo e o campo */
+}
+
+.sr-field input,
+.sr-field select {
+  height: 46px; /* Altura confortável para o toque no celular */
+  box-sizing: border-box; /* Inclui a borda dentro da altura definida */
+  border: 1px solid #d4d8e2; /* Contorno claro */
+  border-radius: 8px; /* Arredonda os cantos do campo */
+  outline: none; /* Remove o contorno padrão ao clicar */
+  padding: 0 12px; /* Respiro interno do texto */
+  font-size: 14px; /* Tamanho do texto digitado */
+  color: #001c3f; /* Cor do texto digitado */
+  background-color: #ffffff; /* Fundo branco do campo */
+  width: 100%; /* Ocupa toda a largura da coluna */
+}
+
+.sr-field input:focus,
+.sr-field select:focus {
+  border-color: #2b45a2; /* Destaca o campo que está sendo editado */
+  box-shadow: 0 0 0 1px #2b45a2; /* Reforça o destaque com um halo azul */
+}
+
+/* Aviso de que a área exige aprovação do síndico */
+.sr-hint {
+  margin-top: 6px; /* Separa do campo */
+  font-size: 12px; /* Texto pequeno */
+  color: #8a6100; /* Amarelo escuro */
+}
+
+/* Painel de disponibilidade */
+.sr-disponibilidade {
+  border: 1px solid #d4d8e2; /* Contorno claro */
+  border-radius: 10px; /* Arredonda os cantos */
+  background-color: #ffffff; /* Fundo branco */
+  padding: 14px; /* Respiro interno */
+  font-size: 13px; /* Tamanho do texto */
+}
+
+.sr-disponibilidade-titulo {
+  font-weight: 700; /* Título em negrito */
+  margin-bottom: 6px; /* Separa do conteúdo */
+}
+
+.sr-disponibilidade-texto {
+  color: #7a87a7; /* Cinza azulado dos textos secundários */
+  line-height: 1.5; /* Deixa o texto mais respirado */
+}
+
+/* Lista dos horários que o morador já reservou naquele dia */
+.sr-horarios {
+  list-style: none; /* Remove os marcadores */
+  margin: 8px 0; /* Espaço acima e abaixo da lista */
+  padding: 0; /* Remove o recuo padrão */
+}
+
+.sr-horario {
+  padding: 6px 10px; /* Respiro interno */
+  border-radius: 8px; /* Arredonda os cantos */
+  background-color: #eef2ff; /* Azul bem claro */
+  color: #2b45a2; /* Azul escuro */
+  margin-bottom: 4px; /* Espaço entre os itens */
+}
+
+/* Horário que conflita com o intervalo escolhido */
+.sr-horario--conflito {
+  background-color: #fdecec; /* Vermelho bem claro */
+  color: #a12626; /* Vermelho escuro */
+  font-weight: 700; /* Destaca o conflito */
+}
+
+/* Mensagem de erro ou de indisponibilidade acima do botão */
+.sr-mensagem {
+  border-radius: 10px; /* Arredonda os cantos */
+  padding: 12px 14px; /* Respiro interno */
+  font-size: 14px; /* Tamanho do texto */
+}
+
+.sr-mensagem--erro {
+  background-color: #fdecec; /* Vermelho bem claro */
+  color: #a12626; /* Vermelho escuro */
+}
+
+.sr-mensagem--indisponivel {
+  background-color: #fff4d6; /* Amarelo bem claro */
+  color: #8a6100; /* Amarelo escuro */
+}
+
+/* Área do botão de solicitar */
+.sr-action {
+  margin-top: 8px; /* Respiro em relação ao último campo */
+}
+
+/* Botão principal que envia a solicitação */
+.sr-btn-solicitar {
+  width: 100%; /* Ocupa toda a largura, o que facilita o toque no celular */
+  background-color: #2b45a2; /* Azul escuro, padrão dos botões do morador */
+  color: #ffffff; /* Texto branco */
+  border: none; /* Remove a borda padrão do botão */
+  border-radius: 10px; /* Arredonda os cantos */
+  padding: 14px 20px; /* Respiro interno */
+  font-size: 15px; /* Tamanho do texto do botão */
+  font-weight: 700; /* Deixa o texto em negrito */
+  cursor: pointer; /* Indica que o botão é clicável */
+  transition: background-color 0.2s ease-in-out; /* Suaviza a troca de cor */
+}
+
+.sr-btn-solicitar:hover:not(:disabled) {
+  background-color: #203b8f; /* Escurece o azul ao passar o mouse */
+}
+
+.sr-btn-solicitar:disabled {
+  opacity: 0.6; /* Indica que o botão está bloqueado */
+  cursor: not-allowed; /* Mostra que não é possível clicar */
+}
+
+/* Telas estreitas: os campos passam a ocupar uma coluna por vez */
+@media (max-width: 560px) {
+
+  .sr-form {
+    grid-template-columns: 1fr; /* Uma única coluna */
+  }
+
+  .sr-field--full {
+    grid-column: auto; /* Deixa de ocupar duas linhas, já que existe só uma coluna */
+  }
+}

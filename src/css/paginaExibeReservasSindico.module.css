@@ -64,21 +64,76 @@
   gap: 40px;
 }
 
-/* Local reservado para o calendário */
-.calendarPlaceholder {
+/* Agenda com as reservas do dia escolhido */
+.agenda {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f9fafb;
-  border: 1px dashed #d1d5db;
-  border-radius: 12px;
-  min-height: 380px;
-  color: #6b7280;
-  font-size: 16px;
+  min-width: 0; /* Permite que a agenda encolha sem estourar a tela */
 }
 
-/* Barra lateral com as solicitações e próximas reservas */
+/* Seletor de dia da agenda */
+.dayPicker {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+/* Botões de navegação entre os dias */
+.dayButton {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  color: #274092;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.dayButton:hover {
+  background-color: #eef2ff;
+}
+
+/* Campo para escolher o dia */
+.dayInput {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #111827;
+  background-color: #ffffff;
+}
+
+/* Estado vazio e de carregamento das listas */
+.empty {
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  padding: 20px;
+  margin: 0 0 24px 0;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Estado de erro ao carregar as listas */
+.error {
+  border: 1px solid #f3c6c6;
+  border-radius: 12px;
+  background-color: #fdecec;
+  padding: 16px;
+  margin: 0 0 24px 0;
+  font-size: 14px;
+  color: #a12626;
+}
+
+/* Espaço entre os cards da agenda */
+.cardGap {
+  margin-bottom: 12px;
+}
+
+/* Barra lateral com as solicitações pendentes */
 .sidebar {
   width: 320px;
   display: flex;

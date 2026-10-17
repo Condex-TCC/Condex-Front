@@ -13,6 +13,12 @@ export default function PaginaCadastraArea() {
   const [descricao, setDescricao] = useState("")
   const [autorizacao, setAutorizacao] = useState(false)
 
+  //State com a mensagem de erro exibida no formulário
+  const [erro, setErro] = useState("")
+
+  //State que bloqueia o botão enquanto a área é cadastrada
+  const [enviando, setEnviando] = useState(false)
+
   //Função que pega o valor e altera o estado
   const nomeState = (evento) => {
 
@@ -36,8 +42,31 @@ export default function PaginaCadastraArea() {
 
   const cadastraRegra = async () => {
     
+    //A API exige nome e descrição | Impede o envio com campos vazios
+    if(!nome.trim() || !descricao.trim()){
+
+      setErro("Preencha o nome e a descrição da área comum.")
+
+      return
+    }
+
+    //Limpa o erro anterior e bloqueia o botão
+    setErro("")
+    setEnviando(true)
+
     //Chama a função que cadastra as regras
-    let message = await insertAreaComun(nome, descricao, autorizacao)
+    let message = await insertAreaComun(nome.trim(), descricao.trim(), autorizacao)
+
+    //Libera o botão
+    setEnviando(false)
+
+    //O service devolve undefined quando a API recusa ou falha | Não pode exibir sucesso nesse caso
+    if(!message){
+
+      setErro("Não foi possível cadastrar a área comum. Verifique os dados, a conexão com a API e se você está logado como síndico.")
+
+      return
+    }
 
     //Chama a tela de menssagem
     navigate('/sindico/mensagem', {
@@ -104,10 +133,24 @@ export default function PaginaCadastraArea() {
           </label>
         </div>
         {/* Fim dos Radio Buttons */}
+
+        {/* Explica o efeito da escolha, pois só reservas de áreas com autorização chegam ao síndico */}
+        <p style={{ margin: 0, fontSize: 13, color: '#6b7280' }}>
+          Escolhendo "Sim", as reservas dessa área ficam pendentes até a sua aprovação.
+          Escolhendo "Não", elas são confirmadas automaticamente e não passam por você.
+        </p>
         
+        {/* Mensagem de erro do formulário */}
+        {
+          erro &&
+          <p role="alert" style={{ border: '1px solid #f3c6c6', borderRadius: 12, backgroundColor: '#fdecec', color: '#a12626', padding: 16, fontSize: 14, margin: 0 }}>
+            {erro}
+          </p>
+        }
+
         <div className={styles.submitContainer}>
-          <button type="submit" className={styles.submitButton}>
-            Adicionar
+          <button type="submit" className={styles.submitButton} disabled={enviando}>
+            {enviando ? 'Adicionando...' : 'Adicionar'}
           </button>
         </div>
       </form>

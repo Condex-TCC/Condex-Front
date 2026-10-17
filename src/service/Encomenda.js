@@ -91,8 +91,11 @@ export async function getEncomendas() {
             throw (montarMensagemErro(json, response.status, "Não foi possível buscar as encomendas."))
         }
 
-        const lista = Array.isArray(json.data) ? json.data : []
-        return lista.map(normalizarEncomenda)
+        let lista = Array.isArray(json.data) ? json.data : []
+        if (!Array.isArray(lista) && Array.isArray(json.data?.encomendas)) {
+            lista = json.data.encomendas
+        }
+        return Array.isArray(lista) ? lista.map(normalizarEncomenda) : []
     }
     catch (erro) {
         console.error("Erro ao buscar as encomendas na API:", erro)

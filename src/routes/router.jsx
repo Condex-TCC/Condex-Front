@@ -43,6 +43,8 @@ import PaginaRegistroVisitante from '../pages/porteiro/RegistroVisitante';
 import PaginaVisitantesMorador from '../pages/morador/telaVisitantesMorador';
 import PaginaCadastraVisitanteMorador from '../pages/morador/telaCadastraVisitanteMorador';
 import PaginaEmBreveMorador from '../pages/morador/telaEmBreveMorador';
+import PaginaReservasMorador from '../pages/morador/telaReservasMorador';
+import PaginaSolicitaReservaMorador from '../pages/morador/telaSolicitaReservaMorador';
 import PaginaExibeComunicados from '../pages/sindico/comunicados/telaExibeComunicados';
 import PaginaExibeResposta from '../pages/sindico/comunicados/telaExibeRespostas';
 import PaginaExibeEnvios from '../pages/sindico/comunicados/telaExibeEnvios';
@@ -284,10 +286,16 @@ const route = createBrowserRouter([
                         element: <PaginaCadastraVisitanteMorador />,
                     },
 
-                    //Tela de reservas do morador
+                    //Tela de reservas do morador | Histórico e cancelamento
                     {
                         path: "reservas", // Renderiza no caminho "/morador/reservas"
-                        element: <PaginaEmBreveMorador titulo="Reservas" descricao="Agende e acompanhe as reservas das áreas comuns." />,
+                        element: <PaginaReservasMorador />,
+                    },
+
+                    //Tela de solicitação de reserva de área comum
+                    {
+                        path: "reservas/nova", // Renderiza no caminho "/morador/reservas/nova"
+                        element: <PaginaSolicitaReservaMorador />,
                     },
 
                     //Tela de mensagens do morador

@@ -50,8 +50,16 @@ export default function PaginaAutorizaRerva() {
     //Chama a função que autoriza a reserva
     let resposta = await aprovaReserva(id, true)
 
-    //Exibe a resposta
-    alert(resposta)
+    //O service devolve undefined quando a API falha | Permanece na tela para tentar de novo
+    if(!resposta){
+
+      alert("Não foi possível aprovar a reserva. Tente novamente.")
+
+      return
+    }
+
+    //Exibe a mensagem própria da tela, pois a API responde "cancelada" também ao aprovar
+    alert("Reserva aprovada com sucesso.")
 
     //Chama a função que realiza o redirecionamento
     back()
@@ -64,8 +72,16 @@ export default function PaginaAutorizaRerva() {
     //Chama a função que reprova a reserva
     let resposta = await aprovaReserva(id, false)
 
-    //Exibe a resposta
-    alert(resposta)
+    //O service devolve undefined quando a API falha | Permanece na tela para tentar de novo
+    if(!resposta){
+
+      alert("Não foi possível recusar a reserva. Tente novamente.")
+
+      return
+    }
+
+    //Exibe a mensagem de sucesso
+    alert("Reserva recusada com sucesso.")
 
     //Chama a função que realiza o redirecionamento
     back()

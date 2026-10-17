@@ -15,14 +15,20 @@ export default function PaginaGerenciaReservas() {
     //Criando um estado para controlar os card que serão exibidos
     const [cards, setCards] = useState([])
 
+    //Estado que indica que a API não devolveu as áreas comuns
+    const [erro, setErro] = useState(false)
+
     //Função que chama a função para obter as areas comuns
     const exibeAreas = async () => {
     
         //Chama a função de regras e obtem os dados
         let areas = await obtendoAreasComuns()
     
+        //O service devolve undefined quando a API falha | Evita quebrar a tela com a lista indefinida
+        setErro(!Array.isArray(areas))
+
         //Altera o estado da variável e recarrega a página
-        setCards(areas)
+        setCards(Array.isArray(areas) ? areas : [])
     }
 
 
@@ -73,6 +79,14 @@ export default function PaginaGerenciaReservas() {
               <button className={styles.primaryButton} onClick={cadastraArea}>+ Registrar Area comum</button>
 
             </div>
+
+            {/* Aviso exibido quando não foi possível carregar as áreas comuns */}
+            {
+              erro &&
+              <p role="alert" style={{ border: '1px solid #f3c6c6', borderRadius: 12, backgroundColor: '#fdecec', color: '#a12626', padding: 16, fontSize: 14, marginBottom: 16 }}>
+                Não foi possível carregar as áreas comuns. Verifique a conexão com a API e se você está logado como síndico.
+              </p>
+            }
 
             {/* Div onde será carregada os cards com as areas comuns */}
             <div>

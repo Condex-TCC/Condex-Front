@@ -14,6 +14,9 @@ function PaginaExibeAprovaReservas(){
     //Hook que irá armazenar os cards
     const [cards, setCards] = useState([])
 
+    //Estado que indica que a API não devolveu as reservas pendentes
+    const [erro, setErro] = useState(false)
+
     //Hook que realiza a navegação
     const navigate = useNavigate()
     
@@ -30,11 +33,12 @@ function PaginaExibeAprovaReservas(){
         //Chamando as reservas da api
         const response = await getReservaPendentes()
 
-        //Desestruturando o objeto para obter a propriedade reservas
-        const { reservas } = await response
+        //O service devolve undefined quando a API falha | Evita quebrar a tela
+        const reservas = response?.reservas
 
         //Definindo o estado com array de reservas
-        setCards(reservas)
+        setErro(!Array.isArray(reservas))
+        setCards(Array.isArray(reservas) ? reservas : [])
     }
 
     //useEffect para é chamado quando a página carrega
@@ -62,6 +66,14 @@ function PaginaExibeAprovaReservas(){
               </button>
 
           </header>
+
+          {/* Aviso exibido quando não foi possível carregar as reservas */}
+          {
+            erro &&
+            <p role="alert" style={{ border: '1px solid #f3c6c6', borderRadius: 12, backgroundColor: '#fdecec', color: '#a12626', padding: 16, fontSize: 14, marginBottom: 16 }}>
+              Não foi possível carregar as reservas pendentes. Verifique a conexão com a API e se você está logado como síndico.
+            </p>
+          }
 
           {/* Div onde será carregado os cards com as reservas pendentes */}
           <div>

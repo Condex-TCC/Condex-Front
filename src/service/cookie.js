@@ -13,8 +13,8 @@ function SetCookie(authorizationToken, tipoUsuario){
         //Atributos do token
         {
             expires: 7, //Define data de expiração
-            secure: true, // Só será enviado em conexões HTTPS
-            sameSite: 'strict' // Protege contra ataques CSRF
+            secure: window.location.protocol === 'https:', // Só será enviado em conexões HTTPS
+            sameSite: 'lax' // Protege contra ataques CSRF
         }
     )
 
@@ -25,8 +25,8 @@ function SetCookie(authorizationToken, tipoUsuario){
         //Atributos do token
         {
             expires: 7, //Define data de expiração
-            secure: true, // Só será enviado em conexões HTTPS
-            sameSite: 'strict' // Protege contra ataques CSRF
+            secure: window.location.protocol === 'https:', // Só será enviado em conexões HTTPS
+            sameSite: 'lax' // Protege contra ataques CSRF
         }
     )
 }

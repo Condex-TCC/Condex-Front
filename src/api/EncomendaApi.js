@@ -18,7 +18,7 @@ export async function getEncomendasAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/encomenda/get"
+    let endPoint = "/api/porteiro/encomenda/get"
 
     //Criando a requisição
     const requisicao = fetch(
@@ -31,6 +31,7 @@ export async function getEncomendasAPI(){
                 'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
                 "Authorization": `Bearer ${token}` //Eniva o token de autorização
             },
+            credentials: 'same-origin'
         }
     )
 
@@ -56,7 +57,7 @@ export async function insertEncomendaAPI(nome, descricao, idMorador, detalhes = 
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/encomenda/create"
+    let endPoint = "/api/porteiro/encomenda/create"
 
     //Objeto com os elementos
     let novaEncomenda = {
@@ -77,6 +78,7 @@ export async function insertEncomendaAPI(nome, descricao, idMorador, detalhes = 
                 'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
                 "Authorization": `Bearer ${token}` //Eniva o token de autorização
             },
+            credentials: 'same-origin',
 
             //Passando o corpo da requisição
             body: JSON.stringify(novaEncomenda) //Convertendo o objeto em Json
@@ -101,7 +103,7 @@ export async function withdrawEncomendaAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/encomenda/withdraw/" + id
+    let endPoint = "/api/porteiro/encomenda/withdraw/" + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -114,6 +116,7 @@ export async function withdrawEncomendaAPI(id){
                 'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
                 "Authorization": `Bearer ${token}` //Eniva o token de autorização
             },
+            credentials: 'same-origin'
         }
     )
 
