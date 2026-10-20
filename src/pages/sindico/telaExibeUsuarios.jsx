@@ -95,7 +95,6 @@ function PaginaExibeUsuarios(){
                   <th className={styles.th}>CPF</th>
                   <th className={styles.th}>telefone</th>
                   <th className={styles.th}>Unidade</th>
-                  <th className={styles.thCenter}>Editar</th>
                   <th className={styles.thCenter}>Apagar</th>
                 </tr>
               ) :
@@ -105,7 +104,8 @@ function PaginaExibeUsuarios(){
                   <th className={styles.th}>Nome</th>
                   <th className={styles.th}>Perfil</th>
                   <th className={styles.th}>E-mail</th>
-                  <th className={styles.thCenter}>Editar</th>
+                  <th className={styles.th}>CPF</th>
+                  <th className={styles.th}>telefone</th>
                   <th className={styles.thCenter}>Apagar</th>
                 </tr>
               )

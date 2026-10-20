@@ -19,7 +19,6 @@ import PaginaExibeUsuarios from '../pages/sindico/telaExibeUsuarios';
 import PaginaCadastraPorteiro from '../pages/sindico/telaCadastraPorteiro';
 import PaginaCadastraMorador from '../pages/sindico/telaCadastraMorador';
 import PaginaMenssagem from '../pages/sindico/telaMenssagem';
-import PaginaAtualizaPorteiro from '../pages/sindico/telaAtualizaPorteiro';
 import PaginaExibeRegrasLaudos from '../pages/sindico/telaExibeRegrasLaudos';
 import PaginaCadastraRegra from '../pages/sindico/telaCadastraRegras';
 import PaginaAtualizaRegra from '../pages/sindico/telaAtualizaRegras';
@@ -28,7 +27,6 @@ import PaginaAtualizaLaudos from '../pages/sindico/telaAtualizaLaudo';
 import PaginaCadastraApertamento from '../pages/sindico/telaCadastraApertamento';
 import PaginaAtualizaApertamento from '../pages/sindico/telaAtualizaApertamento';
 import PaginaSelecionaApertamento from '../pages/sindico/telaSelecionaApartamento';
-import PaginaAtualizaMorador from '../pages/sindico/telaAtualizaMorador';
 import PaginaSelecionaApertamentoUpdate from '../pages/sindico/telaSelecionaApartamentoUpdate';
 import PaginaExibeReserva from '../pages/sindico/reservas/telaExibeReservas';
 import PaginaGerenciaReservas from '../pages/sindico/reservas/telaGerenciamentoReservas';
@@ -121,12 +119,6 @@ const route = createBrowserRouter([
                         element: <PaginaCadastraMorador></PaginaCadastraMorador>,
                     },
 
-                    //Tela para para cadastrar os moradoes
-                    {
-                        path: "usuarios/morador/updade/:id", // Caminho que vai ser acessado na URL
-                        element: <PaginaAtualizaMorador></PaginaAtualizaMorador>,
-                    },
-
                     //Tela de sucesso no cadastro
                     {
                         path: "mensagem", // Caminho que vai ser acessado na URL
@@ -137,13 +129,6 @@ const route = createBrowserRouter([
                     {
                         path: "usuarios/morador/apertamento/update", // Caminho que vai ser acessado na URL
                         element: <PaginaSelecionaApertamentoUpdate></PaginaSelecionaApertamentoUpdate>,
-                    },
-
-                    //Tela de updadte do porteiro
-                    {
-                        //Essa rota recebe um parametro na url
-                        path: "usuarios/porteiro/update/:id", // Caminho que vai ser acessado na URL
-                        element: <PaginaAtualizaPorteiro></PaginaAtualizaPorteiro>,
                     },
 
                     //Tela de exibir regras
