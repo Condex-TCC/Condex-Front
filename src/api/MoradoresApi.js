@@ -91,7 +91,7 @@ export async function vefifyMoradorAPI(id){
 }
 
 //Função que que salva no banco de dados o novo morador
-export async function insertMoradorAPI(nome, cpf, email, telefone, senha, id_unidade){
+export async function insertMoradorAPI(email, id_unidade){
 
     //Receperando o token de outorização
     let cookie = await GetCookie()
@@ -102,11 +102,7 @@ export async function insertMoradorAPI(nome, cpf, email, telefone, senha, id_uni
 
     //Objeto com os elementos
     let novaRegra = {
-        nome: nome,
-        cpf: cpf,
         email: email,
-        telefone: telefone,
-        password: senha,
         id_unidade: id_unidade,
     }
 

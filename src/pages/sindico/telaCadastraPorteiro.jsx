@@ -11,34 +11,20 @@ function PaginaCadastraPorteiro(){
     const navigate = useNavigate();
 
     //Criando estado para controlar as variáveis das inputs
-    const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
 
     //Função que obtem os evento realizam a troca dos valores
-    const toogleNome = (evento) => {
-
-      //Realizando a troca do estado pelo nome
-      setNome(evento.target.value)
-    }
-
     const toogleEmail = (evento) => {
 
       //Realizando a troca do estado pelo email
       setEmail(evento.target.value)
     }
 
-    const tooglePassword = (evento) => {
-
-      //Realizando a troca do estado pela senha
-      setPassword(evento.target.value)
-    }
-
     //Função que realiza o cadastro
     const cadastraPorteiro = async () => {
 
       //Chama a função que realiza o login
-      let messagePorteiro = await criandoPorteiro(nome, email, password)
+      let messagePorteiro = await criandoPorteiro(email)
 
 
       //Chama a tela de menssagem
@@ -76,22 +62,10 @@ function PaginaCadastraPorteiro(){
         {/* Coluna da Esquerda: Campos de entrada de dados */}
         <div className={styles.inputsColumn}>
           <input 
-            type="text" 
-            placeholder="Nome completo" 
-            className={styles.inputField} 
-            onChange={toogleNome}
-          />
-          <input 
             type="email" 
             placeholder="E-mail" 
             className={styles.inputField} 
             onChange={toogleEmail}
-          />
-          <input 
-            type="text" 
-            placeholder="Senha" 
-            className={styles.inputField} 
-            onChange={tooglePassword}
           />
         </div>
 

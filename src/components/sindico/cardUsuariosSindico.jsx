@@ -33,10 +33,9 @@ function CardMorador({morador, redenriza}){
     //Retorna o componenete
     return(
         <tr>
-            <td className={styles.td}>{morador.nome}</td>
-            <td className={styles.td}>Morador</td>
-            <td className={styles.td}>{morador.cpf}</td>
-            <td className={styles.td}>{morador.telefone}</td>
+            <td className={styles.td}>{morador.nome == null ? "Não foi realido o primeiro acesso" : morador.nome}</td>
+            <td className={styles.td}>{morador.cpf == null ? "Vazio" : morador.cpf}</td>
+            <td className={styles.td}>{morador.telefone == null ? "Vazio" : morador.telefone}</td>
             <td className={styles.td}>{morador.unidade.bloco} - {morador.unidade.numero}</td>
 
             {/* Button que deleta */}
@@ -83,11 +82,10 @@ function CardPorteiro({porteiro, redenriza}){
     //Retorna o componenete
     return(
         <tr>
-            <td className={styles.td}>{porteiro.nome}</td>
-            <td className={styles.td}>Porteiro</td>
+            <td className={styles.td}>{porteiro.nome == null ? "Não foi realido o primeiro acesso" : porteiro.nome}</td>
             <td className={styles.td}>{porteiro.email}</td>
-            <td className={styles.td}>{porteiro.cpf}</td>
-            <td className={styles.td}>{porteiro.telefone}</td>
+            <td className={styles.td}>{porteiro.cpf == null ? "Vázio" : porteiro.cpf}</td>
+            <td className={styles.td}>{porteiro.telefone == null ? "Vazio" : porteiro.telefone}</td>
 
             {/* Delete */}
             <td className={styles.tdCenter}>

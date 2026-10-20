@@ -60,7 +60,7 @@ export async function deletePorteirosAPI(id){
 }
 
 //Função que interaje com o login
-export async function insertPorteiroAPI(nome, email, password){
+export async function insertPorteiroAPI(email){
 
     //Receperando o token de outorização
     let cookie = await GetCookie()
@@ -71,9 +71,7 @@ export async function insertPorteiroAPI(nome, email, password){
 
     //Objeto com os elementos
     let novoPorteiro = {
-        nome: nome,
 	    email: email,
-	    password: password
     }
 
     //Criando a requisição

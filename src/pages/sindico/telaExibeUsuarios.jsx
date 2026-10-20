@@ -91,7 +91,6 @@ function PaginaExibeUsuarios(){
               (
                 <tr>
                   <th className={styles.th}>Nome</th>
-                  <th className={styles.th}>Perfil</th>
                   <th className={styles.th}>CPF</th>
                   <th className={styles.th}>telefone</th>
                   <th className={styles.th}>Unidade</th>
@@ -102,7 +101,6 @@ function PaginaExibeUsuarios(){
               (
                 <tr>
                   <th className={styles.th}>Nome</th>
-                  <th className={styles.th}>Perfil</th>
                   <th className={styles.th}>E-mail</th>
                   <th className={styles.th}>CPF</th>
                   <th className={styles.th}>telefone</th>

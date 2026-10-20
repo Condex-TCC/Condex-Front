@@ -141,13 +141,13 @@ export async function deletePorterio(id) {
 }
 
 //Função que realiza a gravação no porteiro
-export async function criandoPorteiro(nome, email, password) {
+export async function criandoPorteiro(email) {
     
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await insertPorteiroAPI(nome, email, password)
+        let response = await insertPorteiroAPI(email)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()
@@ -239,13 +239,13 @@ export async function verifyMorador(id) {
 }
 
 //Função que salva o morador no banco de dados
-export async function insertMorador(nome, cpf, email, telefone, senha, id_unidade) {
+export async function insertMorador(email, id_unidade) {
     
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await insertMoradorAPI(nome, cpf, email, telefone, senha, id_unidade)
+        let response = await insertMoradorAPI(email, id_unidade)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()
