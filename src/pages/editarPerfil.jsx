@@ -10,32 +10,41 @@ function PaginaEditarPerfil(){
 
     //Estado que ermazena o estado da aplicação
     const [usuarioCookie, setUsuario] = useState("")
-    const [dadosUsuario, setDadosUsuario] = useState({})
+
+    //State com os dados do usuário
+    const [idUser, setId] = useState(0)
+    const [nomeUser, setNome] = useState("")
+    const [emailUser, setEmail] = useState("")
+    const [telefoneUser, setTelefone] = useState("")
+    const [cpfUser, setCpf] = useState("")
 
     //Hook responsavel por realizar a navegação de volta
     const navigate = useNavigate()
 
-    //Função que recupera dos cookies o usuário logado
-    const getUserCookie = () => {
+    //Função que recupera os dados do usário logado
+    const obtendoUsuario = async () => {
 
         //Chamando a função que recupera os usuários logados
         let cookie = GetCookie();
 
         //Alterando o estado
         setUsuario(cookie.tipo)
-    }
-
-    //Função que recupera os dados do usário logado
-    const obtendoUsuario = async () => {
 
         //Chama a função que busca os dados do usuário
-        const response = await getUser(usuarioCookie)
+        const response = await getUser(cookie.tipo)
 
         //Desestrutura os dados
         const { usuario } = await response
 
-        //Salvando no state o usuário
-        setDadosUsuario(usuario)
+        //Desestruturando os usuários
+        const { id, nome, email, telefone, cpf} = await usuario
+
+        //Salvando no state
+        setId(id)
+        setNome(nome)
+        setEmail(email)
+        setTelefone(telefone)
+        setCpf(cpf)
     }
 
     //Função que realiza o updade do usuário
@@ -48,15 +57,8 @@ function PaginaEditarPerfil(){
     useEffect(() => {
 
         //Chama a função que busca o usuário
-        getUserCookie()
-    }, [])
-
-    //useEffect que é executado quando o usuário é recuperado
-    useEffect(() => {
-
-        //Chamando a função que obtem o usuário
         obtendoUsuario()
-    }, [usuarioCookie])
+    }, [])
 
     //Função que realiza a navegação deacordo com o nivel de acesso
     const redirec = () => {
@@ -91,7 +93,7 @@ function PaginaEditarPerfil(){
 
     //Retona um objeto
     return (
-        <h1>editar perfil</h1>
+        <h1>editar perfil - ID: {idUser} - Nome: {nomeUser}</h1>
 
         //Irá exbir qual é o tipo de usuário (Sindico, Morador ou Porteiro) dado vindo do state usuário
         //na mesma div mas à direita um botão de voltar
