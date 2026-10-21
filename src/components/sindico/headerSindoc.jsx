@@ -36,6 +36,13 @@ function HeaderSindico(propos){
         navigate('/')
     }
 
+    //Função que redireciona para a página de editar perfil
+    const editarPerfil = () => {
+
+        //Redireciona para a tela de editar perfil
+        navigate('/editarPerfil')
+    }
+
     //Função que altera o estado do hook useConstext para alterar o menu lateral
     const toogleMenuLarateral = () => {
 
@@ -118,9 +125,17 @@ function HeaderSindico(propos){
             {
                 //Verificando se o botão foi clicado
                 menuLogout ? 
+                    // Div que armazena os botões
                     <div className={styles["dropdown-menu"]}>
+
+                        {/* Botão de deslogar */}
                         <button type="button" onClick={deslogar} className={styles["logout-button"]}>
                             Deslogar
+                        </button>
+
+                        {/* Botão de editar perfil */}
+                        <button type="button" onClick={editarPerfil} className={styles["logout-button"]}>
+                            Editar perfil
                         </button>
                     </div>
                 :

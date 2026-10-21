@@ -55,6 +55,7 @@ import PaginaDetalhesComunicados from '../pages/morador/comunicados/telaDetalhes
 import PaginaExibeRegrasMorador from '../pages/morador/RegrasLaudos/telaExibeRegrasMorador';
 import PaginaExibeLaudosMorador from '../pages/morador/RegrasLaudos/telaExibeLaudosMorador';
 import PaginaExibeAprovaReservas from '../pages/sindico/reservas/telaAprovaReserva';
+import PaginaEditarPerfil from '../pages/editarPerfil';
 
 
 //Componente que será utilizado para analisar a URL
@@ -76,12 +77,19 @@ const route = createBrowserRouter([
                         index: true, // Usa index: true para a rota padrão do pai
                         element: <PaginaInical />,
                     },
+
                     //Tela de login
                     {
                         path: "login", // Caminho relativo (sem a barra inicial)
                         element: <TelaDeLogin />,
-                    }
+                    },
                 ]
+            },
+
+            //Tela de editar perfil
+            {
+                path: "/editarPerfil",
+                element: <PaginaEditarPerfil></PaginaEditarPerfil>
             },
 
             //Tela do sindico
