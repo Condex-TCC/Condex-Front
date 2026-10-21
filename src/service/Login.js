@@ -1,6 +1,6 @@
 //Arquivo responsavel por intermediar a lógica entre a telaLogin e a API
 
-import { getUserAPI, LoginApi } from "../api/LoginApi";
+import { EditarPerilAPI, getUserAPI, LoginApi } from "../api/LoginApi";
 
 //Função responsavel por realizar o login
 export async function HendleLogin(emial, password){
@@ -45,7 +45,7 @@ export async function HendleLogin(emial, password){
 }
 
 //Função que edita os dados do usuário
-export async function EditarPerilAPI(usuario, nome, email, telefone, cpf){
+export async function EditarPeril(usuario, nome, email, telefone, cpf){
 
     //Tentando executar a operação de login
     try{

@@ -44,6 +44,13 @@ function HeaderMorador(){
         setMenuLateral( menuLateral === 'fechado' ? "aberto" : 'fechado')
     }
 
+    //Função que redireciona para a página de editar perfil
+    const editarPerfil = () => {
+
+        //Redireciona para a tela de editar perfil
+        navigate('/editarPerfil')
+    }
+
     //Retorna o componente
     return ( 
     <header className={styles.header}>
@@ -122,6 +129,10 @@ function HeaderMorador(){
                     <div className={styles["dropdown-menu"]}>
                         <button type="button" onClick={deslogar} className={styles["logout-button"]}>
                             Deslogar
+                        </button>
+                        {/* Botão de editar perfil */}
+                        <button type="button" onClick={editarPerfil} className={styles["logout-button"]}>
+                            Editar perfil
                         </button>
                     </div>
                 :

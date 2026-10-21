@@ -32,6 +32,13 @@ function HeaderPorteiro(){
         navigate('/')
     }
 
+    //Função que redireciona para a página de editar perfil
+    const editarPerfil = () => {
+
+        //Redireciona para a tela de editar perfil
+        navigate('/editarPerfil')
+    }
+
     //Retorna um componenete
     return (
 
@@ -95,6 +102,10 @@ function HeaderPorteiro(){
                         <div className={styles["dropdown-menu"]}>
                             <button type="button" onClick={deslogar} className={styles["logout-button"]}>
                                 Deslogar
+                            </button>
+                              {/* Botão de editar perfil */}
+                            <button type="button" onClick={editarPerfil} className={styles["logout-button"]}>
+                                Editar perfil
                             </button>
                         </div>
                     :

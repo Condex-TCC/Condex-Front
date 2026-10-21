@@ -64,6 +64,8 @@ export async function EditarPerilAPI(usuario, nome, email, telefone, cpf){
             //Passando os headers
             headers: {
                 'Content-Type': 'application/json', //Tipo de formatação
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
+                "Authorization": `Bearer ${token}` //Eniva o token de autorização
             },
 
             //Passando o corpo da requisição
