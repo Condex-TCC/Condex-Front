@@ -1,0 +1,94 @@
+/* CARD DE RECLAMAÇÃO DO MORADOR */
+
+.crm-card {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #001c3f;
+  background-color: #ffffff;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Cabeçalho do card com rótulo e status */
+.crm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Bloco com rótulo e valor */
+.crm-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Rótulo */
+.crm-rotulo {
+  font-size: 13px;
+  font-weight: 700;
+  color: #7a87a7;
+}
+
+/* Valor da reclamação */
+.crm-valor {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #001c3f;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* Etiqueta de status */
+.crm-status {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.crm-status--visualizado {
+  background-color: #e4f7e8;
+  color: #1e7e34;
+}
+
+.crm-status--naoVisualizado {
+  background-color: #f4f5f9;
+  color: #55628b;
+}
+
+/* Bloco da resposta do síndico */
+.crm-resposta {
+  margin: 0;
+  padding: 10px 12px;
+  border-left: 3px solid #2b45a2;
+  border-radius: 6px;
+  background-color: #eef2ff;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.crm-resposta-rotulo {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2b45a2;
+}
+
+.crm-resposta-valor {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #001c3f;
+  word-break: break-word;
+  white-space: pre-wrap;
+}

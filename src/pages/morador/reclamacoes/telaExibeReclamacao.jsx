@@ -3,8 +3,9 @@
 //Importações do arquivo
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getReclamacoes, getReclamacoesMorador } from "../../../service/Reclamacoes"
-
+import { getReclamacoesMorador } from "../../../service/Reclamacoes"
+import CardReclamacaoMorador from "../../../components/morador/reclamacoes/cardReclamacaoMorador"
+import styles from "../../../css/telaExibeReclamacaoMorador.module.css"
 
 //Função que cria o componente
 function PaginaExibeReclamacaoMorador(){
@@ -19,7 +20,7 @@ function PaginaExibeReclamacaoMorador(){
     const cadastraReclamacao = () => {
 
         //Realiza navegação
-        navigate("reclamacoes/cadastra")
+        navigate("/morador/reclamacoes/cadastra")
     }
 
     //Função que obtem os dados 
@@ -27,12 +28,12 @@ function PaginaExibeReclamacaoMorador(){
 
         //Chama a função que obtem os dados
         const response = await getReclamacoesMorador()
-        console.log(response)
         //salvando no state os dados
+        console.log(response)
         setCards(response)
     }
 
-    //useState que executa uma função quando a página é renderizada
+    //useEffect que executa uma função quando a página é renderizada
     useEffect(() => {
 
         //Chama a função que obtem os dados
@@ -41,12 +42,24 @@ function PaginaExibeReclamacaoMorador(){
 
     //Retona o componente
     return(
-        <h1>reclamacao</h1>
-        //Mais ao lado o botão que redireciona para a página onde se cadastra as reclamação
+        <div className={styles['ter-container']}>
+            {/* Cabeçalho da tela */}
+            <div className={styles['ter-header']}>
+                <h1 className={styles['ter-titulo']}>Reclamações</h1>
+                <button type="button" className={styles['ter-btnCadastrar']} onClick={cadastraReclamacao}>
+                    Cadastrar reclamação
+                </button>
+            </div>
 
-        //div onde as cards da reclmação serão renderizados
+            {/* Div onde as cards da reclamação serão renderizados */}
+            <div className={styles['ter-lista']}>
+                {(Array.isArray(cards) ? cards.flat() : []).map((reclamacao) => (
+                    <CardReclamacaoMorador key={reclamacao.id} reclamacao={reclamacao} />
+                ))}
+            </div>
+        </div>
     )
 }
 
-//Exportando o componente o componente
+//Exportando o componente
 export default PaginaExibeReclamacaoMorador
