@@ -56,6 +56,8 @@ import PaginaExibeRegrasMorador from '../pages/morador/RegrasLaudos/telaExibeReg
 import PaginaExibeLaudosMorador from '../pages/morador/RegrasLaudos/telaExibeLaudosMorador';
 import PaginaExibeAprovaReservas from '../pages/sindico/reservas/telaAprovaReserva';
 import PaginaEditarPerfil from '../pages/editarPerfil';
+import PaginaExibeReclamacaoMorador from '../pages/morador/reclamacoes/telaExibeReclamacao';
+import PaginaCadastraReclamacao from '../pages/morador/reclamacoes/talaCadastraReclamacao';
 
 
 //Componente que será utilizado para analisar a URL
@@ -325,6 +327,18 @@ const route = createBrowserRouter([
                     {
                         path: "registros/laudos",
                         element: <PaginaExibeLaudosMorador></PaginaExibeLaudosMorador>
+                    },
+
+                    //Tela onde será exibidos as reclamações do morador
+                    {
+                        path: "reclamacoes/exibe",
+                        element: <PaginaExibeReclamacaoMorador></PaginaExibeReclamacaoMorador>
+                    },
+
+                    //Tela onde será cadastrado as reclamações
+                    {
+                        path: "reclamacoes/cadastra",
+                        element: <PaginaCadastraReclamacao></PaginaCadastraReclamacao>
                     },
                 ]
             },
