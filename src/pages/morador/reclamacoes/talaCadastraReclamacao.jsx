@@ -4,7 +4,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { insertReclamacao } from "../../../service/Reclamacoes"
-
+import styles from "../../../css/talaCadastaReclamacao.module.css"
 
 //Função que cria o componnete
 function PaginaCadastraReclamacao(){
@@ -37,12 +37,36 @@ function PaginaCadastraReclamacao(){
 
     //Retorna o componente
     return(
-        <h1>cadastra reclamacao</h1>
-        //ao lado o botão de voltar que chama a função de back
+        <div className={styles['tcr-container']}>
+            {/* Cabeçalho da tela */}
+            <div className={styles['tcr-header']}>
+                <button type="button" className={styles['tcr-btnVoltar']} onClick={back}>
+                    Voltar
+                </button>
+            </div>
 
-        //div com uma textarea para o morador digitar a reclamacao, que altera o estado reclamacao
+            <h1 className={styles['tcr-titulo']}>Cadastrar reclamação</h1>
 
-        //botão de cadastrar que chama a função assincrona cadastraReclamacao
+            {/* Formulário de cadastro */}
+            <div className={styles['tcr-form']}>
+                <div className={styles['tcr-field']}>
+                    <label className={styles['tcr-label']} htmlFor="reclamacao">Reclamação</label>
+                    <textarea
+                        id="reclamacao"
+                        className={styles['tcr-textarea']}
+                        placeholder="Digite sua reclamação..."
+                        value={reclamacao}
+                        onChange={(e) => setReclamacao(e.target.value)}
+                    />
+                </div>
+
+                <div className={styles['tcr-action']}>
+                    <button type="button" className={styles['tcr-btnCadastrar']} onClick={cadastraReclamacao}>
+                        Cadastrar
+                    </button>
+                </div>
+            </div>
+        </div>
     )
 }
 

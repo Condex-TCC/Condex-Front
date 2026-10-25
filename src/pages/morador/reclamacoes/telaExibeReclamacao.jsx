@@ -29,8 +29,8 @@ function PaginaExibeReclamacaoMorador(){
         //Chama a função que obtem os dados
         const response = await getReclamacoesMorador()
         //salvando no state os dados
-        console.log(response)
-        setCards(response)
+    
+        setCards(response[0])
     }
 
     //useEffect que executa uma função quando a página é renderizada
@@ -53,8 +53,8 @@ function PaginaExibeReclamacaoMorador(){
 
             {/* Div onde as cards da reclamação serão renderizados */}
             <div className={styles['ter-lista']}>
-                {(Array.isArray(cards) ? cards.flat() : []).map((reclamacao) => (
-                    <CardReclamacaoMorador key={reclamacao.id} reclamacao={reclamacao} />
+                {cards.map((reclamacao) => (
+                    <CardReclamacaoMorador key={reclamacao.id_reclamacao} reclamacao={reclamacao} renderiza={setCards}/>
                 ))}
             </div>
         </div>
