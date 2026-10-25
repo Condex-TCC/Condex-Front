@@ -3,7 +3,7 @@
 //importações do arquivo
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { showReclamacao } from "../../../service/Reclamacoes"
+import { respondeReclamacao, showReclamacao } from "../../../service/Reclamacoes"
 import styles from "../../../css/telaRespondeReclamacao.module.css"
 
 //Função que cria a página
@@ -48,9 +48,13 @@ function PaginaRespondeReclamacao(){
     }
 
     //Função que cadastra a resposta
-    const cadastraResposta = () => {
+    const cadastraResposta = async () => {
 
-        //TODO: Será implementado mais tarde
+        //Chamando a função que realiza o cadastro da resposta
+        const menssagem = await respondeReclamacao(id, resposta)
+
+        //Exibe a menssagem ao usuário
+        alert(menssagem)
 
         //Realiza o redirecionamento
         back()
