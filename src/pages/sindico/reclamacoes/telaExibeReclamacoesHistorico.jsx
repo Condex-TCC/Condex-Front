@@ -4,6 +4,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { getReclamacoesHistorico } from "../../../service/Reclamacoes"
+import CardReclamacaoSindico from "../../../components/sindico/cardReclamacaoSindico"
+import styles from "../../../css/paginaExibeReclamacoesSindico.module.css"
 
 //Função que cria o componente
 function PaginaExibeReclamacoesHistorico(){
@@ -43,11 +45,24 @@ function PaginaExibeReclamacoesHistorico(){
 
     //Retona o componente
     return(
-        <h1>histórico das reclamações</h1>
+        <div className={styles['prs-container']}>
+            <h1 className={styles['prs-titulo']}>Reclamações</h1>
 
-        //Div com um botão de não visualidos (que deve chamar a função de trocar página) e outro botão de historico 
+            <div className={styles['prs-abas']}>
+                <button type="button" className={styles['prs-aba']} onClick={trocaPagina}>
+                    Não visualizadas
+                </button>
+                <button type="button" className={`${styles['prs-aba']} ${styles['prs-aba--ativa']}`}>
+                    Histórico
+                </button>
+            </div>
 
-        //Div que redenderiza o cads de reclamação para o sindico
+            <div className={styles['prs-lista']}>
+                {Array.isArray(cards) && cards.map((reclamacao) => (
+                    <CardReclamacaoSindico key={reclamacao.id_reclamacao} reclamacao={reclamacao} />
+                ))}
+            </div>
+        </div>
     )
 }
 
