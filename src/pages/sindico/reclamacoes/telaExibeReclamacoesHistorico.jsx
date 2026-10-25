@@ -59,7 +59,8 @@ function PaginaExibeReclamacoesHistorico(){
 
             <div className={styles['prs-lista']}>
                 {Array.isArray(cards) && cards.map((reclamacao) => (
-                    <CardReclamacaoSindico key={reclamacao.id_reclamacao} reclamacao={reclamacao} />
+                    <CardReclamacaoSindico key={reclamacao.id_reclamacao} reclamacao={reclamacao}
+                        redireciona={"/sindico/reclamacoes/historico"} />
                 ))}
             </div>
         </div>

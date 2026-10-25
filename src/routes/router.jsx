@@ -60,6 +60,7 @@ import PaginaExibeReclamacaoMorador from '../pages/morador/reclamacoes/telaExibe
 import PaginaCadastraReclamacao from '../pages/morador/reclamacoes/talaCadastraReclamacao';
 import PaginaExibeReclamacaoNaoVisualizada from '../pages/sindico/reclamacoes/telaExibeReclamacoesNaoVisualizadas';
 import PaginaExibeReclamacoesHistorico from '../pages/sindico/reclamacoes/telaExibeReclamacoesHistorico';
+import PaginaRespondeReclamacao from '../pages/sindico/reclamacoes/telaRespondeReclamacao';
 
 
 //Componente que será utilizado para analisar a URL
@@ -267,6 +268,12 @@ const route = createBrowserRouter([
                     {
                         path: "reclamacoes/historico",
                         element: <PaginaExibeReclamacoesHistorico></PaginaExibeReclamacoesHistorico>
+                    },
+
+                    //Tela que vai responser as reclamações
+                    {
+                        path: "reclamacoes/responder/:id",
+                        element: <PaginaRespondeReclamacao></PaginaRespondeReclamacao>
                     },
                 ]
             },

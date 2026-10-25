@@ -1,14 +1,32 @@
 //Card que exibe uma reclamação para o síndico
 
 //Local das importações
+import { useNavigate } from "react-router-dom"
 import styles from "../../css/cardReclamacaoSindico.module.css"
 
 //Card reutilizável de reclamação para o síndico
-function CardReclamacaoSindico({ reclamacao }) {
+function CardReclamacaoSindico({ reclamacao, redireciona }) {
+
+    //Hook que realiza a navegação
+    const navigate = useNavigate()
+
+    //Função que realiza o redirecionanmento para a tela de detalhe
+    const exibeDetalhe = () => {
+
+        //Realiza a navegação para a tela de exibir detalhes na navegação
+        navigate("/sindico/reclamacoes/responder/" + reclamacao.id_reclamacao, //Realiza a navegação
+            {
+                //Passando dados pelas rotas
+                state: {
+                    redirecionamento: redireciona //Passando a rota de retorno
+                }
+            }
+        )
+    }
 
     //Retorna o componente
     return (
-        <div className={styles['crs-card']}>
+        <div className={styles['crs-card']} onClick={exibeDetalhe}>
             {/* Cabeçalho com título da reclamação e status de visualização */}
             <div className={styles['crs-header']}>
                 <div className={styles['crs-rotulo']}>Reclamação</div>
