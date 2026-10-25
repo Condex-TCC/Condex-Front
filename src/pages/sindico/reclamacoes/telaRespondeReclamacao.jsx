@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { showReclamacao } from "../../../service/Reclamacoes"
+import styles from "../../../css/telaRespondeReclamacao.module.css"
 
 //Função que cria a página
 function PaginaRespondeReclamacao(){
@@ -64,15 +65,47 @@ function PaginaRespondeReclamacao(){
 
     //Retona o componente
     return (
-        <h1>responder reclamação</h1>
-        //Na mesma linha mas na direita um botão de voltar que chama a função de back
+        <div className={styles['trr-container']}>
+            {/* Cabeçalho */}
+            <div className={styles['trr-header']}>
+                <h1 className={styles['trr-titulo']}>Responder reclamação</h1>
+                <button type="button" className={styles['trr-btnVoltar']} onClick={back}>
+                    Voltar
+                </button>
+            </div>
 
-        //Div que exibe a reclamação, esse campo deve tar bastante enfase
+            {/* Div da reclamação com destaque */}
+            <div className={styles['trr-destaque']}>
+                <span className={styles['trr-destaqueRotulo']}>Reclamação</span>
+                <div className={styles['trr-destaqueTexto']}>{reclamacao?.reclamacao}</div>
+            </div>
 
-        //Div com os dados do morador
+            {/* Dados do morador */}
+            <div className={styles['trr-morador']}>
+                <span className={styles['trr-moradorRotulo']}>Morador</span>
+                <div className={styles['trr-moradorValor']}>{reclamacao?.morador?.nome}</div>
+                <div className={styles['trr-moradorValor']}>{reclamacao?.morador?.unidade?.bloco} - {reclamacao?.morador?.unidade?.numero}</div>
+            </div>
 
-        //Div com uma textarea ligada ao state de reclamação e embaixo um botão de cadastro de resposta
-        //Caso a resposta do sindico venha na requisição, deve-se exibi-lá e ocultar a div de cadastro de resposta
+            {reclamacao?.resposta ? (
+                <div className={styles['trr-destaque']}>
+                    <span className={styles['trr-destaqueRotulo']}>Resposta do síndico</span>
+                    <div className={styles['trr-destaqueTexto']}>{reclamacao?.resposta}</div>
+                </div>
+            ) : (
+                <div className={styles['trr-cadastro']}>
+                    <textarea
+                        className={styles['trr-textarea']}
+                        placeholder="Digite a resposta para o morador..."
+                        value={resposta}
+                        onChange={(e) => setResposta(e.target.value)}
+                    />
+                    <button type="button" className={styles['trr-btnCadastrar']} onClick={cadastraResposta}>
+                        Cadastrar resposta
+                    </button>
+                </div>
+            )}
+        </div>
     )
 }
 
