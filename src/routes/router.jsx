@@ -58,6 +58,8 @@ import PaginaExibeAprovaReservas from '../pages/sindico/reservas/telaAprovaReser
 import PaginaEditarPerfil from '../pages/editarPerfil';
 import PaginaExibeReclamacaoMorador from '../pages/morador/reclamacoes/telaExibeReclamacao';
 import PaginaCadastraReclamacao from '../pages/morador/reclamacoes/talaCadastraReclamacao';
+import PaginaExibeReclamacaoNaoVisualizada from '../pages/sindico/reclamacoes/telaExibeReclamacoesNaoVisualizadas';
+import PaginaExibeReclamacoesHistorico from '../pages/sindico/reclamacoes/telaExibeReclamacoesHistorico';
 
 
 //Componente que será utilizado para analisar a URL
@@ -253,7 +255,19 @@ const route = createBrowserRouter([
                     {
                         path: "comunicados/cadastrar/selecionar",
                         element: <PaginaSelecionaMoradorComunicado></PaginaSelecionaMoradorComunicado>
-                    }
+                    },
+
+                    //Tela que vai exibir as reclamações não visualizadas para o sindico
+                    {
+                        path: "reclamacoes/exibir",
+                        element: <PaginaExibeReclamacaoNaoVisualizada></PaginaExibeReclamacaoNaoVisualizada>
+                    },
+
+                    //Tela que vai exibir o histórico das reclamações
+                    {
+                        path: "reclamacoes/historico",
+                        element: <PaginaExibeReclamacoesHistorico></PaginaExibeReclamacoesHistorico>
+                    },
                 ]
             },
 
