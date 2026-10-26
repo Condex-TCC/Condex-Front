@@ -1,65 +1,10 @@
 //Arquivo responsavel por solicitar a requisição e trata-la
 
 import { getEncomendasAPI, insertEncomendaAPI, withdrawEncomendaAPI } from "../api/EncomendaApi"
+import { lerJson, montarMensagemErro } from "../utils/erroApi"
 
 //Mensagem exibida quando o frontend não consegue falar com o servidor
 const MENSAGEM_SEM_CONEXAO = "Não foi possível conectar à API. Verifique se o servidor está no ar."
-
-//Lê o corpo da resposta como JSON sem estourar quando o corpo não é JSON
-//Isso acontece quando o servidor está fora do ar ou devolve uma página de erro
-async function lerJson(response) {
-
-    try {
-        return await response.json()
-    }
-    catch {
-        return {}
-    }
-}
-
-//Monta a mensagem de erro a partir da resposta da API
-//Os erros de validação vêm em { message, errors: [ { campo: [mensagens] } ] }
-//e os erros do próprio Laravel (401, 403, 404, 500) vêm apenas com { message }
-function montarMensagemErro(json, statusHttp, mensagemPadrao, mensagemServidor) {
-
-    //Guarda as mensagens de cada campo que não passou na validação
-    let detalhes = ""
-
-    if (Array.isArray(json?.errors)) {
-
-        detalhes = json.errors
-
-            .map((erro) => typeof erro === "object" && erro !== null
-                ? Object.values(erro).flat().join(" ")
-                : String(erro))
-
-            .join(" ")
-    }
-
-    //Sessão expirada ou token inválido
-    if (statusHttp === 401) {
-        return "Sua sessão expirou. Faça login novamente."
-    }
-
-    //Usuário logado sem permissão para essa ação
-    if (statusHttp === 403) {
-        return "Você não tem permissão para realizar essa ação."
-    }
-
-    //Registro que não existe mais na API
-    if (statusHttp === 404) {
-        return `${mensagemPadrao} Registro não encontrado.`
-    }
-
-    //Erro interno do servidor, como a violação de uma chave estrangeira no banco
-    //O texto do Laravel é técnico e pode expor o SQL, então nunca é exibido na tela
-    if (statusHttp >= 500) {
-        return mensagemServidor || `${mensagemPadrao} O servidor recusou os dados enviados.`
-    }
-
-    //Demais casos, usa a mensagem da API e os detalhes dos campos
-    return `${json?.message || mensagemPadrao} ${detalhes}`.trim()
-}
 
 //Função que normaliza um item de encomenda vindo da API (EncomendaResources)
 function normalizarEncomenda(item) {
@@ -91,11 +36,12 @@ export async function getEncomendas() {
             throw (montarMensagemErro(json, response.status, "Não foi possível buscar as encomendas."))
         }
 
-        let lista = Array.isArray(json.data) ? json.data : []
-        if (!Array.isArray(lista) && Array.isArray(json.data?.encomendas)) {
-            lista = json.data.encomendas
-        }
-        return Array.isArray(lista) ? lista.map(normalizarEncomenda) : []
+        //A API devolve { data: { encomendas: [...] } } (EncomendaController::index)
+        const lista = Array.isArray(json.data?.encomendas)
+            ? json.data.encomendas
+            : (Array.isArray(json.data) ? json.data : [])
+
+        return lista.map(normalizarEncomenda)
     }
     catch (erro) {
         console.error("Erro ao buscar as encomendas na API:", erro)

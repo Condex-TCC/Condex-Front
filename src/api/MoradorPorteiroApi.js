@@ -11,7 +11,7 @@ export async function getMoradoresPorteiroAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/morador/get"
+    let endPoint = "/api/porteiro/morador/get"
 
     //Criando a requisição
     const requisicao = fetch(

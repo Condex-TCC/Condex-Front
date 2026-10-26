@@ -1,9 +1,10 @@
 //Tela de cadastro de encomenda do porteiro
 
 //Local das importações
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { cadastrarEncomenda } from '../../service/Encomenda'
+import { getMoradoresPorteiro, rotuloMorador } from '../../service/MoradorPorteiro'
 import styles from '../../css/formularioPorteiro.module.css'
 
 //Limite de caracteres da descrição, o mesmo exigido pela validação do backend
@@ -174,11 +175,63 @@ export default function PaginaCadastraEncomenda() {
     const [ano, setAno] = useState('')
     const [hora, setHora] = useState('')
 
+    //Estados da lista de moradores usada no campo de seleção
+    const [moradores, setMoradores] = useState([])
+    const [carregandoMoradores, setCarregandoMoradores] = useState(true)
+    const [erroMoradores, setErroMoradores] = useState('')
+
     //Estado que guarda o erro de validação de cada campo
     const [erros, setErros] = useState({})
 
     //Estado que desabilita o botão enquanto a gravação acontece
     const [salvando, setSalvando] = useState(false)
+
+    //Função que busca os moradores para o porteiro selecionar o destinatário
+    const buscarMoradores = async () => {
+
+        const lista = await getMoradoresPorteiro()
+
+        if(lista === null){
+
+            setErroMoradores('Não foi possível carregar os moradores. Verifique se o servidor está no ar.')
+        }
+        else{
+
+            setMoradores(lista)
+        }
+
+        setCarregandoMoradores(false)
+    }
+
+    //Busca os moradores assim que a tela é aberta
+    useEffect(() => {
+
+        Promise.resolve().then(() => buscarMoradores())
+    }, [])
+
+    //Função que reinicia o carregamento pelo botão "tentar novamente"
+    const tentarNovamente = () => {
+
+        setCarregandoMoradores(true)
+        setErroMoradores('')
+        buscarMoradores()
+    }
+
+    //Ao escolher o morador, o destinatário, o bloco e o apartamento são preenchidos
+    //com os dados cadastrados, evitando que o porteiro digite o ID ou erre a unidade
+    const selecionarMorador = (valor) => {
+
+        setIdMorador(valor)
+
+        const morador = moradores.find((m) => String(m.id) === String(valor))
+
+        if(morador){
+
+            setDestinatario(morador.nome ?? '')
+            setBloco(String(morador.unidade?.bloco ?? ''))
+            setApartamento(String(morador.unidade?.numero ?? ''))
+        }
+    }
 
     //Função que limita um campo ao tamanho máximo de caracteres
     const limita = (valor, maximo) => valor.replace(/\D/g, '').slice(0, maximo)
@@ -215,7 +268,7 @@ export default function PaginaCadastraEncomenda() {
         //A API exige o id do morador destinatário (id_morador) para vincular a encomenda
         if(!idMorador){
 
-            novosErros.idMorador = 'Informe o ID do morador destinatário.'
+            novosErros.idMorador = 'Selecione o morador destinatário.'
         }
 
         //O id precisa ser um número inteiro maior que zero
@@ -312,6 +365,53 @@ export default function PaginaCadastraEncomenda() {
                 {/* Formulário */}
                 <form className={styles['fp-formulario']} onSubmit={salvar} noValidate>
 
+                    {/* Campo do morador destinatário: a API vincula a encomenda pelo id do morador */}
+                    <div className={styles['fp-campo']}>
+                        <label className={styles['fp-label-visivel']} htmlFor="encomenda-morador">Morador destinatário</label>
+                        <select
+                            id="encomenda-morador"
+                            className={`${styles['fp-input']} ${styles['fp-select']}`}
+                            value={idMorador}
+                            disabled={carregandoMoradores || erroMoradores !== ''}
+                            onChange={(evento) => selecionarMorador(evento.target.value)}
+                        >
+                            <option value="">
+                                {
+                                    carregandoMoradores
+                                        ? 'Carregando moradores...'
+                                        : (erroMoradores ? 'Não foi possível carregar os moradores' : 'Selecione o morador')
+                                }
+                            </option>
+
+                            {
+                                moradores.map((morador) => (
+                                    <option key={morador.id} value={morador.id}>
+                                        {rotuloMorador(morador)}
+                                    </option>
+                                ))
+                            }
+                        </select>
+
+                        {
+                            !carregandoMoradores && !erroMoradores && moradores.length === 0 &&
+                            <span className={styles['fp-erro']}>
+                                Nenhum morador cadastrado. Cadastre um morador antes de registrar a encomenda.
+                            </span>
+                        }
+
+                        {
+                            !carregandoMoradores && erroMoradores &&
+                            <span className={styles['fp-erro']}>
+                                {erroMoradores}{' '}
+                                <button type="button" className={styles['fp-btn-retry']} onClick={tentarNovamente}>
+                                    Tentar novamente
+                                </button>
+                            </span>
+                        }
+
+                        {erros.idMorador && <span className={styles['fp-erro']}>{erros.idMorador}</span>}
+                    </div>
+
                     {/* Campo do destinatário */}
                     <div className={styles['fp-campo']}>
                         <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-destinatario">Destinatário</label>
@@ -324,22 +424,6 @@ export default function PaginaCadastraEncomenda() {
                             onChange={(evento) => setDestinatario(evento.target.value)}
                         />
                         {erros.destinatario && <span className={styles['fp-erro']}>{erros.destinatario}</span>}
-                    </div>
-
-                    {/* Campo do morador destinatário: a API vincula a encomenda pelo id do morador */}
-                    <div className={styles['fp-campo']}>
-                        <label className={styles['fp-rotulo-oculto']} htmlFor="encomenda-id-morador">ID do morador</label>
-                        <input
-                            id="encomenda-id-morador"
-                            className={`${styles['fp-input']} ${styles['fp-input--apartamento']}`}
-                            type="text"
-                            inputMode="numeric"
-                            placeholder="ID do morador"
-                            maxLength={10}
-                            value={idMorador}
-                            onChange={(evento) => setIdMorador(limita(evento.target.value, 10))}
-                        />
-                        {erros.idMorador && <span className={styles['fp-erro']}>{erros.idMorador}</span>}
                     </div>
 
                     {/* Linha com bloco e apartamento */}
@@ -448,7 +532,7 @@ export default function PaginaCadastraEncomenda() {
 
                     {/* Botão de salvar */}
                     <div className={styles['fp-area-salvar']}>
-                        <button type="submit" className={styles['fp-btn-salvar']} disabled={salvando}>
+                        <button type="submit" className={styles['fp-btn-salvar']} disabled={salvando || carregandoMoradores || erroMoradores !== ''}>
                             {salvando ? 'Salvando...' : 'SALVAR'}
                         </button>
                     </div>

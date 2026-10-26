@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { cadastrarVisitantePorteiro } from '../../service/VisitantePorteiro'
-import { getMoradoresPorteiroAPI } from '../../api/MoradorPorteiroApi'
+import { getMoradoresPorteiro, rotuloMorador } from '../../service/MoradorPorteiro'
 import styles from '../../css/formularioPorteiro.module.css'
 
 //Função que aplica a máscara 000.000.000-00 enquanto o CPF é digitado
@@ -20,31 +20,6 @@ function mascaraCpf(valor) {
     if(d.length > 3){ return `${d.slice(0, 3)}.${d.slice(3)}` }
 
     return d
-}
-
-//Função que monta o texto de cada opção do morador (nome + unidade)
-function rotuloMorador(morador) {
-
-    //Sem unidade cadastrada, mostra apenas o nome
-    if(!morador.unidade){
-
-        return morador.nome
-    }
-
-    //Junta bloco e número quando existirem
-    const partes = []
-
-    if(morador.unidade.bloco){ partes.push(`Bloco ${morador.unidade.bloco}`) }
-
-    if(morador.unidade.numero){ partes.push(`Apto ${morador.unidade.numero}`) }
-
-    //Sem bloco nem número, fica só o nome
-    if(partes.length === 0){
-
-        return morador.nome
-    }
-
-    return `${morador.nome} - ${partes.join(' / ')}`
 }
 
 //Tela responsável por cadastrar o visitante pelo porteiro
@@ -75,48 +50,18 @@ export default function RegistroVisitante() {
     //Não mexe no estado antes do await para não causar renderização em cascata
     const buscarMoradores = async () => {
 
-        try{
+        const lista = await getMoradoresPorteiro()
 
-            //Faz a requisição para a API
-            const response = await getMoradoresPorteiroAPI()
+        if(lista === null){
 
-            //Lê o corpo da resposta como JSON sem estourar quando não for JSON
-            let json = {}
-
-            try{
-
-                json = await response.json()
-            }
-            catch{
-
-                json = {}
-            }
-
-            //Verifica se houve algum erro na requisição
-            if(!response.ok){
-
-                setErroMoradores('Não foi possível carregar os moradores.')
-                return
-            }
-
-            //A API devolve a lista aninhada em data[0] ou direta em data
-            const lista = Array.isArray(json.data?.[0])
-                ? json.data[0]
-                : (Array.isArray(json.data) ? json.data : [])
+            setErroMoradores('Não foi possível carregar os moradores. Verifique se o servidor está no ar.')
+        }
+        else{
 
             setMoradores(lista)
         }
-        catch(erro){
 
-            //Servidor fora do ar ou sem conexão
-            console.error('Erro ao buscar os moradores na API:', erro)
-
-            setErroMoradores('Não foi possível conectar à API. Verifique se o servidor está no ar.')
-        }
-        finally{
-
-            setCarregandoMoradores(false)
-        }
+        setCarregandoMoradores(false)
     }
 
     //Busca os moradores assim que a tela é aberta

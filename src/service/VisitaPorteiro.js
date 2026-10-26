@@ -1,64 +1,10 @@
 //Arquivo responsável por tratar as requisições de visitas (porteiro)
 
 import { getVisitasAPI, allowEntryAPI, registerExitAPI } from "../api/VisitaPorteiroApi"
+import { lerJson, montarMensagemErro } from "../utils/erroApi"
 
 //Mensagem exibida quando o frontend não consegue falar com o servidor
 const MENSAGEM_SEM_CONEXAO = "Não foi possível conectar à API. Verifique se o servidor está no ar."
-
-//Lê o corpo da resposta como JSON sem estourar quando o corpo não é JSON
-//Isso acontece quando o servidor está fora do ar ou devolve uma página de erro
-async function lerJson(response) {
-
-    try {
-        return await response.json()
-    }
-    catch {
-        return {}
-    }
-}
-
-//Monta a mensagem de erro a partir da resposta da API
-//Os erros de validação vêm em { message, errors: [ { campo: [mensagens] } ] }
-//e os erros do próprio Laravel (401, 403, 404, 500) vêm apenas com { message }
-function montarMensagemErro(json, statusHttp, mensagemPadrao, mensagemServidor) {
-
-    //Guarda as mensagens de cada campo que não passou na validação
-    let detalhes = ""
-
-    if (Array.isArray(json?.errors)) {
-
-        detalhes = json.errors
-
-            .map((erro) => typeof erro === "object" && erro !== null
-                ? Object.values(erro).flat().join(" ")
-                : String(erro))
-
-            .join(" ")
-    }
-
-    //Sessão expirada ou token inválido
-    if (statusHttp === 401) {
-        return "Sua sessão expirou. Faça login novamente."
-    }
-
-    //Usuário logado sem permissão para essa ação
-    if (statusHttp === 403) {
-        return "Você não tem permissão para realizar essa ação."
-    }
-
-    //Registro que não existe mais na API
-    if (statusHttp === 404) {
-        return `${mensagemPadrao} Registro não encontrado.`
-    }
-
-    //Erro interno do servidor | O texto do Laravel é técnico e não é exibido
-    if (statusHttp >= 500) {
-        return mensagemServidor || `${mensagemPadrao} O servidor recusou os dados enviados.`
-    }
-
-    //Demais casos, usa a mensagem da API e os detalhes dos campos
-    return `${json?.message || mensagemPadrao} ${detalhes}`.trim()
-}
 
 //Função que normaliza um registro de visita vindo da API
 //A API devolve o registro da visita com o visitante embutido em "visitante"

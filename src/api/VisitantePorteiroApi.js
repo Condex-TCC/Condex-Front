@@ -12,7 +12,7 @@ export async function getVisitantesPorteiroAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visitante/get"
+    let endPoint = "/api/porteiro/visitante/get"
 
     //Criando a requisição
     const requisicao = fetch(
@@ -43,7 +43,7 @@ export async function insertVisitantePorteiroAPI(nome, cpf, idMorador){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visitante/create"
+    let endPoint = "/api/porteiro/visitante/create"
 
     //Objeto com os elementos no formato que a API espera
     let novoVisitante = {

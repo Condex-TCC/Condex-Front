@@ -1,6 +1,7 @@
 //Tela de registro de retirada de encomenda do porteiro
 
 //Local das importações
+import { useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { registrarRetiradaEncomenda } from '../../service/Encomenda'
 import styles from '../../css/formularioPorteiro.module.css'
@@ -23,6 +24,9 @@ export default function PaginaDetalheEncomenda() {
     //A encomenda chega pelo estado da navegação quando o porteiro clica no card
     const encomenda = state?.encomenda
 
+    //Estado que desabilita o botão enquanto a retirada é registrada
+    const [salvando, setSalvando] = useState(false)
+
     //Função responsavel por voltar para a tela inicial do porteiro
     const back = () => {
 
@@ -33,8 +37,18 @@ export default function PaginaDetalheEncomenda() {
     //Função que registra a retirada da encomenda
     const retirar = async () => {
 
+        //Impede o clique duplo enquanto a requisição está em andamento
+        if(salvando){
+
+            return
+        }
+
+        setSalvando(true)
+
         //Chama a função que registra a retirada na API
         const resultado = await registrarRetiradaEncomenda(encomenda?.id ?? id)
+
+        setSalvando(false)
 
         //Exibe a menssagem retornada pela API (sucesso ou erro)
         alert(resultado.mensagem)
@@ -113,8 +127,8 @@ export default function PaginaDetalheEncomenda() {
 
                 {/* Botão de confirmar a retirada */}
                 <div className={styles['fp-area-salvar']}>
-                    <button type="button" className={styles['fp-btn-salvar']} onClick={retirar}>
-                        SALVAR
+                    <button type="button" className={styles['fp-btn-salvar']} onClick={retirar} disabled={salvando}>
+                        {salvando ? 'Salvando...' : 'SALVAR'}
                     </button>
                 </div>
 

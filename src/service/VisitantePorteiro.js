@@ -4,9 +4,15 @@ import { getVisitantesPorteiroAPI, insertVisitantePorteiroAPI } from "../api/Vis
 import { lerJson, montarMensagemErro } from "../utils/erroApi"
 
 //Função que desembrulha a lista que vem dentro de um array extra
-//A API devolve { data: [ [visitantes] ] }, então o primeiro passo é
-//sempre pegar o primeiro elemento quando ele for uma lista
+//A API devolve { data: { visitantes: [...] } } (VisitanteController::index).
+//Mantém compatibilidade com { data: [ [visitantes] ] } e { data: [visitantes] }
 function desembrulharLista(data){
+
+    //Formato atual da API: a lista vem dentro de data.visitantes
+    if(Array.isArray(data?.visitantes)){
+
+        return data.visitantes
+    }
 
     //Sem dado devolvido, a tela recebe uma lista vazia
     if(!Array.isArray(data)){
