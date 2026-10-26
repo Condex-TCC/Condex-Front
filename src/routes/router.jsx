@@ -56,6 +56,7 @@ import PaginaExibeRegrasMorador from '../pages/morador/RegrasLaudos/telaExibeReg
 import PaginaExibeLaudosMorador from '../pages/morador/RegrasLaudos/telaExibeLaudosMorador';
 import PaginaExibeAprovaReservas from '../pages/sindico/reservas/telaAprovaReserva';
 import PaginaEditarPerfil from '../pages/editarPerfil';
+import PaginaPrimeiroAcesso from '../pages/primeiroAcesso';
 import PaginaExibeReclamacaoMorador from '../pages/morador/reclamacoes/telaExibeReclamacao';
 import PaginaCadastraReclamacao from '../pages/morador/reclamacoes/talaCadastraReclamacao';
 import PaginaExibeReclamacaoNaoVisualizada from '../pages/sindico/reclamacoes/telaExibeReclamacoesNaoVisualizadas';
@@ -95,6 +96,12 @@ const route = createBrowserRouter([
             {
                 path: "/editarPerfil",
                 element: <PaginaEditarPerfil></PaginaEditarPerfil>
+            },
+
+            //Tela de primeiro acesso | Completa os dados e define a senha
+            {
+                path: "/primeiroAcesso",
+                element: <PaginaPrimeiroAcesso></PaginaPrimeiroAcesso>
             },
 
             //Tela do sindico

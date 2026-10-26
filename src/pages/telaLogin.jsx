@@ -27,6 +27,14 @@ function TelaDeLogin(){
 
         //Vericando se esse usuário já está logado
         if(credenciais.token != undefined && credenciais.tipo != undefined){
+
+            //Se o usuário ainda não concluiu o primeiro acesso, volta para essa tela
+            if(CookieService.GetPrimeiroAcessoPendente()){
+
+                navigate("/primeiroAcesso")
+
+                return
+            }
             
             //Caso o usuário já esteja logado, realiza o redirecionamento
             if(credenciais.tipo == "Sindico"){
@@ -85,8 +93,27 @@ function TelaDeLogin(){
         //Aguarda a operação de login
         let data = await HendleLogin(usuario, password)
 
+        //Sem dados, o login falhou e o erro já foi exibido ao usuário
+        if(!data){
+
+            return
+        }
+
         //Chamando a função do cookie
         tokenCookie(data.token, data.tipo_usuario)        
+
+        //A API devolve primeiro_acesso false enquanto o usuário não concluiu o primeiro acesso
+        const primeiroAcessoPendente = data.primeiro_acesso === false
+
+        CookieService.SetPrimeiroAcessoPendente(primeiroAcessoPendente)
+
+        //Usuário novo precisa completar os dados e definir a senha antes de usar o sistema
+        if(primeiroAcessoPendente){
+
+            navigate("/primeiroAcesso")
+
+            return
+        }
 
         //Verificando o usuário e realizando a mudança de tela
         if(data.tipo_usuario == "Sindico"){

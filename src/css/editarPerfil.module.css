@@ -150,3 +150,41 @@
     outline: none;
     border-color: #4a90e2;
 }
+
+/* Botão desabilitado enquanto salva ou carrega */
+.btnEditar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Campo desabilitado enquanto os dados carregam */
+.dataInput:disabled {
+  background-color: #f1f1f1;
+  cursor: not-allowed;
+}
+
+/* Mensagem de carregamento */
+.aviso {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+/* Mensagem de erro de campo ou de envio */
+.erro {
+  color: #d9534f;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+/* Botão de tentar novamente dentro da mensagem de erro */
+.btnRetry {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #2b45a2;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
