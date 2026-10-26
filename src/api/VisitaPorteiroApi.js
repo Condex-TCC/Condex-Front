@@ -23,24 +23,39 @@ export async function getVisitasAPI(){
     return requisicao
 }
 
-export async function allowEntryAPI(id){
+//Função que registra a entrada de um visitante
+//A API espera PUT /visita/entry com o porteiro, o morador e o visitante no corpo da requisição
+export async function allowEntryAPI(idPorteiro, idMorador, idVisitante){
 
+    //Receperando o token de outorização
     let cookie = await GetCookie()
     let token = cookie.token
 
-    let endPoint = "/api/porteiro/visita/entry/" + id
+    //Endpoint
+    let endPoint = "/api/porteiro/visita/entry"
 
+    //Objeto com os dados exigidos pela API
+    let dadosEntrada = {
+        fk_porteiro: Number(idPorteiro),
+        fk_morador: Number(idMorador),
+        fk_visitante: Number(idVisitante)
+    }
+
+    //Criando a requisição
     const requisicao = fetch(
         endPoint,
         {
             method: "PUT",
             headers: {
+                'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 "Authorization": `Bearer ${token}`
             },
+            body: JSON.stringify(dadosEntrada)
         }
     )
 
+    //Retornado uma promise com os dados da API
     return requisicao
 }
 

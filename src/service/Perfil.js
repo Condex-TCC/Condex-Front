@@ -7,6 +7,21 @@ import { lerJson, montarMensagemErro } from "../utils/erroApi"
 //Mensagem exibida quando o frontend não consegue falar com o servidor
 const MENSAGEM_SEM_CONEXAO = "Não foi possível conectar à API. Verifique se o servidor está no ar."
 
+//Em desenvolvimento, o erro 500 mostra o motivo real devolvido pelo Laravel e o status,
+//para facilitar achar o problema. Em produção, mantém o texto genérico para não expor detalhes
+function detalheServidor(json, statusHttp, contexto) {
+
+    //Registra a resposta completa no console do navegador
+    console.error(`Falha em ${contexto}: HTTP ${statusHttp}`, json)
+
+    if(statusHttp >= 500 && import.meta.env.DEV){
+
+        return `Erro ${statusHttp} no servidor: ${json?.message || "sem mensagem (veja o Network do navegador e o laravel.log)"}`
+    }
+
+    return undefined
+}
+
 //Função que busca os dados do usuário logado
 //Devolve { sucesso, usuario } quando funciona e { sucesso: false, mensagem } quando falha,
 //para a tela diferenciar o carregamento com erro de um perfil vazio
@@ -21,7 +36,7 @@ export async function buscarPerfil(tipoUsuario) {
 
             return {
                 sucesso: false,
-                mensagem: montarMensagemErro(json, response.status, "Não foi possível carregar os dados do perfil.")
+                mensagem: montarMensagemErro(json, response.status, "Não foi possível carregar os dados do perfil.", detalheServidor(json, response.status, "buscarPerfil"))
             }
         }
 
@@ -57,7 +72,7 @@ export async function atualizarPerfil(tipoUsuario, nome, email, telefone, cpf) {
 
             return {
                 sucesso: false,
-                mensagem: montarMensagemErro(json, response.status, "Não foi possível atualizar o perfil.")
+                mensagem: montarMensagemErro(json, response.status, "Não foi possível atualizar o perfil.", detalheServidor(json, response.status, "atualizarPerfil"))
             }
         }
 
@@ -85,7 +100,7 @@ export async function concluirPrimeiroAcesso(tipoUsuario, nome, email, telefone,
 
             return {
                 sucesso: false,
-                mensagem: montarMensagemErro(json, response.status, "Não foi possível concluir o primeiro acesso.")
+                mensagem: montarMensagemErro(json, response.status, "Não foi possível concluir o primeiro acesso.", detalheServidor(json, response.status, "concluirPrimeiroAcesso"))
             }
         }
 

@@ -190,7 +190,7 @@ function PaginainicialPorteiro(){
     const registrarEntrada = async (visitante) => {
 
         //Chama a service que registra a entrada na API
-        const resultado = await registrarEntradaVisita(visitante.id)
+        const resultado = await registrarEntradaVisita(visitante)
 
         //Exibe a mensagem retornada pela API (sucesso ou erro)
         alert(resultado.mensagem)

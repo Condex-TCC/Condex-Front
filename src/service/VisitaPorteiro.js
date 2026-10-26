@@ -2,6 +2,8 @@
 
 import { getVisitasAPI, allowEntryAPI, registerExitAPI } from "../api/VisitaPorteiroApi"
 import { lerJson, montarMensagemErro } from "../utils/erroApi"
+import { GetCookie } from "./cookie"
+import { buscarPerfil } from "./Perfil"
 
 //Mensagem exibida quando o frontend não consegue falar com o servidor
 const MENSAGEM_SEM_CONEXAO = "Não foi possível conectar à API. Verifique se o servidor está no ar."
@@ -58,12 +60,55 @@ export async function getVisitasAtivas() {
     return visitas.filter((visita) => visita.saida == null)
 }
 
-//Função que registra a entrada de um visitante (requer o id do visitante)
+//Guarda o id do porteiro logado para não buscar o perfil a cada entrada registrada
+let idPorteiroEmCache = null
+let tokenDoCache = null
+
+//Função que descobre o id do porteiro logado pelo perfil (GET /perfil)
+async function obterIdPorteiroLogado() {
+
+    const { token, tipo } = GetCookie()
+
+    //Se o token mudou, outro usuário entrou no sistema e o cache deixa de valer
+    if(idPorteiroEmCache && tokenDoCache === token){
+
+        return idPorteiroEmCache
+    }
+
+    const resultado = await buscarPerfil(tipo)
+
+    if(!resultado.sucesso){
+
+        return null
+    }
+
+    idPorteiroEmCache = resultado.usuario.id
+    tokenDoCache = token
+
+    return idPorteiroEmCache
+}
+
+//Função que registra a entrada de um visitante (requer o visitante, com o id do morador)
 //Devolve { sucesso, mensagem } para a tela exibir a resposta real da API
-export async function registrarEntradaVisita(idVisitante) {
+export async function registrarEntradaVisita(visitante) {
 
     try {
-        let response = await allowEntryAPI(idVisitante)
+
+        //A API exige o morador ao qual o visitante pertence
+        if(!visitante?.moradorId){
+
+            return { sucesso: false, mensagem: "Não foi possível identificar o morador deste visitante." }
+        }
+
+        //A API também exige o id do porteiro logado, que precisa bater com o token
+        const idPorteiro = await obterIdPorteiroLogado()
+
+        if(!idPorteiro){
+
+            return { sucesso: false, mensagem: "Não foi possível identificar o porteiro logado. Entre novamente no sistema." }
+        }
+
+        let response = await allowEntryAPI(idPorteiro, visitante.moradorId, visitante.id)
         let json = await lerJson(response)
 
         if (!response.ok) {
@@ -81,7 +126,7 @@ export async function registrarEntradaVisita(idVisitante) {
     }
 }
 
-//Função que registra a saída de um visitante (requer o id do visitante)
+//Função que registra a saída de um visitante (requer o visitante, com o id do morador)
 //Devolve { sucesso, mensagem } para a tela exibir a resposta real da API
 export async function registrarSaidaVisita(idVisitante) {
 

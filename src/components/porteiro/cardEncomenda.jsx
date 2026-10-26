@@ -59,6 +59,14 @@ function CardEncomenda({ encomenda, atualizaLista }){
                 <span className={styles["text--name"]}>{ouSimbolo(destinatario)}</span>
             </div>
 
+            {/* Morador destinatário, que a API devolve junto com a encomenda */}
+            {
+                encomenda.moradorNome != null &&
+                <div className={styles["card--info"]}>
+                    <span className={styles["text--block"]}>Morador: {encomenda.moradorNome}</span>
+                </div>
+            }
+
             {/* Linha de informações: bloco, apartamento e recebimento */}
             {/* A API não devolve esses campos (bloco e apartamento ficam dentro da descrição),
                 então a linha só aparece quando algum deles existe */}

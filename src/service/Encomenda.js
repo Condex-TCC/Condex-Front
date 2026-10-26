@@ -20,6 +20,7 @@ function normalizarEncomenda(item) {
         descricao: item.descricao ?? item.descricao_encomenda ?? null,
         moradorId: item.moradorId ?? item.morador?.id ?? item.fk_id_morador_encomenda ?? null,
         moradorNome: item.moradorNome ?? item.morador?.nome ?? null,
+        moradorTelefone: item.moradorTelefone ?? item.morador?.telefone ?? null,
     }
 }
 
@@ -50,10 +51,9 @@ export async function getEncomendas() {
 }
 
 //Função que cadastra uma nova encomenda
-//Recebe o nome do destinatário, a descrição e o id do morador destinatário, que a
-//API exige em "id_morador". O parâmetro detalhes leva bloco, apartamento e data do
-//formulário. A API real ainda não tem colunas para esses dados, então são ignorados
-//na requisição e só aproveitados pelo mock
+//Recebe o nome da encomenda (ex.: Pacote do Mercado Livre), a descrição e o id do
+//morador destinatário, que a API exige em "id_morador". Os dados do morador são
+//devolvidos pela própria API na relação morador. O parâmetro detalhes só é usado pelo mock
 //Devolve { sucesso, mensagem } para a tela saber se pode navegar ou se precisa
 //mostrar o erro devolvido pela API
 export async function cadastrarEncomenda(nome, descricao, idMorador, detalhes = {}) {

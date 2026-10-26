@@ -103,8 +103,13 @@ export default function PaginaDetalheEncomenda() {
                     <h2 className={styles['fp-resumo-titulo']}>Dados da encomenda</h2>
 
                     <div className={styles['fp-resumo-linha']}>
-                        <span>Destinatário</span>
+                        <span>Encomenda</span>
                         <span>{ouSimbolo(encomenda.nome)}</span>
+                    </div>
+
+                    <div className={styles['fp-resumo-linha']}>
+                        <span>Morador</span>
+                        <span>{ouSimbolo(encomenda.moradorNome)}</span>
                     </div>
 
                     {/* A API guarda bloco, apartamento e data de recebimento dentro
