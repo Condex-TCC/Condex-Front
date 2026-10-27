@@ -62,6 +62,7 @@ import PaginaCadastraReclamacao from '../pages/morador/reclamacoes/talaCadastraR
 import PaginaExibeReclamacaoNaoVisualizada from '../pages/sindico/reclamacoes/telaExibeReclamacoesNaoVisualizadas';
 import PaginaExibeReclamacoesHistorico from '../pages/sindico/reclamacoes/telaExibeReclamacoesHistorico';
 import PaginaRespondeReclamacao from '../pages/sindico/reclamacoes/telaRespondeReclamacao';
+import PaginaValdiaInformacoes from '../pages/telaValidaInformacoes';
 
 
 //Componente que será utilizado para analisar a URL
@@ -102,6 +103,12 @@ const route = createBrowserRouter([
             {
                 path: "/primeiroAcesso",
                 element: <PaginaPrimeiroAcesso></PaginaPrimeiroAcesso>
+            },
+
+            //Tela para validar a consta
+            {
+                path: "/consta/valida",
+                element: <PaginaValdiaInformacoes></PaginaValdiaInformacoes>
             },
 
             //Tela do sindico
