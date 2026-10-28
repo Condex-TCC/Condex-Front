@@ -187,7 +187,7 @@ export async function validaCodigo(id, tipo, codigo){
         // console.log(message);
 
         // Retornando a menssagem
-        return message
+        return data
 
     }
     //Caso alguma promisse retorne um reject irá cair aqui

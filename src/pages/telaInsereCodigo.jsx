@@ -3,6 +3,7 @@
 //Importações do aquivo
 import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import styles from "../css/telaInsereCodigo.module.css"
 import { validaCodigo } from "../service/Login"
 
 
@@ -37,7 +38,7 @@ function PaginaInsereCodigo(){
 
         //Desestruturando o objeto
         const { acesso } = await request
-
+        console.log(request)
         //Verifica se o acesso foi concedido
         if(acesso == true){
  
@@ -53,14 +54,55 @@ function PaginaInsereCodigo(){
 
     //Retorna o componente
     return (
-        <h1>Tela valida o código</h1>
-        //Botão de veltar que chama a função de back
+        <div className={styles.container}>
 
-        //Texto que diz: Entre com o código enviado para o seu SMS
+            {/* Cabeçalho da página: título e botão de voltar */}
+            <header className={styles.header}>
+                <h1 className={styles.title}>Validar código</h1>
 
-        //Div com um label de seis caractes no minimo e no maximo obirgatório que só aceita número
+                {/* Botão de voltar que chama a função de back */}
+                <button type="button" className={styles.btnVoltar} onClick={back}>
+                    Voltar
+                </button>
+            </header>
 
-        //Botão de verificar que chama função de valida código
+            {/* Texto que orienta o usuário sobre o código recebido */}
+            <p className={styles.aviso}>
+                Entre com o seu código. Ele foi enviado para o seu telefone via SMS.
+            </p>
+
+            {/* Campo do código de validação, com no mínimo e no máximo seis números */}
+            <div className={styles.formContainer}>
+                <div className={styles.dataField}>
+                    <label htmlFor="codigo" className={styles.dataLabel}>Código</label>
+                    <input
+                        id="codigo"
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={6}
+                        minLength={6}
+                        required
+                        className={styles.dataInput}
+                        placeholder="Digite o código de 6 dígitos"
+                        value={codigo}
+                        onChange={(e) => setCodigo(e.target.value.replace(/\D/g, ""))}
+                    />
+                </div>
+            </div>
+
+            {/* Botão de verificar que chama a função de validação do código */}
+            <footer className={styles.footer}>
+                <button
+                    type="button"
+                    className={styles.btnVerificar}
+                    onClick={implementaValidaCodigo}
+                    disabled={codigo.length !== 6}
+                >
+                    Verificar
+                </button>
+            </footer>
+
+        </div>
     )
 }
 
