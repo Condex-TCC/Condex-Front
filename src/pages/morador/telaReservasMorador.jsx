@@ -7,9 +7,14 @@ import CardReservaMorador from '../../components/morador/cardReservaMorador'
 import { cancelaReservaMorador, getReservasMorador, reservaAtiva } from '../../service/ReservaMorador'
 import { formatarDataReserva } from '../../service/Reservas'
 import styles from '../../css/telaReservasMorador.module.css'
+import { useBuscaHeader } from '../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../utils/busca'
 
 //Função que cria a tela de reservas
 function TelaReservasMorador(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
@@ -117,8 +122,8 @@ function TelaReservasMorador(){
 
     //Separa as reservas futuras (ativas) do histórico
     //As ativas ficam da mais próxima para a mais distante | O histórico da mais recente para a mais antiga
-    const reservasAtivas = reservas.filter((reserva) => reservaAtiva(reserva)).sort(porDataHora)
-    const reservasHistorico = reservas.filter((reserva) => !reservaAtiva(reserva)).sort((a, b) => porDataHora(b, a))
+    const reservasAtivas = filtrarPorTexto(reservas, termo).filter((reserva) => reservaAtiva(reserva)).sort(porDataHora)
+    const reservasHistorico = filtrarPorTexto(reservas, termo).filter((reserva) => !reservaAtiva(reserva)).sort((a, b) => porDataHora(b, a))
 
     //Retorna o componente
     return (

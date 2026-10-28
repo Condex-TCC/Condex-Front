@@ -6,9 +6,14 @@ import { useNavigate } from "react-router-dom"
 import { getReclamacoesMorador } from "../../../service/Reclamacoes"
 import CardReclamacaoMorador from "../../../components/morador/reclamacoes/cardReclamacaoMorador"
 import styles from "../../../css/telaExibeReclamacaoMorador.module.css"
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 //Função que cria o componente
 function PaginaExibeReclamacaoMorador(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que armazena os dados do json 
     const [cards, setCards] = useState([])
@@ -53,7 +58,7 @@ function PaginaExibeReclamacaoMorador(){
 
             {/* Div onde as cards da reclamação serão renderizados */}
             <div className={styles['ter-lista']}>
-                {cards.map((reclamacao) => (
+                {filtrarPorTexto(cards, termo).map((reclamacao) => (
                     <CardReclamacaoMorador key={reclamacao.id_reclamacao} reclamacao={reclamacao} renderiza={setCards}/>
                 ))}
             </div>

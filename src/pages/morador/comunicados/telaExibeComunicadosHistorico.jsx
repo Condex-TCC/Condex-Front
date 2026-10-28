@@ -7,10 +7,15 @@ import CardComunicadoMorador from "../../../components/morador/comunicados/cardC
 import styles from "../../../css/telaVisitantesMorador.module.css"
 import abasStyles from "../../../css/paginainicialPorteiro.module.css"
 import listaStyles from "../../../css/paginaExibeEnvios.module.css"
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 
 //Função que cria o componente
 function PaginaExibeComunicadosHistorico(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //REGRA DE NEGÓCIO: Nessa tela será exibida todos os comunicados do morador logado
 
@@ -83,7 +88,7 @@ function PaginaExibeComunicadosHistorico(){
                 {/* Cards com todos os comunicados do morador */}
                 {
                     // Iterando e adicionando os cards
-                    comunicados.map((envio) => {
+                    filtrarPorTexto(comunicados, termo).map((envio) => {
 
                         //Retorna o card do comunicado
                         return <CardComunicadoMorador key={envio.id} envio={envio} back={"/morador/comunicados/historico"}></CardComunicadoMorador>

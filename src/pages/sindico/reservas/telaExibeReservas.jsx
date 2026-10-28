@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import CardReservaAutorizacao from '../../../components/sindico/cardReserva';
 import { dataHojeIso, formatarDataReserva, formatarHoraReserva, getReservaPendentes, getReservasPorData } from '../../../service/Reservas';
 import styles from '../../../css/paginaExibeReservasSindico.module.css';
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 //Função que soma (ou subtrai) dias de uma data no formato aaaa-mm-dd
 function somaDias(dataIso, dias) {
@@ -23,6 +25,9 @@ function somaDias(dataIso, dias) {
 }
 
 export default function PaginaExibeReserva() {
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook para navegação
     const navigate = useNavigate()
@@ -189,10 +194,10 @@ export default function PaginaExibeReserva() {
               <h3 className={styles.sectionTitle}>Reservas confirmadas em {formatarDataReserva(dataSelecionada)}</h3>
 
               {
-                agenda.confirmadas.length === 0 ?
+                filtrarPorTexto(agenda.confirmadas, termo).length === 0 ?
                   <p className={styles.empty}>Nenhuma reserva confirmada neste dia.</p>
                 :
-                agenda.confirmadas.map((reserva) => (
+                filtrarPorTexto(agenda.confirmadas, termo).map((reserva) => (
                   <div key={reserva.id} className={`${styles.card} ${styles.cardGap}`}>
                     <div className={styles.cardContent}>
                       <h4>{reserva.espaco?.nome}</h4>
@@ -208,10 +213,10 @@ export default function PaginaExibeReserva() {
               <h3 className={styles.sectionTitle}>Aguardando aprovação neste dia</h3>
 
               {
-                agenda.pendentes.length === 0 ?
+                filtrarPorTexto(agenda.pendentes, termo).length === 0 ?
                   <p className={styles.empty}>Nenhuma solicitação pendente neste dia.</p>
                 :
-                agenda.pendentes.map((reserva) => (
+                filtrarPorTexto(agenda.pendentes, termo).map((reserva) => (
                   <CardReservaAutorizacao
                     key={reserva.id}
                     id={reserva.id}
@@ -242,10 +247,10 @@ export default function PaginaExibeReserva() {
                 <p className={styles.error}>Não foi possível carregar as solicitações.</p>
               :
               //Estado sem solicitações
-              solicitacoes.lista.length === 0 ?
+              filtrarPorTexto(solicitacoes.lista, termo).length === 0 ?
                 <p className={styles.empty}>Nenhuma solicitação pendente.</p>
               :
-              solicitacoes.lista.map((reserva) => (
+              filtrarPorTexto(solicitacoes.lista, termo).map((reserva) => (
                 <CardReservaAutorizacao
                   key={reserva.id}
                   id={reserva.id}

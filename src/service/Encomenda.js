@@ -21,16 +21,17 @@ function normalizarEncomenda(item) {
         moradorId: item.moradorId ?? item.morador?.id ?? item.fk_id_morador_encomenda ?? null,
         moradorNome: item.moradorNome ?? item.morador?.nome ?? null,
         moradorTelefone: item.moradorTelefone ?? item.morador?.telefone ?? null,
+        moradorCpf: item.moradorCpf ?? item.morador?.cpf ?? null,
     }
 }
 
 //Função que obtem todas as encomendas
 //Devolve a lista quando a API responde com sucesso e null quando a requisição
 //falha, para a tela conseguir diferenciar "sem encomendas" de "erro ao buscar"
-export async function getEncomendas() {
+export async function getEncomendas(filtros = {}) {
 
     try {
-        let response = await getEncomendasAPI()
+        let response = await getEncomendasAPI(filtros)
         let json = await lerJson(response)
 
         if (!response.ok) {

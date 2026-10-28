@@ -7,11 +7,16 @@ import CardLaudoMorador from "../../../components/morador/registros/cardLaudoMor
 import styles from "../../../css/telaVisitantesMorador.module.css";
 import abasStyles from "../../../css/paginainicialPorteiro.module.css";
 import listaStyles from "../../../css/paginaExibeEnvios.module.css";
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 
 
 //Função que cria o componente
 function PaginaExibeLaudosMorador(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que irá armazenar os laudos
     const [laudos, setLaudos] = useState([])
@@ -78,7 +83,7 @@ function PaginaExibeLaudosMorador(){
                 {/* Cards com os laudos do condomínio */}
                 {
                     // Iterando e adicionando os cards
-                    laudos.map((laudo) => {
+                    filtrarPorTexto(laudos, termo).map((laudo) => {
 
                         //Retorna o card do laudo
                         return <CardLaudoMorador key={laudo.id} laudo={laudo}></CardLaudoMorador>

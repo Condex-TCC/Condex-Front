@@ -2,10 +2,11 @@
 
 //Local das importações
 import styles from "../../css/paginainicialPorteiro.module.css"
-import { useCallback, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { useNavigate, useOutletContext } from "react-router-dom"
 import { getVisitantesPorteiro } from "../../service/VisitantePorteiro"
 import { getEncomendas } from "../../service/Encomenda"
+import { interpretarBuscaEncomenda, interpretarBuscaVisitante } from "../../utils/busca"
 import { getVisitasAtivas, registrarEntradaVisita, registrarSaidaVisita } from "../../service/VisitaPorteiro"
 import CardVisitanteCadastrado from "../../components/porteiro/cardVisitanteCadastrado"
 import CardEncomenda from "../../components/porteiro/cardEncomenda"
@@ -35,6 +36,12 @@ function PaginainicialPorteiro(){
     //Estado que armazena as encomendas
     const [encomendas, setEncomendas] = useState([])
 
+    //Texto da barra de pesquisa do header, que vem do layout do porteiro
+    const { busca, setBusca } = useOutletContext()
+
+    //Texto já "assentado" depois que o porteiro para de digitar, que é o que dispara a busca na API
+    const [termoBusca, setTermoBusca] = useState(busca)
+
     //Estado que guarda o aviso quando alguma lista não pôde ser carregada
     const [erroCarga, setErroCarga] = useState("")
 
@@ -49,19 +56,42 @@ function PaginainicialPorteiro(){
         return Array.isArray(dadosSeguros[0]) ? dadosSeguros[0] : dadosSeguros
     }
 
+    //Espera o porteiro parar de digitar antes de buscar, para não chamar a API a cada letra
+    useEffect(() => {
+
+        const temporizador = setTimeout(() => setTermoBusca(busca), 400)
+
+        return () => clearTimeout(temporizador)
+    }, [busca])
+
+    //Filtros enviados à API, calculados a partir do texto buscado
+    const filtrosVisitante = useMemo(() => interpretarBuscaVisitante(termoBusca), [termoBusca])
+    const filtrosEncomenda = useMemo(() => interpretarBuscaEncomenda(termoBusca), [termoBusca])
+
+    //Indica se há uma busca ativa, para ajustar as mensagens de lista vazia
+    const buscando = termoBusca.trim() !== ""
+
+    //Função que troca de aba e limpa a busca, já que cada aba filtra campos diferentes
+    const trocarAba = (aba) => {
+
+        setAbaAtiva(aba)
+        setBusca("")
+        setTermoBusca("")
+    }
+
     //Função que busca os visitantes cadastrados
     //Devolve null quando a API falha, para a tela avisar o porteiro
     const buscarVisitantes = useCallback(async () => {
 
         //Chama a service que busca os visitantes do porteiro
-        return await getVisitantesPorteiro()
-    }, [])
+        return await getVisitantesPorteiro(filtrosVisitante)
+    }, [filtrosVisitante])
 
     //Função que busca as encomendas e devolve a lista pronta
     const buscarEncomendas = useCallback(async () => {
 
         //Chama a service que busca as encomendas
-        const resultado = await getEncomendas()
+        const resultado = await getEncomendas(filtrosEncomenda)
 
         //Devolve null quando a API falha, para a tela avisar o porteiro
         if(resultado === null){
@@ -71,15 +101,15 @@ function PaginainicialPorteiro(){
 
         //Devolve a lista já normalizada
         return normalizaLista(resultado)
-    }, [])
+    }, [filtrosEncomenda])
 
     //Função que busca as visitas ativas (visitantes dentro do condomínio)
     //Devolve null quando a API falha, para a tela avisar o porteiro
     const buscarVisitasAtivas = useCallback(async () => {
 
         //Chama a service que busca as visitas ativas
-        return await getVisitasAtivas()
-    }, [])
+        return await getVisitasAtivas(filtrosVisitante)
+    }, [filtrosVisitante])
 
     //Função que recarrega a lista de encomendas depois de uma ação, para a tela
     //refletir o que foi realmente gravado no backend
@@ -220,13 +250,13 @@ function PaginainicialPorteiro(){
         <div className={styles['tabs--group']}>
           <button
             className={abaAtiva === "visitantes" ? styles['tab--active'] : styles['tab--inactive']}
-            onClick={() => setAbaAtiva("visitantes")}
+            onClick={() => trocarAba("visitantes")}
           >
             Visitantes
           </button>
           <button
             className={abaAtiva === "encomendas" ? styles['tab--active'] : styles['tab--inactive']}
-            onClick={() => setAbaAtiva("encomendas")}
+            onClick={() => trocarAba("encomendas")}
           >
             Encomendas
           </button>
@@ -248,6 +278,7 @@ function PaginainicialPorteiro(){
         }
       </div>
 
+
       {
         //Aviso exibido quando alguma lista não pôde ser carregada da API
         erroCarga &&
@@ -264,7 +295,7 @@ function PaginainicialPorteiro(){
                 //Os visitantes cadastrados pelo morador (sem porteiro) e pelo
                 //porteiro (com porteiro) são todos válidos e aparecem na lista
                 visitantes.length === 0 ?
-                  <EstadoVazio>Nenhum visitante cadastrado</EstadoVazio>
+                  <EstadoVazio>{buscando ? "Nenhum visitante encontrado para a busca" : "Nenhum visitante cadastrado"}</EstadoVazio>
                 :
                   visitantes.map((visitante) => {
 
@@ -289,7 +320,7 @@ function PaginainicialPorteiro(){
               {
                 //Uma visita está ativa enquanto não tem saída registrada
                 visitasAtivas.length === 0 ?
-                  <EstadoVazio>Nenhum visitante no condomínio</EstadoVazio>
+                  <EstadoVazio>{buscando ? "Nenhum visitante ativo encontrado para a busca" : "Nenhum visitante no condomínio"}</EstadoVazio>
                 :
                   visitasAtivas.map((visita) => (
                     <CardVisitaAtiva
@@ -308,7 +339,7 @@ function PaginainicialPorteiro(){
 
               {
                 encomendasPendentes.length === 0 ?
-                  <EstadoVazio>Nenhuma encomenda pendente</EstadoVazio>
+                  <EstadoVazio>{buscando ? "Nenhuma encomenda pendente encontrada para a busca" : "Nenhuma encomenda pendente"}</EstadoVazio>
                 :
                   encomendasPendentes.map((encomenda) => (
                     <CardEncomenda
@@ -325,7 +356,7 @@ function PaginainicialPorteiro(){
 
               {
                 encomendasRetiradas.length === 0 ?
-                  <EstadoVazio>Nenhuma encomenda retirada</EstadoVazio>
+                  <EstadoVazio>{buscando ? "Nenhuma encomenda retirada encontrada para a busca" : "Nenhuma encomenda retirada"}</EstadoVazio>
                 :
                   encomendasRetiradas.map((encomenda) => (
                     <CardEncomenda

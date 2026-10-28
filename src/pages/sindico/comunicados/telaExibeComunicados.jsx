@@ -8,9 +8,14 @@ import { getComunicados } from "../../../service/Comunicados"
 import { useEffect, useState } from "react"
 import CardComunicado from "../../../components/sindico/comunicados/cardComunicado"
 import stylesTitle from '../../../css/paginaCadastraRegra.module.css';
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 //Função que cria o componentes
 function PaginaExibeComunicados(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que irá controlar o estado dos comunicados
     const [cards, setCards] = useState([])
@@ -90,7 +95,7 @@ function PaginaExibeComunicados(){
                 {/* Cards com os comunicados */}
                 {
                     // Interando e adicioando os cards
-                    cards.map((comunicado) => {
+                    filtrarPorTexto(cards, termo).map((comunicado) => {
                         //Retorna o card de comunicado
                         return <CardComunicado comunicado={comunicado}></CardComunicado>
                     } )

@@ -1,5 +1,6 @@
 //Elemento que permite adicioar outros componentes dentro de si
 import { Outlet } from 'react-router-dom';
+import { useBuscaDoLayout } from '../hooks/useBuscaHeader';
 import HeaderSindico from '../components/sindico/headerSindoc';
 import { MenuLateralContext } from '../context/menuLateralContext';
 import { useContext } from 'react';
@@ -9,6 +10,9 @@ import SidebarSindico from '../components/sindico/sidebarSindico';
 
 //Função que cria o componente principal da aplciação
 function LayoutSindico(){
+
+    //Texto da barra de pesquisa do header, compartilhado com as páginas
+    const { busca, setBusca } = useBuscaDoLayout()
 
     //Pegando as ações adicionadas no provider
     const {menuLateral, setMenuLateral} = useContext(MenuLateralContext);
@@ -26,13 +30,13 @@ function LayoutSindico(){
                 {/* Container Principal (Header + Conteúdo) que assume o resto do espaço */}
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
                         
-                    <HeaderSindico />
+                    <HeaderSindico busca={busca} aoBuscar={setBusca} />
 
                     {/* Permite renderizar outros componentes dentro desse layout */}
                     <main style={{ padding: '24px' }}>
                         
                         {/* Local onde será inserido outros elementos */}
-                        <Outlet />
+                        <Outlet context={{ busca, setBusca }} />
                     </main>
                         
                 </div>

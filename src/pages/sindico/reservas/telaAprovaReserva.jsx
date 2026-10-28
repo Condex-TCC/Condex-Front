@@ -6,10 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { getReservaPendentes } from "../../../service/Reservas";
 import styles from "../../../css/paginaExibeRegrasLaudos.module.css";
 import stylesTitle from "../../../css/paginaCadastraRegra.module.css";
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 
 //Função que cria o componente
 function PaginaExibeAprovaReservas(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que irá armazenar os cards
     const [cards, setCards] = useState([])
@@ -80,7 +85,7 @@ function PaginaExibeAprovaReservas(){
 
             {/* Percorrendo o array com as reservas pendentes */}
             {
-              cards.map((reserva) => {
+              filtrarPorTexto(cards, termo).map((reserva) => {
 
                 //Retorna o card da reserva
                 return <CardReservaAutorizacao key={reserva.id} id={reserva.id} espaco={reserva.espaco} data={reserva.data} inicio={reserva.inicio} fim={reserva.fim} morador={reserva.morador}></CardReservaAutorizacao>

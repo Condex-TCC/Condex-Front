@@ -6,9 +6,14 @@ import { useNavigate } from "react-router-dom"
 import { getReclamacoesHistorico } from "../../../service/Reclamacoes"
 import CardReclamacaoSindico from "../../../components/sindico/cardReclamacaoSindico"
 import styles from "../../../css/paginaExibeReclamacoesSindico.module.css"
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 //Função que cria o componente
 function PaginaExibeReclamacoesHistorico(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que armazena os dados dos cards que vão ser renderizados
     const [cards, setCards] = useState([])
@@ -58,7 +63,7 @@ function PaginaExibeReclamacoesHistorico(){
             </div>
 
             <div className={styles['prs-lista']}>
-                {Array.isArray(cards) && cards.map((reclamacao) => (
+                {Array.isArray(cards) && filtrarPorTexto(cards, termo).map((reclamacao) => (
                     <CardReclamacaoSindico key={reclamacao.id_reclamacao} reclamacao={reclamacao}
                         redireciona={"/sindico/reclamacoes/historico"} />
                 ))}
