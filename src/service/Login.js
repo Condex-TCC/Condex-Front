@@ -125,7 +125,7 @@ export async function getUser(usuario){
 }
 
 //Função que valida a conta do usuário para iniciar a redefinição de senha
-export async function validaConta(email, cpf, telefone){
+export async function validaContaUsuario(email, cpf, telefone){
 
     //Tentando executar a operação de validação da conta
     try{

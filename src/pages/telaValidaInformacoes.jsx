@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import styles from "../css/telaValidaInformacoes.module.css"
+import { validaContaUsuario } from "../service/Login"
 
 //Importações do arquivo
 
@@ -20,23 +22,87 @@ function PaginaValdiaInformacoes(){
     const back = () => {
 
         //Realiza a navegação para a tela de login
-        navigate("/")
+        navigate("/login")
     }
 
     //Função que pega os dados 
     const validaConta = async () => {
 
-        //TODO: Será implementada mais tarde
+        //Chamando a função que realiza a validação
+        const request = await validaContaUsuario(email, cpf, telefone)
+
+        //Desestrutrando os dados
+        const { usuario } = await request
+
+        //Realiando a navegação 
+
     }
 
     //Retorna o componente
     return (
-        <h1>Página valida informações</h1>
-        //Na mesma linha na direita um botão de voltar que chama a função de back
+        <div className={styles.container}>
 
-        //uma div com tres labels que se conentam com os states (email, cpf, telefone)
+            {/* Cabeçalho da página: título e botão de voltar */}
+            <header className={styles.header}>
+                <h1 className={styles.title}>Validar conta</h1>
 
-        //Um botão de validar conta que chama a função de valida conta
+                <button type="button" className={styles.btnVoltar} onClick={back}>
+                    Voltar
+                </button>
+            </header>
+
+            {/* Formulário com os dados para validação */}
+            <div className={styles.formContainer}>
+
+                {/* Campo E-mail */}
+                <div className={styles.dataField}>
+                    <label htmlFor="email" className={styles.dataLabel}>E-mail</label>
+                    <input
+                        id="email"
+                        type="email"
+                        className={styles.dataInput}
+                        placeholder="Digite seu e-mail"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+
+                {/* Campo CPF */}
+                <div className={styles.dataField}>
+                    <label htmlFor="cpf" className={styles.dataLabel}>CPF</label>
+                    <input
+                        id="cpf"
+                        type="text"
+                        className={styles.dataInput}
+                        placeholder="Digite seu CPF"
+                        value={cpf}
+                        onChange={(e) => setCpf(e.target.value)}
+                    />
+                </div>
+
+                {/* Campo Telefone */}
+                <div className={styles.dataField}>
+                    <label htmlFor="telefone" className={styles.dataLabel}>Telefone</label>
+                    <input
+                        id="telefone"
+                        type="tel"
+                        className={styles.dataInput}
+                        placeholder="Digite seu telefone"
+                        value={telefone}
+                        onChange={(e) => setTelefone(e.target.value)}
+                    />
+                </div>
+
+            </div>
+
+            {/* Botão para enviar os dados */}
+            <footer className={styles.footer}>
+                <button type="button" className={styles.btnEnviar} onClick={validaConta}>
+                    Enviar
+                </button>
+            </footer>
+
+        </div>
     )
 }
 
