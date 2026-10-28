@@ -34,7 +34,13 @@ function PaginaValdiaInformacoes(){
         //Desestrutrando os dados
         const { usuario } = await request
 
-        //Realiando a navegação 
+        //Realiando a navegação
+        navigate("/consta/codigo", {
+            state: {
+                id: usuario.id,
+                tipo: usuario.tipo,
+            }
+        })
 
     }
 

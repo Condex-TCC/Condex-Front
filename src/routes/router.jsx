@@ -63,6 +63,7 @@ import PaginaExibeReclamacaoNaoVisualizada from '../pages/sindico/reclamacoes/te
 import PaginaExibeReclamacoesHistorico from '../pages/sindico/reclamacoes/telaExibeReclamacoesHistorico';
 import PaginaRespondeReclamacao from '../pages/sindico/reclamacoes/telaRespondeReclamacao';
 import PaginaValdiaInformacoes from '../pages/telaValidaInformacoes';
+import PaginaInsereCodigo from '../pages/telaInsereCodigo';
 
 
 //Componente que será utilizado para analisar a URL
@@ -109,6 +110,12 @@ const route = createBrowserRouter([
             {
                 path: "/consta/valida",
                 element: <PaginaValdiaInformacoes></PaginaValdiaInformacoes>
+            },
+
+            //Tela para validar o código enviado via SMS
+            {
+                path: "/consta/codigo",
+                element: <PaginaInsereCodigo></PaginaInsereCodigo>
             },
 
             //Tela do sindico
