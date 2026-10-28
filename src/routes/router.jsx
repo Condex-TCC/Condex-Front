@@ -106,15 +106,21 @@ const route = createBrowserRouter([
                 element: <PaginaPrimeiroAcesso></PaginaPrimeiroAcesso>
             },
 
-            //Tela para validar a consta
+            //Tela para validar a consta | ETAPA 1
             {
                 path: "/consta/valida",
                 element: <PaginaValdiaInformacoes></PaginaValdiaInformacoes>
             },
 
-            //Tela para validar o código enviado via SMS
+            //Tela para validar o código enviado via SMS | ETAPA 2
             {
                 path: "/consta/codigo",
+                element: <PaginaInsereCodigo></PaginaInsereCodigo>
+            },
+
+            //Tela para redefinir a senha | ETAPA 3
+            {
+                path: "/consta/senha",
                 element: <PaginaInsereCodigo></PaginaInsereCodigo>
             },
 

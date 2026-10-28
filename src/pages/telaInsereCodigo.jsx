@@ -41,10 +41,16 @@ function PaginaInsereCodigo(){
         console.log(request)
         //Verifica se o acesso foi concedido
         if(acesso == true){
- 
-            alert("Acesso liberado!")
 
-            //TODO: Fazer aqui depois
+            //Realiza a navegação 
+            navigate("/consta/senha", {
+                state: {
+                    id: id,
+                    tipo: tipo,
+                    codigo: codigo
+                }
+            })
+            
         }else{
 
             //Exibe uma menssagem ao usuário

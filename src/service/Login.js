@@ -224,7 +224,7 @@ export async function redefinirSenha(id, tipo, codigo, novaSenha){
         // console.log(message);
 
         // Retornando a menssagem
-        return message
+        return data
 
     }
     //Caso alguma promisse retorne um reject irá cair aqui
