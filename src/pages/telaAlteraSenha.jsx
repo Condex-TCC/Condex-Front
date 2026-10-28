@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import styles from "../css/telaAlteraSenha.module.css"
+import { redefinirSenha } from "../service/Login"
 
 //Importações do arquivo
 
@@ -32,19 +34,78 @@ function PaginaRedefineSenha(){
     //Função que redefine a senha
     const implementacaoRedefineSenha = async () => {
 
-        //TODO: Será implementado mais tarde
+        //Chama a função de alterar a senha
+        const response = await redefinirSenha(id, tipo, codigo, novaSenha)
+
+        //Desestrutura a resposta
+        const { alterado } = await response
+
+        //Verifica se o acesso foi concedido
+        if(alterado == true){
+
+            //Menssagem para o usuário
+            alert("Sua senha foi alterada com sucesso!")
+
+            //Realiza a navegação para a tela de login
+            navigate("/login")
+            
+        }else{
+
+            //Exibe uma menssagem ao usuário
+            alert("Hove um erro para alterar a senha! Tente novamente mais tarde")
+        }
     }
 
     //Retorna o componente
     return (
-        <h1>Redefine a senha</h1>
-        //Na mesma linha no lado direito um botão de voltar que chama a função de back
+        <div className={styles.container}>
 
-        //Texto que diz para o usuário entrar com a nava senha, no minimo 8 caracteres campo obrigatório
+            {/* Cabeçalho da página: título e botão de voltar */}
+            <header className={styles.header}>
+                <h1 className={styles.title}>Redefinir senha</h1>
 
-        //Div com uma label onde será digitado a nova senha,  no minimo 8 caracteres campo obrigatório
+                {/* Botão de voltar que chama a função de back */}
+                <button type="button" className={styles.btnVoltar} onClick={back}>
+                    Voltar
+                </button>
+            </header>
 
-        //Botão de alterar a nova senha
+            {/* Texto que orienta o usuário sobre a nova senha */}
+            <p className={styles.aviso}>
+                Entre com a sua nova senha. Mínimo de 8 caracteres, campo obrigatório.
+            </p>
+
+            {/* Campo da nova senha, com no mínimo oito caracteres */}
+            <div className={styles.formContainer}>
+                <div className={styles.dataField}>
+                    <label htmlFor="novaSenha" className={styles.dataLabel}>Nova senha</label>
+                    <input
+                        id="novaSenha"
+                        type="password"
+                        minLength={8}
+                        required
+                        autoComplete="new-password"
+                        className={styles.dataInput}
+                        placeholder="Digite a sua nova senha"
+                        value={novaSenha}
+                        onChange={(e) => setNovaSenha(e.target.value)}
+                    />
+                </div>
+            </div>
+
+            {/* Botão que chama a função de redefinir a senha */}
+            <footer className={styles.footer}>
+                <button
+                    type="button"
+                    className={styles.btnSalvar}
+                    onClick={implementacaoRedefineSenha}
+                    disabled={novaSenha.length < 8}
+                >
+                    Salvar nova senha
+                </button>
+            </footer>
+
+        </div>
     )
 }
 

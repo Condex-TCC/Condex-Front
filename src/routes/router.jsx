@@ -64,6 +64,7 @@ import PaginaExibeReclamacoesHistorico from '../pages/sindico/reclamacoes/telaEx
 import PaginaRespondeReclamacao from '../pages/sindico/reclamacoes/telaRespondeReclamacao';
 import PaginaValdiaInformacoes from '../pages/telaValidaInformacoes';
 import PaginaInsereCodigo from '../pages/telaInsereCodigo';
+import PaginaRedefineSenha from '../pages/telaAlteraSenha';
 
 
 //Componente que será utilizado para analisar a URL
@@ -121,7 +122,7 @@ const route = createBrowserRouter([
             //Tela para redefinir a senha | ETAPA 3
             {
                 path: "/consta/senha",
-                element: <PaginaInsereCodigo></PaginaInsereCodigo>
+                element: <PaginaRedefineSenha></PaginaRedefineSenha>
             },
 
             //Tela do sindico

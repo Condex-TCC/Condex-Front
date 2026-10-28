@@ -38,7 +38,7 @@ function PaginaInsereCodigo(){
 
         //Desestruturando o objeto
         const { acesso } = await request
-        console.log(request)
+        
         //Verifica se o acesso foi concedido
         if(acesso == true){
 
