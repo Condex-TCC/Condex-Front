@@ -47,13 +47,13 @@ function paraVisitante(visitante){
 //Função que obtem todos os visitantes cadastrados que o porteiro pode ver
 //Devolve a lista quando a API responde com sucesso e null quando a requisição
 //falha, para a tela diferenciar "sem visitantes" de "erro ao buscar"
-export async function getVisitantesPorteiro() {
+export async function getVisitantesPorteiro(filtros = {}) {
 
     //Tenta executar a requisição
     try{
 
         //Chamando a função que realiza a requisição na API
-        let response = await getVisitantesPorteiroAPI()
+        let response = await getVisitantesPorteiroAPI(filtros)
 
         //Convertendo o JSON para objetos no JS
         let json = await lerJson(response)

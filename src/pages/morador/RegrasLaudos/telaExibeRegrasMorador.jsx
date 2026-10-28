@@ -7,11 +7,16 @@ import CardRegraMorador from "../../../components/morador/registros/cardRegraMor
 import styles from "../../../css/telaVisitantesMorador.module.css";
 import abasStyles from "../../../css/paginainicialPorteiro.module.css";
 import listaStyles from "../../../css/paginaExibeEnvios.module.css";
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 
 
 //Função que cria o componente
 function PaginaExibeRegrasMorador(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que irá armazenar as regras
     const [regras, setRegras] = useState([])
@@ -78,7 +83,7 @@ function PaginaExibeRegrasMorador(){
                 {/* Cards com as regras do condomínio */}
                 {
                     // Iterando e adicionando os cards
-                    regras.map((regra) => {
+                    filtrarPorTexto(regras, termo).map((regra) => {
 
                         //Retorna o card da regra
                         return <CardRegraMorador key={regra.id} regra={regra}></CardRegraMorador>

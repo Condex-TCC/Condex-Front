@@ -7,10 +7,15 @@ import CardComunicadoMorador from "../../../components/morador/comunicados/cardC
 import styles from "../../../css/telaVisitantesMorador.module.css";
 import abasStyles from "../../../css/paginainicialPorteiro.module.css";
 import listaStyles from "../../../css/paginaExibeEnvios.module.css";
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 
 //Função que cria o componente
 function PaginaExibeComunicadosMorador(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //REGRA DE NEGÓCIO: Nessa tela será exibida apenas os comunicados não visualizados
 
@@ -83,7 +88,7 @@ function PaginaExibeComunicadosMorador(){
                 {/* Cards com os comunicados que o morador ainda não visualizou */}
                 {
                     // Iterando e adicionando os cards
-                    comunicados.map((envio) => {
+                    filtrarPorTexto(comunicados, termo).map((envio) => {
 
                         //Retorna o card do comunicado
                         return <CardComunicadoMorador key={envio.id} envio={envio} back={"/morador/comunicados/exibe"}></CardComunicadoMorador>

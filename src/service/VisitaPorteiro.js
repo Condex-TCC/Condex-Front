@@ -27,10 +27,10 @@ function normalizarVisita(item) {
 
 //Função que busca o histórico de visitas
 //Devolve a lista quando a API responde com sucesso e null quando falha
-export async function getVisitas() {
+export async function getVisitas(filtros = {}) {
 
     try {
-        let response = await getVisitasAPI()
+        let response = await getVisitasAPI(filtros)
         let json = await lerJson(response)
 
         if (!response.ok) {
@@ -49,9 +49,9 @@ export async function getVisitas() {
 
 //Função que devolve somente os visitantes que estão dentro do condomínio
 //Uma visita está ativa enquanto não tem saída registrada
-export async function getVisitasAtivas() {
+export async function getVisitasAtivas(filtros = {}) {
 
-    const visitas = await getVisitas()
+    const visitas = await getVisitas(filtros)
 
     if (visitas === null) {
         return null

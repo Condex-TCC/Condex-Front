@@ -7,9 +7,14 @@ import CardProximaVisita from '../../components/morador/cardProximaVisita'
 import CardVisitanteAtivo from '../../components/morador/cardVisitanteAtivo'
 import { getProximasVisitas, getVisitantesAtivos } from '../../service/Visitante'
 import styles from '../../css/telaVisitantesMorador.module.css'
+import { useBuscaHeader } from '../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../utils/busca'
 
 //Função que cria a tela de visitantes
 function TelaVisitantesMorador(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
@@ -66,10 +71,10 @@ function TelaVisitantesMorador(){
 
                 {
                     //Se não houver nenhum visitante dentro, mostra o estado vazio
-                    visitantesAtivos.length === 0 ?
+                    filtrarPorTexto(visitantesAtivos, termo).length === 0 ?
                         <p className={styles['vm-empty']}>Nenhum</p>
                     :
-                        visitantesAtivos.map((visitante) => (
+                        filtrarPorTexto(visitantesAtivos, termo).map((visitante) => (
                             <CardVisitanteAtivo key={visitante.id} visitante={visitante} />
                         ))
                 }
@@ -81,10 +86,10 @@ function TelaVisitantesMorador(){
 
                 {
                     //Se não houver nenhum visitante cadastrado, mostra o estado vazio
-                    proximasVisitas.length === 0 ?
+                    filtrarPorTexto(proximasVisitas, termo).length === 0 ?
                         <p className={styles['vm-empty']}>Nenhum visitante cadastrado</p>
                     :
-                        proximasVisitas.map((visita) => (
+                        filtrarPorTexto(proximasVisitas, termo).map((visita) => (
                             <CardProximaVisita key={visita.id} visita={visita} />
                         ))
                 }

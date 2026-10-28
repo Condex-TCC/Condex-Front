@@ -1,11 +1,12 @@
 //Arquivo responsável por fazer a requisição para a API das encomendas
 
 import { GetCookie } from "../service/cookie"
+import { montarQuery } from "../utils/busca"
 import { USE_MOCK } from "../mock/ativo"
 import { getEncomendasMock, insertEncomendaMock, withdrawEncomendaMock } from "../mock/porteiroMock"
 
 //Função que recupera todas as encomendas do banco de dados
-export async function getEncomendasAPI(){
+export async function getEncomendasAPI(filtros = {}){
 
     //Com o mock ligado, devolve os dados fictícios em memória
     if(USE_MOCK){
@@ -18,7 +19,8 @@ export async function getEncomendasAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "/api/porteiro/encomenda/get"
+    //A API aceita os filtros ?nome= e ?descricao=
+    let endPoint = "/api/porteiro/encomenda/get" + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(

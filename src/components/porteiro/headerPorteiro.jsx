@@ -7,7 +7,8 @@ import * as CookieService from '../../service/cookie'
 //Header do porteiro
 
 //Função que cria o componenete do reader
-function HeaderPorteiro(){
+//Recebe o texto da busca e a função que o altera, controlados pelo layout do porteiro
+function HeaderPorteiro({ busca = "", aoBuscar }){
 
     //Hook que realiza a nevegação automatica
     const navigate = useNavigate();
@@ -77,7 +78,9 @@ function HeaderPorteiro(){
                 <input 
                 type="text" 
                 className={styles["search-input"]} 
-                placeholder="Pesquisar..." 
+                placeholder="Pesquisar nesta página..." 
+                value={busca}
+                onChange={(evento) => aoBuscar?.(evento.target.value)}
                 />
             </div>
 

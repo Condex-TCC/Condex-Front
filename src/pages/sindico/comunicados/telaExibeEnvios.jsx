@@ -8,6 +8,8 @@ import listaStyles from "../../../css/paginaExibeEnvios.module.css";
 import cardStyles from "../../../css/cardRegrasLaudosSindico.module.css";
 import stylesTitle from '../../../css/paginaCadastraRegra.module.css';
 import CardResposta from "../../../components/sindico/comunicados/cardResposta";
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 //Função auxiliar que converte a data do formato ISO para o padrão brasileiro (dd/mm/aaaa)
 function formatarData(dataIso) {
@@ -29,6 +31,9 @@ function formatarData(dataIso) {
 
 //Função que cria o componente
 function PaginaExibeEnvios(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que pega o parametro passado na url
     const { id } = useParams()
@@ -111,7 +116,7 @@ function PaginaExibeEnvios(){
                 {/* Cards com os envios dos moradores */}
                 {
                     // Interando e adicioando os cards
-                    envios.map((envio) => {
+                    filtrarPorTexto(envios, termo).map((envio) => {
 
                         //Retorna o card de resposta com o envio do morador
                         return <CardResposta key={envio.id} resposta={envio} redirecionamento={"/sindico/comunicados/envios/" + id}></CardResposta>

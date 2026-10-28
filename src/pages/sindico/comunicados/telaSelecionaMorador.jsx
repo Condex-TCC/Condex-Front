@@ -7,10 +7,15 @@ import CardMorador from "../../../components/sindico/comunicados/cardMorador"
 import styles from "../../../css/paginaCadastraRegra.module.css"
 import listaStyles from "../../../css/paginaExibeEnvios.module.css"
 import selecaoStyles from "../../../css/paginaCadastraComunicados.module.css"
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 
 //Função que cria o componente
 function PaginaSelecionaMoradorComunicado(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que irá armazenar os moradores
     const [moradoes, setMoradores] = useState([]) //Array de objetos
@@ -72,7 +77,7 @@ function PaginaSelecionaMoradorComunicado(){
     const selectAll = () => {
 
         //Percorre todos os moradores pegando apenas o id de cada um
-        let idsMoradores = moradoes.map((morador) => {
+        let idsMoradores = filtrarPorTexto(moradoes, termo).map((morador) => {
 
             //Retorna o id do morador
             return morador.id
@@ -105,7 +110,7 @@ function PaginaSelecionaMoradorComunicado(){
                 {/* Cards com os moradores que podem ser selecionados */}
                 {
                     // Iterando e adicionando os cards
-                    moradoes.map((morador) => {
+                    filtrarPorTexto(moradoes, termo).map((morador) => {
 
                         //Retorna o card do morador
                         return <CardMorador key={morador.id} morador={morador}

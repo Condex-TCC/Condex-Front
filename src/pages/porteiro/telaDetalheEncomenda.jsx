@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { registrarRetiradaEncomenda } from '../../service/Encomenda'
+import { mascaraCpf, mascaraTelefone } from '../../utils/mascaras'
 import styles from '../../css/formularioPorteiro.module.css'
 
 //Função que devolve o texto quando o dado ainda não é devolvido pela API
@@ -110,6 +111,16 @@ export default function PaginaDetalheEncomenda() {
                     <div className={styles['fp-resumo-linha']}>
                         <span>Morador</span>
                         <span>{ouSimbolo(encomenda.moradorNome)}</span>
+                    </div>
+
+                    <div className={styles['fp-resumo-linha']}>
+                        <span>CPF do morador</span>
+                        <span>{encomenda.moradorCpf ? mascaraCpf(encomenda.moradorCpf) : '-'}</span>
+                    </div>
+
+                    <div className={styles['fp-resumo-linha']}>
+                        <span>Telefone do morador</span>
+                        <span>{encomenda.moradorTelefone ? mascaraTelefone(encomenda.moradorTelefone) : '-'}</span>
                     </div>
 
                     {/* A API guarda bloco, apartamento e data de recebimento dentro

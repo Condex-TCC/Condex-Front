@@ -1,13 +1,15 @@
 //Arquivo responsável por requisições de visitas (entrada/saída/histórico) para porteiro
 
 import { GetCookie } from "../service/cookie"
+import { montarQuery } from "../utils/busca"
 
-export async function getVisitasAPI(){
+export async function getVisitasAPI(filtros = {}){
 
     let cookie = await GetCookie()
     let token = cookie.token
 
-    let endPoint = "/api/porteiro/visita/get"
+    //A API aceita os filtros ?nome= e ?cpf= (do visitante)
+    let endPoint = "/api/porteiro/visita/get" + montarQuery(filtros)
 
     const requisicao = fetch(
         endPoint,

@@ -1,18 +1,20 @@
 //Arquivo responsável por fazer a requisição para a API de visitantes do porteiro
 
 import { GetCookie } from "../service/cookie"
+import { montarQuery } from "../utils/busca"
 
 //Função que recupera todos os visitantes cadastrados na API
 //O endpoint do porteiro devolve tanto os visitantes cadastrados por moradores
 //quanto os cadastrados por porteiros, sem nenhum filtro
-export async function getVisitantesPorteiroAPI(){
+export async function getVisitantesPorteiroAPI(filtros = {}){
 
     //Receperando o token de outorização
     let cookie = await GetCookie()
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "/api/porteiro/visitante/get"
+    //A API aceita os filtros ?nome= e ?cpf=
+    let endPoint = "/api/porteiro/visitante/get" + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(

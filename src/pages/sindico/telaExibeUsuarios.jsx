@@ -5,9 +5,14 @@ import styles from "../../css/telaExibeUsuarios.module.css"
 import { useEffect, useState } from "react"
 import { LoadindUsers } from "../../service/CrudUsuarios"
 import { redirect, useNavigate } from "react-router-dom"
+import { useBuscaHeader } from '../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../utils/busca'
 
 //Função que cria os componentes
 function PaginaExibeUsuarios(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Cmponente que realiza a nevegação automatica
     const navigate = useNavigate();
@@ -116,7 +121,7 @@ function PaginaExibeUsuarios(){
           
           {
             //Percorrendo o array de usuários
-            usuarios.map((usuario) => {
+            filtrarPorTexto(usuarios, termo).map((usuario) => {
               
               // Verifica qual tipo de usuário está selecionado
               if(tipoUsuario === "morador"){

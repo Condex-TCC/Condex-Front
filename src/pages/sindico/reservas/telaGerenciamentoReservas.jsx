@@ -5,9 +5,14 @@ import stylesTitle from '../../../css/paginaCadastraRegra.module.css';
 import { CardArea } from "../../../components/sindico/cardArea";
 import { obtendoAreasComuns } from "../../../service/AreaComum";
 import  CardReservaAutorizacao from "../../../components/sindico/cardReserva";
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 
 export default function PaginaGerenciaReservas() {
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
@@ -94,7 +99,7 @@ export default function PaginaGerenciaReservas() {
              {/* Exibindo os card dependendo da ação */}
              {
                 //Percorrendo o array com os cards que serão exibidos
-                cards.map((elemento) => {
+                filtrarPorTexto(cards, termo).map((elemento) => {
                   
                   //Retorna o card das regras
                   return <CardArea key={elemento.id} area={elemento} renderiza={setCards}></CardArea>

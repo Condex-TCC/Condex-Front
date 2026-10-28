@@ -8,7 +8,8 @@ import { MenuLateralContext } from "../../context/menuLateralContext";
 //Header principal da página
 
 //Função que cria o componente
-function HeaderSindico(propos){
+//Recebe o texto da busca e a função que o altera, controlados pelo layout do síndico
+function HeaderSindico({ busca = "", aoBuscar }){
     
     //Hook que realiza a nevegação automatica
     const navigate = useNavigate();
@@ -104,7 +105,13 @@ function HeaderSindico(propos){
                 </svg>
 
                 {/* Renderiza o campo interativo onde o usuário digita */}
-                <input type="text" placeholder="Pesquisar..." className={styles["search-input"]} />
+                <input
+                    type="text"
+                    placeholder="Pesquisar nesta página..."
+                    className={styles["search-input"]}
+                    value={busca}
+                    onChange={(evento) => aoBuscar?.(evento.target.value)}
+                />
             </div>
         </div>
 
