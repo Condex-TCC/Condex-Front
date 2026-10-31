@@ -1,11 +1,35 @@
 //Local das importações
+import { useEffect, useState } from "react"
 import styles from "../../css/paginaInicialSindico.module.css"
+import { getTelaIncialSindico } from "../../service/TelaInicial"
 
 //Página inicial do sindico
 
 //Função que cria o componente do sindico
 function PaginainicialSindico(){
     
+  //Hook que armazena os dados 
+  const [dadosTelaInical, setDadosTelaInical] = useState([])
+
+  //Função que obtem os dados para a tela inicial do sindico
+  const obtendoDadosTelaInicial = async () => {
+
+    //Obtendo os dados
+    let dados = await getTelaIncialSindico()
+
+    //Salvando os dados no state para poderem ser utilizados na página
+    setDadosTelaInical(dados)
+    console.log(dados)
+  }
+
+  //Hook que é executado quando a página é renderizada
+  useEffect(() => {
+
+    //Chamando a função que obtem os dados para a tela inicial
+    obtendoDadosTelaInicial()
+    
+  }, [])
+
     //Retorna um componente
     return (
     <div className={styles['dashboard--principal']}>
