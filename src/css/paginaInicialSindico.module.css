@@ -148,6 +148,20 @@
   border-radius: var(--raio-cartao);
   box-shadow: var(--sombra-cartao);
   box-sizing: border-box;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Destaque visual ao passar o mouse pelo card clicável */
+.cartao--resumo:hover {
+  transform: translateY(-3px);
+  border-color: #d7e3f2;
+  box-shadow: 0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 34px rgba(16, 24, 40, 0.1);
+}
+
+/* Leve retorno ao pressionar o card */
+.cartao--resumo:active {
+  transform: translateY(-1px);
 }
 
 /* Faixa colorida no topo de cada card */
@@ -239,7 +253,14 @@
   color: #c0c8d6;
   line-height: 1;
   transform: translateY(-1px);
+  transition: color 0.2s ease, transform 0.2s ease;
   flex-shrink: 0;
+}
+
+/* Realça a seta quando o card está em foco visual */
+.cartao--resumo:hover .seta--cartao--resumo {
+  color: var(--cor-primaria);
+  transform: translate(3px, -1px);
 }
 
 /* Linha inferior com os três painéis */
@@ -394,17 +415,25 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  padding: 14px 0;
+  padding: 14px 10px;
   border-bottom: 1px solid #f0f3f8;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Destaque visual ao passar o mouse pelo comunicado clicável */
+.item--comunicado:hover {
+  background-color: #f7faff;
 }
 
 /* Ajustes do primeiro e do último item da lista */
 .item--comunicado:first-child {
-  padding-top: 0;
+  padding-top: 10px;
 }
 
 .item--comunicado:last-child {
-  padding-bottom: 0;
+  padding-bottom: 10px;
   border-bottom: none;
 }
 

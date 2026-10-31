@@ -1,5 +1,6 @@
 //Local das importações
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import styles from "../../css/paginaInicialSindico.module.css"
 import { getTelaIncialSindico } from "../../service/TelaInicial"
 
@@ -10,6 +11,37 @@ function PaginainicialSindico(){
     
   //Hook que armazena os dados 
   const [dadosTelaInical, setDadosTelaInical] = useState([])
+
+  //Hook que realiza a navegação entre as páginas
+  const navigate = useNavigate()
+
+  //Função que redireciona para a tela de reclamações não respondidas
+  const redirecionaReclamacoes = () => {
+
+    //Realiza a navegação para a tela de reclamações
+    navigate("/sindico/reclamacoes/exibir")
+  }
+
+  //Função que redireciona para a tela de aprovação de reservas
+  const redirecionaAprovacaoReservas = () => {
+
+    //Realiza a navegação para a tela de reservas que precisam de aprovação
+    navigate("/sindico/reservas/exibe/aprovadas")
+  }
+
+  //Função que redireciona para as respostas dos comunicados não respondidos
+  const redirecionaRespostasComunicados = () => {
+
+    //Realiza a navegação para a tela de respostas dos comunicados
+    navigate("/sindico/comunicados/respostas")
+  }
+
+  //Função que redireciona para os envios de um comunicado específico
+  const redirecionaEnviosComunicado = (id) => {
+
+    //Realiza a navegação passando o id do comunicado na URL
+    navigate("/sindico/comunicados/envios/" + id)
+  }
 
   //Função que obtem os dados para a tela inicial do sindico
   const obtendoDadosTelaInicial = async () => {
@@ -59,7 +91,10 @@ function PaginainicialSindico(){
       <div className={styles['container--resumo']}>
 
         {/* Card de reclamações não respondidas */}
-        <div className={`${styles['cartao--resumo']} ${styles['cartao--resumo--perguntas']}`}>
+        <div
+          className={`${styles['cartao--resumo']} ${styles['cartao--resumo--perguntas']}`}
+          onClick={redirecionaReclamacoes}
+        >
           <div className={`${styles['caixa--icone']} ${styles['caixa--icone--perguntas']}`}>
             <span className={styles['icone--resumo']}>❓</span>
           </div>
@@ -68,11 +103,13 @@ function PaginainicialSindico(){
             <span className={styles['valor--resumo']}>{dadosTelaInical?.quant_reclamacoes}</span>
           </div>
           <span className={styles['seta--cartao--resumo']}>›</span>
-          {/* TODO: o redirecionamento será implementado mais tarde */}
         </div>
 
         {/* Card de reservas pendentes */}
-        <div className={`${styles['cartao--resumo']} ${styles['cartao--resumo--reservas']}`}>
+        <div
+          className={`${styles['cartao--resumo']} ${styles['cartao--resumo--reservas']}`}
+          onClick={redirecionaAprovacaoReservas}
+        >
           <div className={`${styles['caixa--icone']} ${styles['caixa--icone--reservas']}`}>
             <span className={styles['icone--resumo']}>📅</span>
           </div>
@@ -81,11 +118,13 @@ function PaginainicialSindico(){
             <span className={styles['valor--resumo']}>{dadosTelaInical?.quant_reservas}</span>
           </div>
           <span className={styles['seta--cartao--resumo']}>›</span>
-          {/* TODO: o redirecionamento será implementado mais tarde */}
         </div>
 
         {/* Card de respostas não lidas */}
-        <div className={`${styles['cartao--resumo']} ${styles['cartao--resumo--comunicados']}`}>
+        <div
+          className={`${styles['cartao--resumo']} ${styles['cartao--resumo--comunicados']}`}
+          onClick={redirecionaRespostasComunicados}
+        >
           <div className={`${styles['caixa--icone']} ${styles['caixa--icone--comunicados']}`}>
             <span className={styles['icone--resumo']}>💬</span>
           </div>
@@ -94,7 +133,6 @@ function PaginainicialSindico(){
             <span className={styles['valor--resumo']}>{dadosTelaInical?.quant_comunicados}</span>
           </div>
           <span className={styles['seta--cartao--resumo']}>›</span>
-          {/* TODO: o redirecionamento será implementado mais tarde */}
         </div>
 
       </div>
@@ -125,7 +163,11 @@ function PaginainicialSindico(){
               <div className={styles['nao-tem-comunicados']}>No momento não tem comunidacos!</div>
             ) : (
               dadosTelaInical?.top_comunicados?.map((comunicado) => (
-                <div className={styles['item--comunicado']} key={comunicado.id}>
+                <div
+                  className={styles['item--comunicado']}
+                  key={comunicado.id}
+                  onClick={() => redirecionaEnviosComunicado(comunicado.id)}
+                >
                   <span className={styles['icone--comunicado']}>📢</span>
                   <div className={styles['texto--comunicado']}>
                     <span className={styles['titulo--comunicado']}>{comunicado.titulo}</span>
