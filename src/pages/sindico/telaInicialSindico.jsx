@@ -1,6 +1,7 @@
 //Local das importações
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
 import styles from "../../css/paginaInicialSindico.module.css"
 import { getTelaIncialSindico } from "../../service/TelaInicial"
 
@@ -61,6 +62,24 @@ function PaginainicialSindico(){
     obtendoDadosTelaInicial()
     
   }, [])
+
+  //Dados dos moradores e porteiros cadastrados utilizados no gráfico de pizza
+  const dadosStatusCondominio = [
+    {
+      nome: "Moradores",
+      quantidade: dadosTelaInical?.status_condominio?.morador ?? 0,
+      cor: "#2b45a2"
+    },
+    {
+      nome: "Porteiros",
+      quantidade: dadosTelaInical?.status_condominio?.porteiro ?? 0,
+      cor: "#33c3f0"
+    }
+  ]
+
+  //Total de usuários cadastrados no condomínio
+  const totalUsuarios = dadosTelaInical?.status_condominio?.total
+    ?? (dadosStatusCondominio[0].quantidade + dadosStatusCondominio[1].quantidade)
 
     //Retorna um componente
     return (
@@ -188,7 +207,75 @@ function PaginainicialSindico(){
             <span className={styles['icone--painel']}>📊</span>
             <h2 className={styles['titulo--painel']}>Status do condomínio</h2>
           </div>
-          {/* TODO: o status do condomínio será implementado mais tarde */}
+          <div className={styles['conteudo--painel']}>
+            {totalUsuarios === 0 ? (
+
+              /* Mensagem exibida quando ainda não existem usuários cadastrados */
+              <div className={styles['sem-dados--status']}>
+                Nenhum morador ou porteiro cadastrado no momento.
+              </div>
+            ) : (
+
+              /* Gráfico de pizza com a legenda ao lado */
+              <div className={styles['status--condominio']}>
+
+                {/* Gráfico de pizza com a divisão entre moradores e porteiros */}
+                <div className={styles['grafico--status']}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={dadosStatusCondominio}
+                        dataKey="quantidade"
+                        nameKey="nome"
+                        outerRadius="96%"
+                        paddingAngle={2}
+                        cornerRadius={4}
+                        stroke="none"
+                      >
+                        {dadosStatusCondominio.map((usuario) => (
+                          <Cell key={usuario.nome} fill={usuario.cor} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        formatter={(valor, nome) => [valor + " cadastrados", nome]}
+                        contentStyle={{
+                          padding: "8px 12px",
+                          background: "#ffffff",
+                          border: "1px solid #e4eaf2",
+                          borderRadius: "10px",
+                          boxShadow: "0 8px 24px rgba(16, 24, 40, 0.1)",
+                          fontSize: "12px"
+                        }}
+                        itemStyle={{ color: "#1f2a44", fontWeight: 600 }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Legenda com a quantidade de cada tipo de usuário */}
+                <div className={styles['legenda--status']}>
+                  {dadosStatusCondominio.map((usuario) => (
+                    <div className={styles['item--legenda--status']} key={usuario.nome}>
+                      <span
+                        className={styles['bolinha--legenda--status']}
+                        style={{ backgroundColor: usuario.cor }}
+                      ></span>
+                      <span className={styles['texto--legenda--status']}>{usuario.nome}</span>
+                      <span className={styles['quantidade--legenda--status']}>{usuario.quantidade}</span>
+                    </div>
+                  ))}
+
+                  <div className={styles['divisor--legenda--status']}></div>
+
+                  <div className={styles['total--legenda--status']}>
+                    <span className={styles['texto--total--status']}>Total cadastrado</span>
+                    <span className={styles['quantidade--total--status']}>{totalUsuarios}</span>
+                  </div>
+                </div>
+
+              </div>
+            )}
+          </div>
         </div>
 
       </div>
