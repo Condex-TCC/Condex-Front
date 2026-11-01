@@ -1,0 +1,116 @@
+/* 
+  Estilos da tela de Inserção do Código de Validação
+  Segue o padrão de CSS Modules utilizado no projeto Condex
+*/
+
+/* Container principal da página */
+.container {
+  padding: 24px;
+  font-family: sans-serif;
+  background-color: #ffffff;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Cabeçalho contendo o título e o botão de voltar */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+/* Título da tela */
+.title {
+  font-size: 18px;
+  color: #333;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Botão voltar */
+.btnVoltar {
+  background-color: #274b8f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Texto de orientação exibido abaixo do cabeçalho */
+.aviso {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+/* Container do campo de código */
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  max-width: 500px;
+}
+
+/* Cada campo do formulário */
+.dataField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Rótulo de cada campo */
+.dataLabel {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Input de cada campo */
+.dataInput {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.dataInput:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+/* Área do botão */
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+/* Botão principal "Verificar" */
+.btnVerificar {
+  background: linear-gradient(to right, #3480eb, #12325c);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  max-width: 350px;
+}
+
+/* Botão desabilitado enquanto o código não tiver seis dígitos */
+.btnVerificar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

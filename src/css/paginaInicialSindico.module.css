@@ -1,178 +1,706 @@
-/* Dashboard.css */
+/* Dashboard do síndico */
 
+/* Container principal da página */
 .dashboard--principal {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  padding: 24px;
-  background-color: #ffffff;
-  max-width: 600px;
-  margin: 0 auto;
-}
+  /* Paleta e medidas compartilhadas pelos componentes da tela */
+  --cor-primaria: #001c3f;
+  --cor-texto: #1f2a44;
+  --cor-texto-suave: #667085;
+  --cor-borda: #e4eaf2;
+  --cor-fundo-cartao: #ffffff;
+  --raio-cartao: 18px;
+  --sombra-cartao: 0 1px 2px rgba(16, 24, 40, 0.04), 0 10px 28px rgba(16, 24, 40, 0.06);
 
-.titulo--reclamacoes {
-  font-size: 12px;
-  font-weight: 600;
-  color: #333333;
-  margin-bottom: 8px;
-}
-
-.container--resumo {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.cartao--resumo {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 12px 16px;
-  flex: 1;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  gap: 24px;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 4px 0 40px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--cor-texto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.titulo--cartao--resumo {
-  font-size: 10px;
-  color: #888888;
+/* Cabeçalho com a saudação e a data */
+.cabecalho--dashboard {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  overflow: hidden;
+  padding: 28px 32px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(51, 195, 240, 0.16), transparent 38%),
+    radial-gradient(circle at 0% 100%, rgba(43, 69, 162, 0.1), transparent 42%),
+    linear-gradient(135deg, #f3f8ff 0%, #ffffff 58%, #f8fcff 100%);
+  border: 1px solid #e2ebf7;
+  border-radius: 22px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03), 0 12px 32px rgba(16, 24, 40, 0.05);
+}
+
+/* Círculo decorativo do cabeçalho */
+.cabecalho--dashboard::after {
+  content: "";
+  position: absolute;
+  top: -90px;
+  right: -70px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(51, 195, 240, 0.22);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px rgba(51, 195, 240, 0.04);
+  pointer-events: none;
+}
+
+/* Bloco esquerdo do cabeçalho */
+.cabecalho--texto {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Título de boas-vindas */
+.titulo--boas-vindas {
+  font-size: clamp(24px, 2.4vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  color: var(--cor-primaria);
+  line-height: 1.15;
+}
+
+/* Subtítulo do cabeçalho */
+.subtitulo--boas-vindas {
+  max-width: 580px;
+  font-size: 14.5px;
+  color: var(--cor-texto-suave);
+  line-height: 1.6;
+}
+
+/* Bloco direito com a data atual */
+.bloco--data {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px 10px 10px;
+  background-color: rgba(255, 255, 255, 0.86);
+  border: 1px solid #dce8f6;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Ícone do bloco de data */
+.icone--data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #e8f4ff, #dff8ff);
+  border-radius: 12px;
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Texto da data por extenso */
+.texto--data {
+  display: block;
+  max-width: 220px;
+  font-size: 13px;
   font-weight: 600;
-  margin-bottom: 8px;
+  color: #33415c;
+  line-height: 1.4;
+}
+
+/* Deixa apenas a primeira letra da data em maiúscula */
+.texto--data::first-letter {
   text-transform: uppercase;
 }
 
+/* Linha de cards de resumo */
+.container--resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+/* Card individual de resumo */
+.cartao--resumo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+  padding: 20px;
+  background-color: var(--cor-fundo-cartao);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-cartao);
+  box-shadow: var(--sombra-cartao);
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Destaque visual ao passar o mouse pelo card clicável */
+.cartao--resumo:hover {
+  transform: translateY(-3px);
+  border-color: #d7e3f2;
+  box-shadow: 0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 34px rgba(16, 24, 40, 0.1);
+}
+
+/* Leve retorno ao pressionar o card */
+.cartao--resumo:active {
+  transform: translateY(-1px);
+}
+
+/* Faixa colorida no topo de cada card */
+.cartao--resumo::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--cor-acento, #dbe4f0);
+}
+
+/* Cores de destaque dos cards */
+.cartao--resumo--perguntas {
+  --cor-acento: linear-gradient(90deg, #6d8cff, #a5b8ff);
+}
+
+.cartao--resumo--reservas {
+  --cor-acento: linear-gradient(90deg, #f5b84b, #ffd68a);
+}
+
+.cartao--resumo--comunicados {
+  --cor-acento: linear-gradient(90deg, #34c38f, #7ce0b4);
+}
+
+/* Quadrado colorido que envolve o ícone do card */
+.caixa--icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+}
+
+/* Cores suaves de cada card de resumo */
+.caixa--icone--perguntas {
+  background: linear-gradient(135deg, #eef2ff, #e0e8ff);
+}
+
+.caixa--icone--reservas {
+  background: linear-gradient(135deg, #fff7ea, #ffedd0);
+}
+
+.caixa--icone--comunicados {
+  background: linear-gradient(135deg, #ecfdf3, #d9f7e5);
+}
+
+/* Título do card de resumo */
+.titulo--cartao--resumo {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+/* Conteúdo do card com o título e o valor */
 .conteudo--cartao--resumo {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
 }
 
+/* Número em destaque no card */
 .valor--resumo {
-  font-size: 28px;
-  font-weight: bold;
-  color: #000000;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  color: var(--cor-primaria);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
+/* Ícone em emoji do card */
 .icone--resumo {
-  font-size: 24px;
+  font-size: 22px;
+  line-height: 1;
 }
 
-.titulo--data {
-  font-size: 16px;
-  font-weight: bold;
-  color: #000000;
-  margin-top: 24px;
-  margin-bottom: 12px;
+/* Seta apenas visual do card */
+.seta--cartao--resumo {
+  font-size: 26px;
+  font-weight: 300;
+  color: #c0c8d6;
+  line-height: 1;
+  transform: translateY(-1px);
+  transition: color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
 }
 
-.cartao--atividade {
-  border: 1px solid #d9d9d9;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+/* Realça a seta quando o card está em foco visual */
+.cartao--resumo:hover .seta--cartao--resumo {
+  color: var(--cor-primaria);
+  transform: translate(3px, -1px);
+}
+
+/* Linha inferior com os três painéis */
+.container--paineis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* Painel individual */
+.cartao--painel {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  min-width: 0;
+  min-height: 480px;
+  padding: 26px;
+  background-color: var(--cor-fundo-cartao);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-cartao);
+  box-shadow: var(--sombra-cartao);
+  box-sizing: border-box;
 }
 
-.cabecalho--atividade {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Variações sutis de fundo dos painéis */
+.cartao--painel--resumo {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(124, 58, 237, 0.05), transparent 35%),
+    #ffffff;
 }
 
-.grupo--titulo--prioridade {
+.cartao--painel--comunicados {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(51, 195, 240, 0.06), transparent 35%),
+    #ffffff;
+}
+
+.cartao--painel--status {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(16, 185, 129, 0.06), transparent 35%),
+    #ffffff;
+}
+
+/* Cabeçalho do painel com ícone e título */
+.cabecalho--painel {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #eef2f7;
 }
 
-.titulo--atividade {
-  font-size: 15px;
-  font-weight: bold;
-  color: #000000;
+/* Ícone do painel */
+.icone--painel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #eef5ff, #e1f4ff);
+  border-radius: 13px;
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
-.titulo--atividade--inativo {
-  font-size: 15px;
-  font-weight: bold;
-  color: #a0a0a0;
+/* Cores dos ícones de cada painel */
+.cartao--painel--resumo .icone--painel {
+  background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
 }
 
-/* Tags de Prioridade */
-.tag--prioridade {
-  padding: 2px 8px;
-  border-radius: 12px;
+.cartao--painel--comunicados .icone--painel {
+  background: linear-gradient(135deg, #e8f1ff, #dbeafe);
+}
+
+.cartao--painel--status .icone--painel {
+  background: linear-gradient(135deg, #e6fbf5, #ccfbf1);
+}
+
+/* Título do painel */
+.titulo--painel {
+  flex: 1;
+  min-width: 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--cor-primaria);
+  line-height: 1.3;
+}
+
+/* Etiqueta de conteúdo gerado por IA */
+.etiqueta--ia {
+  margin-left: auto;
+  padding: 5px 11px;
+  background: linear-gradient(135deg, #f3e8ff, #ede9fe);
+  border: 1px solid #e9d5ff;
+  border-radius: 999px;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
+  color: #7c3aed;
+  white-space: nowrap;
 }
 
-.tag--prioridade--alta {
-  background-color: #ffcccc;
-  color: #e65c5c;
+/* Corpo dos painéis com rolagem para manter a mesma altura */
+.conteudo--painel {
+  flex: 1;
+  min-height: 0;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 6px;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #475467;
+  scrollbar-width: thin;
+  scrollbar-color: #d7dfea transparent;
 }
 
-.tag--prioridade--media--inativa {
-  background-color: #f5f5f5;
-  color: #cccccc;
-  font-style: italic;
+/* Barra de rolagem discreta no Chrome, Edge e Safari */
+.conteudo--painel::-webkit-scrollbar {
+  width: 6px;
 }
 
-.tag--prioridade--media {
-  background-color: #fce8b2;
-  color: #d4a017;
+.conteudo--painel::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-/* Tags de Status (Canto direito) */
-.tag--status {
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
+.conteudo--painel::-webkit-scrollbar-thumb {
+  background-color: #d7dfea;
+  border-radius: 999px;
 }
 
-.tag--status--pendente {
-  background-color: #e0e0e0;
-  color: #666666;
+/* Texto do resumo gerado por IA, preservando os parágrafos */
+.texto--resumo {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.8;
+  white-space: pre-line;
+  overflow-wrap: break-word;
 }
 
-.tag--status--concluida {
-  background-color: #c8e6c9;
-  color: #388e3c;
-}
-
-.tag--status--andamento {
-  background-color: #bbdefb;
-  color: #1976d2;
-}
-
-/* Rodapé dos Cartões */
-.rodape--atividade {
+/* Item de comunicado recente */
+.item--comunicado {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  color: #777777;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 12px;
+  border-bottom: 1px solid #f0f3f8;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.info--local {
+/* Destaque visual ao passar o mouse pelo comunicado clicável */
+.item--comunicado:hover {
+  background-color: #f7faff;
+}
+
+/* Ajustes do primeiro e do último item da lista */
+.item--comunicado:first-child {
+  padding-top: 10px;
+}
+
+.item--comunicado:last-child {
+  padding-bottom: 10px;
+  border-bottom: none;
+}
+
+/* Ícone do comunicado */
+.icone--comunicado {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #eef4ff, #e3edff);
+  border-radius: 11px;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Texto do comunicado com título e descrição */
+.texto--comunicado {
+  display: flex;
+  flex-direction: column;
   gap: 4px;
+  flex: 1;
+  min-width: 0;
 }
 
-.info--tempo--pessoa {
+/* Título do comunicado limitado a duas linhas */
+.titulo--comunicado {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cor-texto);
+  line-height: 1.5;
+}
+
+/* Descrição do comunicado limitada a duas linhas */
+.descricao--comunicado {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+  line-height: 1.55;
+}
+
+/* Data do comunicado à direita */
+.data--comunicado {
+  padding: 5px 9px;
+  background-color: #f7f9fc;
+  border: 1px solid #eef2f7;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+/* Mensagem exibida quando não há comunicados */
+.nao-tem-comunicados {
   display: flex;
   align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  padding: 24px;
+  background-color: #fafbfd;
+  border: 1px dashed #dfe6f0;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  line-height: 1.5;
+}
+
+/* Conteúdo do painel de status com o gráfico e a legenda */
+.status--condominio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  min-height: 100%;
+}
+
+/* Área do gráfico de pizza */
+.grafico--status {
+  width: 148px;
+  height: 148px;
+  flex-shrink: 0;
+}
+
+/* Legenda com a quantidade de moradores e porteiros */
+.legenda--status {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  min-width: 112px;
+}
+
+/* Linha da legenda com bolinha, nome e quantidade */
+.item--legenda--status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Bolinha com a cor que representa o usuário no gráfico */
+.bolinha--legenda--status {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Nome do tipo de usuário */
+.texto--legenda--status {
+  flex: 1;
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #475467;
+  line-height: 1.4;
+}
+
+/* Quantidade de usuários do tipo exibido */
+.quantidade--legenda--status {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--cor-primaria);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Divisória entre os tipos de usuário e o total */
+.divisor--legenda--status {
+  height: 1px;
+  background-color: #eef2f7;
+}
+
+/* Linha com o total de usuários cadastrados */
+.total--legenda--status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
 }
 
-.info--tempo {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+/* Texto do total de usuários */
+.texto--total--status {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
 }
 
-.nao-tem-comunicados{
-    font-weight: bold;
+/* Quantidade total de usuários */
+.quantidade--total--status {
+  padding: 3px 10px;
+  background-color: #f2f7ff;
+  border: 1px solid #e2ebf7;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--cor-primaria);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mensagem exibida quando não há usuários cadastrados */
+.sem-dados--status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  padding: 24px;
+  background-color: #fafbfd;
+  border: 1px dashed #dfe6f0;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  line-height: 1.5;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 900px) {
+  .cabecalho--dashboard {
+    padding: 24px;
+  }
+
+  .cartao--painel {
+    min-height: 440px;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard--principal {
+    gap: 18px;
+    padding-bottom: 24px;
+  }
+
+  .cabecalho--dashboard {
+    gap: 20px;
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .titulo--boas-vindas {
+    font-size: 24px;
+  }
+
+  .bloco--data {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .texto--data {
+    max-width: none;
+  }
+
+  .container--resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .container--paineis {
+    grid-template-columns: 1fr;
+  }
+
+  .cartao--resumo {
+    padding: 18px;
+  }
+
+  .cartao--painel {
+    min-height: 400px;
+    padding: 20px;
+  }
+
+  .conteudo--painel {
+    max-height: 320px;
+  }
+
+  .status--condominio {
+    gap: 18px;
+  }
+
+  .grafico--status {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 420px) {
+  .titulo--boas-vindas {
+    font-size: 22px;
+  }
+
+  .subtitulo--boas-vindas {
+    font-size: 13.5px;
+  }
+
+  .texto--data {
+    font-size: 12px;
+  }
+
+  .valor--resumo {
+    font-size: 28px;
+  }
 }

@@ -62,6 +62,9 @@ import PaginaCadastraReclamacao from '../pages/morador/reclamacoes/talaCadastraR
 import PaginaExibeReclamacaoNaoVisualizada from '../pages/sindico/reclamacoes/telaExibeReclamacoesNaoVisualizadas';
 import PaginaExibeReclamacoesHistorico from '../pages/sindico/reclamacoes/telaExibeReclamacoesHistorico';
 import PaginaRespondeReclamacao from '../pages/sindico/reclamacoes/telaRespondeReclamacao';
+import PaginaValdiaInformacoes from '../pages/telaValidaInformacoes';
+import PaginaInsereCodigo from '../pages/telaInsereCodigo';
+import PaginaRedefineSenha from '../pages/telaAlteraSenha';
 
 
 //Componente que será utilizado para analisar a URL
@@ -102,6 +105,24 @@ const route = createBrowserRouter([
             {
                 path: "/primeiroAcesso",
                 element: <PaginaPrimeiroAcesso></PaginaPrimeiroAcesso>
+            },
+
+            //Tela para validar a consta | ETAPA 1
+            {
+                path: "/consta/valida",
+                element: <PaginaValdiaInformacoes></PaginaValdiaInformacoes>
+            },
+
+            //Tela para validar o código enviado via SMS | ETAPA 2
+            {
+                path: "/consta/codigo",
+                element: <PaginaInsereCodigo></PaginaInsereCodigo>
+            },
+
+            //Tela para redefinir a senha | ETAPA 3
+            {
+                path: "/consta/senha",
+                element: <PaginaRedefineSenha></PaginaRedefineSenha>
             },
 
             //Tela do sindico

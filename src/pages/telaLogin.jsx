@@ -183,6 +183,8 @@ function TelaDeLogin(){
                         </div>
                     </div>
 
+                    <Link to={"/consta/valida"}>Esqueci minha senha</Link>
+
                     {/* Botão de Entrar */}
                     <div className={styles['container-botao']}>
                         <button type="submit" className={styles['btn-login']}>
