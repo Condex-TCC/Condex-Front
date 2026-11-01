@@ -36,9 +36,8 @@ export async function getVisitantesPorteiroAPI(filtros = {}){
 }
 
 //Função que cadastra um visitante feito pelo porteiro
-//A API exige nome, cpf e morador (id do morador responsável)
-//Ao cadastrar, a API grava o porteiro logado em employee_id
-export async function insertVisitantePorteiroAPI(nome, cpf, idMorador){
+//O cadastro pede só nome e cpf: o morador visitado é escolhido na entrada da visita
+export async function insertVisitantePorteiroAPI(nome, cpf){
 
     //Receperando o token de outorização
     let cookie = await GetCookie()
@@ -50,8 +49,7 @@ export async function insertVisitantePorteiroAPI(nome, cpf, idMorador){
     //Objeto com os elementos no formato que a API espera
     let novoVisitante = {
         nome: nome,
-        cpf: cpf,
-        morador: Number(idMorador)
+        cpf: cpf
     }
 
     //Criando a requisição

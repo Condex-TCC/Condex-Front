@@ -36,6 +36,15 @@ function CardVisitaAtiva({ visita, aoRegistrarSaida }){
             <div className={styles["card--active"]}>
                 <div className={styles["info--group"]}>
                     <span className={styles["text--block"]}>CPF: {ouSimbolo(visita.cpfVisitante)}</span>
+                    {/* Morador visitado, quando a API devolve o nome ou o id dele */}
+                    {
+                        visita.moradorVisitadoNome != null ?
+                        <span className={styles["text--block"]}>Visitando: {visita.moradorVisitadoNome}</span>
+                        : (
+                            visita.moradorVisitadoId != null &&
+                            <span className={styles["text--block"]}>Morador visitado (ID): {visita.moradorVisitadoId}</span>
+                        )
+                    }
                     <span className={styles["text--date"]}>Entrada: {formatarDataHora(visita.entrada)}</span>
                 </div>
 

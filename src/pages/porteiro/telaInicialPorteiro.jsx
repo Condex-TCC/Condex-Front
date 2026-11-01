@@ -11,6 +11,7 @@ import { getVisitasAtivas, registrarEntradaVisita, registrarSaidaVisita } from "
 import CardVisitanteCadastrado from "../../components/porteiro/cardVisitanteCadastrado"
 import CardEncomenda from "../../components/porteiro/cardEncomenda"
 import CardVisitaAtiva from "../../components/porteiro/cardVisitaAtiva"
+import ModalSelecionarMorador from "../../components/porteiro/modalSelecionarMorador"
 
 //Componente de estado vazio, reaproveitado por todas as seções da tela
 function EstadoVazio({ children }){
@@ -41,6 +42,9 @@ function PaginainicialPorteiro(){
 
     //Texto já "assentado" depois que o porteiro para de digitar, que é o que dispara a busca na API
     const [termoBusca, setTermoBusca] = useState(busca)
+
+    //Estado que guarda o visitante que está tendo a entrada registrada (janela do morador visitado)
+    const [visitanteEmEntrada, setVisitanteEmEntrada] = useState(null)
 
     //Estado que guarda o aviso quando alguma lista não pôde ser carregada
     const [erroCarga, setErroCarga] = useState("")
@@ -217,13 +221,26 @@ function PaginainicialPorteiro(){
     }
 
     //Função que registra a entrada de um visitante cadastrado
-    const registrarEntrada = async (visitante) => {
+    const registrarEntrada = (visitante) => {
+
+        //Abre a janela onde o porteiro escolhe qual morador será visitado
+        setVisitanteEmEntrada(visitante)
+    }
+
+    //Função que confirma a entrada com o morador escolhido na janela
+    const confirmarEntrada = async (idMorador) => {
 
         //Chama a service que registra a entrada na API
-        const resultado = await registrarEntradaVisita(visitante)
+        const resultado = await registrarEntradaVisita(visitanteEmEntrada, idMorador)
 
         //Exibe a mensagem retornada pela API (sucesso ou erro)
         alert(resultado.mensagem)
+
+        //Fecha a janela só quando deu certo, para o porteiro poder corrigir e tentar de novo
+        if(resultado.sucesso){
+
+            setVisitanteEmEntrada(null)
+        }
 
         //Recarrega as visitas ativas para refletir o que foi gravado
         recarregarVisitasAtivas()
@@ -370,6 +387,15 @@ function PaginainicialPorteiro(){
           </>
       }
 
+      {
+        //Janela de escolha do morador visitado, aberta pelo botão "Registrar entrada"
+        visitanteEmEntrada &&
+        <ModalSelecionarMorador
+          visitante={visitanteEmEntrada}
+          aoConfirmar={confirmarEntrada}
+          aoCancelar={() => setVisitanteEmEntrada(null)}
+        />
+      }
     </div>
   )
 }

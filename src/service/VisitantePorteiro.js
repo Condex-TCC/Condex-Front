@@ -25,22 +25,16 @@ function desembrulharLista(data){
 }
 
 //Função que converte o registro devolvido pela API no formato usado pelo card
-//Campos reais da API: id, name, cpf, resident_id (morador) e employee_id (porteiro)
+//Campos reais da API (VisitanteResources): id, name e cpf
 //
-//Regra de negócio da API:
-//  resident_id preenchido e employee_id nulo        -> cadastrado pelo MORADOR
-//  resident_id preenchido e employee_id preenchido  -> cadastrado pelo PORTEIRO
-//Os dois casos são visitantes válidos, então nenhum registro é descartado
-//por causa do employee_id nulo
+//O visitante é só uma pessoa (nome e CPF), sem vínculo com morador nem com porteiro.
+//O morador visitado e o porteiro ficam registrados em cada visita, na hora da entrada
 function paraVisitante(visitante){
 
     return {
         id: visitante.id,
         nome: visitante.name,
-        cpf: visitante.cpf,
-        moradorId: visitante.resident_id,
-        porteiroId: visitante.employee_id,
-        cadastradoPor: visitante.employee_id == null ? 'morador' : 'porteiro'
+        cpf: visitante.cpf
     }
 }
 
@@ -84,13 +78,13 @@ export async function getVisitantesPorteiro(filtros = {}) {
 //Função que cadastra um visitante feito pelo porteiro
 //Devolve { sucesso, mensagem } para a tela saber se pode navegar ou se
 //precisa mostrar o erro da API (CPF repetido, morador inexistente, etc.)
-export async function cadastrarVisitantePorteiro(nome, cpf, idMorador) {
+export async function cadastrarVisitantePorteiro(nome, cpf) {
 
     //Tenta executar a requisição
     try{
 
         //Chamando a função que realiza a requisição na API
-        let response = await insertVisitantePorteiroAPI(nome, cpf, idMorador)
+        let response = await insertVisitantePorteiroAPI(nome, cpf)
 
         //Convertendo o JSON para objetos no JS
         let json = await lerJson(response)

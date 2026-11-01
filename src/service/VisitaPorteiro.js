@@ -9,7 +9,8 @@ import { buscarPerfil } from "./Perfil"
 const MENSAGEM_SEM_CONEXAO = "Não foi possível conectar à API. Verifique se o servidor está no ar."
 
 //Função que normaliza um registro de visita vindo da API
-//A API devolve o registro da visita com o visitante embutido em "visitante"
+//A API devolve o registro da visita com o visitante, o morador visitado e o porteiro embutidos
+//(relações "visitante", "morador" e "porteiro" do model Visita)
 function normalizarVisita(item) {
 
     if (!item) return item
@@ -19,7 +20,8 @@ function normalizarVisita(item) {
         visitanteId: item.visitanteId ?? item.fk_visitante ?? item.visitante?.id ?? null,
         nomeVisitante: item.nomeVisitante ?? item.visitante?.nome_visitante ?? item.visitante?.nome ?? null,
         cpfVisitante: item.cpfVisitante ?? item.visitante?.cpf_visitante ?? item.visitante?.cpf ?? null,
-        moradorId: item.moradorId ?? item.visitante?.resident_id ?? null,
+        moradorVisitadoId: item.moradorVisitadoId ?? item.fk_morador ?? null,
+        moradorVisitadoNome: item.moradorVisitadoNome ?? item.morador?.nome ?? item.morador?.nome_morador ?? null,
         entrada: item.entrada ?? null,
         saida: item.saida ?? null,
     }
@@ -88,16 +90,16 @@ async function obterIdPorteiroLogado() {
     return idPorteiroEmCache
 }
 
-//Função que registra a entrada de um visitante (requer o visitante, com o id do morador)
+//Função que registra a entrada de um visitante (requer o visitante e o morador que será visitado)
 //Devolve { sucesso, mensagem } para a tela exibir a resposta real da API
-export async function registrarEntradaVisita(visitante) {
+export async function registrarEntradaVisita(visitante, idMorador) {
 
     try {
 
-        //A API exige o morador ao qual o visitante pertence
-        if(!visitante?.moradorId){
+        //O porteiro escolhe o morador visitado a cada entrada
+        if(!idMorador){
 
-            return { sucesso: false, mensagem: "Não foi possível identificar o morador deste visitante." }
+            return { sucesso: false, mensagem: "Selecione o morador que será visitado." }
         }
 
         //A API também exige o id do porteiro logado, que precisa bater com o token
@@ -108,7 +110,7 @@ export async function registrarEntradaVisita(visitante) {
             return { sucesso: false, mensagem: "Não foi possível identificar o porteiro logado. Entre novamente no sistema." }
         }
 
-        let response = await allowEntryAPI(idPorteiro, visitante.moradorId, visitante.id)
+        let response = await allowEntryAPI(idPorteiro, idMorador, visitante.id)
         let json = await lerJson(response)
 
         if (!response.ok) {

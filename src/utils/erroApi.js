@@ -14,6 +14,16 @@ export async function lerJson(response){
     }
 }
 
+//Função que traduz as mensagens de validação mais comuns do Laravel, que vêm em inglês
+function traduzirDetalhes(texto){
+
+    return texto
+        .replace(/The (\w+) has already been taken\./gi, (_, campo) => campo.toLowerCase() === 'cpf'
+            ? "Já existe um visitante cadastrado com este CPF."
+            : `O campo ${campo} já está cadastrado.`)
+        .replace(/The (\w+) field is required\./gi, "O campo $1 é obrigatório.")
+}
+
 //Função que monta a mensagem de erro a partir da resposta da API
 //A API devolve os erros de validação no formato { message, errors: [ { campo: [mensagens] } ] }
 //Já os erros do próprio Laravel (401, 403, 404, 500) vêm apenas com { message }
@@ -33,6 +43,8 @@ export function montarMensagemErro(json, statusHttp, mensagemPadrao, mensagemSer
                 : String(erro))
 
             .join(" ")
+
+        detalhes = traduzirDetalhes(detalhes)
     }
 
     //Sessão expirada ou token inválido

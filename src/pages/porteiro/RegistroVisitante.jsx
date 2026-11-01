@@ -1,10 +1,9 @@
 //Tela de cadastro de visitante do porteiro
 
 //Local das importações
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { cadastrarVisitantePorteiro } from '../../service/VisitantePorteiro'
-import { getMoradoresPorteiro, rotuloMorador } from '../../service/MoradorPorteiro'
 import styles from '../../css/formularioPorteiro.module.css'
 
 //Função que aplica a máscara 000.000.000-00 enquanto o CPF é digitado
@@ -31,14 +30,6 @@ export default function RegistroVisitante() {
     //States para controlar o valor de cada campo do formulário
     const [nome, setNome] = useState('')
     const [cpf, setCpf] = useState('')
-    const [idMorador, setIdMorador] = useState('')
-
-    //Estado que guarda a lista de moradores para seleção
-    const [moradores, setMoradores] = useState([])
-
-    //Estados que controlam o carregamento e o erro da lista de moradores
-    const [carregandoMoradores, setCarregandoMoradores] = useState(true)
-    const [erroMoradores, setErroMoradores] = useState('')
 
     //Estado que guarda o erro de cada campo
     const [erros, setErros] = useState({})
@@ -46,41 +37,7 @@ export default function RegistroVisitante() {
     //Estado que desabilita o botão enquanto a gravação acontece
     const [salvando, setSalvando] = useState(false)
 
-    //Função que busca os moradores para o porteiro selecionar
-    //Não mexe no estado antes do await para não causar renderização em cascata
-    const buscarMoradores = async () => {
-
-        const lista = await getMoradoresPorteiro()
-
-        if(lista === null){
-
-            setErroMoradores('Não foi possível carregar os moradores. Verifique se o servidor está no ar.')
-        }
-        else{
-
-            setMoradores(lista)
-        }
-
-        setCarregandoMoradores(false)
-    }
-
-    //Busca os moradores assim que a tela é aberta
-    //O agendamento evita chamar setState direto no corpo do efeito, o que
-    //causaria renderizações em cascata
-    useEffect(() => {
-
-        Promise.resolve().then(() => buscarMoradores())
-    }, [])
-
-    //Função que reinicia o carregamento pelo botão "tentar novamente"
-    const tentarNovamente = () => {
-
-        setCarregandoMoradores(true)
-        setErroMoradores('')
-        buscarMoradores()
-    }
-
-    //Função que verifica os campos exigidos pela API (nome, cpf e morador)
+    //Função que verifica os campos exigidos pela API (nome e cpf)
     const validar = () => {
 
         const novosErros = {}
@@ -88,8 +45,6 @@ export default function RegistroVisitante() {
         if(!nome.trim()){ novosErros.nome = 'Informe o nome do visitante.' }
 
         if(cpf.replace(/\D/g, '').length !== 11){ novosErros.cpf = 'Informe o CPF completo.' }
-
-        if(!idMorador || Number(idMorador) < 1){ novosErros.idMorador = 'Selecione o morador responsável.' }
 
         setErros(novosErros)
 
@@ -114,7 +69,7 @@ export default function RegistroVisitante() {
         try{
 
             //Chama a função que cadastra o visitante na API
-            const resultado = await cadastrarVisitantePorteiro(nome.trim(), cpf, Number(idMorador))
+            const resultado = await cadastrarVisitantePorteiro(nome.trim(), cpf)
 
             //Quando a API recusa, a tela fica como está, exibindo o motivo
             if(!resultado.sucesso){
@@ -180,60 +135,16 @@ export default function RegistroVisitante() {
                         {erros.cpf && <span className={styles['fp-erro']}>{erros.cpf}</span>}
                     </div>
 
-                    {/* O porteiro escolhe o morador responsável em vez de digitar o id */}
-                    <div className={styles['fp-campo']}>
-                        <label className={styles['fp-label-visivel']} htmlFor="visitante-morador">Morador responsável</label>
-                        <select
-                            id="visitante-morador"
-                            className={`${styles['fp-input']} ${styles['fp-select']}`}
-                            value={idMorador}
-                            disabled={carregandoMoradores || erroMoradores !== ''}
-                            onChange={(evento) => setIdMorador(evento.target.value)}
-                        >
-                            <option value="">
-                                {
-                                    carregandoMoradores
-                                        ? 'Carregando moradores...'
-                                        : (erroMoradores ? 'Não foi possível carregar os moradores' : 'Selecione o morador')
-                                }
-                            </option>
-
-                            {
-                                moradores.map((morador) => (
-                                    <option key={morador.id} value={morador.id}>
-                                        {rotuloMorador(morador)}
-                                    </option>
-                                ))
-                            }
-                        </select>
-
-                        {/* Nenhum morador cadastrado na API */}
-                        {
-                            !carregandoMoradores && !erroMoradores && moradores.length === 0 &&
-                            <span className={styles['fp-erro']}>
-                                Nenhum morador cadastrado. Cadastre um morador antes de registrar o visitante.
-                            </span>
-                        }
-
-                        {/* Erro ao buscar a lista, com opção de tentar de novo */}
-                        {
-                            !carregandoMoradores && erroMoradores &&
-                            <span className={styles['fp-erro']}>
-                                {erroMoradores}{' '}
-                                <button type="button" className={styles['fp-btn-retry']} onClick={tentarNovamente}>
-                                    Tentar novamente
-                                </button>
-                            </span>
-                        }
-
-                        {erros.idMorador && <span className={styles['fp-erro']}>{erros.idMorador}</span>}
-                    </div>
+                    {/* O morador visitado não é guardado no cadastro: o porteiro escolhe ao registrar a entrada */}
+                    <p className={styles['fp-subtitulo']}>
+                        O morador que será visitado é escolhido na hora de registrar a entrada.
+                    </p>
 
                     <div className={styles['fp-area-salvar']}>
                         <button
                             type="submit"
                             className={styles['fp-btn-salvar']}
-                            disabled={salvando || carregandoMoradores || erroMoradores !== '' || moradores.length === 0}
+                            disabled={salvando}
                         >
                             {salvando ? 'Salvando...' : 'SALVAR'}
                         </button>

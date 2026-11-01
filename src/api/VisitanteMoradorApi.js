@@ -10,7 +10,7 @@ export async function getVisitantesMoradorAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/visitante/visitante/get"
+    let endPoint = "/api/morador/visitante/get"
 
     //Criando a requisição
     const requisicao = fetch(
