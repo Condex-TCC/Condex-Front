@@ -65,6 +65,7 @@ import PaginaRespondeReclamacao from '../pages/sindico/reclamacoes/telaRespondeR
 import PaginaValdiaInformacoes from '../pages/telaValidaInformacoes';
 import PaginaInsereCodigo from '../pages/telaInsereCodigo';
 import PaginaRedefineSenha from '../pages/telaAlteraSenha';
+import PaginaInicalMorador from '../pages/morador/telaInicialMorador';
 
 
 //Componente que será utilizado para analisar a URL
@@ -315,7 +316,7 @@ const route = createBrowserRouter([
                     //Tela inicial do morador
                     {
                         index: true, // Renderiza no caminho "/morador"
-                        element: <PaginaEmBreveMorador titulo="Início" descricao="Seja bem-vindo ao Cond e x, morador." />,
+                        element: <PaginaInicalMorador></PaginaInicalMorador>
                     },
 
                     //Tela de visitantes do morador
