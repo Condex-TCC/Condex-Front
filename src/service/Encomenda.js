@@ -1,6 +1,6 @@
 //Arquivo responsavel por solicitar a requisição e trata-la
 
-import { getEncomendasAPI, insertEncomendaAPI, withdrawEncomendaAPI } from "../api/EncomendaApi"
+import { getEncomendasAPI, getEncomendasMoradorAPI, insertEncomendaAPI, withdrawEncomendaAPI } from "../api/EncomendaApi"
 import { lerJson, montarMensagemErro } from "../utils/erroApi"
 
 //Mensagem exibida quando o frontend não consegue falar com o servidor
@@ -106,4 +106,40 @@ export async function registrarRetiradaEncomenda(id) {
         console.error("Erro ao registrar a retirada da encomenda na API:", erro)
         return { sucesso: false, mensagem: MENSAGEM_SEM_CONEXAO }
     }
+}
+
+
+//Função que obtem as ecomendas do morador
+export async function getEncomendasMorador() {
+    
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await getEncomendasMoradorAPI()
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { message, status, data} = json
+
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
+
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
+
+        //Retornando a menssagem
+        return data
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao encomenda do morador", erro)
+
+    }
+
 }
