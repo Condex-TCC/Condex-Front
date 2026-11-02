@@ -68,6 +68,7 @@ import PaginaRedefineSenha from '../pages/telaAlteraSenha';
 import PaginaInicalMorador from '../pages/morador/telaInicialMorador';
 import PaginaVisitantesSindico from '../pages/sindico/visitantesVisitas/telaVisitantes';
 import PaginaVisitasSindico from '../pages/sindico/visitantesVisitas/telaVisitas';
+import PaginaExibeEncomendaMorador from '../pages/morador/encomendas/telaExibeEncomendas';
 
 
 //Componente que será utilizado para analisar a URL
@@ -403,6 +404,12 @@ const route = createBrowserRouter([
                     {
                         path: "reclamacoes/cadastra",
                         element: <PaginaCadastraReclamacao></PaginaCadastraReclamacao>
+                    },
+
+                    //Tela onde será exibidos as encomendas do morador
+                    {
+                        path: "encomenda",
+                        element: <PaginaExibeEncomendaMorador></PaginaExibeEncomendaMorador>
                     },
                 ]
             },
