@@ -29,6 +29,13 @@ function PaginaInicalMorador(){
         navigate("/morador/reservas")
     }
 
+    //Função que redireciona para a tela de encomendas do morador
+    const redirecionaEncomendas = () => {
+
+        //Realiza a navegação para a tela de encomendas
+        navigate("/morador/encomenda")
+    }
+
     //Função que redireciona para os detalhes de um comunicado específico
     const redirecionaDetalhesComunicado = (id) => {
 
@@ -105,7 +112,10 @@ function PaginaInicalMorador(){
                 </div>
 
                 {/* Card de encomendas aguardando retirada */}
-                <div className={`${styles['cartao--resumo']} ${styles['cartao--resumo--encomendas']}`}>
+                <div
+                    className={`${styles['cartao--resumo']} ${styles['cartao--resumo--encomendas']} ${styles['cartao--resumo--clicavel']}`}
+                    onClick={redirecionaEncomendas}
+                >
                     <div className={`${styles['caixa--icone']} ${styles['caixa--icone--encomendas']}`}>
                         <span className={styles['icone--resumo']}>📦</span>
                     </div>
