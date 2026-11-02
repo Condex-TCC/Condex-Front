@@ -66,6 +66,8 @@ import PaginaValdiaInformacoes from '../pages/telaValidaInformacoes';
 import PaginaInsereCodigo from '../pages/telaInsereCodigo';
 import PaginaRedefineSenha from '../pages/telaAlteraSenha';
 import PaginaInicalMorador from '../pages/morador/telaInicialMorador';
+import PaginaVisitantesSindico from '../pages/sindico/visitantesVisitas/telaVisitantes';
+import PaginaVisitasSindico from '../pages/sindico/visitantesVisitas/telaVisitas';
 
 
 //Componente que será utilizado para analisar a URL
@@ -303,6 +305,18 @@ const route = createBrowserRouter([
                     {
                         path: "reclamacoes/responder/:id",
                         element: <PaginaRespondeReclamacao></PaginaRespondeReclamacao>
+                    },
+
+                    //Tela que vai exibir os moradores
+                    {
+                        path: "visitantes",
+                        element: <PaginaVisitantesSindico></PaginaVisitantesSindico>
+                    },
+
+                    //Tela que vai exbir as visitas 
+                    {
+                        path: "visitas",
+                        element: <PaginaVisitasSindico></PaginaVisitasSindico>
                     },
                 ]
             },

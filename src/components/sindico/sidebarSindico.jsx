@@ -52,6 +52,13 @@ const SidebarSindico = () => {
       navigate('/sindico/comunicados')
     }
 
+    //Visitantes e visitas
+    const visitantesVisitas = () => {
+
+      //TODO: ajustar a rota quando a tela de visitantes e visitas for criada
+      navigate('/sindico/visitas')
+    }
+
     //Reclamações
     const reclamacoes = () => {
 
@@ -118,6 +125,20 @@ const SidebarSindico = () => {
 
             {/* Texto descritivo do botão (grafia mantida conforme solicitado) */}
             <span className={styles['sd-label']}>Usúarios</span>
+          </li>
+
+          {/* Item do menu: Visitantes e visitas */}
+          <li className={styles['sd-nav-item']} onClick={visitantesVisitas}>
+
+            {/* Ícone SVG: Visitante autorizado */}
+            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className={styles['sd-icon']}>
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <polyline points="16 11 18 13 22 9"></polyline>
+            </svg>
+
+            {/* Texto descritivo do botão */}
+            <span className={styles['sd-label']}>Visitantes</span>
           </li>
 
           {/* Item do menu: Reservas */}
