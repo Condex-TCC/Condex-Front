@@ -29,23 +29,28 @@ function CardEncomendaMorador({ encomenda }) {
 
             </div>
 
-            {/* Descrição da encomenda, exibida apenas quando existe */}
-            {encomenda.descricao != null && (
-                <div className={styles['linha--informacao']}>
-                    <span className={styles['rotulo--informacao']}>Descrição</span>
-                    <span className={styles['valor--informacao']}>{encomenda.descricao}</span>
-                </div>
-            )}
+            {/* Informações da encomenda */}
+            <div className={styles['informacoes--encomenda']}>
 
-            {/* Data de retirada, exibida apenas quando a encomenda foi retirada */}
-            {encomenda.data_retirada != null && (
-                <div className={styles['linha--informacao']}>
-                    <span className={styles['rotulo--informacao']}>Retirada em</span>
-                    <span className={styles['valor--informacao']}>
-                        {new Date(encomenda.data_retirada).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
-                    </span>
-                </div>
-            )}
+                {/* Descrição da encomenda, exibida apenas quando existe */}
+                {encomenda.descricao != null && (
+                    <div className={styles['linha--informacao']}>
+                        <span className={styles['rotulo--informacao']}>Descrição</span>
+                        <span className={styles['valor--informacao']}>{encomenda.descricao}</span>
+                    </div>
+                )}
+
+                {/* Data de retirada, exibida apenas quando a encomenda foi retirada */}
+                {encomenda.data_retirada != null && (
+                    <div className={styles['linha--informacao']}>
+                        <span className={styles['rotulo--informacao']}>Retirada em</span>
+                        <span className={styles['valor--informacao']}>
+                            {new Date(encomenda.data_retirada).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
+                        </span>
+                    </div>
+                )}
+
+            </div>
 
         </div>
     )
