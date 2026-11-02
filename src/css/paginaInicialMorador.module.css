@@ -104,6 +104,24 @@
   box-sizing: border-box;
 }
 
+/* Card de resumo que possui navegação */
+.cartao--resumo--clicavel {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Destaque visual ao passar o mouse pelo card clicável */
+.cartao--resumo--clicavel:hover {
+  transform: translateY(-3px);
+  border-color: #d7e3f2;
+  box-shadow: 0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 34px rgba(16, 24, 40, 0.1);
+}
+
+/* Leve retorno ao pressionar o card clicável */
+.cartao--resumo--clicavel:active {
+  transform: translateY(-1px);
+}
+
 /* Faixa colorida no topo de cada card */
 .cartao--resumo::before {
   content: "";
@@ -422,6 +440,14 @@
   gap: 14px;
   padding: 14px 10px;
   border-bottom: 1px solid #f0f3f8;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Destaque visual ao passar o mouse pelo comunicado clicável */
+.item--comunicado:hover {
+  background-color: #f7faff;
 }
 
 /* Ajustes do primeiro e do último item da lista */
@@ -479,18 +505,30 @@
   line-height: 1.5;
 }
 
-/* Selo de comunicado não visualizado */
-.selo--novo {
+/* Selos de status do comunicado */
+.selo--novo,
+.selo--visualizado {
   padding: 2px 8px;
-  background-color: #eef2ff;
-  border: 1px solid #e0e7ff;
   border-radius: 999px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: #4f46e5;
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+/* Selo de comunicado não visualizado */
+.selo--novo {
+  background-color: #eef2ff;
+  border: 1px solid #e0e7ff;
+  color: #4f46e5;
+}
+
+/* Selo de comunicado já visualizado */
+.selo--visualizado {
+  background-color: #ecfdf3;
+  border: 1px solid #d1fadf;
+  color: #067647;
 }
 
 /* Descrição do comunicado limitada a duas linhas */

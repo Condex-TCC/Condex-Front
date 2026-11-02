@@ -2,6 +2,7 @@
 
 //Importações do arquivos
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import styles from "../../css/paginaInicialMorador.module.css"
 import { getTelaInicialMorador } from "../../service/TelaInicial"
 
@@ -10,6 +11,30 @@ function PaginaInicalMorador(){
 
     //Hook que armazena os dados
     const [dadosTelaInicial, setDadosTelaInicial] = useState({})
+
+    //Hook que realiza a navegação entre as páginas
+    const navigate = useNavigate()
+
+    //Função que redireciona para a tela de comunicados do morador
+    const redirecionaComunicados = () => {
+
+        //Realiza a navegação para a tela de comunicados
+        navigate("/morador/comunicados/exibe")
+    }
+
+    //Função que redireciona para a tela de reservas do morador
+    const redirecionaReservas = () => {
+
+        //Realiza a navegação para a tela de reservas
+        navigate("/morador/reservas")
+    }
+
+    //Função que redireciona para os detalhes de um comunicado específico
+    const redirecionaDetalhesComunicado = (id) => {
+
+        //Realiza a navegação passando o id do comunicado na URL
+        navigate("/morador/comunicados/detalhes/" + id)
+    }
 
     //Função que obtem os dados para a tela inicial do morador
     const obtendoDadosTelaInicial = async () => {
@@ -50,7 +75,10 @@ function PaginaInicalMorador(){
             <div className={styles['container--resumo']}>
 
                 {/* Card de comunicados não vistos */}
-                <div className={`${styles['cartao--resumo']} ${styles['cartao--resumo--comunicados']}`}>
+                <div
+                    className={`${styles['cartao--resumo']} ${styles['cartao--resumo--comunicados']} ${styles['cartao--resumo--clicavel']}`}
+                    onClick={redirecionaComunicados}
+                >
                     <div className={`${styles['caixa--icone']} ${styles['caixa--icone--comunicados']}`}>
                         <span className={styles['icone--resumo']}>💬</span>
                     </div>
@@ -59,11 +87,13 @@ function PaginaInicalMorador(){
                         <span className={styles['valor--resumo']}>{dadosTelaInicial?.quant_comunicados}</span>
                     </div>
                     <span className={styles['seta--cartao--resumo']}>›</span>
-                    {/* TODO: o redirecionamento será implementado mais tarde */}
                 </div>
 
                 {/* Card de reservas pendentes */}
-                <div className={`${styles['cartao--resumo']} ${styles['cartao--resumo--reservas']}`}>
+                <div
+                    className={`${styles['cartao--resumo']} ${styles['cartao--resumo--reservas']} ${styles['cartao--resumo--clicavel']}`}
+                    onClick={redirecionaReservas}
+                >
                     <div className={`${styles['caixa--icone']} ${styles['caixa--icone--reservas']}`}>
                         <span className={styles['icone--resumo']}>📅</span>
                     </div>
@@ -72,7 +102,6 @@ function PaginaInicalMorador(){
                         <span className={styles['valor--resumo']}>{dadosTelaInicial?.quant_reservas}</span>
                     </div>
                     <span className={styles['seta--cartao--resumo']}>›</span>
-                    {/* TODO: o redirecionamento será implementado mais tarde */}
                 </div>
 
                 {/* Card de encomendas aguardando retirada */}
@@ -85,7 +114,6 @@ function PaginaInicalMorador(){
                         <span className={styles['valor--resumo']}>{dadosTelaInicial?.quant_encomendas}</span>
                     </div>
                     <span className={styles['seta--cartao--resumo']}>›</span>
-                    {/* TODO: o redirecionamento será implementado mais tarde */}
                 </div>
 
             </div>
@@ -141,13 +169,20 @@ function PaginaInicalMorador(){
                             <div className={styles['nao-tem-comunicados']}>No momento não há comunicados!</div>
                         ) : (
                             dadosTelaInicial?.top_comunicados?.map((item) => (
-                                <div className={styles['item--comunicado']} key={item.id}>
+                                <div
+                                    className={styles['item--comunicado']}
+                                    key={item.id}
+                                    onClick={() => redirecionaDetalhesComunicado(item.id)}
+                                >
                                     <span className={styles['icone--comunicado']}>📢</span>
                                     <div className={styles['texto--comunicado']}>
                                         <div className={styles['linha--titulo--comunicado']}>
                                             <span className={styles['titulo--comunicado']}>{item.comunicado?.titulo}</span>
                                             {item.visualizado === false && (
                                                 <span className={styles['selo--novo']}>Novo</span>
+                                            )}
+                                            {item.visualizado === true && (
+                                                <span className={styles['selo--visualizado']}>Visualizado</span>
                                             )}
                                         </div>
                                         <span className={styles['descricao--comunicado']}>{item.comunicado?.descricao}</span>
