@@ -1,0 +1,600 @@
+/* Dashboard do morador */
+
+/* Container principal da página */
+.dashboard--principal {
+  /* Paleta e medidas compartilhadas pelos componentes da tela */
+  --cor-primaria: #001c3f;
+  --cor-texto: #1f2a44;
+  --cor-texto-suave: #667085;
+  --cor-borda: #e4eaf2;
+  --cor-fundo-cartao: #ffffff;
+  --raio-cartao: 18px;
+  --sombra-cartao: 0 1px 2px rgba(16, 24, 40, 0.04), 0 10px 28px rgba(16, 24, 40, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 4px 0 40px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--cor-texto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Cabeçalho com a saudação do morador */
+.cabecalho--dashboard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  overflow: hidden;
+  padding: 28px 32px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(51, 195, 240, 0.16), transparent 38%),
+    radial-gradient(circle at 0% 100%, rgba(43, 69, 162, 0.1), transparent 42%),
+    linear-gradient(135deg, #f3f8ff 0%, #ffffff 58%, #f8fcff 100%);
+  border: 1px solid #e2ebf7;
+  border-radius: 22px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03), 0 12px 32px rgba(16, 24, 40, 0.05);
+}
+
+/* Círculo decorativo do cabeçalho */
+.cabecalho--dashboard::after {
+  content: "";
+  position: absolute;
+  top: -90px;
+  right: -70px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(51, 195, 240, 0.22);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px rgba(51, 195, 240, 0.04);
+  pointer-events: none;
+}
+
+/* Bloco do cabeçalho com o título e o subtítulo */
+.cabecalho--texto {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Título de boas-vindas */
+.titulo--boas-vindas {
+  font-size: clamp(24px, 2.4vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  color: var(--cor-primaria);
+  line-height: 1.15;
+}
+
+/* Subtítulo do cabeçalho */
+.subtitulo--boas-vindas {
+  max-width: 580px;
+  font-size: 14.5px;
+  color: var(--cor-texto-suave);
+  line-height: 1.6;
+}
+
+/* Linha de cards de resumo */
+.container--resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+/* Card individual de resumo */
+.cartao--resumo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+  padding: 20px;
+  background-color: var(--cor-fundo-cartao);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-cartao);
+  box-shadow: var(--sombra-cartao);
+  box-sizing: border-box;
+}
+
+/* Faixa colorida no topo de cada card */
+.cartao--resumo::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--cor-acento, #dbe4f0);
+}
+
+/* Cores de destaque dos cards */
+.cartao--resumo--comunicados {
+  --cor-acento: linear-gradient(90deg, #a855f7, #d8b4fe);
+}
+
+.cartao--resumo--reservas {
+  --cor-acento: linear-gradient(90deg, #f5b84b, #ffd68a);
+}
+
+.cartao--resumo--encomendas {
+  --cor-acento: linear-gradient(90deg, #34c38f, #7ce0b4);
+}
+
+/* Quadrado colorido que envolve o ícone do card */
+.caixa--icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+}
+
+/* Cores suaves de cada card de resumo */
+.caixa--icone--comunicados {
+  background: linear-gradient(135deg, #f5edff, #eadcff);
+}
+
+.caixa--icone--reservas {
+  background: linear-gradient(135deg, #fff7ea, #ffedd0);
+}
+
+.caixa--icone--encomendas {
+  background: linear-gradient(135deg, #ecfdf3, #d9f7e5);
+}
+
+/* Título do card de resumo */
+.titulo--cartao--resumo {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+/* Conteúdo do card com o título e o valor */
+.conteudo--cartao--resumo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Número em destaque no card */
+.valor--resumo {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  color: var(--cor-primaria);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ícone em emoji do card */
+.icone--resumo {
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* Seta apenas visual do card */
+.seta--cartao--resumo {
+  font-size: 26px;
+  font-weight: 300;
+  color: #c0c8d6;
+  line-height: 1;
+  transform: translateY(-1px);
+  flex-shrink: 0;
+}
+
+/* Linha inferior com os dois painéis */
+.container--paineis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* Painel individual */
+.cartao--painel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 420px;
+  padding: 26px;
+  background-color: var(--cor-fundo-cartao);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-cartao);
+  box-shadow: var(--sombra-cartao);
+  box-sizing: border-box;
+}
+
+/* Variações sutis de fundo dos painéis */
+.cartao--painel--reservas {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(245, 184, 75, 0.08), transparent 35%),
+    #ffffff;
+}
+
+.cartao--painel--comunicados {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(51, 195, 240, 0.06), transparent 35%),
+    #ffffff;
+}
+
+/* Cabeçalho do painel com ícone e título */
+.cabecalho--painel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+/* Ícone do painel */
+.icone--painel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #eef5ff, #e1f4ff);
+  border-radius: 13px;
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Cores dos ícones de cada painel */
+.cartao--painel--reservas .icone--painel {
+  background: linear-gradient(135deg, #fff7ea, #ffedd0);
+}
+
+.cartao--painel--comunicados .icone--painel {
+  background: linear-gradient(135deg, #e8f1ff, #dbeafe);
+}
+
+/* Título do painel */
+.titulo--painel {
+  flex: 1;
+  min-width: 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--cor-primaria);
+  line-height: 1.3;
+}
+
+/* Corpo dos painéis com rolagem para manter a mesma altura */
+.conteudo--painel {
+  flex: 1;
+  min-height: 0;
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 6px;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #475467;
+  scrollbar-width: thin;
+  scrollbar-color: #d7dfea transparent;
+}
+
+/* Barra de rolagem discreta no Chrome, Edge e Safari */
+.conteudo--painel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.conteudo--painel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.conteudo--painel::-webkit-scrollbar-thumb {
+  background-color: #d7dfea;
+  border-radius: 999px;
+}
+
+/* Item de reserva */
+.item--reserva {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 10px;
+  border-bottom: 1px solid #f0f3f8;
+}
+
+/* Ajustes do primeiro e do último item da lista */
+.item--reserva:first-child {
+  padding-top: 0;
+}
+
+.item--reserva:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+/* Bloco com o dia e o mês da reserva */
+.data--reserva {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  padding: 8px 0;
+  background: linear-gradient(135deg, #fff7ea, #ffedd0);
+  border: 1px solid #ffe6bf;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+/* Dia da reserva */
+.dia--reserva {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--cor-primaria);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mês abreviado da reserva */
+.mes--reserva {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #b45309;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+/* Texto da reserva com o espaço e o horário */
+.texto--reserva {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Nome do espaço reservado */
+.espaco--reserva {
+  overflow: hidden;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--cor-texto);
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Horário da reserva */
+.horario--reserva {
+  font-size: 12.5px;
+  color: var(--cor-texto-suave);
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Selo com o status da reserva */
+.selo--status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Deixa apenas a primeira letra do status em maiúscula */
+.selo--status::first-letter {
+  text-transform: uppercase;
+}
+
+/* Selo laranja para reservas pendentes */
+.selo--status--pendente {
+  background-color: #fff4e5;
+  border: 1px solid #ffe0b8;
+  color: #b45309;
+}
+
+/* Selo neutro para os demais status */
+.selo--status--neutro {
+  background-color: #f2f4f7;
+  border: 1px solid #e4e7ec;
+  color: #667085;
+}
+
+/* Item de comunicado recente */
+.item--comunicado {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 10px;
+  border-bottom: 1px solid #f0f3f8;
+}
+
+/* Ajustes do primeiro e do último item da lista */
+.item--comunicado:first-child {
+  padding-top: 0;
+}
+
+.item--comunicado:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+/* Ícone do comunicado em um círculo suave */
+.icone--comunicado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #eef4ff, #e3edff);
+  border-radius: 50%;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Texto do comunicado com título e descrição */
+.texto--comunicado {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Linha com o título e o selo de novo */
+.linha--titulo--comunicado {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Título do comunicado limitado a uma linha */
+.titulo--comunicado {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cor-texto);
+  line-height: 1.5;
+}
+
+/* Selo de comunicado não visualizado */
+.selo--novo {
+  padding: 2px 8px;
+  background-color: #eef2ff;
+  border: 1px solid #e0e7ff;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #4f46e5;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Descrição do comunicado limitada a duas linhas */
+.descricao--comunicado {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+  line-height: 1.55;
+}
+
+/* Data do comunicado à direita */
+.data--comunicado {
+  padding: 5px 9px;
+  background-color: #f7f9fc;
+  border: 1px solid #eef2f7;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+/* Mensagem exibida quando não há reservas ou comunicados */
+.nao-tem-reservas,
+.nao-tem-comunicados {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  padding: 24px;
+  background-color: #fafbfd;
+  border: 1px dashed #dfe6f0;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  line-height: 1.5;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 900px) {
+  .cabecalho--dashboard {
+    padding: 24px;
+  }
+
+  .cartao--painel {
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard--principal {
+    gap: 18px;
+    padding-bottom: 24px;
+  }
+
+  .cabecalho--dashboard {
+    gap: 20px;
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .titulo--boas-vindas {
+    font-size: 24px;
+  }
+
+  .container--resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .container--paineis {
+    grid-template-columns: 1fr;
+  }
+
+  .cartao--resumo {
+    padding: 18px;
+  }
+
+  .cartao--painel {
+    min-height: 380px;
+    padding: 20px;
+  }
+
+  .conteudo--painel {
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 420px) {
+  .titulo--boas-vindas {
+    font-size: 22px;
+  }
+
+  .subtitulo--boas-vindas {
+    font-size: 13.5px;
+  }
+
+  .valor--resumo {
+    font-size: 28px;
+  }
+}
