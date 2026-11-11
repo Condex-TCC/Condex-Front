@@ -347,7 +347,6 @@ const route = createBrowserRouter([
                         element: <PaginaExibeHistoricoVisitasMorador></PaginaExibeHistoricoVisitasMorador>,
                     },
 
-
                     //Tela de reservas do morador | Histórico e cancelamento
                     {
                         path: "reservas", // Renderiza no caminho "/morador/reservas"

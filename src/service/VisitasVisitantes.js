@@ -1,6 +1,6 @@
 //Arquivo responsável por tratar as requisições de visitas e visitantes do síndico
 
-import { getVisitasSindicoAPI, getVisitantesSindicoAPI } from "../api/VisitasVisitantesAPI"
+import { getVisitasSindicoAPI, getVisitantesSindicoAPI, getVisitasMoradorAPI, getVisitasHisoticoMoradorAPI } from "../api/VisitasVisitantesAPI"
 
 //Função que obtem as visitas registradas no condomínio
 export async function getVisitasSindico(filtros = {}){
@@ -69,3 +69,72 @@ export async function getVisitantesSindico(filtros = {}){
 
     }
 }
+
+//Função que obtem as visitas do morador
+export async function getVisitasMorador(){
+
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await getVisitasMoradorAPI()
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { status, data } = json
+
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
+
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
+
+        //Retornando os dados
+        return data
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao buscar as visidas do morador na API:", erro)
+
+    }
+}
+
+//Função que obtem as visitas do morador
+export async function getVisitasHisoticoMorador(){
+
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await getVisitasHisoticoMoradorAPI()
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { status, data } = json
+
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
+
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
+
+        //Retornando os dados
+        return data
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao buscar as visidas do morador na API:", erro)
+
+    }
+}
+
