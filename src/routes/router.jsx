@@ -70,6 +70,7 @@ import PaginaVisitantesSindico from '../pages/sindico/visitantesVisitas/telaVisi
 import PaginaVisitasSindico from '../pages/sindico/visitantesVisitas/telaVisitas';
 import PaginaExibeEncomendaMorador from '../pages/morador/encomendas/telaExibeEncomendas';
 import PaginaExibeVisitasMorador from '../pages/morador/visitasVisitantes/telaExibeVisitas';
+import PaginaConsltaVisitanteMorador from '../pages/morador/visitasVisitantes/telaConsultaVisitanteMorador';
 
 
 //Componente que será utilizado para analisar a URL
@@ -341,9 +342,15 @@ const route = createBrowserRouter([
                         element: <PaginaExibeVisitasMorador></PaginaExibeVisitasMorador>,
                     },
 
-                    //Tela que vai exibir o hostórico de visitas do moraodor
+                    //Tela que vai concultar os visitantes 
                     {
                         path: "visitas/historico",
+                        element: <PaginaConsltaVisitanteMorador></PaginaConsltaVisitanteMorador>
+                    },
+
+                    //Tela que vai exibir o hostórico de visitas do moraodor
+                    {
+                        path: "visitante/consulta",
                         element: <PaginaExibeHistoricoVisitasMorador></PaginaExibeHistoricoVisitasMorador>,
                     },
 
