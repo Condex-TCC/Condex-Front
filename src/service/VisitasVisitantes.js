@@ -3,13 +3,13 @@
 import { getVisitasSindicoAPI, getVisitantesSindicoAPI } from "../api/VisitasVisitantesAPI"
 
 //Função que obtem as visitas registradas no condomínio
-export async function getVisitasSindico(){
+export async function getVisitasSindico(filtros = {}){
 
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await getVisitasSindicoAPI()
+        let response = await getVisitasSindicoAPI(filtros)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()
@@ -37,13 +37,13 @@ export async function getVisitasSindico(){
 }
 
 //Função que obtem os visitantes cadastrados no condomínio
-export async function getVisitantesSindico(){
+export async function getVisitantesSindico(filtros = {}){
 
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await getVisitantesSindicoAPI()
+        let response = await getVisitantesSindicoAPI(filtros)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()

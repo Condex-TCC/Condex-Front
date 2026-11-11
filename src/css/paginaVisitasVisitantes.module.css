@@ -75,3 +75,10 @@
   display: flex;
   flex-direction: column;
 }
+
+.aviso--vazio {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #7a87a7;
+  padding: 16px 0;
+}
