@@ -69,6 +69,7 @@ import PaginaInicalMorador from '../pages/morador/telaInicialMorador';
 import PaginaVisitantesSindico from '../pages/sindico/visitantesVisitas/telaVisitantes';
 import PaginaVisitasSindico from '../pages/sindico/visitantesVisitas/telaVisitas';
 import PaginaExibeEncomendaMorador from '../pages/morador/encomendas/telaExibeEncomendas';
+import PaginaExibeVisitasMorador from '../pages/morador/visitasVisitantes/telaExibeVisitas';
 
 
 //Componente que será utilizado para analisar a URL
@@ -334,17 +335,18 @@ const route = createBrowserRouter([
                         element: <PaginaInicalMorador></PaginaInicalMorador>
                     },
 
-                    //Tela de visitantes do morador
+                    //Tela que vai exibir as visitas do morador
                     {
-                        path: "visitantes", // Renderiza no caminho "/morador/visitantes"
-                        element: <PaginaVisitantesMorador />,
+                        path: "visitas",
+                        element: <PaginaExibeVisitasMorador></PaginaExibeVisitasMorador>,
                     },
 
-                    //Tela de pré cadastro de visitante
+                    //Tela que vai exibir o hostórico de visitas do moraodor
                     {
-                        path: "visitantes/cadastro", // Renderiza no caminho "/morador/visitantes/cadastro"
-                        element: <PaginaCadastraVisitanteMorador />,
+                        path: "visitas/historico",
+                        element: <PaginaExibeHistoricoVisitasMorador></PaginaExibeHistoricoVisitasMorador>,
                     },
+
 
                     //Tela de reservas do morador | Histórico e cancelamento
                     {

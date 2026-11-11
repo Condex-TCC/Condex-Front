@@ -64,7 +64,7 @@ const ITENS_SIDEBAR = [
     {
         chave: 'visitantes',
         rotulo: 'Visitantes',
-        path: '/morador/visitantes',
+        path: '/morador/visitas',
         icone: (
             <>
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
