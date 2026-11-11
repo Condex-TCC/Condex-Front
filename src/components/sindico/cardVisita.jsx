@@ -3,81 +3,212 @@
 //Local das importações
 import styles from "../../css/cardVisita.module.css"
 
+//Função que formata uma data da API para o padrão brasileiro
+const formatarData = (valor) => {
+
+    //Retorna um traço quando a data não existe na API
+    if (!valor) return "-"
+
+    //Convertendo a string da API para data
+    const data = new Date(valor)
+
+    //Retorna um traço quando a data é inválida
+    if (Number.isNaN(data.getTime())) return "-"
+
+    //Retornando a data formatada
+    return data.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })
+}
+
+//Função que aplica a máscara de CPF quando o valor chega apenas com números
+const formatarCpf = (valor) => {
+
+    //Retorna um traço quando o CPF não existe na API
+    if (!valor) return "-"
+
+    //Aplicando a máscara apenas em sequências de 11 dígitos
+    return String(valor).replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+}
+
+//Função que devolve o texto quando o dado não existe na API
+const ouSimbolo = (valor) => valor ?? "-"
+
+//Função que gera as iniciais do visitante para o avatar
+const obterIniciais = (nome) => {
+
+    //Retorna um símbolo quando o nome não existe
+    if (!nome) return "?"
+
+    //Separando as palavras do nome
+    const partes = nome.trim().split(/\s+/)
+
+    //Nome com apenas uma palavra
+    if (partes.length === 1) return partes[0].slice(0, 2).toUpperCase()
+
+    //Retornando a primeira letra do primeiro e do último nome
+    return (partes[0][0] + partes[partes.length - 1][0]).toUpperCase()
+}
+
+//Função que define o status da visita de acordo com os dados da API
+const obterStatus = (visita) => {
+
+    //Visita recusada pelo morador
+    if (visita.autorizacao === 0 || visita.autorizacao === false) {
+        return { texto: "Recusada", classe: "selo--status--recusada" }
+    }
+
+    //Visita que ainda aguarda a autorização do morador
+    if (visita.autorizacao == null) {
+        return { texto: "Visita pendente", classe: "selo--status--pendente" }
+    }
+
+    //Visita já finalizada, quando existe o registro de saída
+    if (visita.saida_registro != null) {
+        return { texto: "Finalizada", classe: "selo--status--finalizada" }
+    }
+
+    //Visita em andamento, quando existe o registro de entrada
+    if (visita.entrada_registro != null) {
+        return { texto: "Em andamento", classe: "selo--status--andamento" }
+    }
+
+    //Visita autorizada, mas que ainda não teve a entrada registrada
+    return { texto: "Autorizada", classe: "selo--status--autorizada" }
+}
+
+//Componente que exibe um rótulo e um valor dentro das grades de informação
+function Informacao({ rotulo, valor, total = false }) {
+
+    return (
+        <div className={`${styles['linha--informacao']}${total ? ` ${styles['linha--informacao--total']}` : ""}`}>
+            <span className={styles['rotulo--informacao']}>{rotulo}</span>
+            <span className={styles['valor--informacao']}>{ouSimbolo(valor)}</span>
+        </div>
+    )
+}
+
+//Componente que exibe um registro de entrada ou saída da visita
+function Registro({ titulo, data, porteiro }) {
+
+    //Registro ainda não realizado
+    if (!data) {
+        return (
+            <div className={styles['registro']}>
+                <span className={styles['registro--titulo']}>{titulo}</span>
+                <span className={styles['registro--vazio']}>Ainda não registrada</span>
+            </div>
+        )
+    }
+
+    //Registro realizado com os dados do porteiro
+    return (
+        <div className={styles['registro']}>
+            <span className={styles['registro--titulo']}>{titulo}</span>
+            <span className={styles['registro--data']}>{formatarData(data)}</span>
+
+            {/* Dados do porteiro responsável pelo registro */}
+            <span className={styles['registro--porteiro']}>
+                Porteiro: {ouSimbolo(porteiro?.nome)}
+            </span>
+            {porteiro?.email && <span className={styles['registro--contato']}>{porteiro.email}</span>}
+            {porteiro?.telefone && <span className={styles['registro--contato']}>{porteiro.telefone}</span>}
+        </div>
+    )
+}
+
 //Card reutilizável de visita para o síndico
 function CardVisita({ visita }) {
 
+    //Obtendo o status da visita
+    const status = obterStatus(visita)
+
+    //Atalho para a unidade do morador visitado
+    const unidade = visita.morador?.unidade
+
     //Retorna o componente
     return (
-        <div className={styles['card--visita']}>
+        <article className={styles['card--visita']}>
 
-            {/* Cabeçalho com o nome do visitante e o status da visita */}
-            <div className={styles['cabecalho--visita']}>
+            {/* Cabeçalho com os dados do visitante e o status da visita */}
+            <header className={styles['cabecalho--visita']}>
 
-                {/* Nome e CPF do visitante */}
+                {/* Avatar com as iniciais e identificação do visitante */}
                 <div className={styles['identificacao--visitante']}>
-                    <span className={styles['nome--visitante']}>{visita.visitante?.name}</span>
-                    <span className={styles['cpf--visitante']}>
-                        {visita.visitante?.cpf?.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")}
+                    <span className={styles['avatar--visitante']} aria-hidden="true">
+                        {obterIniciais(visita.visitante?.name)}
+                    </span>
+
+                    <div className={styles['dados--visitante']}>
+                        <span className={styles['nome--visitante']}>{ouSimbolo(visita.visitante?.name)}</span>
+
+                        {/* CPF e RG do visitante em formato de etiquetas */}
+                        <div className={styles['chips--visitante']}>
+                            <span className={styles['chip']}>CPF {formatarCpf(visita.visitante?.cpf)}</span>
+                            {visita.visitante?.rg &&
+                                <span className={styles['chip']}>RG {visita.visitante.rg}</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                {/* Status e identificador da visita */}
+                <div className={styles['status--visita']}>
+                    <span className={`${styles['selo--status']} ${styles[status.classe]}`}>
+                        {status.texto}
                     </span>
                 </div>
 
-                {/* Selo de status da visita */}
-                <span className={visita.saida === null
-                    ? `${styles['selo--status']} ${styles['selo--status--andamento']}`
-                    : `${styles['selo--status']} ${styles['selo--status--finalizada']}`}>
-                    {visita.saida === null ? "Em andamento" : "Finalizada"}
-                </span>
+            </header>
 
-            </div>
+            {/* Dados do morador visitado */}
+            <section className={styles['secao--visita']}>
+                <h3 className={styles['titulo--secao']}>Morador visitado</h3>
 
-            {/* Informações da visita */}
-            <div className={styles['informacoes--visita']}>
-
-                {/* Morador visitado */}
-                <div className={styles['linha--informacao']}>
-                    <span className={styles['rotulo--informacao']}>Morador visitado</span>
-                    <span className={styles['valor--informacao']}>{visita.morador?.nome}</span>
+                <div className={styles['grade--informacao']}>
+                    <Informacao rotulo="Nome" valor={visita.morador?.nome} />
+                    <Informacao rotulo="CPF" valor={formatarCpf(visita.morador?.cpf)} />
+                    <Informacao rotulo="E-mail" valor={visita.morador?.email} />
+                    <Informacao rotulo="Telefone" valor={visita.morador?.telefone} />
                 </div>
+            </section>
 
-                {/* Unidade do morador visitado, exibida apenas quando bloco e número existem */}
-                {visita.morador?.unidade?.bloco != null && visita.morador?.unidade?.numero != null ? (
-                    <div className={styles['linha--informacao']}>
-                        <span className={styles['rotulo--informacao']}>Unidade</span>
-                        <span className={styles['valor--informacao']}>
-                            {visita.morador?.unidade?.bloco}, {visita.morador?.unidade?.numero}
-                        </span>
-                    </div>
-                ) : null}
+            {/* Dados da unidade do morador visitado */}
+            <section className={styles['secao--visita']}>
+                <h3 className={styles['titulo--secao']}>Unidade</h3>
 
-                {/* Porteiro que registrou a visita, exibido apenas quando o nome existe */}
-                {visita.porteiro?.nome != null ? (
-                    <div className={styles['linha--informacao']}>
-                        <span className={styles['rotulo--informacao']}>Porteiro</span>
-                        <span className={styles['valor--informacao']}>{visita.porteiro?.nome}</span>
-                    </div>
-                ) : null}
-
-                {/* Entrada */}
-                <div className={styles['linha--informacao']}>
-                    <span className={styles['rotulo--informacao']}>Entrada</span>
-                    <span className={styles['valor--informacao']}>
-                        {new Date(visita.entrada).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
-                    </span>
+                <div className={styles['grade--informacao']}>
+                    <Informacao rotulo="Bloco" valor={unidade?.bloco} />
+                    <Informacao rotulo="Número" valor={unidade?.numero} />
                 </div>
+            </section>
 
-                {/* Saída, exibida apenas quando a visita foi finalizada */}
-                {visita.saida != null ? (
-                    <div className={styles['linha--informacao']}>
-                        <span className={styles['rotulo--informacao']}>Saída</span>
-                        <span className={styles['valor--informacao']}>
-                            {new Date(visita.saida).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}
-                        </span>
-                    </div>
-                ) : null}
+            {/* Horários previstos da visita */}
+            <section className={styles['secao--visita']}>
+                <h3 className={styles['titulo--secao']}>Agendamento</h3>
 
-            </div>
+                <div className={styles['grade--informacao']}>
+                    <Informacao rotulo="Entrada prevista" valor={formatarData(visita.entrada_prevista)} />
+                    <Informacao rotulo="Saída prevista" valor={formatarData(visita.saida_prevista)} />
+                </div>
+            </section>
 
-        </div>
+            {/* Registros de entrada e saída feitos pelos porteiros */}
+            <section className={styles['secao--visita']}>
+                <h3 className={styles['titulo--secao']}>Registros</h3>
+
+                <div className={styles['grade--registros']}>
+                    <Registro
+                        titulo="Entrada"
+                        data={visita.entrada_registro}
+                        porteiro={visita.porteiro_entrada}
+                    />
+                    <Registro
+                        titulo="Saída"
+                        data={visita.saida_registro}
+                        porteiro={visita.porteiro_saida}
+                    />
+                </div>
+            </section>
+        </article>
     )
 }
 

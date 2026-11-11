@@ -57,7 +57,7 @@ function PaginaVisitasSindico(){
 
             <div className={styles['lista--cards']}>
                 {cards?.map((visita) => (
-                    <CardVisita key={visita.id} visita={visita} />
+                    <CardVisita key={visita.id_visita} visita={visita} />
                 ))}
             </div>
         </div>

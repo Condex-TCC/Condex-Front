@@ -5,13 +5,13 @@
   color: #001c3f;
   background-color: #ffffff;
   border: 1px solid #e8ebf1;
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin-bottom: 12px;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
   box-shadow: 0 2px 6px rgba(0, 28, 63, 0.06);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
@@ -20,37 +20,80 @@
   box-shadow: 0 4px 12px rgba(0, 28, 63, 0.09);
 }
 
+/* CABEÇALHO */
+
 .cabecalho--visita {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px 16px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid #eef0f4;
+  gap: 12px 20px;
 }
 
 .identificacao--visitante {
   display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.avatar--visitante {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e6efff, #dbe6ff);
+  color: #2b45a2;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dados--visitante {
+  display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 8px;
   min-width: 0;
 }
 
 .nome--visitante {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.25;
   color: #001c3f;
   word-break: break-word;
 }
 
-.cpf--visitante {
-  font-size: 13px;
-  line-height: 1.4;
-  color: #7a87a7;
+.chips--visitante {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background-color: #f4f5f9;
+  border: 1px solid #e6e9f0;
+  color: #55628b;
+  font-size: 12px;
+  font-weight: 600;
   letter-spacing: 0.2px;
   word-break: break-word;
+}
+
+.status--visita {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  margin-left: auto;
 }
 
 .selo--status {
@@ -58,7 +101,6 @@
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
-  margin-left: auto;
   border-radius: 20px;
   padding: 5px 12px;
   font-size: 11px;
@@ -85,14 +127,64 @@
   color: #1e7e34;
 }
 
-.informacoes--visita {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px 24px;
+.selo--status--autorizada {
+  background-color: #e6efff;
+  color: #1d4ed8;
 }
 
-.informacoes--visita > .linha--informacao:first-child {
-  grid-column: 1 / -1;
+.selo--status--pendente {
+  background-color: #eef0f4;
+  color: #5b6785;
+}
+
+.selo--status--recusada {
+  background-color: #fde8e8;
+  color: #b42318;
+}
+
+.id--visita {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #a0aac4;
+}
+
+/* SEÇÕES DE INFORMAÇÃO */
+
+.secao--visita {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid #eef0f4;
+}
+
+.titulo--secao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #7a87a7;
+}
+
+.titulo--secao::before {
+  content: "";
+  width: 3px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: #2b45a2;
+}
+
+.grade--informacao {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px 22px;
 }
 
 .linha--informacao {
@@ -100,6 +192,10 @@
   flex-direction: column;
   gap: 3px;
   min-width: 0;
+}
+
+.linha--informacao--total {
+  grid-column: 1 / -1;
 }
 
 .rotulo--informacao {
@@ -119,6 +215,73 @@
   word-break: break-word;
 }
 
+/* REGISTROS DE ENTRADA E SAÍDA */
+
+.grade--registros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.registro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  background-color: #fafbfe;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  min-width: 0;
+}
+
+.registro--titulo {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #55628b;
+}
+
+.registro--data {
+  font-size: 14px;
+  font-weight: 600;
+  color: #001c3f;
+}
+
+.registro--porteiro {
+  font-size: 13px;
+  color: #55628b;
+}
+
+.registro--contato {
+  font-size: 12px;
+  color: #7a87a7;
+  word-break: break-word;
+}
+
+.registro--vazio {
+  font-size: 13px;
+  font-style: italic;
+  color: #a0aac4;
+}
+
+/* RODAPÉ */
+
+.rodape--visita {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 16px;
+  padding-top: 14px;
+  border-top: 1px solid #eef0f4;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #a0aac4;
+}
+
+/* RESPONSIVIDADE */
+
 @media (max-width: 520px) {
 
   .cabecalho--visita {
@@ -126,16 +289,17 @@
     align-items: flex-start;
   }
 
-  .selo--status {
+  .status--visita {
+    align-items: flex-start;
     margin-left: 0;
   }
 
-  .informacoes--visita {
+  .grade--informacao,
+  .grade--registros {
     grid-template-columns: 1fr;
-    gap: 12px;
   }
 
-  .informacoes--visita > .linha--informacao:first-child {
+  .linha--informacao--total {
     grid-column: auto;
   }
 }
