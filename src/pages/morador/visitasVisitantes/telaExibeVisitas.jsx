@@ -95,7 +95,7 @@ function PaginaExibeVisitasMorador(){
                 {/* Lista com os cards das visitas ativas */}
                 <div className={styles['lista--cards']}>
                     {ativas?.map((visita) => (
-                        <CardVisitaMorador key={visita?.id_visita} visita={visita} />
+                        <CardVisitaMorador key={visita?.id_visita} visita={visita} redireciona={"/morador/visitas"}/>
                     ))}
                 </div>
 
@@ -110,7 +110,7 @@ function PaginaExibeVisitasMorador(){
                 {/* Lista com os cards das visitas pendentes */}
                 <div className={styles['lista--cards']}>
                     {pendentes?.map((visita) => (
-                        <CardVisitaMorador key={visita?.id_visita} visita={visita} />
+                        <CardVisitaMorador key={visita?.id_visita} visita={visita} redireciona={"/morador/visitas"}/>
                     ))}
                 </div>
 
@@ -125,7 +125,7 @@ function PaginaExibeVisitasMorador(){
                 {/* Lista com os cards das visitas futuras */}
                 <div className={styles['lista--cards']}>
                     {futuras?.map((visita) => (
-                        <CardVisitaMorador key={visita?.id_visita} visita={visita} />
+                        <CardVisitaMorador key={visita?.id_visita} visita={visita} redireciona={"/morador/visitas"}/>
                     ))}
                 </div>
 

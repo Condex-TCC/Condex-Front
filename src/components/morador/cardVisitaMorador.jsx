@@ -1,11 +1,15 @@
 //Card que exibe uma visita do morador
 
 //Local das importações
+import { useNavigate } from "react-router-dom"
 import styles from "../../css/cardVisitaMorador.module.css"
 import { cancelaVisitamorador } from "../../service/VisitasVisitantes"
 
 //Card reutilizável de visita do morador
-function CardVisitaMorador({ visita }) {
+function CardVisitaMorador({ visita, redireciona }) {
+
+    //Hook que realiza a navegação
+    const navigate = useNavigate()
 
     //Função que realiza o cancelamento
     const cancelaVisita = async () => {
@@ -20,10 +24,22 @@ function CardVisitaMorador({ visita }) {
         window.location.reload();
     }
 
+    //Função que realiza a navegação para detalhes
+    const exibeDetalhe = () => {
+
+        //Realiza a navegação
+        navigate("/morador/visita/detalhes/" + visita.id_visita, {
+            //Passando uma valor pela url
+            state: {
+                redireciona: redireciona
+            }
+        })
+    }
+
     //Retorna o componente
     return (
 
-        <article className={styles['card--visita']}>
+        <article className={styles['card--visita']} on onClick={exibeDetalhe}>
 
             {/* Cabeçalho com os dados do visitante e o status da visita */}
             <header className={styles['cabecalho--visita']}>

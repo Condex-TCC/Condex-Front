@@ -72,7 +72,7 @@ function PaginaExibeHistoricoVisitasMorador(){
             {/* Lista com os cards do histórico de visitas */}
             <div className={styles['lista--cards']}>
                 {historico?.map((visita) => (
-                    <CardVisitaMorador key={visita?.id_visita} visita={visita} />
+                    <CardVisitaMorador key={visita?.id_visita} visita={visita} redireciona={"/morador/visitas/historico"}/>
                 ))}
             </div>
 
