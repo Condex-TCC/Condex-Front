@@ -4,7 +4,7 @@
 
 
 //Função que cria o componente
-function PaginaConsltaVisitanteMorador(){
+function PaginaConsultaVisitanteMorador(){
 
     //Retorna o componente
     return (
@@ -13,4 +13,4 @@ function PaginaConsltaVisitanteMorador(){
 }
 
 //Exporta o componente
-export default PaginaConsltaVisitanteMorador
+export default PaginaConsultaVisitanteMorador

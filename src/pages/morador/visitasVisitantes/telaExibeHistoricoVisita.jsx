@@ -4,6 +4,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { getVisitasHisoticoMorador } from "../../../service/VisitasVisitantes"
+import CardVisitaMorador from "../../../components/morador/cardVisitaMorador"
+import styles from "../../../css/paginaVisitasMorador.module.css"
 
 
 //Função que cria o componente
@@ -44,11 +46,37 @@ function PaginaExibeHistoricoVisitasMorador(){
 
     //Retorna o componente
     return (
-        <h1>Página exibe historico de visitas</h1>
-        //Menu de botãos: 1°) visitas (chama a função de navegaVisitas) | 2°) histórico (não faz nada)
-        //Na direita a mesma linha chama função de navega para a consulta, chama função de navegaConstulsta
+        <div className={styles['pagina--visitas']}>
 
-        //Div que renderiza o cards com o valor salvo no state
+            {/* Cabeçalho com o título e a descrição da página */}
+            <div className={styles['cabecalho--pagina']}>
+                <h1 className={styles['titulo--pagina']}>Histórico de visitas</h1>
+                <p className={styles['descricao--pagina']}>Consulte as visitas já registradas no seu apartamento.</p>
+            </div>
+
+            {/* Barra com o menu de abas */}
+            <div className={styles['barra--pagina']}>
+
+                {/* Menu de botões entre as telas de visitas e histórico */}
+                <div className={styles['menu--pagina']}>
+                    <button type="button" className={`${styles['botao--menu']} ${styles['botao--menu--inativo']}`} onClick={navegaVisitas}>
+                        Visitas
+                    </button>
+                    <button type="button" className={`${styles['botao--menu']} ${styles['botao--menu--ativo']}`}>
+                        Histórico
+                    </button>
+                </div>
+
+            </div>
+
+            {/* Lista com os cards do histórico de visitas */}
+            <div className={styles['lista--cards']}>
+                {historico?.map((visita) => (
+                    <CardVisitaMorador key={visita?.id_visita} visita={visita} />
+                ))}
+            </div>
+
+        </div>
     );
 }
 

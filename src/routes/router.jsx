@@ -38,8 +38,6 @@ import PaginaDetalheEncomenda from '../pages/porteiro/telaDetalheEncomenda';
 import PaginaRegistroVisitante from '../pages/porteiro/RegistroVisitante';
 
 //Importando as páginas do morador
-import PaginaVisitantesMorador from '../pages/morador/telaVisitantesMorador';
-import PaginaCadastraVisitanteMorador from '../pages/morador/telaCadastraVisitanteMorador';
 import PaginaEmBreveMorador from '../pages/morador/telaEmBreveMorador';
 import PaginaReservasMorador from '../pages/morador/telaReservasMorador';
 import PaginaSolicitaReservaMorador from '../pages/morador/telaSolicitaReservaMorador';
@@ -70,8 +68,8 @@ import PaginaVisitantesSindico from '../pages/sindico/visitantesVisitas/telaVisi
 import PaginaVisitasSindico from '../pages/sindico/visitantesVisitas/telaVisitas';
 import PaginaExibeEncomendaMorador from '../pages/morador/encomendas/telaExibeEncomendas';
 import PaginaExibeVisitasMorador from '../pages/morador/visitasVisitantes/telaExibeVisitas';
-import PaginaConsltaVisitanteMorador from '../pages/morador/visitasVisitantes/telaConsultaVisitanteMorador';
-
+import PaginaExibeHistoricoVisitasMorador from '../pages/morador/visitasVisitantes/telaExibeHistoricoVisita';
+import  PaginaConsultaVisitanteMorador from '../pages/morador/visitasVisitantes/telaConsultaVisita';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -345,13 +343,13 @@ const route = createBrowserRouter([
                     //Tela que vai concultar os visitantes 
                     {
                         path: "visitas/historico",
-                        element: <PaginaConsltaVisitanteMorador></PaginaConsltaVisitanteMorador>
+                        element: <PaginaExibeHistoricoVisitasMorador></PaginaExibeHistoricoVisitasMorador>
                     },
 
                     //Tela que vai exibir o hostórico de visitas do moraodor
                     {
                         path: "visitante/consulta",
-                        element: <PaginaExibeHistoricoVisitasMorador></PaginaExibeHistoricoVisitasMorador>,
+                        element: <PaginaConsultaVisitanteMorador></PaginaConsultaVisitanteMorador>,
                     },
 
                     //Tela de reservas do morador | Histórico e cancelamento

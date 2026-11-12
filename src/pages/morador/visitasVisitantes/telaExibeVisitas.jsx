@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getVisitasMorador } from "../../../service/VisitasVisitantes";
+import CardVisitaMorador from "../../../components/morador/cardVisitaMorador";
+import styles from "../../../css/paginaVisitasMorador.module.css";
 
 //Importações do arquivo
 
@@ -56,19 +58,80 @@ function PaginaExibeVisitasMorador(){
 
     //Retorna o componente
     return (
-        <h1>Página exibe os visitas</h1>
-        //Menu de botãos: 1°) visitas (não faz nada) | 2°) histórico (chama a função de navegaHistorico)
-        //Na direita a mesma linha chama função de navega para a consulta, chama função de navegaConstulsta
+        <div className={styles['pagina--visitas']}>
 
-        //tiulo de visitas ativas
-        //Div que renderiza as visitas ativas
+            {/* Cabeçalho com o título e a descrição da página */}
+            <div className={styles['cabecalho--pagina']}>
+                <h1 className={styles['titulo--pagina']}>Visitas do apartamento</h1>
+                <p className={styles['descricao--pagina']}>Acompanhe as visitas em andamento, autorize solicitações pendentes e veja os próximos agendamentos.</p>
+            </div>
 
-        //titulo das visitas futuras
-        //div que renderiza o card das visitas futuras
+            {/* Barra com o menu de abas e o botão de consulta */}
+            <div className={styles['barra--pagina']}>
 
-        //titulo das visitas pendentes de aprovação
-        //descrição, clique na visita
-        //div que renderiza o card das visitas pendentes
+                {/* Menu de botões entre as telas de visitas e histórico */}
+                <div className={styles['menu--pagina']}>
+                    <button type="button" className={`${styles['botao--menu']} ${styles['botao--menu--ativo']}`}>
+                        Visitas
+                    </button>
+                    <button type="button" className={`${styles['botao--menu']} ${styles['botao--menu--inativo']}`} onClick={navegaHistorico}>
+                        Histórico
+                    </button>
+                </div>
+
+                {/* Botão que leva para a consulta de visitante */}
+                <button type="button" className={styles['botao--consulta']} onClick={navegaConstulsta}>
+                    Consultar visitante
+                </button>
+
+            </div>
+
+            {/* Seção com as visitas que estão acontecendo agora */}
+            <section className={styles['secao--visitas']}>
+
+                <h2 className={styles['subtitulo--secao']}>Visitas em andamento</h2>
+                <p className={styles['descricao--secao']}>Visitantes que já entraram e estão no condomínio neste momento.</p>
+
+                {/* Lista com os cards das visitas ativas */}
+                <div className={styles['lista--cards']}>
+                    {ativas?.map((visita) => (
+                        <CardVisitaMorador key={visita?.id_visita} visita={visita} />
+                    ))}
+                </div>
+
+            </section>
+
+            {/* Seção com as visitas que aguardam a autorização do morador */}
+            <section className={styles['secao--visitas']}>
+
+                <h2 className={styles['subtitulo--secao']}>Aguardando autorização</h2>
+                <p className={styles['descricao--secao']}>Solicitações de visita que precisam da sua aprovação.</p>
+
+                {/* Lista com os cards das visitas pendentes */}
+                <div className={styles['lista--cards']}>
+                    {pendentes?.map((visita) => (
+                        <CardVisitaMorador key={visita?.id_visita} visita={visita} />
+                    ))}
+                </div>
+
+            </section>
+
+            {/* Seção com as visitas autorizadas que ainda vão acontecer */}
+            <section className={styles['secao--visitas']}>
+
+                <h2 className={styles['subtitulo--secao']}>Próximas visitas</h2>
+                <p className={styles['descricao--secao']}>Visitas autorizadas com entrada prevista para os próximos dias.</p>
+
+                {/* Lista com os cards das visitas futuras */}
+                <div className={styles['lista--cards']}>
+                    {futuras?.map((visita) => (
+                        <CardVisitaMorador key={visita?.id_visita} visita={visita} />
+                    ))}
+                </div>
+
+            </section>
+
+        </div>
     );
 }
 
