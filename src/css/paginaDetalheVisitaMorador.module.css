@@ -1,0 +1,389 @@
+/* TELA DE DETALHES DA VISITA DO MORADOR */
+
+/* Container principal da página, centralizado na tela */
+.pagina--detalhe-visita {
+  /* Paleta e medidas compartilhadas pelos cartões da tela */
+  --cor-primaria: #001c3f;
+  --cor-texto: #1f2a44;
+  --cor-texto-suave: #667085;
+  --cor-borda: #e4eaf2;
+  --cor-fundo-cartao: #ffffff;
+  --raio-cartao: 18px;
+  --sombra-cartao: 0 1px 2px rgba(16, 24, 40, 0.04), 0 10px 28px rgba(16, 24, 40, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4px 0 40px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--cor-texto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Cabeçalho com o título e o botão de voltar na mesma linha */
+.cabecalho--pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+/* Título da página com o nome do visitante */
+.titulo--pagina {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  color: var(--cor-primaria);
+  word-break: break-word;
+}
+
+/* Botão que retorna para a tela anterior */
+.botao--voltar {
+  flex-shrink: 0;
+  padding: 9px 16px;
+  background-color: #ffffff;
+  border: 1px solid #d4d8e2;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #2b45a2;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Destaque suave ao passar o mouse pelo botão de voltar */
+.botao--voltar:hover {
+  background-color: #eef2ff;
+  border-color: #b9c4e6;
+}
+
+/* Foco visível do botão de voltar */
+.botao--voltar:focus-visible {
+  outline: 2px solid #2b45a2;
+  outline-offset: 2px;
+}
+
+/* Cartão que agrupa um bloco de informações */
+.cartao--detalhe {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 24px;
+  background-color: var(--cor-fundo-cartao);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-cartao);
+  box-shadow: var(--sombra-cartao);
+  box-sizing: border-box;
+}
+
+/* Subtítulo de cada bloco de informações */
+.titulo--cartao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  line-height: 1.3;
+  color: var(--cor-primaria);
+}
+
+/* Detalhe colorido antes do subtítulo */
+.titulo--cartao::before {
+  content: "";
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  background-color: #2b45a2;
+}
+
+/* Grade com os rótulos e valores de um bloco */
+.grade--informacoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px 24px;
+}
+
+/* Linha com o rótulo e o valor de uma informação */
+.linha--informacao {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Linha que ocupa toda a largura da grade */
+.linha--informacao--total {
+  grid-column: 1 / -1;
+}
+
+/* Rótulo da informação */
+.rotulo--informacao {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: #7a87a7;
+}
+
+/* Valor da informação */
+.valor--informacao {
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--cor-texto);
+  word-break: break-word;
+}
+
+/* Cabeçalho dos cartões, com o título à esquerda e o status à direita */
+.cabecalho--cartao {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Conteúdo da autorização pendente, centralizado no cartão */
+.autorizacao--conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 8px 0 2px;
+  text-align: center;
+}
+
+/* Pergunta exibida quando a visita está pendente */
+.texto--autorizacao {
+  margin: 0;
+  max-width: 420px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--cor-texto);
+}
+
+/* Linha com os botões de autorizar e recusar */
+.acoes--autorizacao {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Selo com o status da visita ou da autorização */
+.selo--status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Bolinha colorida antes do texto do status */
+.selo--status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* Selo laranja para visitas pendentes */
+.selo--pendente {
+  background-color: #fff4e5;
+  border: 1px solid #ffe0b8;
+  color: #b45309;
+}
+
+/* Selo verde para visitas aprovadas */
+.selo--aprovada {
+  background-color: #ecfdf3;
+  border: 1px solid #d1fadf;
+  color: #067647;
+}
+
+/* Selo vermelho para visitas recusadas */
+.selo--recusada {
+  background-color: #fde8e8;
+  border: 1px solid #fecdca;
+  color: #b42318;
+}
+
+/* Selo verde para visitas finalizadas */
+.selo--finalizada {
+  background-color: #e4f7e8;
+  color: #1e7e34;
+}
+
+/* Selo laranja para visitas em andamento */
+.selo--andamento {
+  background-color: #fff1e0;
+  color: #b25e09;
+}
+
+/* Selo azul para visitas autorizadas */
+.selo--autorizada {
+  background-color: #e6efff;
+  color: #1d4ed8;
+}
+
+/* Selo cinza para visitas aguardando autorização */
+.selo--aguardando {
+  background-color: #eef0f4;
+  color: #5b6785;
+}
+
+/* Selo vermelho para visitas negadas */
+.selo--negada {
+  background-color: #fde8e8;
+  color: #b42318;
+}
+
+/* Botão verde que autoriza a visita */
+.botao--autorizar {
+  padding: 10px 18px;
+  background-color: #7ab973;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+/* Destaque suave ao passar o mouse pelo botão de autorizar */
+.botao--autorizar:hover {
+  opacity: 0.85;
+}
+
+/* Foco visível do botão de autorizar */
+.botao--autorizar:focus-visible {
+  outline: 2px solid #4d8a47;
+  outline-offset: 2px;
+}
+
+/* Botão vermelho que recusa a visita */
+.botao--recusar {
+  padding: 10px 18px;
+  background-color: #d14649;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+/* Destaque suave ao passar o mouse pelo botão de recusar */
+.botao--recusar:hover {
+  opacity: 0.85;
+}
+
+/* Foco visível do botão de recusar */
+.botao--recusar:focus-visible {
+  outline: 2px solid #a83235;
+  outline-offset: 2px;
+}
+
+/* Grade com os cartões de entrada e saída */
+.grade--registros {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* Cartão de um registro de entrada ou saída */
+.cartao--registro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 22px;
+  background-color: var(--cor-fundo-cartao);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-cartao);
+  box-shadow: var(--sombra-cartao);
+  box-sizing: border-box;
+}
+
+/* Data e hora de um registro */
+.data--registro {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--cor-primaria);
+}
+
+/* Aviso de registro ainda não realizado */
+.aviso--registro {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #7a87a7;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 700px) {
+
+  .grade--registros {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+
+  .pagina--detalhe-visita {
+    gap: 16px;
+    padding-bottom: 24px;
+  }
+
+  .cabecalho--pagina {
+    align-items: flex-start;
+  }
+
+  .cartao--detalhe,
+  .cartao--registro {
+    padding: 18px;
+  }
+
+  .grade--informacoes {
+    grid-template-columns: 1fr;
+  }
+
+  .linha--informacao--total {
+    grid-column: auto;
+  }
+
+  .acoes--autorizacao {
+    width: 100%;
+  }
+
+  .botao--autorizar,
+  .botao--recusar {
+    flex: 1;
+  }
+}

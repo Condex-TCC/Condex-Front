@@ -197,7 +197,7 @@ export async function showVisitaMorador(id){
         }
 
         //Retornando os dados
-        return message
+        return data
     }
     //Casso aconteça algum erro na requisição, cai nesse bloco
     catch(erro){
