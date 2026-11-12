@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { getHistoricoVisitasPorterio } from "../../../service/VisitasVisitantes";
 
 //Importações do arquivos
+import CardVisitaPorteiro from "../../../components/porteiro/cardVisitaPorteiro";
+import styles from "../../../css/paginaHistoricoVisitaPorteiro.module.css";
 
 
 //Funão que cria o componente
@@ -45,10 +47,24 @@ function PaginaHistoricoVisitaPorteiro(){
 
     //Retorna um componente
     return(
-        <h1>histórico de visitas</h1>
-        //Na mesma linha, alinhado à direita, um botão de voltar que chama a função de back
+        <div className={styles['pagina--historico']}>
 
-        //Div que renderiza os cards predentes no state, os cards são os cardVisitaPorteiro.jsx
+            {/* Cabeçalho com o título e o botão de voltar na mesma linha */}
+            <div className={styles['cabecalho--historico']}>
+                <h1 className={styles['titulo--historico']}>Histórico de visitas</h1>
+
+                <button type="button" className={styles['botao--voltar']} onClick={back}>
+                    &larr; voltar
+                </button>
+            </div>
+
+            {/* Div que renderiza os cards presentes no state */}
+            <div className={styles['lista--cards']}>
+                {cards?.map((visita) => (
+                    <CardVisitaPorteiro key={visita?.id_visita} visita={visita} />
+                ))}
+            </div>
+        </div>
     );
 }
 
