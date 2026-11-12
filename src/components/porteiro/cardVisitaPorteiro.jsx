@@ -53,26 +53,26 @@ const obterStatus = (visita) => {
 
     //Visita recusada pelo morador
     if (visita.autorizacao === 0 || visita.autorizacao === false) {
-        return { texto: "Recusada", classe: "selo--status--recusada" }
+        return { texto: "Recusada", classe: "selo--status--recusada", acao: null }
     }
 
     //Visita que ainda aguarda a autorização do morador
     if (visita.autorizacao == null) {
-        return { texto: "Aguardando autorização", classe: "selo--status--pendente" }
+        return { texto: "Aguardando autorização", classe: "selo--status--pendente", acao: "deletar" }
     }
 
     //Visita já finalizada, quando existe o registro de saída
     if (visita.saida_registro != null) {
-        return { texto: "Finalizada", classe: "selo--status--finalizada" }
+        return { texto: "Finalizada", classe: "selo--status--finalizada", acao: null }
     }
 
     //Visita em andamento, quando existe o registro de entrada
     if (visita.entrada_registro != null) {
-        return { texto: "Em andamento", classe: "selo--status--andamento" }
+        return { texto: "Em andamento", classe: "selo--status--andamento", acao: "saida" }
     }
 
     //Visita autorizada, mas que ainda não teve a entrada registrada
-    return { texto: "Autorizada", classe: "selo--status--autorizada" }
+    return { texto: "Autorizada", classe: "selo--status--autorizada", acao: "entrada" }
 }
 
 //Componente que exibe um rótulo e um valor dentro das grades de informação
@@ -117,6 +117,24 @@ function CardVisitaPorteiro({ visita }) {
 
     //Atalho para a unidade do morador visitado
     const unidade = visita.morador?.unidade
+
+    //Função que exibe o aviso do botão de registrar entrada
+    const registrarEntrada = () => {
+
+        alert("Registrando a entrada da visita...")
+    }
+
+    //Função que exibe o aviso do botão de registrar saída
+    const registrarSaida = () => {
+
+        alert("Registrando a saída da visita...")
+    }
+
+    //Função que exibe o aviso do botão de deletar visita
+    const deletarVisita = () => {
+
+        alert("Deletando a visita...")
+    }
 
     //Retorna o componente
     return (
@@ -200,6 +218,41 @@ function CardVisitaPorteiro({ visita }) {
                     />
                 </div>
             </section>
+
+            {/* Ações disponíveis de acordo com o status da visita */}
+            {status.acao &&
+                <footer className={styles['acoes--visita']}>
+                    {status.acao === "entrada" &&
+                        <button
+                            type="button"
+                            className={`${styles['botao--acao']} ${styles['botao--entrada']}`}
+                            onClick={registrarEntrada}
+                        >
+                            Registrar entrada
+                        </button>
+                    }
+
+                    {status.acao === "saida" &&
+                        <button
+                            type="button"
+                            className={`${styles['botao--acao']} ${styles['botao--saida']}`}
+                            onClick={registrarSaida}
+                        >
+                            Registrar saída
+                        </button>
+                    }
+
+                    {status.acao === "deletar" &&
+                        <button
+                            type="button"
+                            className={`${styles['botao--acao']} ${styles['botao--deletar']}`}
+                            onClick={deletarVisita}
+                        >
+                            Deletar visita
+                        </button>
+                    }
+                </footer>
+            }
         </article>
     )
 }

@@ -278,6 +278,53 @@
   color: #a0aac4;
 }
 
+/* AÇÕES DO CARD */
+
+/* Rodapé com o botão de ação da visita */
+.acoes--visita {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid #eef0f4;
+}
+
+/* Botão de ação do card */
+.botao--acao {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+/* Leve escurecimento ao passar o mouse pelo botão */
+.botao--acao:hover {
+  filter: brightness(0.95);
+}
+
+/* Botão verde para registrar a entrada */
+.botao--entrada {
+  background-color: #1e7e34;
+  color: #ffffff;
+}
+
+/* Botão laranja para registrar a saída */
+.botao--saida {
+  background-color: #b25e09;
+  color: #ffffff;
+}
+
+/* Botão vermelho para deletar a visita */
+.botao--deletar {
+  background-color: #b42318;
+  color: #ffffff;
+}
+
 /* RESPONSIVIDADE */
 
 @media (max-width: 520px) {
@@ -295,5 +342,13 @@
   .grade--informacao,
   .grade--registros {
     grid-template-columns: 1fr;
+  }
+
+  .acoes--visita {
+    flex-direction: column;
+  }
+
+  .botao--acao {
+    width: 100%;
   }
 }
