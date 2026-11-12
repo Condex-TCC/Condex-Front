@@ -81,7 +81,7 @@ function PaginaExibeVisitasMorador(){
 
                 {/* Botão que leva para a consulta de visitante */}
                 <button type="button" className={styles['botao--consulta']} onClick={navegaConstulsta}>
-                    Consultar visitante
+                    Agendar Visita
                 </button>
 
             </div>
