@@ -4,14 +4,11 @@
 import styles from "../../css/paginainicialPorteiro.module.css"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useNavigate, useOutletContext } from "react-router-dom"
-import { getVisitantesPorteiro } from "../../service/VisitantePorteiro"
 import { getEncomendas } from "../../service/Encomenda"
-import { interpretarBuscaEncomenda, interpretarBuscaVisitante } from "../../utils/busca"
-import { getVisitasAtivas, registrarEntradaVisita, registrarSaidaVisita } from "../../service/VisitaPorteiro"
-import CardVisitanteCadastrado from "../../components/porteiro/cardVisitanteCadastrado"
+import { interpretarBuscaEncomenda, filtrarPorTexto } from "../../utils/busca"
+import { getVisitasPorterio } from "../../service/VisitasVisitantes"
 import CardEncomenda from "../../components/porteiro/cardEncomenda"
-import CardVisitaAtiva from "../../components/porteiro/cardVisitaAtiva"
-import ModalSelecionarMorador from "../../components/porteiro/modalSelecionarMorador"
+import CardVisitaPorteiro from "../../components/porteiro/cardVisitaPorteiro"
 
 //Componente de estado vazio, reaproveitado por todas as seções da tela
 function EstadoVazio({ children }){
@@ -28,11 +25,12 @@ function PaginainicialPorteiro(){
     //Estado que controla qual aba está ativa
     const [abaAtiva, setAbaAtiva] = useState("visitantes")
 
-    //Estado que armazena os visitantes cadastrados na API (por moradores ou por porteiros)
-    const [visitantes, setVisitantes] = useState([])
-
-    //Estado que armazena as visitas ativas (visitantes que estão dentro do condomínio)
-    const [visitasAtivas, setVisitasAtivas] = useState([])
+    //Estado que armazena as visitas do porteiro separadas por categoria
+    const [visitas, setVisitas] = useState({
+        visitas_ativas: [],
+        visitas_futuras: [],
+        visitas_pendentes: []
+    })
 
     //Estado que armazena as encomendas
     const [encomendas, setEncomendas] = useState([])
@@ -42,9 +40,6 @@ function PaginainicialPorteiro(){
 
     //Texto já "assentado" depois que o porteiro para de digitar, que é o que dispara a busca na API
     const [termoBusca, setTermoBusca] = useState(busca)
-
-    //Estado que guarda o visitante que está tendo a entrada registrada (janela do morador visitado)
-    const [visitanteEmEntrada, setVisitanteEmEntrada] = useState(null)
 
     //Estado que guarda o aviso quando alguma lista não pôde ser carregada
     const [erroCarga, setErroCarga] = useState("")
@@ -69,7 +64,6 @@ function PaginainicialPorteiro(){
     }, [busca])
 
     //Filtros enviados à API, calculados a partir do texto buscado
-    const filtrosVisitante = useMemo(() => interpretarBuscaVisitante(termoBusca), [termoBusca])
     const filtrosEncomenda = useMemo(() => interpretarBuscaEncomenda(termoBusca), [termoBusca])
 
     //Indica se há uma busca ativa, para ajustar as mensagens de lista vazia
@@ -83,13 +77,13 @@ function PaginainicialPorteiro(){
         setTermoBusca("")
     }
 
-    //Função que busca os visitantes cadastrados
-    //Devolve null quando a API falha, para a tela avisar o porteiro
-    const buscarVisitantes = useCallback(async () => {
+    //Função que busca as visitas do porteiro
+    //Devolve undefined quando a API falha, para a tela avisar o porteiro
+    const buscarVisitas = useCallback(async () => {
 
-        //Chama a service que busca os visitantes do porteiro
-        return await getVisitantesPorteiro(filtrosVisitante)
-    }, [filtrosVisitante])
+        //Chama a service que busca as visitas do porteiro
+        return await getVisitasPorterio()
+    }, [])
 
     //Função que busca as encomendas e devolve a lista pronta
     const buscarEncomendas = useCallback(async () => {
@@ -107,14 +101,6 @@ function PaginainicialPorteiro(){
         return normalizaLista(resultado)
     }, [filtrosEncomenda])
 
-    //Função que busca as visitas ativas (visitantes dentro do condomínio)
-    //Devolve null quando a API falha, para a tela avisar o porteiro
-    const buscarVisitasAtivas = useCallback(async () => {
-
-        //Chama a service que busca as visitas ativas
-        return await getVisitasAtivas(filtrosVisitante)
-    }, [filtrosVisitante])
-
     //Função que recarrega a lista de encomendas depois de uma ação, para a tela
     //refletir o que foi realmente gravado no backend
     const recarregarEncomendas = useCallback(async () => {
@@ -129,19 +115,6 @@ function PaginainicialPorteiro(){
         }
     }, [buscarEncomendas])
 
-    //Função que recarrega as visitas ativas depois de registrar entrada/saída
-    const recarregarVisitasAtivas = useCallback(async () => {
-
-        //Busca a lista no backend
-        const lista = await buscarVisitasAtivas()
-
-        //Só atualiza a tela quando a busca funcionou
-        if(lista !== null){
-
-            setVisitasAtivas(lista)
-        }
-    }, [buscarVisitasAtivas])
-
     //Busca os dados assim que a página carrega
     useEffect(() => {
 
@@ -152,10 +125,9 @@ function PaginainicialPorteiro(){
         const carregarTela = async () => {
 
             //Espera as requisições terminarem juntas
-            const [listaVisitantes, listaEncomendas, listaVisitasAtivas] = await Promise.all([
-                buscarVisitantes(),
+            const [listaEncomendas, listaVisitas] = await Promise.all([
                 buscarEncomendas(),
-                buscarVisitasAtivas()
+                buscarVisitas()
             ])
 
             //Se a tela já foi fechada, não tenta salvar o resultado
@@ -167,27 +139,25 @@ function PaginainicialPorteiro(){
             //Monta o aviso com o que não pôde ser carregado
             const falhas = []
 
-            if(listaVisitantes === null){
-
-                falhas.push("os visitantes")
-            }
-
             if(listaEncomendas === null){
 
                 falhas.push("as encomendas")
             }
 
-            if(listaVisitasAtivas === null){
+            if(!listaVisitas){
 
-                falhas.push("os visitantes ativos")
+                falhas.push("as visitas")
             }
 
             setErroCarga(falhas.length > 0 ? `Não foi possível carregar ${falhas.join(" e ")}. Verifique sua conexão e se o servidor está no ar.` : "")
 
-            //Salva nos estados, mantendo lista vazia quando a busca falhou
-            setVisitantes(listaVisitantes ?? [])
+            //Salva nos estados, mantendo listas vazias quando a busca falhou
             setEncomendas(listaEncomendas ?? [])
-            setVisitasAtivas(listaVisitasAtivas ?? [])
+            setVisitas({
+                visitas_ativas: listaVisitas?.visitas_ativas ?? [],
+                visitas_futuras: listaVisitas?.visitas_futuras ?? [],
+                visitas_pendentes: listaVisitas?.visitas_pendentes ?? []
+            })
         }
 
         //Dispara o carregamento
@@ -198,7 +168,7 @@ function PaginainicialPorteiro(){
 
             cancelado = true
         }
-    }, [buscarVisitantes, buscarEncomendas, buscarVisitasAtivas])
+    }, [buscarEncomendas, buscarVisitas])
 
     //Separando as encomendas pendentes das já retiradas
     //A API trata o campo "data" como a data da retirada, então a encomenda é
@@ -220,44 +190,11 @@ function PaginainicialPorteiro(){
         navigate("/porteiro/visitante/create")
     }
 
-    //Função que registra a entrada de um visitante cadastrado
-    const registrarEntrada = (visitante) => {
-
-        //Abre a janela onde o porteiro escolhe qual morador será visitado
-        setVisitanteEmEntrada(visitante)
-    }
-
-    //Função que confirma a entrada com o morador escolhido na janela
-    const confirmarEntrada = async (idMorador) => {
-
-        //Chama a service que registra a entrada na API
-        const resultado = await registrarEntradaVisita(visitanteEmEntrada, idMorador)
-
-        //Exibe a mensagem retornada pela API (sucesso ou erro)
-        alert(resultado.mensagem)
-
-        //Fecha a janela só quando deu certo, para o porteiro poder corrigir e tentar de novo
-        if(resultado.sucesso){
-
-            setVisitanteEmEntrada(null)
-        }
-
-        //Recarrega as visitas ativas para refletir o que foi gravado
-        recarregarVisitasAtivas()
-    }
-
-    //Função que registra a saída de um visitante que está no condomínio
-    const registrarSaida = async (visita) => {
-
-        //Chama a service que registra a saída na API, usando o id do visitante
-        const resultado = await registrarSaidaVisita(visita.visitanteId)
-
-        //Exibe a mensagem retornada pela API (sucesso ou erro)
-        alert(resultado.mensagem)
-
-        //Recarrega as visitas ativas para refletir o que foi gravado
-        recarregarVisitasAtivas()
-    }
+    //Separando as visitas por categoria e aplicando a busca local
+    //A API de visitas do porteiro não recebe filtros, então a busca é feita no texto já carregado
+    const visitasAtivas = filtrarPorTexto(visitas.visitas_ativas, termoBusca)
+    const visitasFuturas = filtrarPorTexto(visitas.visitas_futuras, termoBusca)
+    const visitasPendentes = filtrarPorTexto(visitas.visitas_pendentes, termoBusca)
 
     //Retorna um componente
     return (
@@ -306,44 +243,51 @@ function PaginainicialPorteiro(){
         abaAtiva === "visitantes" ?
           <>
             <div className={styles['list--section']}>
-              <h2 className={styles['section--title']}>Visitantes cadastrados</h2>
-
-              {
-                //Os visitantes cadastrados pelo morador (sem porteiro) e pelo
-                //porteiro (com porteiro) são todos válidos e aparecem na lista
-                visitantes.length === 0 ?
-                  <EstadoVazio>{buscando ? "Nenhum visitante encontrado para a busca" : "Nenhum visitante cadastrado"}</EstadoVazio>
-                :
-                  visitantes.map((visitante) => {
-
-                    //Um visitante que já está dentro não recebe o botão de entrada,
-                    //para evitar a recusa da API ("visita em andamento")
-                    const jaAtivo = visitasAtivas.some((visita) => visita.visitanteId === visitante.id)
-
-                    return (
-                      <CardVisitanteCadastrado
-                        key={visitante.id}
-                        visitante={visitante}
-                        aoRegistrarEntrada={jaAtivo ? null : registrarEntrada}
-                      />
-                    )
-                  })
-              }
-            </div>
-
-            <div className={styles['list--section']}>
               <h2 className={styles['section--title']}>Visitantes ativos</h2>
 
               {
                 //Uma visita está ativa enquanto não tem saída registrada
                 visitasAtivas.length === 0 ?
-                  <EstadoVazio>{buscando ? "Nenhum visitante ativo encontrado para a busca" : "Nenhum visitante no condomínio"}</EstadoVazio>
+                  <EstadoVazio>{buscando ? "Nenhum visitante ativo encontrado para a busca" : "Nenhum visitante ativo no condomínio"}</EstadoVazio>
                 :
                   visitasAtivas.map((visita) => (
-                    <CardVisitaAtiva
-                      key={visita.pk_id_visita ?? visita.visitanteId}
+                    <CardVisitaPorteiro
+                      key={visita.id_visita}
                       visita={visita}
-                      aoRegistrarSaida={registrarSaida}
+                    />
+                  ))
+              }
+            </div>
+
+            <div className={styles['list--section']}>
+              <h2 className={styles['section--title']}>Visitantes futuros</h2>
+
+              {
+                //Visitas já autorizadas que ainda não tiveram a entrada registrada
+                visitasFuturas.length === 0 ?
+                  <EstadoVazio>{buscando ? "Nenhuma visita futura encontrada para a busca" : "Nenhuma visita futura"}</EstadoVazio>
+                :
+                  visitasFuturas.map((visita) => (
+                    <CardVisitaPorteiro
+                      key={visita.id_visita}
+                      visita={visita}
+                    />
+                  ))
+              }
+            </div>
+
+            <div className={styles['list--section']}>
+              <h2 className={styles['section--title']}>Visitantes pendentes de aprovação</h2>
+
+              {
+                //Visitas que ainda aguardam a autorização do morador
+                visitasPendentes.length === 0 ?
+                  <EstadoVazio>{buscando ? "Nenhuma visita pendente encontrada para a busca" : "Nenhuma visita pendente de aprovação"}</EstadoVazio>
+                :
+                  visitasPendentes.map((visita) => (
+                    <CardVisitaPorteiro
+                      key={visita.id_visita}
+                      visita={visita}
                     />
                   ))
               }
@@ -385,16 +329,6 @@ function PaginainicialPorteiro(){
               }
             </div>
           </>
-      }
-
-      {
-        //Janela de escolha do morador visitado, aberta pelo botão "Registrar entrada"
-        visitanteEmEntrada &&
-        <ModalSelecionarMorador
-          visitante={visitanteEmEntrada}
-          aoConfirmar={confirmarEntrada}
-          aoCancelar={() => setVisitanteEmEntrada(null)}
-        />
       }
     </div>
   )

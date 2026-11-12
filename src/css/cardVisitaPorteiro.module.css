@@ -1,0 +1,299 @@
+/* CARD DE VISITA DO PORTEIRO */
+
+/* Card individual de visita */
+.card--visita {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #001c3f;
+  background-color: #ffffff;
+  border: 1px solid #e8ebf1;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 6px rgba(0, 28, 63, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+/* Leve destaque ao passar o mouse pelo card */
+.card--visita:hover {
+  border-color: #dbe1ee;
+  box-shadow: 0 4px 12px rgba(0, 28, 63, 0.09);
+}
+
+/* CABEÇALHO */
+
+/* Cabeçalho com a identificação do visitante e o selo de status */
+.cabecalho--visita {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+/* Bloco com o avatar e os dados do visitante */
+.identificacao--visitante {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+/* Avatar com as iniciais do visitante */
+.avatar--visitante {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e6efff, #dbe6ff);
+  color: #2b45a2;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Nome e documentos do visitante */
+.dados--visitante {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Nome do visitante em destaque */
+.nome--visitante {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #001c3f;
+  word-break: break-word;
+}
+
+/* Linha com os documentos do visitante */
+.chips--visitante {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Etiqueta de documento do visitante (CPF e RG) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background-color: #f4f5f9;
+  border: 1px solid #e6e9f0;
+  color: #55628b;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  word-break: break-word;
+}
+
+/* Área do selo de status */
+.status--visita {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  margin-left: auto;
+}
+
+/* Selo com o status da visita */
+.selo--status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* Bolinha colorida antes do texto do status */
+.selo--status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* Selo laranja para visitas em andamento */
+.selo--status--andamento {
+  background-color: #fff1e0;
+  color: #b25e09;
+}
+
+/* Selo verde para visitas finalizadas */
+.selo--status--finalizada {
+  background-color: #e4f7e8;
+  color: #1e7e34;
+}
+
+/* Selo azul para visitas autorizadas */
+.selo--status--autorizada {
+  background-color: #e6efff;
+  color: #1d4ed8;
+}
+
+/* Selo cinza para visitas aguardando autorização */
+.selo--status--pendente {
+  background-color: #eef0f4;
+  color: #5b6785;
+}
+
+/* Selo vermelho para visitas recusadas */
+.selo--status--recusada {
+  background-color: #fde8e8;
+  color: #b42318;
+}
+
+/* SEÇÕES DE INFORMAÇÃO */
+
+/* Cada seção do card */
+.secao--visita {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid #eef0f4;
+}
+
+/* Título de cada seção */
+.titulo--secao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #7a87a7;
+}
+
+/* Detalhe colorido antes do título da seção */
+.titulo--secao::before {
+  content: "";
+  width: 3px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: #2b45a2;
+}
+
+/* Grade com as informações da seção */
+.grade--informacao {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px 22px;
+}
+
+/* Linha com o rótulo e o valor de uma informação */
+.linha--informacao {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+/* Rótulo da informação */
+.rotulo--informacao {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #7a87a7;
+}
+
+/* Valor da informação */
+.valor--informacao {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #001c3f;
+  word-break: break-word;
+}
+
+/* REGISTROS DE ENTRADA E SAÍDA */
+
+/* Grade com os registros de entrada e saída */
+.grade--registros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+/* Caixa de um registro de entrada ou saída */
+.registro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  background-color: #fafbfe;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  min-width: 0;
+}
+
+/* Título do registro */
+.registro--titulo {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #55628b;
+}
+
+/* Data do registro */
+.registro--data {
+  font-size: 14px;
+  font-weight: 600;
+  color: #001c3f;
+}
+
+/* Nome do porteiro responsável pelo registro */
+.registro--porteiro {
+  font-size: 13px;
+  color: #55628b;
+  word-break: break-word;
+}
+
+/* Aviso de registro ainda não realizado */
+.registro--vazio {
+  font-size: 13px;
+  font-style: italic;
+  color: #a0aac4;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 520px) {
+
+  .cabecalho--visita {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .status--visita {
+    align-items: flex-start;
+    margin-left: 0;
+  }
+
+  .grade--informacao,
+  .grade--registros {
+    grid-template-columns: 1fr;
+  }
+}
