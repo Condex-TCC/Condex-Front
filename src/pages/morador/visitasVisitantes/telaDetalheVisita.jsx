@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { showVisitaMorador } from "../../../service/VisitasVisitantes";
+import { autorizaVisitamorador, cancelaVisitamorador, showVisitaMorador } from "../../../service/VisitasVisitantes";
 
 //Importações do arquivo
 import styles from "../../../css/paginaDetalheVisitaMorador.module.css";
@@ -52,6 +52,44 @@ function PaginaDetalheVisitaMorador(){
         //Chama a função que obtem os dados
         obterDados()
     }, [])
+
+    //Função que autoriza a reserva
+    const autorizaVisita = async () => {
+
+        //Chama a função de fazer visita
+        const response = await autorizaVisitamorador(id)
+
+        //Exibe a resposta
+        alert(response)
+
+        //Recarrega a página
+        window.location.reload()
+    }
+
+     //Função que candela a reserva
+    const cancelaVisita = async () => {
+
+        //Chama a função de fazer visita
+        const response = await cancelaVisitamorador(id)
+
+        //Exibe a resposta
+        alert(response)
+
+        //Recarrega a página
+        window.location.reload()
+    }
+
+    //Funções que chamam as funções de autoriza e cancela
+    const autoriza = () => {
+
+        //Chama a função que autoriza os dados
+        autorizaVisita()
+    }
+    const cancela = () => {
+
+        //Chama a função que cancela a visita
+        cancelaVisita()
+    }
 
     //Retorna o componente
     return(
@@ -176,11 +214,11 @@ function PaginaDetalheVisitaMorador(){
                         {/* Botões sem ação por enquanto, serão implementados mais tarde */}
                         <div className={styles['acoes--autorizacao']}>
 
-                            <button type="button" className={styles['botao--autorizar']}>
+                            <button type="button" className={styles['botao--autorizar']} onClick={autoriza}>
                                 Autorizo a visita
                             </button>
 
-                            <button type="button" className={styles['botao--recusar']}>
+                            <button type="button" className={styles['botao--recusar']} onClick={cancela}>
                                 Recuso a visita
                             </button>
 
