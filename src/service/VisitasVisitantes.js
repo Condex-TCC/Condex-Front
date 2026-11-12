@@ -326,7 +326,7 @@ export async function cadastraVisitaMorador(id_visitante, hora_entrada, hora_sai
         const {message, status, data } = json
 
         //Verifica se houve algum erro na requisição
-        if(status != 200){
+        if(status != 200 && status != 400){
 
             //Para a execução do try e lança um erro para o catch
             throw("Erro na requisição " + status)

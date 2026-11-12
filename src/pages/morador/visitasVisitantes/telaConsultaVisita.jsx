@@ -34,7 +34,7 @@ function PaginaConsultaVisitanteMorador(){
         navigate("/morador/visitante/agendar/visita", {
             state: {
                 id_visitante: id,
-                nome_visitant: nome,
+                nome_visitante: nome,
             }
         })
     }
