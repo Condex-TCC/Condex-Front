@@ -190,6 +190,13 @@ function PaginainicialPorteiro(){
         navigate("/porteiro/visitante/create")
     }
 
+    //Função que realiza a navegação para a tela de histórico de visitas
+    const verHistorico = () => {
+
+      //Realiza a navegação
+      navigate("/porteiro/visitas/historico")
+    }
+
     //Separando as visitas por categoria e aplicando a busca local
     //A API de visitas do porteiro não recebe filtros, então a busca é feita no texto já carregado
     const visitasAtivas = filtrarPorTexto(visitas.visitas_ativas, termoBusca)
@@ -219,12 +226,20 @@ function PaginainicialPorteiro(){
         {
           //Botão muda de acordo com a aba selecionada
           abaAtiva === "visitantes" ?
-            <button
-              className={styles['btn--add']}
-              onClick={registrarVisitante}
-            >
-              + Registrar visitante
-            </button>
+            <div className={styles['acoes--group']}>
+              <button
+                className={styles['btn--add']}
+                onClick={registrarVisitante}
+              >
+                + Cadastrar Visita
+              </button>
+              <button
+                className={styles['btn--historico']}
+                onClick={verHistorico}
+              >
+                Histórico de visitas
+              </button>
+            </div>
           :
             <button className={styles['btn--add']} onClick={abrirCadastroEncomenda}>
               + Cadastrar encomenda

@@ -54,6 +54,25 @@
   cursor: pointer;
 }
 
+/* Grupo com os botões de ação da aba de visitas (cadastrar e histórico) */
+.acoes--group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Botão do histórico de visitas, com uma cor própria para se diferenciar do cadastro */
+.btn--historico {
+  background-color: #0f766e; /* Verde-petróleo para diferenciar do azul do cadastro */
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .list--section {
   margin-bottom: 40px;
 }

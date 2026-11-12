@@ -72,6 +72,7 @@ import PaginaExibeHistoricoVisitasMorador from '../pages/morador/visitasVisitant
 import  PaginaConsultaVisitanteMorador from '../pages/morador/visitasVisitantes/telaConsultaVisita';
 import PaginaDetalheVisitaMorador from '../pages/morador/visitasVisitantes/telaDetalheVisita';
 import PaginaCadastraVisitaMorador from '../pages/morador/visitasVisitantes/telaCadastraVisita';
+import PaginaHistoricoVisitaPorteiro from '../pages/porteiro/visitaVisitante/telaHsitoricoVisitaPorteiro';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -451,6 +452,12 @@ const route = createBrowserRouter([
                     {
                         path: "visitante/create", // Renderiza no caminho "/porteiro/visitante/create"
                         element: <PaginaRegistroVisitante />,
+                    },
+
+                    //Tela de histórico de visitas
+                    {
+                        path: "visitas/historico",
+                        element: <PaginaHistoricoVisitaPorteiro></PaginaHistoricoVisitaPorteiro>
                     },
 
                     //Tela de cadastro de encomenda
