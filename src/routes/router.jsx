@@ -71,6 +71,7 @@ import PaginaExibeVisitasMorador from '../pages/morador/visitasVisitantes/telaEx
 import PaginaExibeHistoricoVisitasMorador from '../pages/morador/visitasVisitantes/telaExibeHistoricoVisita';
 import  PaginaConsultaVisitanteMorador from '../pages/morador/visitasVisitantes/telaConsultaVisita';
 import PaginaDetalheVisitaMorador from '../pages/morador/visitasVisitantes/telaDetalheVisita';
+import PaginaCadastraVisitaMorador from '../pages/morador/visitasVisitantes/telaCadastraVisita';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -352,11 +353,18 @@ const route = createBrowserRouter([
                         path: "visitante/consulta",
                         element: <PaginaConsultaVisitanteMorador></PaginaConsultaVisitanteMorador>,
                     },
+                    
 
                     //Tela que vai exibir os detelhes da visita do morador
                     {
                         path: "visita/detalhes/:id",
                         element: <PaginaDetalheVisitaMorador></PaginaDetalheVisitaMorador>,
+                    },
+
+                    //Tela que vai Cadastrar a visita
+                    {
+                        path: "visitante/agendar/visita",
+                        element: <PaginaCadastraVisitaMorador></PaginaCadastraVisitaMorador>
                     },
 
                     //Tela de reservas do morador | Histórico e cancelamento
