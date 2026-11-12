@@ -2,9 +2,23 @@
 
 //Local das importações
 import styles from "../../css/cardVisitaMorador.module.css"
+import { cancelaVisitamorador } from "../../service/VisitasVisitantes"
 
 //Card reutilizável de visita do morador
 function CardVisitaMorador({ visita }) {
+
+    //Função que realiza o cancelamento
+    const cancelaVisita = async () => {
+
+        //Chama a função que cancela visita
+        const resonse = await cancelaVisitamorador(visita.id_visita)
+
+        //Exibe a menssagen
+        alert(resonse)
+
+        //Recarrega a página
+        window.location.reload();
+    }
 
     //Retorna o componente
     return (
@@ -115,7 +129,7 @@ function CardVisitaMorador({ visita }) {
                 <footer className={styles['acoes--visita']}>
 
                     {/* Botão de cancelar visita, que será implementado mais tarde */}
-                    <button type="button" className={styles['botao--cancelar']}>
+                    <button type="button" className={styles['botao--cancelar']} onClick={cancelaVisita}>
                         Cancelar visita
                     </button>
 
