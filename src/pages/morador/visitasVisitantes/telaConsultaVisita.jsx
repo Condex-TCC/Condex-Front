@@ -28,12 +28,13 @@ function PaginaConsultaVisitanteMorador(){
     }
 
     //Função que navega para a página de agendar visita
-    const agendaVisita = (id) => {
+    const agendaVisita = (id, nome) => {
 
         //Realiza a navegação
         navigate("/morador/visitante/agendar/visita", {
             state: {
-                id_visitante: id
+                id_visitante: id,
+                nome_visitant: nome,
             }
         })
     }
@@ -107,7 +108,7 @@ function PaginaConsultaVisitanteMorador(){
             if(encontrado == true){
 
                 //Redireciona para a tela de agendar visitante
-                agendaVisita(visitante.id)
+                agendaVisita(visitante.id, visitante.name)
             }
         }
     }

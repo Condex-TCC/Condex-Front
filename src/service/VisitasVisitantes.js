@@ -1,6 +1,6 @@
 //Arquivo responsável por tratar as requisições de visitas e visitantes do síndico
 
-import { getVisitasSindicoAPI, getVisitantesSindicoAPI, getVisitasMoradorAPI, getVisitasHisoticoMoradorAPI, cancelaVisitamoradorAPI, showVisitaMoradorAPI, autorizaVisitamoradorAPI, consultaVisitanteAPI, cadastraVisitanteAPI } from "../api/VisitasVisitantesAPI"
+import { getVisitasSindicoAPI, getVisitantesSindicoAPI, getVisitasMoradorAPI, getVisitasHisoticoMoradorAPI, cancelaVisitamoradorAPI, showVisitaMoradorAPI, autorizaVisitamoradorAPI, consultaVisitanteAPI, cadastraVisitanteAPI, cadastraVisitaMoradorAPI } from "../api/VisitasVisitantesAPI"
 
 //Função que obtem as visitas registradas no condomínio
 export async function getVisitasSindico(filtros = {}){
@@ -306,6 +306,40 @@ export async function cadastraVisitante(nome, rg, cpf){
 
         //Exibe um alerta na tela
         console.error("Erro ao cadastrar visitante:", erro)
+
+    }
+}
+
+//Função que trata a requisição para cadastrar o cadstro de uma nova visita
+export async function cadastraVisitaMorador(id_visitante, hora_entrada, hora_saida){
+
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await cadastraVisitaMoradorAPI(id_visitante, hora_entrada, hora_saida)
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const {message, status, data } = json
+
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
+
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
+
+        //Retornando os dados
+        return { message, status }
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao cadastrar visita do morador:", erro)
 
     }
 }
