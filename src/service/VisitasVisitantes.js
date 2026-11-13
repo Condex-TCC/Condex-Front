@@ -1,6 +1,6 @@
 //Arquivo responsável por tratar as requisições de visitas e visitantes do síndico
 
-import { getVisitasSindicoAPI, getVisitantesSindicoAPI, getVisitasMoradorAPI, getVisitasHisoticoMoradorAPI, cancelaVisitamoradorAPI, showVisitaMoradorAPI, autorizaVisitamoradorAPI, consultaVisitanteAPI, cadastraVisitanteAPI, cadastraVisitaMoradorAPI, getVisitasPorterioAPI, getHistoricoVisitasPorterioAPI, showVisitasPorterioAPI, deleteVisitaPorterioAPI, registraEntradaVisitaAPI, registraSaidaVisitaAPI, consultaVisitantePortieroAPI, cadastraVisitantePorteiroAPI, getMoradoresVisitasPortieroAPI } from "../api/VisitasVisitantesAPI"
+import { getVisitasSindicoAPI, getVisitantesSindicoAPI, getVisitasMoradorAPI, getVisitasHisoticoMoradorAPI, cancelaVisitamoradorAPI, showVisitaMoradorAPI, autorizaVisitamoradorAPI, consultaVisitanteAPI, cadastraVisitanteAPI, cadastraVisitaMoradorAPI, getVisitasPorterioAPI, getHistoricoVisitasPorterioAPI, showVisitasPorterioAPI, deleteVisitaPorterioAPI, registraEntradaVisitaAPI, registraSaidaVisitaAPI, consultaVisitantePortieroAPI, cadastraVisitantePorteiroAPI, getMoradoresVisitasPortieroAPI, cadastraVisitaPorteiroAPI } from "../api/VisitasVisitantesAPI"
 
 //Função que obtem as visitas registradas no condomínio
 export async function getVisitasSindico(filtros = {}){
@@ -646,6 +646,40 @@ export async function getMoradoresVisitasPortiero(){
 
         //Exibe um alerta na tela
         console.error("Erro ao buscar moradores no banco de dados:", erro)
+
+    }
+}
+
+//Função que trata a requisição para cadastrar o cadstro de uma nova visita
+export async function cadastraVisitaPorteiro(id_visitante, id_Morador, hora_entrada, hora_saida){
+
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await cadastraVisitaPorteiroAPI(id_visitante, id_Morador, hora_entrada, hora_saida)
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const {message, status, data } = json
+
+        //Verifica se houve algum erro na requisição
+        if(status != 200 && status != 400){
+
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
+        }
+
+        //Retornando os dados
+        return { message, status }
+    }
+    //Casso aconteça algum erro na requisição, cai nesse bloco
+    catch(erro){
+
+        //Exibe um alerta na tela
+        console.error("Erro ao cadastrar visita do porteiro:", erro)
 
     }
 }
