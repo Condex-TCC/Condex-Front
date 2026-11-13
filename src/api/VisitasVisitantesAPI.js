@@ -342,7 +342,7 @@ export async function cadastraVisitaMoradorAPI(id_visitante, hora_entrada, hora_
 
 
 //Função que obtem as visitas da tela inical do porteiro
-export async function getVisitasPorterioAPI(){
+export async function getVisitasPorterioAPI(filtros = {}){
 
     //Receperando o token de outorização
     let cookie = await GetCookie()
@@ -350,7 +350,7 @@ export async function getVisitasPorterioAPI(){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/get" 
+    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/get" + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(
@@ -373,7 +373,7 @@ export async function getVisitasPorterioAPI(){
 }
 
 //Função que obtem o histórico de visidas do porteiro
-export async function getHistoricoVisitasPorterioAPI(){
+export async function getHistoricoVisitasPorterioAPI(filtros = {}){
 
     //Receperando o token de outorização
     let cookie = await GetCookie()
@@ -381,7 +381,7 @@ export async function getHistoricoVisitasPorterioAPI(){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/historico/get" 
+    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/historico/get" + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(
@@ -609,14 +609,15 @@ export async function cadastraVisitantePorteiroAPI(nome, rg, cpf){
 }
 
 //Função que se obtem os novos moradores
-export async function getMoradoresVisitasPortieroAPI(){
+export async function getMoradoresVisitasPortieroAPI(filtros = {}){
 
     //Receperando o token de outorização
     let cookie = await GetCookie()
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/morador/get"
+    //A API aceita o filtro ?email= (o backend do morador só pesquisa pelo email)
+    let endPoint = "http://127.0.0.1:8000/api/porteiro/morador/get" + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(

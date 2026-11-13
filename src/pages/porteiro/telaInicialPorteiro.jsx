@@ -5,7 +5,7 @@ import styles from "../../css/paginainicialPorteiro.module.css"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useNavigate, useOutletContext } from "react-router-dom"
 import { getEncomendas } from "../../service/Encomenda"
-import { interpretarBuscaEncomenda, filtrarPorTexto } from "../../utils/busca"
+import { interpretarBuscaEncomenda, interpretarBuscaVisitante } from "../../utils/busca"
 import { getVisitasPorterio } from "../../service/VisitasVisitantes"
 import CardEncomenda from "../../components/porteiro/cardEncomenda"
 import CardVisitaPorteiro from "../../components/porteiro/cardVisitaPorteiro"
@@ -65,6 +65,7 @@ function PaginainicialPorteiro(){
 
     //Filtros enviados à API, calculados a partir do texto buscado
     const filtrosEncomenda = useMemo(() => interpretarBuscaEncomenda(termoBusca), [termoBusca])
+    const filtrosVisita = useMemo(() => interpretarBuscaVisitante(termoBusca), [termoBusca])
 
     //Indica se há uma busca ativa, para ajustar as mensagens de lista vazia
     const buscando = termoBusca.trim() !== ""
@@ -81,9 +82,9 @@ function PaginainicialPorteiro(){
     //Devolve undefined quando a API falha, para a tela avisar o porteiro
     const buscarVisitas = useCallback(async () => {
 
-        //Chama a service que busca as visitas do porteiro
-        return await getVisitasPorterio()
-    }, [])
+        //Chama a service que busca as visitas do porteiro, enviando os filtros da busca
+        return await getVisitasPorterio(filtrosVisita)
+    }, [filtrosVisita])
 
     //Função que busca as encomendas e devolve a lista pronta
     const buscarEncomendas = useCallback(async () => {
@@ -197,11 +198,11 @@ function PaginainicialPorteiro(){
       navigate("/porteiro/visitas/historico")
     }
 
-    //Separando as visitas por categoria e aplicando a busca local
-    //A API de visitas do porteiro não recebe filtros, então a busca é feita no texto já carregado
-    const visitasAtivas = filtrarPorTexto(visitas.visitas_ativas, termoBusca)
-    const visitasFuturas = filtrarPorTexto(visitas.visitas_futuras, termoBusca)
-    const visitasPendentes = filtrarPorTexto(visitas.visitas_pendentes, termoBusca)
+    //Separando as visitas por categoria
+    //A busca já é feita pela API, então as listas chegam prontas para exibição
+    const visitasAtivas = visitas.visitas_ativas
+    const visitasFuturas = visitas.visitas_futuras
+    const visitasPendentes = visitas.visitas_pendentes
 
     //Retorna um componente
     return (

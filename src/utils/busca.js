@@ -29,6 +29,13 @@ export function interpretarBuscaEncomenda(termo){
     return texto ? { nome: texto } : {}
 }
 
+//Função que transforma o texto digitado em filtros aceitos pela API de moradores
+//Mesma regra da busca de visitantes: números/pontos/traços viram CPF, o resto vira nome
+export function interpretarBuscaMorador(termo){
+
+    return interpretarBuscaVisitante(termo)
+}
+
 //Função que monta a query string (?nome=x&cpf=y) ignorando os filtros vazios
 export function montarQuery(filtros = {}){
 

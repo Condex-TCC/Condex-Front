@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useBuscaHeader } from "../../../hooks/useBuscaHeader";
+import { interpretarBuscaVisitante } from "../../../utils/busca";
 import { getHistoricoVisitasPorterio } from "../../../service/VisitasVisitantes";
 
 //Importações do arquivos
@@ -12,11 +14,21 @@ import styles from "../../../css/paginaHistoricoVisitaPorteiro.module.css";
 //Funão que cria o componente
 function PaginaHistoricoVisitaPorteiro(){
 
+    //Texto da barra de pesquisa do header, já com atraso depois da digitação
+    const { termo } = useBuscaHeader()
+
     //Hook que armazena os cards
-    const [cards, setCards] = useState([])
+    //Guarda também o termo usado na busca, para saber quando a lista ainda está carregando
+    const [resultado, setResultado] = useState({ termo: null, lista: [] })
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
+
+    //Indica que a lista do termo atual ainda está sendo buscada
+    const carregando = resultado.termo !== termo
+
+    //Lista de visitas exibida na tela
+    const cards = resultado.lista
 
     //Função que retorna para a tela principal do porteiro
     const back = () => {
@@ -26,24 +38,53 @@ function PaginaHistoricoVisitaPorteiro(){
     }
 
     //Função que obtem os dados da API
-    const obterDados = async () => {
+    //Recebe o termo buscado para montar os filtros enviados na query string
+    const obterDados = async (termoAtual) => {
 
-        //Chama a função de obter dados
-        const response = await getHistoricoVisitasPorterio()
+        //Monta os filtros (?nome= ou ?cpf=) a partir do texto digitado
+        const filtros = interpretarBuscaVisitante(termoAtual)
 
-        //Desestruturando o json
-        const { visitas } = await response
+        //Chama a função de obter dados, enviando os filtros
+        const response = await getHistoricoVisitasPorterio(filtros)
 
-        //Salvando os dados no state
-        setCards(visitas)
+        //Desestruturando o json, tolerando a falha da requisição
+        const { visitas } = response ?? {}
+
+        //Devolve a lista já normalizada
+        return visitas ?? []
     }
 
-    //Função que é executada quando a página é renderizada
+    //Função que é executada quando a página é renderizada e sempre que a busca muda
     useEffect(() => {
 
+        //Evita atualizar o estado quando a página já saiu de cena ou o termo mudou
+        let cancelado = false
+
+        //Função que busca os dados do termo atual
+        const carregar = async () => {
+
+            //Chama a função que obtem os dados
+            const visitas = await obterDados(termo)
+
+            //Se a busca foi cancelada, não atualiza a tela
+            if(cancelado){
+
+                return
+            }
+
+            //Salvando os dados no state
+            setResultado({ termo, lista: visitas })
+        }
+
         //Chama a função que obtem os dados
-        obterDados()
-    }, [])
+        carregar()
+
+        //Limpeza executada quando o termo muda ou a tela sai de cena
+        return () => {
+
+            cancelado = true
+        }
+    }, [termo])
 
     //Retorna um componente
     return(
@@ -60,9 +101,19 @@ function PaginaHistoricoVisitaPorteiro(){
 
             {/* Div que renderiza os cards presentes no state */}
             <div className={styles['lista--cards']}>
-                {cards?.map((visita) => (
-                    <CardVisitaPorteiro key={visita?.id_visita} visita={visita} />
-                ))}
+                {carregando ?
+                    <p className={styles['aviso--vazio']}>Carregando visitas...</p>
+                : cards.length === 0 ?
+                    <p className={styles['aviso--vazio']}>
+                        {termo.trim() !== ""
+                            ? "Nenhuma visita encontrada para a busca."
+                            : "Nenhuma visita registrada."}
+                    </p>
+                :
+                    cards.map((visita) => (
+                        <CardVisitaPorteiro key={visita?.id_visita} visita={visita} />
+                    ))
+                }
             </div>
         </div>
     );

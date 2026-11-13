@@ -3,6 +3,8 @@
 //Importaçoes do arquivo
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import { useBuscaHeader } from "../../../hooks/useBuscaHeader"
+import { interpretarBuscaMorador } from "../../../utils/busca"
 import { getMoradoresVisitasPortiero } from "../../../service/VisitasVisitantes"
 
 //Importações do arquivo
@@ -13,8 +15,12 @@ import styles from "../../../css/paginaSelecionaMoradorPorteiro.module.css"
 //Função que cria a página
 function PaginaSelecionaMoradorPorteiro(){
 
+    //Texto da barra de pesquisa do header, já com atraso depois da digitação
+    const { termo } = useBuscaHeader()
+
     //Hook que armazena os dados
-    const [cards, setCards] = useState([])
+    //Guarda também o termo usado na busca, para saber quando a lista ainda está carregando
+    const [resultado, setResultado] = useState({ termo: null, lista: [] })
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
@@ -26,6 +32,12 @@ function PaginaSelecionaMoradorPorteiro(){
     const idVisitante = location.state.id_visitante
     const nomeVisitante = location.state.nome_visitante
 
+    //Indica que a lista do termo atual ainda está sendo buscada
+    const carregando = resultado.termo !== termo
+
+    //Lista de moradores exibida na tela
+    const cards = resultado.lista
+
     //Função que retonro para a tela de consulta visitante
     const back = () => {
 
@@ -34,21 +46,53 @@ function PaginaSelecionaMoradorPorteiro(){
     }
 
     //Função que obtem os dados
-    const obterDados = async () => {
+    //Recebe o termo buscado para montar os filtros enviados na query string
+    const obterDados = async (termoAtual) => {
 
-        //Chamando a função de obter dadso
-        const response = await getMoradoresVisitasPortiero()
+        //Monta os filtros (?nome= ou ?cpf=) a partir do texto digitado
+        const filtros = interpretarBuscaMorador(termoAtual)
 
-        //Salvando os dados no state
-        setCards(response[0])
+        //Chamando a função de obter dadso, enviando os filtros
+        const response = await getMoradoresVisitasPortiero(filtros)
+
+        //A API devolve a lista de moradores aninhada em data[0]
+        const lista = Array.isArray(response?.[0]) ? response[0] : response
+
+        //Devolve a lista já normalizada
+        return lista ?? []
     }
 
-    //Função que é chamada quando a página é renderizada
+    //Função que é chamada quando a página é renderizada e sempre que a busca muda
     useEffect(() => {
 
-        //Chama a função de obter os dados
-        obterDados()
-    }, [])
+        //Evita atualizar o estado quando a página já saiu de cena ou o termo mudou
+        let cancelado = false
+
+        //Função que busca os dados do termo atual
+        const carregar = async () => {
+
+            //Chama a função que obtem os dados
+            const moradores = await obterDados(termo)
+
+            //Se a busca foi cancelada, não atualiza a tela
+            if(cancelado){
+
+                return
+            }
+
+            //Salvando os dados no state
+            setResultado({ termo, lista: moradores })
+        }
+
+        //Chama a função que obtem os dados
+        carregar()
+
+        //Limpeza executada quando o termo muda ou a tela sai de cena
+        return () => {
+
+            cancelado = true
+        }
+    }, [termo])
 
     //Retorna o componente
     return(
@@ -71,15 +115,25 @@ function PaginaSelecionaMoradorPorteiro(){
 
             {/* Div que renderiza os cards de morador do porteiro */}
             <div className={styles['lista--cards']}>
-                {cards?.map((morador) => (
-                    <CardMoradorPorteiro
-                        key={morador.id}
-                        morador={morador}
-                        id={idVisitante}
-                        nome={nomeVisitante}
-                        idMorador={morador.id}
-                    />
-                ))}
+                {carregando ?
+                    <p className={styles['aviso--vazio']}>Carregando moradores...</p>
+                : cards.length === 0 ?
+                    <p className={styles['aviso--vazio']}>
+                        {termo.trim() !== ""
+                            ? "Nenhum morador encontrado para a busca."
+                            : "Nenhum morador cadastrado."}
+                    </p>
+                :
+                    cards.map((morador) => (
+                        <CardMoradorPorteiro
+                            key={morador.id}
+                            morador={morador}
+                            id={idVisitante}
+                            nome={nomeVisitante}
+                            idMorador={morador.id}
+                        />
+                    ))
+                }
             </div>
 
         </div>

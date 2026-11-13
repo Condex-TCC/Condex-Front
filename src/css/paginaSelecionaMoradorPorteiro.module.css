@@ -60,6 +60,18 @@
   gap: 14px;
 }
 
+/* Aviso exibido enquanto a lista carrega ou quando não há moradores para mostrar */
+.aviso--vazio {
+  margin: 0;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border: 1px solid #e4eaf2;
+  color: #667085;
+  font-size: 15px;
+  text-align: center;
+}
+
 /* Ajustes para telas menores */
 @media (max-width: 640px) {
 

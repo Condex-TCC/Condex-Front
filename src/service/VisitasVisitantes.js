@@ -345,13 +345,13 @@ export async function cadastraVisitaMorador(id_visitante, hora_entrada, hora_sai
 }
 
 //Função que retonra as visitas do poritero
-export async function getVisitasPorterio(){
+export async function getVisitasPorterio(filtros = {}){
 
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await getVisitasPorterioAPI()
+        let response = await getVisitasPorterioAPI(filtros)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()
@@ -379,13 +379,13 @@ export async function getVisitasPorterio(){
 }
 
 //Função que retonra as visitas do poritero
-export async function getHistoricoVisitasPorterio(){
+export async function getHistoricoVisitasPorterio(filtros = {}){
 
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await getHistoricoVisitasPorterioAPI()
+        let response = await getHistoricoVisitasPorterioAPI(filtros)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()
@@ -617,13 +617,13 @@ export async function cadastraVisitantePorteiro(nome, rg, cpf){
 }
 
 //Função que obtem todos os moradores cadastrados no banco de dados
-export async function getMoradoresVisitasPortiero(){
+export async function getMoradoresVisitasPortiero(filtros = {}){
 
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await getMoradoresVisitasPortieroAPI()
+        let response = await getMoradoresVisitasPortieroAPI(filtros)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()
