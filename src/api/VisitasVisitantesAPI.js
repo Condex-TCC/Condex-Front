@@ -528,3 +528,82 @@ export async function registraSaidaVisitaAPI(id){
     return requisicao
 
 }
+
+//Função que consulta o visitante
+export async function consultaVisitantePortieroAPI(rg, cpf){
+
+    //Receperando o token de outorização
+    let cookie = await GetCookie()
+    let token = cookie.token
+
+    //Endpoint
+    let endPoint = "http://127.0.0.1:8000/api/porteiro/visitante/consulta"
+
+    //Montando o body que vai ser enviado na requisição
+    let bodyObject = {
+        rg: rg,
+        cpf: cpf,
+    }
+
+    //Criando a requisição
+    const requisicao = fetch(
+        endPoint, //Passando o endPoint para a requisição
+        {
+            method: "POST", //Passando qual é o metodo HTTP
+
+            //Passando os headers
+            headers: {
+                'Content-Type': 'application/json', //Tipo de formatação
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
+                "Authorization": `Bearer ${token}` //Eniva o token de autorização
+            },
+
+            //Passando o body
+            body: JSON.stringify(bodyObject),
+        }
+    )
+
+    //Retornado uma promise com os dados da API
+    return requisicao
+
+}
+
+//Função que cadastra um novo visitante
+export async function cadastraVisitantePorteiroAPI(nome, rg, cpf){
+
+    //Receperando o token de outorização
+    let cookie = await GetCookie()
+    let token = cookie.token
+
+    //Endpoint
+    let endPoint = "http://127.0.0.1:8000/api/porteiro/visitante/create"
+
+    //Montando o body que vai ser enviado na requisição
+    let bodyObject = {
+        nome: nome,
+        rg: rg,
+        cpf: cpf,
+    }
+
+    //Criando a requisição
+    const requisicao = fetch(
+        endPoint, //Passando o endPoint para a requisição
+        {
+            method: "POST", //Passando qual é o metodo HTTP
+
+            //Passando os headers
+            headers: {
+                'Content-Type': 'application/json', //Tipo de formatação
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
+                "Authorization": `Bearer ${token}` //Eniva o token de autorização
+            },
+
+            //Passando o body
+            body: JSON.stringify(bodyObject),
+        }
+    )
+
+    //Retornado uma promise com os dados da API
+    return requisicao
+
+}
