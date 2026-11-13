@@ -5,6 +5,10 @@ import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { getMoradoresVisitasPortiero } from "../../../service/VisitasVisitantes"
 
+//Importações do arquivo
+import CardMoradorPorteiro from "../../../components/porteiro/cardMoradorPorteiro"
+import styles from "../../../css/paginaSelecionaMoradorPorteiro.module.css"
+
 
 //Função que cria a página
 function PaginaSelecionaMoradorPorteiro(){
@@ -29,19 +33,6 @@ function PaginaSelecionaMoradorPorteiro(){
         navigate("/porteiro/visitante/consulta")
     }
 
-    //Função que navega para a página de cadastar visita
-    const cadastarVisita = (id, nome, idMorador) => {
-
-        //Realiza a navegação
-        navigate("/porteiro/visitas/create", {
-            state: {
-                id_visitante: id,
-                nome_visitante: nome,
-                id_morador: idMorador,
-            }
-        })
-    }
-
     //Função que obtem os dados
     const obterDados = async () => {
 
@@ -49,7 +40,7 @@ function PaginaSelecionaMoradorPorteiro(){
         const response = await getMoradoresVisitasPortiero()
 
         //Salvando os dados no state
-        setCards(response)
+        setCards(response[0])
     }
 
     //Função que é chamada quando a página é renderizada
@@ -61,12 +52,37 @@ function PaginaSelecionaMoradorPorteiro(){
 
     //Retorna o componente
     return(
-        <h1>Seleciona o morador</h1>
-        //Na mesma linha, aliado á diretira um bottão de voltar que chama a função de back
-        //Descrição : Selecione o morador que vai receber a visita
+        <div className={styles['pagina--seleciona-morador']}>
 
-        //Div que renderiza os cards de morador do poreiro
+            {/* Cabeçalho com o título e o botão de voltar na mesma linha */}
+            <div className={styles['cabecalho--pagina']}>
 
+                <h1 className={styles['titulo--pagina']}>Seleciona o morador</h1>
+
+                {/* Botão que retorna para a tela de consulta do visitante */}
+                <button type="button" className={styles['botao--voltar']} onClick={back}>
+                    &larr; Voltar
+                </button>
+
+            </div>
+
+            {/* Descrição da tela */}
+            <p className={styles['descricao--pagina']}>Selecione o morador que vai receber a visita.</p>
+
+            {/* Div que renderiza os cards de morador do porteiro */}
+            <div className={styles['lista--cards']}>
+                {cards?.map((morador) => (
+                    <CardMoradorPorteiro
+                        key={morador.id}
+                        morador={morador}
+                        id={idVisitante}
+                        nome={nomeVisitante}
+                        idMorador={morador.id}
+                    />
+                ))}
+            </div>
+
+        </div>
     )
 }
 
