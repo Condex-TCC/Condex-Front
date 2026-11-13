@@ -187,7 +187,7 @@ function PaginainicialPorteiro(){
     const registrarVisitante = () => {
 
         //Navega para a tela de cadastro de visitante do porteiro
-        navigate("/porteiro/visitante/create")
+        navigate("/porteiro/visitante/consulta")
     }
 
     //Função que realiza a navegação para a tela de histórico de visitas

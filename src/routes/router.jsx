@@ -74,6 +74,8 @@ import PaginaDetalheVisitaMorador from '../pages/morador/visitasVisitantes/telaD
 import PaginaCadastraVisitaMorador from '../pages/morador/visitasVisitantes/telaCadastraVisita';
 import PaginaHistoricoVisitaPorteiro from '../pages/porteiro/visitaVisitante/telaHsitoricoVisitaPorteiro';
 import PaginaDetalhesVisitaPorteiro from '../pages/porteiro/visitaVisitante/telaShowVisitaPorteiro';
+import PaginaConsultaVisitantePorteiro from '../pages/porteiro/visitaVisitante/telaConsultaVisitantePorteiro';
+import PaginaSelecionaMoradorPorteiro from '../pages/porteiro/visitaVisitante/telaSeleiconaMoradorPorteiro';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -449,10 +451,16 @@ const route = createBrowserRouter([
                         element: <PaginainicialPorteiro />,
                     },
 
-                    //Tela de cadastro de visitante pelo porteiro
+                    //Tela para seleiconar o visitante pelo porteiro
                     {
-                        path: "visitante/create", // Renderiza no caminho "/porteiro/visitante/create"
-                        element: <PaginaRegistroVisitante />,
+                        path: "visitante/consulta", // Renderiza no caminho "/porteiro/visitante/create"
+                        element: <PaginaConsultaVisitantePorteiro></PaginaConsultaVisitantePorteiro>,
+                    },
+
+                    //Tela para seleicnar o morador para receber a cisita
+                    {
+                        path: "visitante/seleciona/morador", // Renderiza no caminho "/porteiro/visitante/create"
+                        element: <PaginaSelecionaMoradorPorteiro></PaginaSelecionaMoradorPorteiro>,
                     },
 
                     //Tela de histórico de visitas
