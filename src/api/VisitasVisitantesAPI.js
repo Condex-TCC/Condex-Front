@@ -450,7 +450,7 @@ export async function deleteVisitaPorterioAPI(id){
     const requisicao = fetch(
         endPoint, //Passando o endPoint para a requisição
         {
-            method: "GET", //Passando qual é o metodo HTTP
+            method: "DELETE", //Passando qual é o metodo HTTP
 
             //Passando os headers
             headers: {
@@ -481,7 +481,7 @@ export async function registraEntradaVisitaAPI(id){
     const requisicao = fetch(
         endPoint, //Passando o endPoint para a requisição
         {
-            method: "GET", //Passando qual é o metodo HTTP
+            method: "PUT", //Passando qual é o metodo HTTP
 
             //Passando os headers
             headers: {
@@ -513,7 +513,7 @@ export async function registraSaidaVisitaAPI(id){
     const requisicao = fetch(
         endPoint, //Passando o endPoint para a requisição
         {
-            method: "GET", //Passando qual é o metodo HTTP
+            method: "PUT", //Passando qual é o metodo HTTP
 
             //Passando os headers
             headers: {

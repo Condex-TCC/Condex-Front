@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { showVisitasPorterio } from "../../../service/VisitasVisitantes"
+import { showVisitasPorterio, deleteVisitaPorterio, registraEntradaVisita, registraSaidaVisita} from "../../../service/VisitasVisitantes"
 
 //Importações do arquivo
 import styles from "../../../css/paginaDetalheVisitaPorteiro.module.css"
@@ -47,23 +47,67 @@ function PaginaDetalhesVisitaPorteiro(){
         obterDados()
     }, [])
 
-    //Função que exibe o aviso do botão de registrar entrada
-    const registrarEntrada = () => {
-
-        alert("Registrando a entrada da visita...")
-    }
-
-    //Função que exibe o aviso do botão de registrar saída
-    const registrarSaida = () => {
-
-        alert("Registrando a saída da visita...")
-    }
-
-    //Função que exibe o aviso do botão de deletar visita
-    const deletarVisita = () => {
-
-        alert("Deletando a visita...")
-    }
+     //Função que exibe o aviso do botão de registrar entrada
+        const entrada = async () => {
+    
+            //Chama a função que registra a entrada da visita
+            const response = await registraEntradaVisita(id)
+    
+            //Exibe a menssagen
+            alert(response)
+    
+            //Recarrega a página
+            window.location.reload()
+        }
+    
+        //Função que exibe o aviso do botão de registrar saída
+        const saida = async () => {
+    
+            //Chama a função que registra a saida da visita
+            const response = await registraSaidaVisita(id)
+    
+            //Exibe a menssagen
+            alert(response)
+    
+            //Recarrega a página
+            window.location.reload()
+        }
+    
+        //Função que exibe o aviso do botão de deletar visita
+        const deletar = async ()  => {
+    
+            //Chama a função que deleta a visita pendente
+            const response = await deleteVisitaPorterio(id)
+    
+            //Exibe a menssagen
+            alert(response)
+    
+            //Voltar para a página inicial
+            back()
+        }
+    
+        //Funções que vão chamar as funções assincronas
+        const deletarVisita = (e)  => {
+            //Impede a propagação do elemento filho para o elemento pai
+            e.stopPropagation()
+    
+            //Chama a função assincrona
+            deletar()
+        }
+        const registrarSaida = (e) => {
+            //Impede a propagação do elemento filho para o elemento pai
+            e.stopPropagation()
+    
+            //Chama a função assincrona
+            saida()
+        }
+        const registrarEntrada = (e) => {
+            //Impede a propagação do elemento filho para o elemento pai
+            e.stopPropagation()
+    
+            //Chama a função assincrona
+            entrada()
+        }
 
     //Retonra o componente
     return (
