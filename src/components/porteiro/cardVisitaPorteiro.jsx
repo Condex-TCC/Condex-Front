@@ -1,6 +1,7 @@
 //Card que exibe uma visita na tela inicial do porteiro
 
 //Local das importações
+import { useNavigate } from "react-router-dom"
 import styles from "../../css/cardVisitaPorteiro.module.css"
 
 //Função que formata uma data da API para o padrão brasileiro
@@ -112,11 +113,21 @@ function Registro({ titulo, data, porteiro }) {
 //Card estático de visita do porteiro
 function CardVisitaPorteiro({ visita }) {
 
+    //Hook que realiza a navegação
+    const navigate = useNavigate()
+
     //Obtendo o status da visita
     const status = obterStatus(visita)
 
     //Atalho para a unidade do morador visitado
     const unidade = visita.morador?.unidade
+
+    //Função que realiza a navegação para a tela de datlhes
+    const navega = () => {
+
+        //Realiza a navegação
+        navigate("/porteiro/visitas/detalhe/" + visita.id_visita)
+    }
 
     //Função que exibe o aviso do botão de registrar entrada
     const registrarEntrada = () => {
@@ -138,7 +149,7 @@ function CardVisitaPorteiro({ visita }) {
 
     //Retorna o componente
     return (
-        <article className={styles['card--visita']}>
+        <article className={styles['card--visita']} onClick={navega}>
 
             {/* Cabeçalho com os dados do visitante e o status da visita */}
             <header className={styles['cabecalho--visita']}>
