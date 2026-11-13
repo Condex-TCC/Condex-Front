@@ -76,6 +76,7 @@ import PaginaHistoricoVisitaPorteiro from '../pages/porteiro/visitaVisitante/tel
 import PaginaDetalhesVisitaPorteiro from '../pages/porteiro/visitaVisitante/telaShowVisitaPorteiro';
 import PaginaConsultaVisitantePorteiro from '../pages/porteiro/visitaVisitante/telaConsultaVisitantePorteiro';
 import PaginaSelecionaMoradorPorteiro from '../pages/porteiro/visitaVisitante/telaSeleiconaMoradorPorteiro';
+import PaginaCadastraVisitaPorteiro from '../pages/porteiro/visitaVisitante/telaCadastraVisitaPorteiro';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -473,6 +474,12 @@ const route = createBrowserRouter([
                     {
                         path: "visitas/detalhe/:id",
                         element: <PaginaDetalhesVisitaPorteiro></PaginaDetalhesVisitaPorteiro>
+                    },
+
+                    //Tela de cadastro da visita
+                    {
+                        path: "visitas/create",
+                        element: <PaginaCadastraVisitaPorteiro></PaginaCadastraVisitaPorteiro>
                     },
 
                     //Tela de cadastro de encomenda
