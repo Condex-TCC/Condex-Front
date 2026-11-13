@@ -1,0 +1,247 @@
+/* TELA DE AGENDAMENTO DE VISITA DO PORTEIRO */
+
+/* Container principal da página, centralizado na tela */
+.pagina--agenda-visita {
+  /* Paleta e medidas compartilhadas pelos cartões da tela */
+  --cor-primaria: #001c3f;
+  --cor-texto: #1f2a44;
+  --cor-texto-suave: #667085;
+  --cor-borda: #e4eaf2;
+  --cor-fundo-cartao: #ffffff;
+  --raio-cartao: 18px;
+  --sombra-cartao: 0 1px 2px rgba(16, 24, 40, 0.04), 0 10px 28px rgba(16, 24, 40, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4px 0 40px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--cor-texto);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Cabeçalho com o título e o botão de voltar na mesma linha */
+.cabecalho--pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+/* Título da página com o nome do visitante */
+.titulo--pagina {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: clamp(22px, 2.2vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  color: var(--cor-primaria);
+  word-break: break-word;
+}
+
+/* Botão que retorna para a tela de consulta */
+.botao--voltar {
+  flex-shrink: 0;
+  padding: 9px 16px;
+  background-color: #ffffff;
+  border: 1px solid #d4d8e2;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #2b45a2;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Destaque suave ao passar o mouse pelo botão de voltar */
+.botao--voltar:hover {
+  background-color: #eef2ff;
+  border-color: #b9c4e6;
+}
+
+/* Foco visível do botão de voltar */
+.botao--voltar:focus-visible {
+  outline: 2px solid #2b45a2;
+  outline-offset: 2px;
+}
+
+/* Descrição curta abaixo do cabeçalho */
+.descricao--pagina {
+  margin: -8px 0 0;
+  max-width: 620px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--cor-texto-suave);
+}
+
+/* Cartão com os horários previstos da visita */
+.cartao--horarios {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 320px));
+  justify-content: center;
+  gap: 20px 28px;
+  width: 100%;
+  padding: 30px 28px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-cartao);
+  box-shadow: var(--sombra-cartao);
+  box-sizing: border-box;
+}
+
+/* Detalhe azul no topo do cartão */
+.cartao--horarios::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  width: 56px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background-color: #2b45a2;
+  transform: translateX(-50%);
+}
+
+/* Cada campo do formulário */
+.campo--formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+/* Rótulo do campo */
+.campo--formulario label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--cor-primaria);
+}
+
+/* Campo de data e hora */
+.campo--formulario input {
+  height: 48px;
+  box-sizing: border-box;
+  border: 1px solid #d4d8e2;
+  border-radius: 10px;
+  outline: none;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--cor-primaria);
+  background-color: #ffffff;
+  width: 100%;
+  min-width: 0;
+  color-scheme: light;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+/* Envoltório do seletor de data e hora */
+.campo--data-wrapper {
+  width: 100%;
+}
+
+/* Campo do seletor de data e hora */
+.campo--data {
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Texto de exemplo exibido enquanto o campo está vazio */
+.campo--data::placeholder {
+  color: #98a2b3;
+  opacity: 1;
+}
+
+/* Calendário do seletor de data e hora */
+.calendario--visita {
+  font-family: inherit;
+  border-color: var(--cor-borda);
+  border-radius: 12px;
+  box-shadow: var(--sombra-cartao);
+}
+
+/* Contorno suave ao passar o mouse pelo campo */
+.campo--formulario input:hover {
+  border-color: #b9c4e6;
+}
+
+/* Destaque do campo que está sendo editado */
+.campo--formulario input:focus {
+  border-color: #2b45a2;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(43, 69, 162, 0.12);
+}
+
+/* Botão verde que cadastra a visita, centralizado abaixo do cartão */
+.botao--cadastrar {
+  align-self: center;
+  padding: 13px 32px;
+  background-color: #7ab973;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(122, 185, 115, 0.28);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+/* Destaque suave ao passar o mouse pelo botão de cadastro */
+.botao--cadastrar:hover {
+  background-color: #6cae66;
+  box-shadow: 0 8px 20px rgba(122, 185, 115, 0.34);
+}
+
+/* Leve afundamento ao clicar no botão */
+.botao--cadastrar:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 12px rgba(122, 185, 115, 0.26);
+}
+
+/* Foco visível do botão de cadastro */
+.botao--cadastrar:focus-visible {
+  outline: 2px solid #4d8a47;
+  outline-offset: 3px;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 700px) {
+
+  .cartao--horarios {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+
+  .pagina--agenda-visita {
+    gap: 16px;
+    padding-bottom: 24px;
+  }
+
+  .cabecalho--pagina {
+    align-items: flex-start;
+  }
+
+  .cartao--horarios {
+    padding: 22px 18px;
+  }
+
+  .botao--cadastrar {
+    align-self: stretch;
+  }
+}
