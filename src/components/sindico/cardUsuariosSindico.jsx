@@ -1,7 +1,7 @@
 //Componente que gera os card da tabela de usuários
 //
 //APRESENTAÇÃO: cada linha continua exibindo os mesmos dados e
-//executando as mesmas ações (editar/apagar). As ações é que
+//executando a mesma ação (apagar). As ações é que
 //passam a ser <button> em vez de <svg> com onClick: mesmo
 //comportamento no mouse, agora também alcançáveis por teclado
 //e com rótulo lido por leitores de tela.
@@ -36,38 +36,13 @@ function CardMorador({morador, redenriza}){
 
     }
 
-    //Função responsavel por recuperar os dados do porteiro
-    const showMorador = () => {
-
-      //Realiza o redirecionamento
-      navigate("morador/updade/" + id)
-    }
-
-
     //Retorna o componenete
     return(
         <tr>
-            <td className={styles.td}>{morador.nome}</td>
-            <td className={styles.td}>Morador</td>
-            <td className={styles.td}>{morador.cpf}</td>
-            <td className={styles.td}>{morador.telefone}</td>
+            <td className={styles.td}>{morador.nome == null ? "Não foi realido o primeiro acesso" : morador.nome}</td>
+            <td className={styles.td}>{morador.cpf == null ? "Vazio" : morador.cpf}</td>
+            <td className={styles.td}>{morador.telefone == null ? "Vazio" : morador.telefone}</td>
             <td className={styles.td}>{morador.unidade.bloco} - {morador.unidade.numero}</td>
-            
-            {/* Botão que edita (ação secundária -> contorno neutro) */}
-            <td className={styles.tdCenter}>
-              <button
-                type="button"
-                className={styles.acaoBtn}
-                onClick={showMorador}
-                aria-label={`Editar ${morador.nome}`}
-                title="Editar"
-              >
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                </svg>
-              </button>
-            </td>
 
             {/* Botão que deleta (ação destrutiva -> vermelho) */}
             <td className={styles.tdCenter}>
@@ -116,35 +91,13 @@ function CardPorteiro({porteiro, redenriza}){
 
     }
 
-    //Função responsavel por recuperar os dados do porteiro
-    const showPorteiro = async () => {
-
-      //Realiza o redirecionamento
-      navigate("/sindico/usuarios/porteiro/update/" + id)
-    }
-
     //Retorna o componenete
     return(
         <tr>
-            <td className={styles.td}>{porteiro.nome}</td>
-            <td className={styles.td}>Porteiro</td>
+            <td className={styles.td}>{porteiro.nome == null ? "Não foi realido o primeiro acesso" : porteiro.nome}</td>
             <td className={styles.td}>{porteiro.email}</td>
-
-            {/* Botão que edita (ação secundária -> contorno neutro) */}
-            <td className={styles.tdCenter}>
-              <button
-                type="button"
-                className={styles.acaoBtn}
-                onClick={showPorteiro}
-                aria-label={`Editar ${porteiro.nome}`}
-                title="Editar"
-              >
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                </svg>
-              </button>
-            </td>
+            <td className={styles.td}>{porteiro.cpf == null ? "Vázio" : porteiro.cpf}</td>
+            <td className={styles.td}>{porteiro.telefone == null ? "Vazio" : porteiro.telefone}</td>
 
             {/* Botão que deleta (ação destrutiva -> vermelho) */}
             <td className={styles.tdCenter}>

@@ -9,7 +9,8 @@ import { MenuLateralContext } from "../../context/menuLateralContext";
 //Header principal da página
 
 //Função que cria o componente
-function HeaderSindico(propos){
+//Recebe o texto da busca e a função que o altera, controlados pelo layout do síndico
+function HeaderSindico({ busca = "", aoBuscar }){
     
     //Hook que realiza a nevegação automatica
     const navigate = useNavigate();
@@ -35,6 +36,13 @@ function HeaderSindico(propos){
 
         //Redireciona para a tela inicial
         navigate('/')
+    }
+
+    //Função que redireciona para a página de editar perfil
+    const editarPerfil = () => {
+
+        //Redireciona para a tela de editar perfil
+        navigate('/editarPerfil')
     }
 
     //Função que altera o estado do hook useConstext para alterar o menu lateral
@@ -101,7 +109,14 @@ function HeaderSindico(propos){
                 </svg>
 
                 {/* Renderiza o campo interativo onde o usuário digita */}
-                <input type="text" placeholder="Pesquisar..." aria-label="Pesquisar" className={styles["search-input"]} />
+                <input
+                    type="text"
+                    placeholder="Pesquisar nesta página..."
+                    aria-label="Pesquisar"
+                    className={styles["search-input"]}
+                    value={busca}
+                    onChange={(evento) => aoBuscar?.(evento.target.value)}
+                />
             </div>
         </div>
 
@@ -122,9 +137,17 @@ function HeaderSindico(propos){
             {
                 //Verificando se o botão foi clicado
                 menuLogout ? 
+                    // Div que armazena os botões
                     <div className={styles["dropdown-menu"]}>
+
+                        {/* Botão de deslogar */}
                         <button type="button" onClick={deslogar} className={styles["logout-button"]}>
                             Deslogar
+                        </button>
+
+                        {/* Botão de editar perfil */}
+                        <button type="button" onClick={editarPerfil} className={styles["logout-button"]}>
+                            Editar perfil
                         </button>
                     </div>
                 :

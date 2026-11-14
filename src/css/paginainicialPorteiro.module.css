@@ -260,6 +260,16 @@
   transform: translateY(-2px);
 }
 
+/* Grupo com os botões de ação da aba de visitas (cadastrar e histórico).
+   O histórico usa o estilo secundário (.btn--exit): a cor de destaque
+   fica só na ação primária da tela. */
+.acoes--group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--cx-space-sm);
+}
+
 /* Linha superior: nome à esquerda, pastilha de status à direita.
    flex-wrap deixa a pastilha descer em telas estreitas. */
 .card--top {
@@ -362,7 +372,9 @@
 /* Ação do card (spec 5.2 secondary): a mesma ação de card é
    a mesma ação do sistema — superfície branca, texto azul,
    borda forte e halo de foco. */
-.btn--exit {
+.btn--exit,
+.btn--historico,
+.btn--cancelar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -384,16 +396,22 @@
               transform var(--cx-dur-fast) ease;
 }
 
-.btn--exit:hover {
+.btn--exit:hover,
+.btn--historico:hover,
+.btn--cancelar:hover {
   background-color: var(--cx-primary-soft);
   border-color: var(--cx-primary-border);
 }
 
-.btn--exit:active {
+.btn--exit:active,
+.btn--historico:active,
+.btn--cancelar:active {
   transform: translateY(1px);
 }
 
-.btn--exit:focus-visible {
+.btn--exit:focus-visible,
+.btn--historico:focus-visible,
+.btn--cancelar:focus-visible {
   outline: none;
   box-shadow: var(--cx-focus-halo);
 }
@@ -483,12 +501,107 @@
   }
 }
 
+/* Janela de escolha do morador visitado */
+.modal--overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(11, 23, 51, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cx-space-md);
+  z-index: 100;
+}
+
+.modal--box {
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-lg);
+  padding: var(--cx-space-lg);
+  width: 100%;
+  max-width: 440px;
+}
+
+.modal--title {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-lg);
+  font-weight: 800;
+  color: var(--cx-text-strong);
+  margin: 0 0 var(--cx-space-sm) 0;
+}
+
+.modal--text {
+  font-size: var(--cx-text-base);
+  color: var(--cx-text-muted);
+  margin: 0 0 var(--cx-space-md) 0;
+}
+
+.modal--select {
+  width: 100%;
+  height: var(--cx-control);
+  box-sizing: border-box;
+  padding: 0 12px;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  font-size: var(--cx-text-base);
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  background-color: var(--cx-surface);
+  cursor: pointer;
+}
+
+.modal--select:focus-visible {
+  outline: none;
+  border-color: var(--cx-primary);
+  box-shadow: var(--cx-focus-halo);
+}
+
+.modal--select:disabled {
+  background-color: var(--cx-surface-inset);
+  color: var(--cx-text-faint);
+  cursor: not-allowed;
+}
+
+.modal--erro {
+  color: var(--cx-danger);
+  font-size: var(--cx-text-xs);
+  margin: var(--cx-space-sm) 0 0 0;
+}
+
+.modal--retry {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--cx-primary);
+  font-size: var(--cx-text-xs);
+  font-weight: 700;
+  font-family: var(--cx-font);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.modal--actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--cx-space-sm);
+  margin-top: var(--cx-space-md);
+}
+
+.btn--exit:disabled,
+.btn--cancelar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Movimento reduzido: as transições de hover/foco viram
    troca instantânea (spec 7) */
 @media (prefers-reduced-motion: reduce) {
   .card--item,
   .btn--add,
   .btn--exit,
+  .btn--historico,
+  .btn--cancelar,
   .tab--active,
   .tab--inactive {
     transition: none;

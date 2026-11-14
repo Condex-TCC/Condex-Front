@@ -1,0 +1,103 @@
+/* TELA DE CADASTRO DE RECLAMAÇÃO DO MORADOR */
+
+.tcr-container {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #001c3f;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-bottom: 8px;
+}
+
+.tcr-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.tcr-btnVoltar {
+  flex-shrink: 0;
+  background-color: #ffffff;
+  border: 1px solid #d4d8e2;
+  border-radius: 8px;
+  color: #2b45a2;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.tcr-btnVoltar:hover {
+  background-color: #eef2ff;
+}
+
+.tcr-titulo {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.tcr-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tcr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tcr-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #001c3f;
+}
+
+.tcr-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d4d8e2;
+  border-radius: 8px;
+  outline: none;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #001c3f;
+  background-color: #ffffff;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  resize: vertical;
+  min-height: 160px;
+}
+
+.tcr-textarea:focus {
+  border-color: #2b45a2;
+  box-shadow: 0 0 0 1px #2b45a2;
+}
+
+.tcr-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tcr-btnCadastrar {
+  width: 100%;
+  background-color: #2b45a2;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.tcr-btnCadastrar:hover {
+  background-color: #203b8f;
+}
+
+.tcr-btnCadastrar:active {
+  transform: scale(0.99);
+}

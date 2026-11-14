@@ -1,0 +1,163 @@
+/* CARD DE ENCOMENDA DO MORADOR */
+
+/* Card individual de encomenda */
+.card--encomenda {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 22px 24px;
+  background-color: #ffffff;
+  border: 1px solid #e4eaf2;
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 10px 28px rgba(16, 24, 40, 0.06);
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #1f2a44;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Leve destaque ao passar o mouse pelo card */
+.card--encomenda:hover {
+  transform: translateY(-2px);
+  border-color: #d7e3f2;
+  box-shadow: 0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 34px rgba(16, 24, 40, 0.1);
+}
+
+/* Cabeçalho do card com a identificação e o selo */
+.cabecalho--encomenda {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Bloco com o ícone e o nome da encomenda */
+.identificacao--encomenda {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Ícone da encomenda em um círculo suave */
+.icone--encomenda {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ecfdf3, #d9f7e5);
+  font-size: 24px;
+  line-height: 1;
+}
+
+/* Nome da encomenda em destaque */
+.nome--encomenda {
+  min-width: 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #001c3f;
+  word-break: break-word;
+}
+
+/* Selo com o status da encomenda */
+.selo--status {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Selo verde para encomendas já retiradas */
+.selo--status--retirada {
+  background-color: #ecfdf3;
+  border: 1px solid #d1fadf;
+  color: #067647;
+}
+
+/* Selo laranja para encomendas aguardando retirada */
+.selo--status--aguardando {
+  background-color: #fff4e5;
+  border: 1px solid #ffe0b8;
+  color: #b45309;
+}
+
+/* Área com as informações completas da encomenda */
+.informacoes--encomenda {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px 24px;
+  padding-top: 16px;
+  border-top: 1px solid #eef2f7;
+}
+
+/* Não reserva espaço quando a encomenda não tem informações extras */
+.informacoes--encomenda:empty {
+  display: none;
+}
+
+/* Linha com o rótulo e o valor de uma informação */
+.linha--informacao {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Rótulo da informação */
+.rotulo--informacao {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: #7a87a7;
+}
+
+/* Valor da informação */
+.valor--informacao {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #475467;
+  word-break: break-word;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 640px) {
+
+  .card--encomenda {
+    padding: 18px;
+  }
+
+  .icone--encomenda {
+    width: 46px;
+    height: 46px;
+    font-size: 21px;
+  }
+
+  .informacoes--encomenda {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+
+  .cabecalho--encomenda {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .selo--status {
+    align-self: flex-start;
+  }
+}

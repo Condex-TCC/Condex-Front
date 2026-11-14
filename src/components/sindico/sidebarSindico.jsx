@@ -98,6 +98,18 @@ const SidebarSindico = () => {
     //Classe do item: base + destaque quando for a tela aberta
     const classeItem = (ativo) =>
       `${styles['sd-nav-item']} ${ativo ? styles['sd-item-active'] : ''}`
+    //Visitantes e visitas
+    const visitantesVisitas = () => {
+
+      //TODO: ajustar a rota quando a tela de visitantes e visitas for criada
+      navigate('/sindico/visitas')
+    }
+
+    //Reclamações
+    const reclamacoes = () => {
+
+      navigate('/sindico/reclamacoes/exibir')
+    }
 
   return (
     // Container principal de toda a barra lateral
@@ -168,6 +180,20 @@ const SidebarSindico = () => {
           {/* Rótulo de seção */}
           <li className={styles['sd-group']} aria-hidden="true">{GRUPOS.comunidade}</li>
 
+          {/* Item do menu: Visitantes e visitas */}
+          <li className={classeItem(estaAtivo('/sindico/visitas'))} onClick={visitantesVisitas}>
+
+            {/* Ícone SVG: Visitante autorizado */}
+            <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className={styles['sd-icon']} aria-hidden="true">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <polyline points="16 11 18 13 22 9"></polyline>
+            </svg>
+
+            {/* Texto descritivo do botão */}
+            <span className={styles['sd-label']}>Visitantes</span>
+          </li>
+
           {/* Item do menu: Reservas */}
           <li className={classeItem(estaAtivo('/sindico/reservas'))} onClick={reservas}>
             {/* Ícone SVG: Calendário */}
@@ -189,6 +215,18 @@ const SidebarSindico = () => {
             </svg>
             {/* Texto descritivo do botão */}
             <span className={styles['sd-label']}>Comunicação</span> 
+          </li>
+
+          {/* Item do menu: Reclamações */}
+          <li className={classeItem(estaAtivo('/sindico/reclamacoes'))} onClick={reclamacoes}>
+            {/* Ícone SVG: Reclamações */}
+            <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className={styles['sd-icon']} aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <line x1="9" y1="9" x2="15" y2="9"></line>
+              <line x1="9" y1="13" x2="13" y2="13"></line>
+            </svg>
+            {/* Texto descritivo do botão */}
+            <span className={styles['sd-label']}>Reclamações</span>
           </li>
 
           {/* Rótulo de seção */}

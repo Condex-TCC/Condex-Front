@@ -1,7 +1,7 @@
 //Arquivo responsavel por intermediar a lógica entre a tela que de controle de usuários pelo sindico e a API
 
-import { deleteMoradores, getMoradores, insertMoradorAPI, showMoradorAPI, updateMoradorAPI, vefifyMoradorAPI } from "../api/MoradoresApi"
-import { deletePorteirosAPI, getPorteiro, insertPorteiroAPI, showPorteiroAPI, updatePorteiroAPI } from "../api/PorteiroApi"
+import { deleteMoradores, getMoradores, insertMoradorAPI, showMoradorAPI, vefifyMoradorAPI } from "../api/MoradoresApi"
+import { deletePorteirosAPI, getPorteiro, insertPorteiroAPI, showPorteiroAPI } from "../api/PorteiroApi"
 
 
 //Função responsavel por realizar o login
@@ -141,13 +141,13 @@ export async function deletePorterio(id) {
 }
 
 //Função que realiza a gravação no porteiro
-export async function criandoPorteiro(nome, email, password) {
+export async function criandoPorteiro(email) {
     
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await insertPorteiroAPI(nome, email, password)
+        let response = await insertPorteiroAPI(email)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()
@@ -210,41 +210,6 @@ export async function obtendoPorteiro(id) {
 
 }
 
-//Função que atualiza o porteiro
-export async function atualizaPorteiro (id, nome, email, password) {
-    
-    //Tendanto executar a requisição
-    try{
-
-        //Chamando a função que realiza a requisição no API
-        let response = await updatePorteiroAPI(nome, email, password, id)
-
-        //Convertendo o JSON para objetos no JS
-        let json = await response.json()
-
-        //Desestrutura o promisse
-        const { message, status, data} = json
-
-        //Verifica se houve algum erro na requisição
-        if(status != 200){
-
-            //Para a execução do try e lança um erro para o catch
-            throw("Erro na requisição " + status)
-        }
-
-        //Retornando a menssagem
-        return message
-    }
-    //Casso aconteça algum erro na requisição, cai nesse bloco
-    catch(erro){
-
-        //Exibe um alerta na tela
-        console.error("Erro ao buscar o porteiro na API:", erro)
-
-    }
-
-}
-
 //Função que verifica se o apertamendo selecionado está sem morador cadastrado
 export async function verifyMorador(id) {
     
@@ -274,13 +239,13 @@ export async function verifyMorador(id) {
 }
 
 //Função que salva o morador no banco de dados
-export async function insertMorador(nome, cpf, email, telefone, senha, id_unidade) {
+export async function insertMorador(email, id_unidade) {
     
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await insertMoradorAPI(nome, cpf, email, telefone, senha, id_unidade)
+        let response = await insertMoradorAPI(email, id_unidade)
 
         //Convertendo o JSON para objetos no JS
         let json = await response.json()
@@ -318,34 +283,6 @@ export async function showMorador(id) {
 
         //Retornando a menssagem
         return data
-    }
-    //Casso aconteça algum erro na requisição, cai nesse bloco
-    catch(erro){
-
-        //Exibe um alerta na tela
-        console.error("Erro ao cadastar o morador na API:", erro)
-
-    }
-
-}
-
-//Função que atualiza o morador no banco de dados
-export async function updateMorador(id, nome, cpf, email, telefone, senha, id_unidade) {
-    
-    //Tendanto executar a requisição
-    try{
-
-        //Chamando a função que realiza a requisição no API
-        let response = await updateMoradorAPI(id, nome, cpf, email, telefone, senha, id_unidade)
-
-        //Convertendo o JSON para objetos no JS
-        let json = await response.json()
-
-        //Desestrutura o promisse
-        const { message, status, errors, data} = json
-        console.log(errors)
-        //Retornando a menssagem
-        return message
     }
     //Casso aconteça algum erro na requisição, cai nesse bloco
     catch(erro){

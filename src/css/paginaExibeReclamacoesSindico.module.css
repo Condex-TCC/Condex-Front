@@ -1,0 +1,46 @@
+/* TELA DE EXIBIÇÃO DE RECLAMAÇÕES DO SÍNDICO */
+
+.prs-container {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #001c3f;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-bottom: 8px;
+}
+
+.prs-titulo {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.prs-abas {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.prs-aba {
+  background-color: #ffffff;
+  border: 1px solid #d4d8e2;
+  border-radius: 8px;
+  color: #001c3f;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.prs-aba--ativa {
+  background-color: #eef2ff;
+  border-color: #2b45a2;
+  color: #2b45a2;
+  font-weight: 700;
+}
+
+.prs-lista {
+  display: flex;
+  flex-direction: column;
+}

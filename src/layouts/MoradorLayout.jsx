@@ -1,5 +1,6 @@
 //Elemento que permite adicioar outros componentes dentro de si
 import { Outlet } from 'react-router-dom';
+import { useBuscaDoLayout } from '../hooks/useBuscaHeader';
 import HeaderMorador from '../components/morador/headerMorador';
 import SidebarMorador from '../components/morador/sidebarMorador';
 import { MenuLateralContext } from '../context/menuLateralContext';
@@ -10,6 +11,9 @@ import styles from '../css/shellLayout.module.css'; // Layout comum aos perfis c
 
 //Função que cria o componente principal da aplciação
 function LayoutMorador(){
+
+    //Texto da barra de pesquisa do header, compartilhado com as páginas
+    const { busca, setBusca } = useBuscaDoLayout()
 
     //Pegando as ações adicionadas no provider
     //menuLateral = 'aberto' | 'fechado' (apresentação do menu, sem relação com regra de negócio)
@@ -39,14 +43,14 @@ function LayoutMorador(){
                 <div className={styles['shell__body']}>
                          
                     {/* Chama o menu do moarador */}
-                    <HeaderMorador></HeaderMorador>
+                    <HeaderMorador busca={busca} aoBuscar={setBusca} />
 
                     {/* Permite renderizar outros componentes dentro desse layout */}
                     {/* O flex: 1 empurra o menu inferior para a base da tela quando o conteúdo é curto */}
                     <main className={`${styles['shell__main']}`}>
                          
                         {/* Local onde será inserido outros elementos */}
-                        <Outlet />
+                        <Outlet context={{ busca, setBusca }} />
                     </main>
                          
                 </div>

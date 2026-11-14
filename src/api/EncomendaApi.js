@@ -1,11 +1,12 @@
 //Arquivo responsável por fazer a requisição para a API das encomendas
 
 import { GetCookie } from "../service/cookie"
+import { montarQuery } from "../utils/busca"
 import { USE_MOCK } from "../mock/ativo"
 import { getEncomendasMock, insertEncomendaMock, withdrawEncomendaMock } from "../mock/porteiroMock"
 
 //Função que recupera todas as encomendas do banco de dados
-export async function getEncomendasAPI(){
+export async function getEncomendasAPI(filtros = {}){
 
     //Com o mock ligado, devolve os dados fictícios em memória
     if(USE_MOCK){
@@ -18,7 +19,8 @@ export async function getEncomendasAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/encomenda/get"
+    //A API aceita os filtros ?nome= e ?descricao=
+    let endPoint = "/api/porteiro/encomenda/get" + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(
@@ -31,6 +33,7 @@ export async function getEncomendasAPI(){
                 'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
                 "Authorization": `Bearer ${token}` //Eniva o token de autorização
             },
+            credentials: 'same-origin'
         }
     )
 
@@ -56,7 +59,7 @@ export async function insertEncomendaAPI(nome, descricao, idMorador, detalhes = 
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/encomenda/create"
+    let endPoint = "/api/porteiro/encomenda/create"
 
     //Objeto com os elementos
     let novaEncomenda = {
@@ -77,6 +80,7 @@ export async function insertEncomendaAPI(nome, descricao, idMorador, detalhes = 
                 'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
                 "Authorization": `Bearer ${token}` //Eniva o token de autorização
             },
+            credentials: 'same-origin',
 
             //Passando o corpo da requisição
             body: JSON.stringify(novaEncomenda) //Convertendo o objeto em Json
@@ -101,7 +105,7 @@ export async function withdrawEncomendaAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/encomenda/withdraw/" + id
+    let endPoint = "/api/porteiro/encomenda/withdraw/" + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -111,6 +115,38 @@ export async function withdrawEncomendaAPI(id){
 
             //Passando os headers
             headers: {
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
+                "Authorization": `Bearer ${token}` //Eniva o token de autorização
+            },
+            credentials: 'same-origin'
+        }
+    )
+
+    //Retornado uma promise com os dados da API
+    return requisicao
+}
+
+
+//Função que recupera todas as encomendas do banco de dados
+export async function getEncomendasMoradorAPI(){
+
+    //Receperando o token de outorização
+    let cookie = await GetCookie()
+    let token = cookie.token
+
+    //Endpoint
+    //A API aceita os filtros ?nome= e ?descricao=
+    let endPoint = "/api/morador/encomenda/get"
+
+    //Criando a requisição
+    const requisicao = fetch(
+        endPoint, //Passando o endPoint para a requisição
+        {
+            method: "GET", //Passando qual é o metodo HTTP
+
+            //Passando os headers
+            headers: {
+                'Content-Type': 'application/json', //Tipo de formatação
                 'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
                 "Authorization": `Bearer ${token}` //Eniva o token de autorização
             },

@@ -1,11 +1,10 @@
 // EventCard.jsx
 import { useNavigate } from 'react-router-dom';
-import styles from '../../css/cardReserva.module.css';
+import styles from '../../css/cardReservaAutorizacao.module.css';
 
 
 //Função que cria o componente
-function CardReservaAutorizacao() {
-
+function CardReservaAutorizacao({ id, espaco, data, inicio, fim, morador }) {
 
   //Hook que realiza a navegação
   const navigate = useNavigate()
@@ -13,8 +12,28 @@ function CardReservaAutorizacao() {
   //Função que realiza o redirecionamento para a tela e visualiar reserva
   const aprovarReserva = () => {
 
-    //TODO: Adicionar navegação por parametro
-    navigate("autorizacao/" + 1)
+    //Realizando a navegação para a págian de reservas
+    navigate("/sindico/reservas/gerenciamento/autorizacao/" + id)
+  }
+
+  //Função que formata a data para o padrão brasileiro
+  const formatData = (dataReserva) => {
+
+    //Divide a data para obter ano, mês e dia
+    const [ano, mes, dia] = dataReserva.split("-")
+
+    //Retorna a data no formato dd/mm/aaaa
+    return `${dia}/${mes}/${ano}`
+  }
+
+  //Função que formata o horário removendo os segundos
+  const formatHora = (hora) => {
+
+    //Divide o horário para obter horas e minutos
+    const [horas, minutos] = hora.split(":")
+
+    //Retorna o horário no formato hh:mm
+    return `${horas}:${minutos}`
   }
 
 
@@ -26,11 +45,9 @@ function CardReservaAutorizacao() {
   return (
     <button type="button" className={styles.card} onClick={aprovarReserva}>
 
-      {/* Linha principal: área da reserva • evento reservado */}
+      {/* Linha principal: nome da área reservada */}
       <span className={styles.header}>
-        <span className={styles.title}>Salão de eventos</span>
-        <span className={styles.separator} aria-hidden="true">•</span>
-        <span className={styles.title}>Festa de aniversário</span>
+        <span className={styles.title}>{espaco.nome}</span>
       </span>
 
       <span className={styles.content}>
@@ -44,21 +61,21 @@ function CardReservaAutorizacao() {
               <line x1="8" y1="2" x2="8" y2="6"></line>
               <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
-            21/06/2026
+            {formatData(data)}
           </span>
           <span className={styles.detailItem}>
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
-            18:00 às 23:00
+            {formatHora(inicio)} às {formatHora(fim)}
           </span>
         </span>
 
         {/* Quem solicitou: nome à esquerda, unidade em pastilha à direita */}
         <span className={styles.footer}>
-          <span className={styles.solicitante}>João Carlos Ferreira</span>
-          <span className={styles.unidade}>Bloco B - Apto 204</span>
+          <span className={styles.solicitante}>{morador.nome}</span>
+          <span className={styles.unidade}>{morador.unidade.bloco} - Apto {morador.unidade.numero}</span>
         </span>
       </span>
 

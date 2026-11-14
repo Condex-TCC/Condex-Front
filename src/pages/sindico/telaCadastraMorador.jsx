@@ -15,11 +15,7 @@ function PaginaCadastraMorador(){
   const { id } = useParams();
 
   //States para controlar o valor dos campos
-  const [nome, setNome] = useState('')
-  const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
-  const [telefone, setTelefone] = useState('')
-  const [senha, setSenha] = useState('')
 
   //States para controlar os campos do condomio selecionado
   const [bloco, setBloco] = useState('')
@@ -33,31 +29,11 @@ function PaginaCadastraMorador(){
     navigate("/sindico/usuarios/morador/apertamento")
   }
 
-  //Funções de toogle para alterar o esdado das variáveis 
-  const nomeState = (evento) => {
-
-    //Troca o estado
-    setNome(evento.target.value)
-  }
-  const cpfState = (evento) => {
-
-    //Troca o estado
-    setCpf(evento.target.value)
-  }
+  //Função que realiza a troca do valor do state
   const emailState = (evento) => {
 
     //Troca o estado
     setEmail(evento.target.value)
-  }
-   const telefoneState = (evento) => {
-
-    //Troca o estado
-    setTelefone(evento.target.value)
-  }
-   const senhaState = (evento) => {
-
-    //Troca o estado
-    setSenha(evento.target.value)
   }
 
   //Função que carrega os dados da API
@@ -87,7 +63,7 @@ function PaginaCadastraMorador(){
   const cadastraMorador = async () => {
 
     //Chama a função responsavel cadastrar o morador
-    const message = await insertMorador(nome, cpf, email, telefone, senha, id)
+    const message = await insertMorador(email, id)
 
     //Realiza a mudança de tela para a tela de menssagem
     navigate("/sindico/mensagem", {
@@ -119,38 +95,14 @@ function PaginaCadastraMorador(){
 
          <form className={styles.form} onSubmit={(e) => { e.preventDefault(); cadastraMorador(); }}>
 
-           <section className={styles['form-secao']} aria-labelledby="secao-dados-pessoais">
-             <h3 className={styles['form-secao__titulo']} id="secao-dados-pessoais">
-               Dados pessoais
+           <section className={styles['form-secao']} aria-labelledby="secao-dados-acesso">
+             <h3 className={styles['form-secao__titulo']} id="secao-dados-acesso">
+               Dados de acesso
              </h3>
 
              <div className={styles['form-grid']}>
-               {/* Nome abre a linha inteira: é o identificador do cadastro */}
+               {/* O morador completa os demais dados no primeiro acesso */}
                <div className={`${styles.campo} ${styles['campo--full']}`}>
-                 <label className={styles['campo__label']} htmlFor="morador-nome">Nome</label>
-                 <input
-                   id="morador-nome"
-                   type="text"
-                   placeholder="Nome"
-                   className={styles.inputTitle}
-                   value={nome}
-                   onChange={nomeState}
-                 />
-               </div>
-
-               <div className={styles.campo}>
-                 <label className={styles['campo__label']} htmlFor="morador-cpf">CPF</label>
-                 <input
-                   id="morador-cpf"
-                   type="text"
-                   placeholder="CPF"
-                   className={styles.inputTitle}
-                   value={cpf}
-                   onChange={cpfState}
-                 />
-               </div>
-
-               <div className={styles.campo}>
                  <label className={styles['campo__label']} htmlFor="morador-email">E-mail</label>
                  <input
                    id="morador-email"
@@ -159,30 +111,6 @@ function PaginaCadastraMorador(){
                    className={styles.inputTitle}
                    value={email}
                    onChange={emailState}
-                 />
-               </div>
-
-               <div className={styles.campo}>
-                 <label className={styles['campo__label']} htmlFor="morador-telefone">Telefone</label>
-                 <input
-                   id="morador-telefone"
-                   type="text"
-                   placeholder="Telefone"
-                   className={styles.inputTitle}
-                   value={telefone}
-                   onChange={telefoneState}
-                 />
-               </div>
-
-               <div className={styles.campo}>
-                 <label className={styles['campo__label']} htmlFor="morador-senha">Senha</label>
-                 <input
-                   id="morador-senha"
-                   type="text"
-                   placeholder="Senha"
-                   className={styles.inputTitle}
-                   value={senha}
-                   onChange={senhaState}
                  />
                </div>
              </div>

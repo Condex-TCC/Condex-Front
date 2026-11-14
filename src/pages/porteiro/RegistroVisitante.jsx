@@ -30,7 +30,6 @@ export default function RegistroVisitante() {
     //States para controlar o valor de cada campo do formulário
     const [nome, setNome] = useState('')
     const [cpf, setCpf] = useState('')
-    const [idMorador, setIdMorador] = useState('')
 
     //Estado que guarda o erro de cada campo
     const [erros, setErros] = useState({})
@@ -38,7 +37,7 @@ export default function RegistroVisitante() {
     //Estado que desabilita o botão enquanto a gravação acontece
     const [salvando, setSalvando] = useState(false)
 
-    //Função que verifica os campos exigidos pela API (nome, cpf e morador)
+    //Função que verifica os campos exigidos pela API (nome e cpf)
     const validar = () => {
 
         const novosErros = {}
@@ -46,8 +45,6 @@ export default function RegistroVisitante() {
         if(!nome.trim()){ novosErros.nome = 'Informe o nome do visitante.' }
 
         if(cpf.replace(/\D/g, '').length !== 11){ novosErros.cpf = 'Informe o CPF completo.' }
-
-        if(!idMorador || Number(idMorador) < 1){ novosErros.idMorador = 'Informe o ID do morador responsável.' }
 
         setErros(novosErros)
 
@@ -72,7 +69,7 @@ export default function RegistroVisitante() {
         try{
 
             //Chama a função que cadastra o visitante na API
-            const resultado = await cadastrarVisitantePorteiro(nome.trim(), cpf, Number(idMorador))
+            const resultado = await cadastrarVisitantePorteiro(nome.trim(), cpf)
 
             //Quando a API recusa, a tela fica como está, exibindo o motivo
             if(!resultado.sucesso){
@@ -151,25 +148,18 @@ export default function RegistroVisitante() {
                         {erros.cpf && <span className={styles['fp-erro']}>{erros.cpf}</span>}
                     </div>
 
-                    {/* A API vincula o visitante ao morador pelo id (campo "morador") */}
-                    <div className={styles['fp-campo']}>
-                        <label className={styles['fp-rotulo']} htmlFor="visitante-id-morador">ID do morador</label>
-                        <input
-                            id="visitante-id-morador"
-                            className={`${styles['fp-input']} ${styles['fp-input--apartamento']}`}
-                            type="text"
-                            inputMode="numeric"
-                            placeholder="ID do morador"
-                            maxLength={10}
-                            value={idMorador}
-                            onChange={(evento) => setIdMorador(evento.target.value.replace(/\D/g, '').slice(0, 10))}
-                        />
-                        {erros.idMorador && <span className={styles['fp-erro']}>{erros.idMorador}</span>}
-                    </div>
+                    {/* O morador visitado não é guardado no cadastro: o porteiro escolhe ao registrar a entrada */}
+                    <p className={styles['fp-subtitulo']}>
+                        O morador que será visitado é escolhido na hora de registrar a entrada.
+                    </p>
 
                     {/* Ação principal ocupa a linha inteira da grade */}
                     <div className={`${styles['fp-area-salvar']} ${styles['fp-celula--larga']}`}>
-                        <button type="submit" className={styles['fp-btn-salvar']} disabled={salvando}>
+                        <button
+                            type="submit"
+                            className={styles['fp-btn-salvar']}
+                            disabled={salvando}
+                        >
                             {salvando ? 'Salvando...' : 'SALVAR'}
                         </button>
                     </div>

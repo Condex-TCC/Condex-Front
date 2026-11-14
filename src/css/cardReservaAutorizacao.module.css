@@ -64,12 +64,6 @@
   color: var(--cx-text-strong);
 }
 
-/* Separador tipográfico: discreto e ignorado pelo leitor de tela */
-.separator {
-  color: var(--cx-text-faint);
-  font-weight: 700;
-}
-
 /* Bloco inferior: dados à esquerda, solicitante à direita */
 .content {
   display: flex;

@@ -1,10 +1,14 @@
 import styles from '../../../css/paginaCadastraRegra.module.css';
+import stylesDados from '../../../css/paginaAutorizaReserva.module.css';
 
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import CardReservaAutorizacao from '../../../components/sindico/cardReserva';
+import { aprovaReserva, showReserva } from '../../../service/Reservas';
 
 export default function PaginaAutorizaRerva() {
+
+  //Hook que irá armazenar o objeto da reserva
+  const [dadosReserva, setDadosReserva] = useState({})
 
   //Hook que realiza a navegação
   const navigate = useNavigate()
@@ -16,45 +20,73 @@ export default function PaginaAutorizaRerva() {
   const back = () => {
 
     //Navega para a tela que exibe os laudos
-    navigate("/sindico/reservas/gerenciamento")
+    navigate("/sindico/reservas/exibe/aprovadas")
   }
+
+  //Função que obtem uma reserva especifica
+  const obtemReserva = async () => {
+
+    //Chamando a reserva
+    const response = await showReserva(id)
+
+    //Desestruturando o objeto do Json
+    const { reserva } = await response
+
+    //Alterando o estado da reserva
+    setDadosReserva(reserva)
+  }
+
+  //useEffect que é executado uma vez quando a página é renderizda
+  useEffect(() => {
+
+    //Chama a função que obtem os dados
+    obtemReserva()
+  }, [])
 
   //Função que será chamada para autorizar a reserva
   const AutorizarRerva = async () => {
     
-    // //Chama a função que cadastra as regras
-    // let message = await insertRegraAPI(nome, descricao)
+    //Chama a função que autoriza a reserva
+    let resposta = await aprovaReserva(id, true)
 
-    // //Chama a tela de menssagem
-    // navigate('/sindico/mensagem', {
-    //   //Realiza a passagem de valores para a página
-    //   state: {
-    //     menssagem: "Regra Criada com sucesso!" ,
-    //     redirecionamento: '/sindico/condominio/regrasLaudos'
-    //   }
-    // });
-    alert("Fazer aqui a lógica para autroizar reserva")
+    //O service devolve undefined quando a API falha | Permanece na tela para tentar de novo
+    if(!resposta){
+
+      alert("Não foi possível aprovar a reserva. Tente novamente.")
+
+      return
+    }
+
+    //Exibe a mensagem própria da tela, pois a API responde "cancelada" também ao aprovar
+    alert("Reserva aprovada com sucesso.")
+
+    //Chama a função que realiza o redirecionamento
+    back()
+
   }
 
-  //Função que será chamada para recuser a reserva
-  const recusarReserva= async () => {
+   //Função que será chamada para negar a reserva
+  const NegarRerva = async () => {
     
-    // //Chama a função que cadastra as regras
-    // let message = await insertRegraAPI(nome, descricao)
+    //Chama a função que reprova a reserva
+    let resposta = await aprovaReserva(id, false)
 
-    // //Chama a tela de menssagem
-    // navigate('/sindico/mensagem', {
-    //   //Realiza a passagem de valores para a página
-    //   state: {
-    //     menssagem: "Regra Criada com sucesso!" ,
-    //     redirecionamento: '/sindico/condominio/regrasLaudos'
-    //   }
-    // });
-    alert("Fazer aqui a lógica para autroizar reserva")
+    //O service devolve undefined quando a API falha | Permanece na tela para tentar de novo
+    if(!resposta){
+
+      alert("Não foi possível recusar a reserva. Tente novamente.")
+
+      return
+    }
+
+    //Exibe a mensagem de sucesso
+    alert("Reserva recusada com sucesso.")
+
+    //Chama a função que realiza o redirecionamento
+    back()
+
   }
 
-  //TODO: Fazer uma função que recupera os dados da reserva especifica 
-  //TODO: Use effect para carregar os dados da reserva
 
   return (
     <div className={styles.container}>
@@ -75,9 +107,88 @@ export default function PaginaAutorizaRerva() {
       </header>
 
       <form className={styles.form} onSubmit={(e) => { e.preventDefault();}}>
+        
+        {/* Div com os dados da reserva */}
+        <div className={stylesDados.dadosBloco}>
 
-        {/* Passar os dados aqui */}
-        <CardReservaAutorizacao></CardReservaAutorizacao>
+          {/* Título do bloco */}
+          <h3 className={stylesDados.blocoTitle}>Dados da reserva</h3>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Espaço:</span>
+            <span className={stylesDados.valor}>{dadosReserva.espaco?.nome}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Descrição:</span>
+            <span className={stylesDados.valor}>{dadosReserva.espaco?.descricao}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Data:</span>
+            <span className={stylesDados.valor}>{dadosReserva.data?.split("-").reverse().join("/")}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Início:</span>
+            <span className={stylesDados.valor}>{dadosReserva.inicio?.split(":").slice(0, 2).join(":")}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Fim:</span>
+            <span className={stylesDados.valor}>{dadosReserva.fim?.split(":").slice(0, 2).join(":")}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Status:</span>
+            <span className={stylesDados.valor}>{dadosReserva.status}</span>
+          </div>
+
+        </div>
+
+        {/* Div com os dados do morador */}
+        <div className={stylesDados.dadosBloco}>
+
+          {/* Título do bloco */}
+          <h3 className={stylesDados.blocoTitle}>Dados do morador</h3>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Nome:</span>
+            <span className={stylesDados.valor}>{dadosReserva.morador?.nome}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>CPF:</span>
+            <span className={stylesDados.valor}>{dadosReserva.morador?.cpf}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>E-mail:</span>
+            <span className={stylesDados.valor}>{dadosReserva.morador?.email}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Telefone:</span>
+            <span className={stylesDados.valor}>{dadosReserva.morador?.telefone}</span>
+          </div>
+
+          {/* Linha com rótulo e valor */}
+          <div className={stylesDados.campo}>
+            <span className={stylesDados.rotulo}>Unidade:</span>
+            <span className={stylesDados.valor}>{dadosReserva.morador?.unidade?.bloco} - Apto {dadosReserva.morador?.unidade?.numero}</span>
+          </div>
+
+        </div>
 
         {/* Ações da decisão: confirmação (verde) e destrutiva
             (vermelho), alinhadas à direita no desktop. */}
@@ -93,7 +204,7 @@ export default function PaginaAutorizaRerva() {
           <button 
             type="button" 
             className={styles.buttonRecusar} 
-            onClick={recusarReserva}
+            onClick={NegarRerva}
           >
             Recusar
           </button>

@@ -1,0 +1,103 @@
+/* CARD DE MORADOR DO PORTEIRO */
+
+/* Card individual do morador, clicável para iniciar o cadastro da visita */
+.card--morador {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #001c3f;
+  background-color: #ffffff;
+  border: 1px solid #e8ebf1;
+  border-left: 4px solid #2b45a2;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 6px rgba(0, 28, 63, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+/* Leve destaque ao passar o mouse pelo card */
+.card--morador:hover {
+  border-color: #dbe1ee;
+  box-shadow: 0 4px 12px rgba(0, 28, 63, 0.09);
+}
+
+/* CABEÇALHO */
+
+/* Cabeçalho com o nome do morador e a unidade */
+.cabecalho--morador {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
+
+/* Nome do morador */
+.nome--morador {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #001c3f;
+}
+
+/* Unidade do morador exibida como etiqueta ao lado do nome */
+.unidade--morador {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  background-color: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+/* DADOS DO MORADOR */
+
+/* Grade com os dados de contato do morador */
+.dados--morador {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px 20px;
+}
+
+/* Linha com o rótulo e o valor de um dado */
+.linha--dado {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* Rótulo do dado */
+.rotulo--dado {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: #7a87a7;
+}
+
+/* Valor do dado */
+.valor--dado {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1f2a44;
+  word-break: break-word;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 560px) {
+
+  .cabecalho--morador {
+    align-items: flex-start;
+  }
+
+  .dados--morador {
+    grid-template-columns: 1fr;
+  }
+}

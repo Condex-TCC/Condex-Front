@@ -11,34 +11,20 @@ function PaginaCadastraPorteiro(){
     const navigate = useNavigate();
 
     //Criando estado para controlar as variáveis das inputs
-    const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
 
     //Função que obtem os evento realizam a troca dos valores
-    const toogleNome = (evento) => {
-
-      //Realizando a troca do estado pelo nome
-      setNome(evento.target.value)
-    }
-
     const toogleEmail = (evento) => {
 
       //Realizando a troca do estado pelo email
       setEmail(evento.target.value)
     }
 
-    const tooglePassword = (evento) => {
-
-      //Realizando a troca do estado pela senha
-      setPassword(evento.target.value)
-    }
-
     //Função que realiza o cadastro
     const cadastraPorteiro = async () => {
 
       //Chama a função que realiza o login
-      let messagePorteiro = await criandoPorteiro(nome, email, password)
+      let messagePorteiro = await criandoPorteiro(email)
 
 
       //Chama a tela de menssagem
@@ -69,7 +55,7 @@ function PaginaCadastraPorteiro(){
           <p className="cx-overline">Usuários</p>
           <h2 className="cx-page-title">Cadastrar um novo Porteiro</h2>
           <p className="cx-page-subtitle">
-            Cadastre o porteiro com nome, e-mail e senha de acesso.
+            Informe o e-mail do porteiro; os demais dados são preenchidos no primeiro acesso.
           </p>
         </div>
 
@@ -87,22 +73,11 @@ function PaginaCadastraPorteiro(){
           Dados do porteiro
         </h3>
 
-        {/* Coluna da Esquerda: Campos de entrada de dados.
-            Nome abre a linha inteira (é o identificador do
-            cadastro); e-mail e senha dividem a linha seguinte. */}
+        {/* Coluna da Esquerda: campo de entrada de dados.
+            O e-mail ocupa a linha inteira: é o único dado
+            informado no cadastro (o resto vem no primeiro acesso). */}
         <div className={styles.inputsColumn}>
           <div className={`${styles.campo} ${styles['campo--full']}`}>
-            <label className={styles['campo__label']} htmlFor="porteiro-nome">Nome completo</label>
-            <input
-              id="porteiro-nome"
-              type="text"
-              placeholder="Nome completo"
-              className={styles.inputField}
-              onChange={toogleNome}
-            />
-          </div>
-
-          <div className={styles.campo}>
             <label className={styles['campo__label']} htmlFor="porteiro-email">E-mail</label>
             <input
               id="porteiro-email"
@@ -110,17 +85,6 @@ function PaginaCadastraPorteiro(){
               placeholder="E-mail"
               className={styles.inputField}
               onChange={toogleEmail}
-            />
-          </div>
-
-          <div className={styles.campo}>
-            <label className={styles['campo__label']} htmlFor="porteiro-senha">Senha</label>
-            <input
-              id="porteiro-senha"
-              type="text"
-              placeholder="Senha"
-              className={styles.inputField}
-              onChange={tooglePassword}
             />
           </div>
         </div>

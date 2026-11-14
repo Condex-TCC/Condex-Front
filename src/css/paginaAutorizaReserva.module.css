@@ -1,0 +1,49 @@
+/* =========================================
+   EXIBIÇÃO DOS DADOS DA RESERVA E DO MORADOR
+   Segue o padrão visual do paginaCadastraRegra
+========================================= */
+
+/* Bloco de dados da reserva e do morador */
+.dadosBloco {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Título do bloco */
+.blocoTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000;
+  margin: 0 0 0.25rem;
+  text-decoration: underline;
+  text-decoration-color: #0088ff;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* Linha com rótulo e valor */
+.campo {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Rótulo do campo */
+.rotulo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #555;
+  min-width: 6.5rem;
+}
+
+/* Valor do campo */
+.valor {
+  font-size: 0.95rem;
+  color: #333;
+  overflow-wrap: break-word;
+}

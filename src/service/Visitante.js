@@ -2,16 +2,21 @@
 
 import { getVisitantesMoradorAPI, insertVisitanteMoradorAPI } from "../api/VisitanteMoradorApi"
 
-//ATENÇÃO: a tabela de visitantes da API guarda apenas nome, cpf e o morador
-//responsável. Os campos de agendamento (data, horário de chegada e saída
-//prevista) não possuem coluna no banco, por isso não são exibidos nas telas.
-//Assim que o backend criar essas colunas, basta devolvê-las no mapeamento
-//abaixo para que os cards voltem a mostrar a data e o horaário da visita.
+//ATENÇÃO: o visitante guarda apenas nome e CPF. O morador visitado e o porteiro
+//ficam na visita, registrada pelo porteiro na entrada. Por isso a API (GET /morador/visitante/get)
+//lista os visitantes que já tiveram alguma visita ao morador logado.
+//Os campos de agendamento (data, horário de chegada e saída prevista) não possuem
+//coluna no banco, por isso não são exibidos nas telas.
 
-//Função que desembrulha a lista que vem dentro de um array extra
-//A API devolve { data: [ [visitantes] ], então o primeiro passo é
-//sempre pegar o primeiro elemento quando ele for uma lista
+//Função que desembrulha a lista de visitantes devolvida pela API
+//A API devolve { data: { visitantes: [...] } } (VisitanteController::indexMorador)
 function desembrulharLista(data){
+
+    //Formato atual da API: a lista vem dentro de data.visitantes
+    if(Array.isArray(data?.visitantes)){
+
+        return data.visitantes
+    }
 
     //Sem dado devolvido, a tela recebe uma lista vazia
     if(!Array.isArray(data)){
@@ -27,9 +32,9 @@ function desembrulharLista(data){
 function paraVisita(visitante){
 
     return {
-        id: visitante.pk_id_visitante,
-        nome: visitante.nome_visitante,
-        documento: visitante.cpf_visitante,
+        id: visitante.id ?? visitante.pk_id_visitante,
+        nome: visitante.name ?? visitante.nome_visitante,
+        documento: visitante.cpf ?? visitante.cpf_visitante,
         data: null, //A API ainda não possui essa coluna
         horario: null, //A API ainda não possui essa coluna
         saidaPrevista: null, //A API ainda não possui essa coluna
@@ -45,7 +50,7 @@ export async function getVisitantesAtivos() {
     return []
 }
 
-//Função que obtem os visitantes previamente cadastrados pelo morador logado
+//Função que obtem os visitantes que já visitaram o morador logado
 export async function getProximasVisitas() {
 
     //Tenta executar a requisição
@@ -81,7 +86,7 @@ export async function getProximasVisitas() {
     }
 }
 
-//Função que cadastra um novo visitante para o morador logado
+//Função que cadastra um novo visitante (nome e CPF) pelo morador logado
 //Recebe { nome, documento } e devolve { sucesso, mensagem } para a tela
 //saber se pode navegar ou se precisa mostrar o erro da API
 export async function criarVisitaPreCadastrada(visita) {

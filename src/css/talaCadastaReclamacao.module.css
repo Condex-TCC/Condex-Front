@@ -1,0 +1,116 @@
+/* TELA DE CADASTRO DE RECLAMAÇÃO DO MORADOR */
+
+.tcr-container {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #001c3f;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-bottom: 16px;
+}
+
+.tcr-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.tcr-btnVoltar {
+  background-color: #ffffff;
+  border: 1px solid #d4d8e2;
+  border-radius: 8px;
+  color: #2b45a2;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.tcr-btnVoltar:hover {
+  background-color: #eef2ff;
+  border-color: #c9d0e6;
+}
+
+.tcr-titulo {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.tcr-form {
+  background-color: #ffffff;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tcr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tcr-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #7a87a7;
+}
+
+.tcr-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d4d8e2;
+  border-radius: 10px;
+  outline: none;
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #001c3f;
+  background-color: #ffffff;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  resize: vertical;
+  min-height: 180px;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.tcr-textarea::placeholder {
+  color: #a3acc4;
+}
+
+.tcr-textarea:focus {
+  border-color: #2b45a2;
+  box-shadow: 0 0 0 1px #2b45a2;
+}
+
+.tcr-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tcr-btnCadastrar {
+  width: 100%;
+  background-color: #2b45a2;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.tcr-btnCadastrar:hover {
+  background-color: #203b8f;
+}
+
+.tcr-btnCadastrar:active {
+  transform: scale(0.99);
+}

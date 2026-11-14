@@ -1,0 +1,95 @@
+/* PÁGINA DE SELEÇÃO DE MORADOR DO PORTEIRO */
+
+/* Container principal da página, com o mesmo fundo da tela inicial do porteiro */
+.pagina--seleciona-morador {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 30px;
+  color: #111;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+}
+
+/* Cabeçalho com o título à esquerda e o botão de voltar à direita, na mesma linha */
+.cabecalho--pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* Título da página */
+.titulo--pagina {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: #111;
+}
+
+/* Botão de voltar, alinhado à direita do cabeçalho */
+.botao--voltar {
+  background-color: #2b45a2;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Escurece o botão de voltar ao passar o mouse */
+.botao--voltar:hover {
+  background-color: #203b8f;
+}
+
+/* Descrição curta da tela, abaixo do cabeçalho */
+.descricao--pagina {
+  margin: 0 0 28px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* Lista com os cards de morador, em grade responsiva */
+.lista--cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 14px;
+}
+
+/* Aviso exibido enquanto a lista carrega ou quando não há moradores para mostrar */
+.aviso--vazio {
+  margin: 0;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border: 1px solid #e4eaf2;
+  color: #667085;
+  font-size: 15px;
+  text-align: center;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 640px) {
+
+  .pagina--seleciona-morador {
+    padding: 20px 16px;
+  }
+
+  .cabecalho--pagina {
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .botao--voltar {
+    width: 100%;
+  }
+
+  .lista--cards {
+    grid-template-columns: 1fr;
+  }
+}

@@ -8,7 +8,8 @@ import * as CookieService from '../../service/cookie'
 //Header do porteiro
 
 //Função que cria o componenete do reader
-function HeaderPorteiro(){
+//Recebe o texto da busca e a função que o altera, controlados pelo layout do porteiro
+function HeaderPorteiro({ busca = "", aoBuscar }){
 
     //Hook que realiza a nevegação automatica
     const navigate = useNavigate();
@@ -31,6 +32,13 @@ function HeaderPorteiro(){
     
         //Redireciona para a tela inicial
         navigate('/')
+    }
+
+    //Função que redireciona para a página de editar perfil
+    const editarPerfil = () => {
+
+        //Redireciona para a tela de editar perfil
+        navigate('/editarPerfil')
     }
 
     //Retorna um componenete
@@ -65,7 +73,9 @@ function HeaderPorteiro(){
                 <input 
                 type="text" 
                 className={styles["search-input"]} 
-                placeholder="Pesquisar..." 
+                placeholder="Pesquisar nesta página..." 
+                value={busca}
+                onChange={(evento) => aoBuscar?.(evento.target.value)}
                 />
             </div>
 
@@ -91,6 +101,10 @@ function HeaderPorteiro(){
                         <div className={styles["dropdown-menu"]}>
                             <button type="button" onClick={deslogar} className={styles["logout-button"]}>
                                 Deslogar
+                            </button>
+                              {/* Botão de editar perfil */}
+                            <button type="button" onClick={editarPerfil} className={styles["logout-button"]}>
+                                Editar perfil
                             </button>
                         </div>
                     :

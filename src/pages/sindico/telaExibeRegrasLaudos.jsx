@@ -9,9 +9,14 @@ import { useNavigate } from "react-router-dom"
 import { obtendoLaudo } from "../../service/Laudos"
 import { getApertamentos } from "../../service/Apartamentos"
 import { ApertamentoCard } from "../../components/sindico/cardApertamento"
+import { useBuscaHeader } from '../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../utils/busca'
 
 //Função que cria o componente
 function PaginaExibeRegrasLaudos() {
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
@@ -246,8 +251,7 @@ function PaginaExibeRegrasLaudos() {
            {/* Exibindo os card dependendo da ação */}
            {
               //Percorrendo o array com os cards que serão exibidos
-              lista.map((elemento) => {
-
+              filtrarPorTexto(lista, termo).map((elemento) => {
                 //Verifica qual card deve ser redenrizado
                 if (acao === "regras") {
 

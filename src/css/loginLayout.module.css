@@ -462,6 +462,28 @@
 }
 
 /* Alinhamento do botão */
+/* Link "Esqueci minha senha": ação terciária, alinhada à direita logo
+   abaixo do campo de senha. Usa a cor principal dos links do sistema e
+   o mesmo halo de foco dos demais controles */
+.linha-esqueci {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -4px;
+}
+
+.link-esqueci {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cx-primary);
+    text-decoration: none;
+    border-radius: var(--cx-radius-sm);
+    padding: 2px 4px;
+}
+
+.link-esqueci:hover {
+    text-decoration: underline;
+}
+
 .container-botao {
     display: flex;
     justify-content: center;

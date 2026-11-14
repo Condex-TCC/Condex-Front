@@ -1,8 +1,10 @@
 //Tela de registro de retirada de encomenda do porteiro
 
 //Local das importações
+import { useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { registrarRetiradaEncomenda } from '../../service/Encomenda'
+import { mascaraCpf, mascaraTelefone } from '../../utils/mascaras'
 import styles from '../../css/formularioPorteiro.module.css'
 
 //Função que devolve o texto quando o dado ainda não é devolvido pela API
@@ -23,6 +25,9 @@ export default function PaginaDetalheEncomenda() {
     //A encomenda chega pelo estado da navegação quando o porteiro clica no card
     const encomenda = state?.encomenda
 
+    //Estado que desabilita o botão enquanto a retirada é registrada
+    const [salvando, setSalvando] = useState(false)
+
     //Função responsavel por voltar para a tela inicial do porteiro
     const back = () => {
 
@@ -33,8 +38,18 @@ export default function PaginaDetalheEncomenda() {
     //Função que registra a retirada da encomenda
     const retirar = async () => {
 
+        //Impede o clique duplo enquanto a requisição está em andamento
+        if(salvando){
+
+            return
+        }
+
+        setSalvando(true)
+
         //Chama a função que registra a retirada na API
         const resultado = await registrarRetiradaEncomenda(encomenda?.id ?? id)
+
+        setSalvando(false)
 
         //Exibe a menssagem retornada pela API (sucesso ou erro)
         alert(resultado.mensagem)
@@ -100,8 +115,23 @@ export default function PaginaDetalheEncomenda() {
                     <h2 className={styles['fp-resumo-titulo']}>Dados da encomenda</h2>
 
                     <div className={styles['fp-resumo-linha']}>
-                        <span>Destinatário</span>
+                        <span>Encomenda</span>
                         <span>{ouSimbolo(encomenda.nome)}</span>
+                    </div>
+
+                    <div className={styles['fp-resumo-linha']}>
+                        <span>Morador</span>
+                        <span>{ouSimbolo(encomenda.moradorNome)}</span>
+                    </div>
+
+                    <div className={styles['fp-resumo-linha']}>
+                        <span>CPF do morador</span>
+                        <span>{encomenda.moradorCpf ? mascaraCpf(encomenda.moradorCpf) : '-'}</span>
+                    </div>
+
+                    <div className={styles['fp-resumo-linha']}>
+                        <span>Telefone do morador</span>
+                        <span>{encomenda.moradorTelefone ? mascaraTelefone(encomenda.moradorTelefone) : '-'}</span>
                     </div>
 
                     {/* A API guarda bloco, apartamento e data de recebimento dentro
@@ -129,9 +159,10 @@ export default function PaginaDetalheEncomenda() {
                         type="button"
                         className={styles['fp-btn-salvar']}
                         onClick={retirar}
+                        disabled={salvando}
                         aria-label="Confirmar retirada da encomenda"
                     >
-                        SALVAR
+                        {salvando ? 'Salvando...' : 'SALVAR'}
                     </button>
                 </div>
 

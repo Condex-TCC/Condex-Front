@@ -1,19 +1,13 @@
-//Card que exibe um visitante cadastrado na API (por um morador ou pelo próprio porteiro)
+//Card que exibe um visitante cadastrado na API (nome e CPF)
 
 //Local das importações
 import styles from "../../css/paginainicialPorteiro.module.css"
 
 //Função que devolve o texto quando o dado não existe na API
-const ouSimbolo = (valor) => valor ?? '—'
+const ouSimbolo = (valor) => valor ?? '-'
 
 //Card que exibe um visitante cadastrado
-function CardVisitanteCadastrado({ visitante }){
-
-    //Texto de quem cadastrou, de acordo com a regra da API
-    //employee_id nulo = morador | employee_id preenchido = porteiro
-    const origem = visitante.cadastradoPor === 'porteiro'
-        ? 'Cadastrado pelo porteiro'
-        : 'Cadastrado pelo morador'
+function CardVisitanteCadastrado({ visitante, aoRegistrarEntrada }){
 
     //Retorna o componente
     return (
@@ -23,20 +17,29 @@ function CardVisitanteCadastrado({ visitante }){
                 (cx-badge compartilha o visual das outras telas) */}
             <div className={styles["card--top"]}>
                 <span className={styles["text--name"]}>{ouSimbolo(visitante.nome)}</span>
-                <span className={`cx-badge cx-badge--info ${styles["badge--origem"]}`}>{origem}</span>
             </div>
 
-            {/* Linha de informações: CPF e morador responsável */}
-            {/* A API devolve apenas o id do morador, e o porteiro não tem
-                nenhum endpoint para consultar o nome dele */}
-            <div className={styles["card--info"]}>
-                <span className={styles["text--block"]}>CPF: {ouSimbolo(visitante.cpf)}</span>
-                <span className={styles["text--date"]}>Morador (ID): {ouSimbolo(visitante.moradorId)}</span>
+            {/* Linha de informações e ação: CPF, entrada */}
+            <div className={styles["card--active"]}>
+                <div className={styles["info--group"]}>
+                    <span className={styles["text--block"]}>CPF: {ouSimbolo(visitante.cpf)}</span>
+                </div>
+
+                {/* A API registra a entrada pelo id do visitante */}
+                {
+                    aoRegistrarEntrada &&
+                    <button
+                        className={styles["btn--exit"]}
+                        onClick={() => aoRegistrarEntrada(visitante)}
+                    >
+                        Registrar entrada
+                    </button>
+                }
             </div>
 
         </article>
     )
 }
 
-//Exportando o compomente para ser utilizado em outra página
+//Exportando o componente para ser utilizado em outra página
 export default CardVisitanteCadastrado

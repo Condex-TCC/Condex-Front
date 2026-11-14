@@ -8,9 +8,14 @@ import { getRespostas } from "../../../service/Comunicados"
 import { useEffect, useState } from "react"
 import CardResposta from "../../../components/sindico/comunicados/cardResposta"
 import stylesTitle from '../../../css/paginaCadastraRegra.module.css';
+import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../../utils/busca'
 
 //Função que cria o componentes
 function PaginaExibeResposta(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Hook que irá controlar o estado das respostas
     const [cards, setCards] = useState([])
@@ -122,7 +127,7 @@ function PaginaExibeResposta(){
                 {/* Cards com as respostas */}
                 {
                     // Interando e adicioando os cards
-                    lista.map((resposta) => {
+                    filtrarPorTexto(lista, termo).map((resposta) => {
                         //Retorna o card de comunicado
                         return <CardResposta resposta={resposta} redirecionamento={"/sindico/comunicados/respostas"}></CardResposta>
                     } )

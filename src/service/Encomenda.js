@@ -1,70 +1,69 @@
 //Arquivo responsavel por solicitar a requisição e trata-la
 
-import { getEncomendasAPI, insertEncomendaAPI, withdrawEncomendaAPI } from "../api/EncomendaApi"
+import { getEncomendasAPI, getEncomendasMoradorAPI, insertEncomendaAPI, withdrawEncomendaAPI } from "../api/EncomendaApi"
 import { lerJson, montarMensagemErro } from "../utils/erroApi"
 
 //Mensagem exibida quando o frontend não consegue falar com o servidor
 const MENSAGEM_SEM_CONEXAO = "Não foi possível conectar à API. Verifique se o servidor está no ar."
 
+//Função que normaliza um item de encomenda vindo da API (EncomendaResources)
+function normalizarEncomenda(item) {
+
+    if (!item) return item
+
+    return {
+        ...item,
+        data: item.data ?? item.data_retirada ?? item.retirada_em ?? null,
+        data_retirada: item.data_retirada ?? item.data ?? null,
+        recebida: item.recebida ?? item.data_recebimento ?? null,
+        nome: item.nome ?? item.nome_encomenda ?? null,
+        descricao: item.descricao ?? item.descricao_encomenda ?? null,
+        moradorId: item.moradorId ?? item.morador?.id ?? item.fk_id_morador_encomenda ?? null,
+        moradorNome: item.moradorNome ?? item.morador?.nome ?? null,
+        moradorTelefone: item.moradorTelefone ?? item.morador?.telefone ?? null,
+        moradorCpf: item.moradorCpf ?? item.morador?.cpf ?? null,
+    }
+}
+
 //Função que obtem todas as encomendas
 //Devolve a lista quando a API responde com sucesso e null quando a requisição
 //falha, para a tela conseguir diferenciar "sem encomendas" de "erro ao buscar"
-export async function getEncomendas() {
+export async function getEncomendas(filtros = {}) {
 
-    //Tendanto executar a requisição
-    try{
-
-        //Chamando a função que realiza a requisição no API
-        let response = await getEncomendasAPI()
-
-        //Convertendo o JSON para objetos no JS
+    try {
+        let response = await getEncomendasAPI(filtros)
         let json = await lerJson(response)
 
-        //Verifica se houve algum erro na requisição
-        //O status HTTP é usado porque os erros do Laravel (401, 403, 500)
-        //não trazem o campo "status" no corpo da resposta
-        if(!response.ok){
-
-            //Para a execução do try e lança um erro para o catch
-            throw(montarMensagemErro(json, response.status, "Não foi possível buscar as encomendas."))
+        if (!response.ok) {
+            throw (montarMensagemErro(json, response.status, "Não foi possível buscar as encomendas."))
         }
 
-        //Retornando a lista de encomendas
-        return json.data
+        //A API devolve { data: { encomendas: [...] } } (EncomendaController::index)
+        const lista = Array.isArray(json.data?.encomendas)
+            ? json.data.encomendas
+            : (Array.isArray(json.data) ? json.data : [])
+
+        return lista.map(normalizarEncomenda)
     }
-    //Casso aconteça algum erro na requisição, cai nesse bloco
-    catch(erro){
-
-        //Exibe o erro no console para depuração
+    catch (erro) {
         console.error("Erro ao buscar as encomendas na API:", erro)
-
-        //Sinaliza a falha para a tela
         return null
     }
-
 }
 
 //Função que cadastra uma nova encomenda
-//Recebe o nome do destinatário, a descrição e o id do morador destinatário, que a
-//API exige em "id_morador". O parâmetro detalhes leva bloco, apartamento e data do
-//formulário. A API real ainda não tem colunas para esses dados, então são ignorados
-//na requisição e só aproveitados pelo mock
+//Recebe o nome da encomenda (ex.: Pacote do Mercado Livre), a descrição e o id do
+//morador destinatário, que a API exige em "id_morador". Os dados do morador são
+//devolvidos pela própria API na relação morador. O parâmetro detalhes só é usado pelo mock
 //Devolve { sucesso, mensagem } para a tela saber se pode navegar ou se precisa
 //mostrar o erro devolvido pela API
 export async function cadastrarEncomenda(nome, descricao, idMorador, detalhes = {}) {
 
-    //Tendanto executar a requisição
-    try{
-
-        //Chamando a função que realiza a requisição no API
+    try {
         let response = await insertEncomendaAPI(nome, descricao, idMorador, detalhes)
-
-        //Convertendo o JSON para objetos no JS
         let json = await lerJson(response)
 
-        //Verifica se houve algum erro na requisição
-        if(!response.ok){
-
+        if (!response.ok) {
             return {
                 sucesso: false,
                 mensagem: montarMensagemErro(
@@ -77,25 +76,12 @@ export async function cadastrarEncomenda(nome, descricao, idMorador, detalhes = 
             }
         }
 
-        //Retornando o sucesso com a menssagem da API
-        return {
-            sucesso: true,
-            mensagem: json.message
-        }
+        return { sucesso: true, mensagem: json.message }
     }
-    //Casso aconteça algum erro na requisição, cai nesse bloco
-    catch(erro){
-
-        //Exibe o erro no console para depuração
+    catch (erro) {
         console.error("Erro ao cadastrar a encomenda na API:", erro)
-
-        //Devolve uma mensagem amigável para a tela exibir
-        return {
-            sucesso: false,
-            mensagem: MENSAGEM_SEM_CONEXAO
-        }
+        return { sucesso: false, mensagem: MENSAGEM_SEM_CONEXAO }
     }
-
 }
 
 //Função que registra a retirada de uma encomenda
@@ -103,41 +89,57 @@ export async function cadastrarEncomenda(nome, descricao, idMorador, detalhes = 
 //como "Esta encomenda já foi retirada!"
 export async function registrarRetiradaEncomenda(id) {
 
-    //Tendanto executar a requisição
-    try{
-
-        //Chamando a função que realiza a requisição no API
+    try {
         let response = await withdrawEncomendaAPI(id)
-
-        //Convertendo o JSON para objetos no JS
         let json = await lerJson(response)
 
-        //Verifica se houve algum erro na requisição
-        if(!response.ok){
-
+        if (!response.ok) {
             return {
                 sucesso: false,
                 mensagem: montarMensagemErro(json, response.status, "Não foi possível registrar a retirada da encomenda.")
             }
         }
 
-        //Retornando o sucesso com a menssagem da API
-        return {
-            sucesso: true,
-            mensagem: json.message
+        return { sucesso: true, mensagem: json.message }
+    }
+    catch (erro) {
+        console.error("Erro ao registrar a retirada da encomenda na API:", erro)
+        return { sucesso: false, mensagem: MENSAGEM_SEM_CONEXAO }
+    }
+}
+
+
+//Função que obtem as ecomendas do morador
+export async function getEncomendasMorador() {
+    
+    //Tendanto executar a requisição
+    try{
+
+        //Chamando a função que realiza a requisição no API
+        let response = await getEncomendasMoradorAPI()
+
+        //Convertendo o JSON para objetos no JS
+        let json = await response.json()
+
+        //Desestrutura o promisse
+        const { message, status, data} = json
+
+        //Verifica se houve algum erro na requisição
+        if(status != 200){
+
+            //Para a execução do try e lança um erro para o catch
+            throw("Erro na requisição " + status)
         }
+
+        //Retornando a menssagem
+        return data
     }
     //Casso aconteça algum erro na requisição, cai nesse bloco
     catch(erro){
 
-        //Exibe o erro no console para depuração
-        console.error("Erro ao registrar a retirada da encomenda na API:", erro)
+        //Exibe um alerta na tela
+        console.error("Erro ao encomenda do morador", erro)
 
-        //Devolve uma mensagem amigável para a tela exibir
-        return {
-            sucesso: false,
-            mensagem: MENSAGEM_SEM_CONEXAO
-        }
     }
 
 }

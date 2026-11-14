@@ -5,9 +5,14 @@ import styles from "../../css/telaExibeUsuarios.module.css"
 import { useEffect, useState } from "react"
 import { LoadindUsers } from "../../service/CrudUsuarios"
 import { useNavigate } from "react-router-dom"
+import { useBuscaHeader } from '../../hooks/useBuscaHeader'
+import { filtrarPorTexto } from '../../utils/busca'
 
 //Função que cria os componentes
 function PaginaExibeUsuarios(){
+
+    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
+    const { termo } = useBuscaHeader()
 
     //Cmponente que realiza a nevegação automatica
     const navigate = useNavigate();
@@ -154,11 +159,9 @@ function PaginaExibeUsuarios(){
               (
                 <tr>
                   <th className={styles.th} scope="col">Nome</th>
-                  <th className={styles.th} scope="col">Perfil</th>
                   <th className={styles.th} scope="col">CPF</th>
                   <th className={styles.th} scope="col">Telefone</th>
                   <th className={styles.th} scope="col">Unidade</th>
-                  <th className={styles.thCenter} scope="col">Editar</th>
                   <th className={styles.thCenter} scope="col">Apagar</th>
                 </tr>
               ) :
@@ -166,9 +169,9 @@ function PaginaExibeUsuarios(){
               (
                 <tr>
                   <th className={styles.th} scope="col">Nome</th>
-                  <th className={styles.th} scope="col">Perfil</th>
                   <th className={styles.th} scope="col">E-mail</th>
-                  <th className={styles.thCenter} scope="col">Editar</th>
+                  <th className={styles.th} scope="col">CPF</th>
+                  <th className={styles.th} scope="col">Telefone</th>
                   <th className={styles.thCenter} scope="col">Apagar</th>
                 </tr>
               )
@@ -181,7 +184,7 @@ function PaginaExibeUsuarios(){
           
           {
             //Percorrendo o array de usuários
-            usuarios.map((usuario) => {
+            filtrarPorTexto(usuarios, termo).map((usuario) => {
               
               // Verifica qual tipo de usuário está selecionado
               if(tipoUsuario === "morador"){

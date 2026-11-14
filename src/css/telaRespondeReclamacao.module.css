@@ -1,0 +1,150 @@
+/* TELA DE RESPOSTA DE RECLAMAÇÃO DO SÍNDICO */
+
+.trr-container {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #001c3f;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-bottom: 16px;
+}
+
+.trr-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.trr-titulo {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.trr-btnVoltar {
+  background-color: #ffffff;
+  border: 1px solid #d4d8e2;
+  border-radius: 8px;
+  color: #2b45a2;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.trr-btnVoltar:hover {
+  background-color: #eef2ff;
+  border-color: #c9d0e6;
+}
+
+.trr-destaque {
+  background-color: #eef2ff;
+  border: 1px solid #c9d0e6;
+  border-left: 4px solid #2b45a2;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.trr-destaqueRotulo {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #2b45a2;
+  margin-bottom: 8px;
+}
+
+.trr-destaqueTexto {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #001c3f;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.trr-morador {
+  background-color: #ffffff;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.trr-moradorRotulo {
+  font-size: 12px;
+  font-weight: 700;
+  color: #7a87a7;
+}
+
+.trr-moradorValor {
+  font-size: 14px;
+  color: #001c3f;
+  font-weight: 600;
+}
+
+.trr-cadastro {
+  background-color: #ffffff;
+  border: 1px solid #eef0f4;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.trr-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d4d8e2;
+  border-radius: 10px;
+  outline: none;
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #001c3f;
+  background-color: #ffffff;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  resize: vertical;
+  min-height: 150px;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.trr-textarea::placeholder {
+  color: #a3acc4;
+}
+
+.trr-textarea:focus {
+  border-color: #2b45a2;
+  box-shadow: 0 0 0 1px #2b45a2;
+}
+
+.trr-btnCadastrar {
+  align-self: flex-start;
+  background-color: #2b45a2;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.trr-btnCadastrar:hover {
+  background-color: #203b8f;
+}
+
+.trr-btnCadastrar:active {
+  transform: scale(0.99);
+}

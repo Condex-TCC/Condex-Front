@@ -1,5 +1,9 @@
 //Local das importações
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
 import styles from "../../css/paginaInicialSindico.module.css"
+import { getTelaIncialSindico } from "../../service/TelaInicial"
 
 //Página inicial do sindico
 //
@@ -12,91 +16,275 @@ import styles from "../../css/paginaInicialSindico.module.css"
 //Função que cria o componente do sindico
 function PaginainicialSindico(){
     
+  //Hook que armazena os dados 
+  const [dadosTelaInical, setDadosTelaInical] = useState([])
+
+  //Hook que realiza a navegação entre as páginas
+  const navigate = useNavigate()
+
+  //Função que redireciona para a tela de reclamações não respondidas
+  const redirecionaReclamacoes = () => {
+
+    //Realiza a navegação para a tela de reclamações
+    navigate("/sindico/reclamacoes/exibir")
+  }
+
+  //Função que redireciona para a tela de aprovação de reservas
+  const redirecionaAprovacaoReservas = () => {
+
+    //Realiza a navegação para a tela de reservas que precisam de aprovação
+    navigate("/sindico/reservas/exibe/aprovadas")
+  }
+
+  //Função que redireciona para as respostas dos comunicados não respondidos
+  const redirecionaRespostasComunicados = () => {
+
+    //Realiza a navegação para a tela de respostas dos comunicados
+    navigate("/sindico/comunicados/respostas")
+  }
+
+  //Função que redireciona para os envios de um comunicado específico
+  const redirecionaEnviosComunicado = (id) => {
+
+    //Realiza a navegação passando o id do comunicado na URL
+    navigate("/sindico/comunicados/envios/" + id)
+  }
+
+  //Função que obtem os dados para a tela inicial do sindico
+  const obtendoDadosTelaInicial = async () => {
+
+    //Obtendo os dados
+    let dados = await getTelaIncialSindico()
+
+    //Salvando os dados no state para poderem ser utilizados na página
+    setDadosTelaInical(dados)
+    console.log(dados)
+  }
+
+  //Hook que é executado quando a página é renderizada
+  useEffect(() => {
+
+    //Chamando a função que obtem os dados para a tela inicial
+    obtendoDadosTelaInicial()
+    
+  }, [])
+
+  //Dados dos moradores e porteiros cadastrados utilizados no gráfico de pizza
+  const dadosStatusCondominio = [
+    {
+      nome: "Moradores",
+      quantidade: dadosTelaInical?.status_condominio?.morador ?? 0,
+      cor: "#2b45a2"
+    },
+    {
+      nome: "Porteiros",
+      quantidade: dadosTelaInical?.status_condominio?.porteiro ?? 0,
+      cor: "#33c3f0"
+    }
+  ]
+
+  //Total de usuários cadastrados no condomínio
+  const totalUsuarios = dadosTelaInical?.status_condominio?.total
+    ?? (dadosStatusCondominio[0].quantidade + dadosStatusCondominio[1].quantidade)
+
     //Retorna um componente
     return (
-    <div className={styles.pagina}>
+    <div className={styles['dashboard--principal']}>
 
-      {/* Cabeçalho da página: diz ao síndico onde ele está e o que
-          vai encontrar abaixo. Padrão de toda a área interna. */}
-      <header className={styles['cabecalho-pagina']}>
-        <div>
+      {/* Cabeçalho da página: contexto, título e apoio (padrão cx-page-header)
+          e, à direita, a data de hoje por extenso */}
+      <header className={styles['cabecalho--dashboard']}>
+
+        {/* Bloco da esquerda com o título e o subtítulo */}
+        <div className={styles['cabecalho--texto']}>
           <p className="cx-overline">Painel do condomínio</p>
-          <h2 className="cx-page-title">Início</h2>
+          <h2 className="cx-page-title">Olá, Síndico!</h2>
           <p className="cx-page-subtitle">
-            Resumo rápido do que precisa da sua atenção.
+            Aqui está um resumo das principais informações do seu condomínio.
           </p>
         </div>
+
+        {/* Bloco da direita com a data de hoje por extenso */}
+        <div className={styles['bloco--data']}>
+          <span className={styles['icone--data']} aria-hidden="true">📅</span>
+          <span className={styles['texto--data']}>
+            {new Date().toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+          </span>
+        </div>
+
       </header>
 
-      {/* Grade de dois painéis: indicadores à esquerda,
-          comunicação à direita. Em telas estreitas eles empilham. */}
-      <div className={styles['grade-painel']}>
+      {/* Cards de resumo do dia */}
+      <div className={styles['container--resumo']}>
 
-        {/* Painel 1 — indicadores de perguntas */}
-        <section className={styles.painel} aria-labelledby="titulo-perguntas">
-          <div className={styles['painel__cabecalho']}>
-            <h3 className={styles['painel__titulo']} id="titulo-perguntas">
-              Perguntas não respondidas
-            </h3>
+        {/* Card de reclamações não respondidas */}
+        <div
+          className={`${styles['cartao--resumo']} ${styles['cartao--resumo--perguntas']}`}
+          onClick={redirecionaReclamacoes}
+        >
+          <div className={`${styles['caixa--icone']} ${styles['caixa--icone--perguntas']}`}>
+            <span className={styles['icone--resumo']}>❓</span>
           </div>
+          <div className={styles['conteudo--cartao--resumo']}>
+            <span className={styles['titulo--cartao--resumo']}>Reclamações não respondidas</span>
+            <span className={styles['valor--resumo']}>{dadosTelaInical?.quant_reclamacoes}</span>
+          </div>
+          <span className={styles['seta--cartao--resumo']}>›</span>
+        </div>
 
-          <div className={styles['container--resumo']}>
+        {/* Card de reservas pendentes */}
+        <div
+          className={`${styles['cartao--resumo']} ${styles['cartao--resumo--reservas']}`}
+          onClick={redirecionaAprovacaoReservas}
+        >
+          <div className={`${styles['caixa--icone']} ${styles['caixa--icone--reservas']}`}>
+            <span className={styles['icone--resumo']}>📅</span>
+          </div>
+          <div className={styles['conteudo--cartao--resumo']}>
+            <span className={styles['titulo--cartao--resumo']}>Reservas pendentes</span>
+            <span className={styles['valor--resumo']}>{dadosTelaInical?.quant_reservas}</span>
+          </div>
+          <span className={styles['seta--cartao--resumo']}>›</span>
+        </div>
 
-            {/* Indicador 1: pendentes (atenção -> âmbar) */}
-            <article className={styles['cartao--resumo']}>
-              <div className={styles['cartao--resumo__topo']}>
-                <span className={styles['cartao--resumo__rotulo']}>Pendentes</span>
-                <span className={`${styles['cartao--resumo__icone']} ${styles['cartao--resumo__icone--alerta']}`} aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                    <line x1="12" y1="9" x2="12" y2="13"></line>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                  </svg>
-                </span>
+        {/* Card de respostas não lidas */}
+        <div
+          className={`${styles['cartao--resumo']} ${styles['cartao--resumo--comunicados']}`}
+          onClick={redirecionaRespostasComunicados}
+        >
+          <div className={`${styles['caixa--icone']} ${styles['caixa--icone--comunicados']}`}>
+            <span className={styles['icone--resumo']}>💬</span>
+          </div>
+          <div className={styles['conteudo--cartao--resumo']}>
+            <span className={styles['titulo--cartao--resumo']}>Respostas não lidas</span>
+            <span className={styles['valor--resumo']}>{dadosTelaInical?.quant_comunicados}</span>
+          </div>
+          <span className={styles['seta--cartao--resumo']}>›</span>
+        </div>
+
+      </div>
+
+      {/* Painéis de resumo, comunicados e status */}
+      <div className={styles['container--paineis']}>
+
+        {/* Painel com o resumo gerado por IA */}
+        <div className={`${styles['cartao--painel']} ${styles['cartao--painel--resumo']}`}>
+          <div className={styles['cabecalho--painel']}>
+            <span className={styles['icone--painel']}>✨</span>
+            <h2 className={styles['titulo--painel']}>Resumo do condomínio</h2>
+            <span className={styles['etiqueta--ia']}>Gerado por IA</span>
+          </div>
+          <div className={styles['conteudo--painel']}>
+            <p className={styles['texto--resumo']}>{dadosTelaInical?.resumo_condominio}</p>
+          </div>
+        </div>
+
+        {/* Painel com os comunicados recentes */}
+        <div className={`${styles['cartao--painel']} ${styles['cartao--painel--comunicados']}`}>
+          <div className={styles['cabecalho--painel']}>
+            <span className={styles['icone--painel']}>📢</span>
+            <h2 className={styles['titulo--painel']}>Comunicados recentes</h2>
+          </div>
+          <div className={styles['conteudo--painel']}>
+            {dadosTelaInical?.top_comunicados?.length === 0 ? (
+              <div className={styles['nao-tem-comunicados']}>No momento não tem comunidacos!</div>
+            ) : (
+              dadosTelaInical?.top_comunicados?.map((comunicado) => (
+                <div
+                  className={styles['item--comunicado']}
+                  key={comunicado.id}
+                  onClick={() => redirecionaEnviosComunicado(comunicado.id)}
+                >
+                  <span className={styles['icone--comunicado']}>📢</span>
+                  <div className={styles['texto--comunicado']}>
+                    <span className={styles['titulo--comunicado']}>{comunicado.titulo}</span>
+                    <span className={styles['descricao--comunicado']}>{comunicado.descricao}</span>
+                  </div>
+                  <span className={styles['data--comunicado']}>
+                    {new Date(comunicado.criado_em).toLocaleDateString("pt-BR")}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Painel com o status do condomínio */}
+        <div className={`${styles['cartao--painel']} ${styles['cartao--painel--status']}`}>
+          <div className={styles['cabecalho--painel']}>
+            <span className={styles['icone--painel']}>📊</span>
+            <h2 className={styles['titulo--painel']}>Status do condomínio</h2>
+          </div>
+          <div className={styles['conteudo--painel']}>
+            {totalUsuarios === 0 ? (
+
+              /* Mensagem exibida quando ainda não existem usuários cadastrados */
+              <div className={styles['sem-dados--status']}>
+                Nenhum morador ou porteiro cadastrado no momento.
               </div>
-              <strong className={styles['cartao--resumo__valor']}>0</strong>
-              <span className={styles['cartao--resumo__nota']}>aguardando resposta</span>
-            </article>
+            ) : (
 
-            {/* Indicador 2: em andamento (informação -> azul) */}
-            <article className={styles['cartao--resumo']}>
-              <div className={styles['cartao--resumo__topo']}>
-                <span className={styles['cartao--resumo__rotulo']}>Em andamento</span>
-                <span className={`${styles['cartao--resumo__icone']} ${styles['cartao--resumo__icone--info']}`} aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-                  </svg>
-                </span>
+              /* Gráfico de pizza com a legenda ao lado */
+              <div className={styles['status--condominio']}>
+
+                {/* Gráfico de pizza com a divisão entre moradores e porteiros */}
+                <div className={styles['grafico--status']}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={dadosStatusCondominio}
+                        dataKey="quantidade"
+                        nameKey="nome"
+                        outerRadius="96%"
+                        paddingAngle={2}
+                        cornerRadius={4}
+                        stroke="none"
+                      >
+                        {dadosStatusCondominio.map((usuario) => (
+                          <Cell key={usuario.nome} fill={usuario.cor} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        formatter={(valor, nome) => [valor + " cadastrados", nome]}
+                        contentStyle={{
+                          padding: "8px 12px",
+                          background: "#ffffff",
+                          border: "1px solid #e4eaf2",
+                          borderRadius: "10px",
+                          boxShadow: "0 8px 24px rgba(16, 24, 40, 0.1)",
+                          fontSize: "12px"
+                        }}
+                        itemStyle={{ color: "#1f2a44", fontWeight: 600 }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+
+                {/* Legenda com a quantidade de cada tipo de usuário */}
+                <div className={styles['legenda--status']}>
+                  {dadosStatusCondominio.map((usuario) => (
+                    <div className={styles['item--legenda--status']} key={usuario.nome}>
+                      <span
+                        className={styles['bolinha--legenda--status']}
+                        style={{ backgroundColor: usuario.cor }}
+                      ></span>
+                      <span className={styles['texto--legenda--status']}>{usuario.nome}</span>
+                      <span className={styles['quantidade--legenda--status']}>{usuario.quantidade}</span>
+                    </div>
+                  ))}
+
+                  <div className={styles['divisor--legenda--status']}></div>
+
+                  <div className={styles['total--legenda--status']}>
+                    <span className={styles['texto--total--status']}>Total cadastrado</span>
+                    <span className={styles['quantidade--total--status']}>{totalUsuarios}</span>
+                  </div>
+                </div>
+
               </div>
-              <strong className={styles['cartao--resumo__valor']}>0</strong>
-              <span className={styles['cartao--resumo__nota']}>em análise</span>
-            </article>
-
+            )}
           </div>
-        </section>
-
-        {/* Painel 2 — últimos comunicados */}
-        <section className={styles.painel} aria-labelledby="titulo-comunicados">
-          <div className={styles['painel__cabecalho']}>
-            <h3 className={styles['painel__titulo']} id="titulo-comunicados">
-              Últimos comunicados
-            </h3>
-          </div>
-
-          {/* Estado vazio do padrão CONDEX: ícone + frase + explicação.
-              Informa que está vazio e o que acontecerá aqui. */}
-          <div className="cx-empty">
-            <span className="cx-empty__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-            </span>
-            <p className="cx-empty__title">No momento não há comunicados!</p>
-            <p className="cx-empty__text">
-              Os comunicados publicados para os moradores aparecem neste painel.
-            </p>
-          </div>
-        </section>
+        </div>
 
       </div>
 

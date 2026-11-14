@@ -53,16 +53,44 @@ const ITENS_SIDEBAR = [
         )
     },
 
+    // Reclamações
+    {
+        chave: 'reclamacoes',
+        rotulo: 'Reclamações',
+        path: '/morador/reclamacoes/exibe',
+        icone: (
+            <>
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </>
+        )
+    },
+
     // Visitantes
     {
         chave: 'visitantes',
         grupo: 'Condomínio',
         rotulo: 'Visitantes',
-        path: '/morador/visitantes',
+        path: '/morador/visitas',
         icone: (
             <>
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
+            </>
+        )
+    },
+
+    // Encomendas (rota /morador/encomenda)
+    {
+        chave: 'encomendas',
+        rotulo: 'Encomendas',
+        path: '/morador/encomenda',
+        icone: (
+            <>
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
             </>
         )
     },
@@ -119,6 +147,13 @@ const SidebarMorador = () => {
         if(item.chave === 'comunicados' && pathname.startsWith('/morador/mensagens')){
 
             return true
+        }
+
+        //Itens com telas internas (detalhes, cadastro, histórico) continuam
+        //destacados enquanto o morador navega dentro da mesma seção
+        if(['visitantes', 'encomendas', 'reclamacoes'].includes(item.chave)){
+
+            return pathname === item.path || pathname.startsWith(`${item.path}/`)
         }
 
         return pathname === item.path

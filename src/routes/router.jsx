@@ -19,7 +19,6 @@ import PaginaExibeUsuarios from '../pages/sindico/telaExibeUsuarios';
 import PaginaCadastraPorteiro from '../pages/sindico/telaCadastraPorteiro';
 import PaginaCadastraMorador from '../pages/sindico/telaCadastraMorador';
 import PaginaMenssagem from '../pages/sindico/telaMenssagem';
-import PaginaAtualizaPorteiro from '../pages/sindico/telaAtualizaPorteiro';
 import PaginaExibeRegrasLaudos from '../pages/sindico/telaExibeRegrasLaudos';
 import PaginaCadastraRegra from '../pages/sindico/telaCadastraRegras';
 import PaginaAtualizaRegra from '../pages/sindico/telaAtualizaRegras';
@@ -28,7 +27,6 @@ import PaginaAtualizaLaudos from '../pages/sindico/telaAtualizaLaudo';
 import PaginaCadastraApertamento from '../pages/sindico/telaCadastraApertamento';
 import PaginaAtualizaApertamento from '../pages/sindico/telaAtualizaApertamento';
 import PaginaSelecionaApertamento from '../pages/sindico/telaSelecionaApartamento';
-import PaginaAtualizaMorador from '../pages/sindico/telaAtualizaMorador';
 import PaginaSelecionaApertamentoUpdate from '../pages/sindico/telaSelecionaApartamentoUpdate';
 import PaginaExibeReserva from '../pages/sindico/reservas/telaExibeReservas';
 import PaginaGerenciaReservas from '../pages/sindico/reservas/telaGerenciamentoReservas';
@@ -40,9 +38,9 @@ import PaginaDetalheEncomenda from '../pages/porteiro/telaDetalheEncomenda';
 import PaginaRegistroVisitante from '../pages/porteiro/RegistroVisitante';
 
 //Importando as páginas do morador
-import PaginaVisitantesMorador from '../pages/morador/telaVisitantesMorador';
-import PaginaCadastraVisitanteMorador from '../pages/morador/telaCadastraVisitanteMorador';
 import PaginaEmBreveMorador from '../pages/morador/telaEmBreveMorador';
+import PaginaReservasMorador from '../pages/morador/telaReservasMorador';
+import PaginaSolicitaReservaMorador from '../pages/morador/telaSolicitaReservaMorador';
 import PaginaExibeComunicados from '../pages/sindico/comunicados/telaExibeComunicados';
 import PaginaExibeResposta from '../pages/sindico/comunicados/telaExibeRespostas';
 import PaginaExibeEnvios from '../pages/sindico/comunicados/telaExibeEnvios';
@@ -54,7 +52,31 @@ import PaginaExibeComunicadosHistorico from '../pages/morador/comunicados/telaEx
 import PaginaDetalhesComunicados from '../pages/morador/comunicados/telaDetalhesComunicados';
 import PaginaExibeRegrasMorador from '../pages/morador/RegrasLaudos/telaExibeRegrasMorador';
 import PaginaExibeLaudosMorador from '../pages/morador/RegrasLaudos/telaExibeLaudosMorador';
-
+import PaginaExibeAprovaReservas from '../pages/sindico/reservas/telaAprovaReserva';
+import PaginaEditarPerfil from '../pages/editarPerfil';
+import PaginaPrimeiroAcesso from '../pages/primeiroAcesso';
+import PaginaExibeReclamacaoMorador from '../pages/morador/reclamacoes/telaExibeReclamacao';
+import PaginaCadastraReclamacao from '../pages/morador/reclamacoes/talaCadastraReclamacao';
+import PaginaExibeReclamacaoNaoVisualizada from '../pages/sindico/reclamacoes/telaExibeReclamacoesNaoVisualizadas';
+import PaginaExibeReclamacoesHistorico from '../pages/sindico/reclamacoes/telaExibeReclamacoesHistorico';
+import PaginaRespondeReclamacao from '../pages/sindico/reclamacoes/telaRespondeReclamacao';
+import PaginaValdiaInformacoes from '../pages/telaValidaInformacoes';
+import PaginaInsereCodigo from '../pages/telaInsereCodigo';
+import PaginaRedefineSenha from '../pages/telaAlteraSenha';
+import PaginaInicalMorador from '../pages/morador/telaInicialMorador';
+import PaginaVisitantesSindico from '../pages/sindico/visitantesVisitas/telaVisitantes';
+import PaginaVisitasSindico from '../pages/sindico/visitantesVisitas/telaVisitas';
+import PaginaExibeEncomendaMorador from '../pages/morador/encomendas/telaExibeEncomendas';
+import PaginaExibeVisitasMorador from '../pages/morador/visitasVisitantes/telaExibeVisitas';
+import PaginaExibeHistoricoVisitasMorador from '../pages/morador/visitasVisitantes/telaExibeHistoricoVisita';
+import  PaginaConsultaVisitanteMorador from '../pages/morador/visitasVisitantes/telaConsultaVisita';
+import PaginaDetalheVisitaMorador from '../pages/morador/visitasVisitantes/telaDetalheVisita';
+import PaginaCadastraVisitaMorador from '../pages/morador/visitasVisitantes/telaCadastraVisita';
+import PaginaHistoricoVisitaPorteiro from '../pages/porteiro/visitaVisitante/telaHsitoricoVisitaPorteiro';
+import PaginaDetalhesVisitaPorteiro from '../pages/porteiro/visitaVisitante/telaShowVisitaPorteiro';
+import PaginaConsultaVisitantePorteiro from '../pages/porteiro/visitaVisitante/telaConsultaVisitantePorteiro';
+import PaginaSelecionaMoradorPorteiro from '../pages/porteiro/visitaVisitante/telaSeleiconaMoradorPorteiro';
+import PaginaCadastraVisitaPorteiro from '../pages/porteiro/visitaVisitante/telaCadastraVisitaPorteiro';
 
 //Componente que será utilizado para analisar a URL
 const route = createBrowserRouter([
@@ -75,12 +97,43 @@ const route = createBrowserRouter([
                         index: true, // Usa index: true para a rota padrão do pai
                         element: <PaginaInical />,
                     },
+
                     //Tela de login
                     {
                         path: "login", // Caminho relativo (sem a barra inicial)
                         element: <TelaDeLogin />,
-                    }
+                    },
                 ]
+            },
+
+            //Tela de editar perfil
+            {
+                path: "/editarPerfil",
+                element: <PaginaEditarPerfil></PaginaEditarPerfil>
+            },
+
+            //Tela de primeiro acesso | Completa os dados e define a senha
+            {
+                path: "/primeiroAcesso",
+                element: <PaginaPrimeiroAcesso></PaginaPrimeiroAcesso>
+            },
+
+            //Tela para validar a consta | ETAPA 1
+            {
+                path: "/consta/valida",
+                element: <PaginaValdiaInformacoes></PaginaValdiaInformacoes>
+            },
+
+            //Tela para validar o código enviado via SMS | ETAPA 2
+            {
+                path: "/consta/codigo",
+                element: <PaginaInsereCodigo></PaginaInsereCodigo>
+            },
+
+            //Tela para redefinir a senha | ETAPA 3
+            {
+                path: "/consta/senha",
+                element: <PaginaRedefineSenha></PaginaRedefineSenha>
             },
 
             //Tela do sindico
@@ -118,12 +171,6 @@ const route = createBrowserRouter([
                         element: <PaginaCadastraMorador></PaginaCadastraMorador>,
                     },
 
-                    //Tela para para cadastrar os moradoes
-                    {
-                        path: "usuarios/morador/updade/:id", // Caminho que vai ser acessado na URL
-                        element: <PaginaAtualizaMorador></PaginaAtualizaMorador>,
-                    },
-
                     //Tela de sucesso no cadastro
                     {
                         path: "mensagem", // Caminho que vai ser acessado na URL
@@ -134,13 +181,6 @@ const route = createBrowserRouter([
                     {
                         path: "usuarios/morador/apertamento/update", // Caminho que vai ser acessado na URL
                         element: <PaginaSelecionaApertamentoUpdate></PaginaSelecionaApertamentoUpdate>,
-                    },
-
-                    //Tela de updadte do porteiro
-                    {
-                        //Essa rota recebe um parametro na url
-                        path: "usuarios/porteiro/update/:id", // Caminho que vai ser acessado na URL
-                        element: <PaginaAtualizaPorteiro></PaginaAtualizaPorteiro>,
                     },
 
                     //Tela de exibir regras
@@ -215,6 +255,12 @@ const route = createBrowserRouter([
                         element: <PaginaAutorizaRerva></PaginaAutorizaRerva>
                     },
 
+                    //Tela para visualiar as reservas que precisão de aprovação
+                    {
+                        path: "reservas/exibe/aprovadas",
+                        element: <PaginaExibeAprovaReservas></PaginaExibeAprovaReservas>
+                    },
+
                     //Tela do comunicados
                     {
                         path: "comunicados", // Renderiza no caminho "/morador/documentos"
@@ -249,7 +295,37 @@ const route = createBrowserRouter([
                     {
                         path: "comunicados/cadastrar/selecionar",
                         element: <PaginaSelecionaMoradorComunicado></PaginaSelecionaMoradorComunicado>
-                    }
+                    },
+
+                    //Tela que vai exibir as reclamações não visualizadas para o sindico
+                    {
+                        path: "reclamacoes/exibir",
+                        element: <PaginaExibeReclamacaoNaoVisualizada></PaginaExibeReclamacaoNaoVisualizada>
+                    },
+
+                    //Tela que vai exibir o histórico das reclamações
+                    {
+                        path: "reclamacoes/historico",
+                        element: <PaginaExibeReclamacoesHistorico></PaginaExibeReclamacoesHistorico>
+                    },
+
+                    //Tela que vai responser as reclamações
+                    {
+                        path: "reclamacoes/responder/:id",
+                        element: <PaginaRespondeReclamacao></PaginaRespondeReclamacao>
+                    },
+
+                    //Tela que vai exibir os moradores
+                    {
+                        path: "visitantes",
+                        element: <PaginaVisitantesSindico></PaginaVisitantesSindico>
+                    },
+
+                    //Tela que vai exbir as visitas 
+                    {
+                        path: "visitas",
+                        element: <PaginaVisitasSindico></PaginaVisitasSindico>
+                    },
                 ]
             },
 
@@ -262,25 +338,50 @@ const route = createBrowserRouter([
                     //Tela inicial do morador
                     {
                         index: true, // Renderiza no caminho "/morador"
-                        element: <PaginaEmBreveMorador titulo="Início" descricao="Seja bem-vindo ao CONDEX, morador." />,
+                        element: <PaginaInicalMorador></PaginaInicalMorador>
                     },
 
-                    //Tela de visitantes do morador
+                    //Tela que vai exibir as visitas do morador
                     {
-                        path: "visitantes", // Renderiza no caminho "/morador/visitantes"
-                        element: <PaginaVisitantesMorador />,
+                        path: "visitas",
+                        element: <PaginaExibeVisitasMorador></PaginaExibeVisitasMorador>,
                     },
 
-                    //Tela de pré cadastro de visitante
+                    //Tela que vai concultar os visitantes 
                     {
-                        path: "visitantes/cadastro", // Renderiza no caminho "/morador/visitantes/cadastro"
-                        element: <PaginaCadastraVisitanteMorador />,
+                        path: "visitas/historico",
+                        element: <PaginaExibeHistoricoVisitasMorador></PaginaExibeHistoricoVisitasMorador>
                     },
 
-                    //Tela de reservas do morador
+                    //Tela que vai exibir o hostórico de visitas do moraodor
+                    {
+                        path: "visitante/consulta",
+                        element: <PaginaConsultaVisitanteMorador></PaginaConsultaVisitanteMorador>,
+                    },
+                    
+
+                    //Tela que vai exibir os detelhes da visita do morador
+                    {
+                        path: "visita/detalhes/:id",
+                        element: <PaginaDetalheVisitaMorador></PaginaDetalheVisitaMorador>,
+                    },
+
+                    //Tela que vai Cadastrar a visita
+                    {
+                        path: "visitante/agendar/visita",
+                        element: <PaginaCadastraVisitaMorador></PaginaCadastraVisitaMorador>
+                    },
+
+                    //Tela de reservas do morador | Histórico e cancelamento
                     {
                         path: "reservas", // Renderiza no caminho "/morador/reservas"
-                        element: <PaginaEmBreveMorador titulo="Reservas" descricao="Agende e acompanhe as reservas das áreas comuns." />,
+                        element: <PaginaReservasMorador />,
+                    },
+
+                    //Tela de solicitação de reserva de área comum
+                    {
+                        path: "reservas/nova", // Renderiza no caminho "/morador/reservas/nova"
+                        element: <PaginaSolicitaReservaMorador />,
                     },
 
                     //Tela de mensagens do morador
@@ -318,6 +419,24 @@ const route = createBrowserRouter([
                         path: "registros/laudos",
                         element: <PaginaExibeLaudosMorador></PaginaExibeLaudosMorador>
                     },
+
+                    //Tela onde será exibidos as reclamações do morador
+                    {
+                        path: "reclamacoes/exibe",
+                        element: <PaginaExibeReclamacaoMorador></PaginaExibeReclamacaoMorador>
+                    },
+
+                    //Tela onde será cadastrado as reclamações
+                    {
+                        path: "reclamacoes/cadastra",
+                        element: <PaginaCadastraReclamacao></PaginaCadastraReclamacao>
+                    },
+
+                    //Tela onde será exibidos as encomendas do morador
+                    {
+                        path: "encomenda",
+                        element: <PaginaExibeEncomendaMorador></PaginaExibeEncomendaMorador>
+                    },
                 ]
             },
 
@@ -333,10 +452,34 @@ const route = createBrowserRouter([
                         element: <PaginainicialPorteiro />,
                     },
 
-                    //Tela de cadastro de visitante pelo porteiro
+                    //Tela para seleiconar o visitante pelo porteiro
                     {
-                        path: "visitante/create", // Renderiza no caminho "/porteiro/visitante/create"
-                        element: <PaginaRegistroVisitante />,
+                        path: "visitante/consulta", // Renderiza no caminho "/porteiro/visitante/create"
+                        element: <PaginaConsultaVisitantePorteiro></PaginaConsultaVisitantePorteiro>,
+                    },
+
+                    //Tela para seleicnar o morador para receber a cisita
+                    {
+                        path: "visitante/seleciona/morador", // Renderiza no caminho "/porteiro/visitante/create"
+                        element: <PaginaSelecionaMoradorPorteiro></PaginaSelecionaMoradorPorteiro>,
+                    },
+
+                    //Tela de histórico de visitas
+                    {
+                        path: "visitas/historico",
+                        element: <PaginaHistoricoVisitaPorteiro></PaginaHistoricoVisitaPorteiro>
+                    },
+
+                    //Tela de detalhes da visita 
+                    {
+                        path: "visitas/detalhe/:id",
+                        element: <PaginaDetalhesVisitaPorteiro></PaginaDetalhesVisitaPorteiro>
+                    },
+
+                    //Tela de cadastro da visita
+                    {
+                        path: "visitas/create",
+                        element: <PaginaCadastraVisitaPorteiro></PaginaCadastraVisitaPorteiro>
                     },
 
                     //Tela de cadastro de encomenda

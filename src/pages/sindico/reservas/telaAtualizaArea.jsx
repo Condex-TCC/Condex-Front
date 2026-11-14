@@ -156,6 +156,12 @@ export default function PaginaAtualizaArea() {
             </label>
           </div>
           {/* Fim dos Radio Buttons */}
+
+          {/* Explica o efeito da escolha, pois só reservas de áreas com autorização chegam ao síndico */}
+          <p className={styles.formAjuda}>
+            Escolhendo "Sim", as reservas dessa área ficam pendentes até a sua aprovação.
+            Escolhendo "Não", elas são confirmadas automaticamente e não passam por você.
+          </p>
         </section>
 
         {/* Rodapé de ações: única primária da tela, à direita */}
