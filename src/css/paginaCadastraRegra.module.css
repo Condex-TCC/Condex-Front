@@ -183,6 +183,27 @@
   min-width: 0;
 }
 
+/* Texto de apoio abaixo de um controle: explica o efeito da escolha
+   sem competir com o rótulo do campo. */
+.formAjuda {
+  margin: 0;
+  font-size: var(--cx-text-sm);
+  line-height: 1.5;
+  color: var(--cx-text-muted);
+}
+
+/* Mensagem de erro do formulário (validação ou falha da API).
+   Vermelho suave, com o mesmo raio dos demais blocos. */
+.formErro {
+  margin: 0;
+  padding: var(--cx-space-md);
+  font-size: var(--cx-text-sm);
+  color: var(--cx-danger);
+  background-color: var(--cx-danger-soft, #fdecec);
+  border: 1px solid var(--cx-danger-border, #f3c6c6);
+  border-radius: var(--cx-radius-md, 12px);
+}
+
 /* Variante com ação à direita (ex.: trocar de apartamento):
    o filete passa para o contêiner e o título não desce sozinho. */
 .form-secao__topo {
