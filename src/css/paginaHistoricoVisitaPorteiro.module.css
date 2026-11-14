@@ -2,13 +2,13 @@
 
 /* Container principal da página, com o mesmo fundo da tela inicial do porteiro */
 .pagina--historico {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--cx-font);
   padding: 30px;
-  color: #111;
+  color: var(--cx-text-strong);
   width: 100%;
   box-sizing: border-box;
   min-height: 100vh;
-  background-color: #f4f4f4;
+  background-color: var(--cx-surface-inset);
 }
 
 /* Cabeçalho com o título à esquerda e o botão de voltar à direita, na mesma linha */
@@ -17,32 +17,35 @@
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  margin-bottom: 40px;
+  margin-bottom: var(--cx-space-2xl);
 }
 
 /* Título da página */
 .titulo--historico {
-  font-size: 24px;
-  font-weight: bold;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cx-text-strong);
+  line-height: 1.2;
   margin: 0;
-  color: #111;
 }
 
 /* Botão de voltar, alinhado à direita do cabeçalho */
 .botao--voltar {
-  background-color: #2b45a2;
-  color: #ffffff;
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
   border: none;
   padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: var(--cx-radius-sm);
+  font-size: var(--cx-text-base);
   font-weight: bold;
   cursor: pointer;
 }
 
 /* Escurece o botão de voltar ao passar o mouse */
 .botao--voltar:hover {
-  background-color: #203b8f;
+  background-color: var(--cx-primary-hover);
 }
 
 /* Lista com um card por linha, como nas demais telas do projeto */
@@ -55,12 +58,12 @@
 /* Aviso exibido enquanto a lista carrega ou quando não há visitas para mostrar */
 .aviso--vazio {
   margin: 0;
-  padding: 24px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  border: 1px solid #e4eaf2;
-  color: #667085;
-  font-size: 15px;
+  padding: var(--cx-space-lg);
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  color: var(--cx-text-muted);
+  font-size: var(--cx-text-md);
   text-align: center;
 }
 
@@ -74,7 +77,7 @@
   .cabecalho--historico {
     flex-wrap: wrap;
     gap: 12px;
-    margin-bottom: 24px;
+    margin-bottom: var(--cx-space-lg);
   }
 
   .botao--voltar {

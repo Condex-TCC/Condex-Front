@@ -2,14 +2,14 @@
 
 /* Card individual do morador, clicável para iniciar o cadastro da visita */
 .card--morador {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #001c3f;
-  background-color: #ffffff;
-  border: 1px solid #e8ebf1;
-  border-left: 4px solid #2b45a2;
-  border-radius: 14px;
+  font-family: var(--cx-font);
+  color: var(--cx-navy);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-left: 4px solid var(--cx-primary);
+  border-radius: var(--cx-radius-lg);
   padding: 18px 20px;
-  box-shadow: 0 2px 6px rgba(0, 28, 63, 0.06);
+  box-shadow: var(--cx-shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -19,8 +19,8 @@
 
 /* Leve destaque ao passar o mouse pelo card */
 .card--morador:hover {
-  border-color: #dbe1ee;
-  box-shadow: 0 4px 12px rgba(0, 28, 63, 0.09);
+  border-color: var(--cx-border);
+  box-shadow: var(--cx-shadow);
 }
 
 /* CABEÇALHO */
@@ -37,21 +37,21 @@
 /* Nome do morador */
 .nome--morador {
   margin: 0;
-  font-size: 17px;
+  font-size: var(--cx-text-lg);
   font-weight: 700;
   line-height: 1.3;
-  color: #001c3f;
+  color: var(--cx-navy);
 }
 
 /* Unidade do morador exibida como etiqueta ao lado do nome */
 .unidade--morador {
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
   font-weight: 600;
-  color: #374151;
-  background-color: #f9fafb;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 4px 8px;
+  color: var(--cx-text);
+  background-color: var(--cx-surface-alt);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius-sm);
+  padding: var(--cx-space-xs) var(--cx-space-sm);
   white-space: nowrap;
 }
 
@@ -68,25 +68,25 @@
 .linha--dado {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--cx-space-2xs);
   min-width: 0;
 }
 
 /* Rótulo do dado */
 .rotulo--dado {
-  font-size: 11px;
+  font-size: var(--cx-text-2xs);
   font-weight: 700;
   letter-spacing: 0.05em;
   line-height: 1.4;
   text-transform: uppercase;
-  color: #7a87a7;
+  color: var(--cx-text-muted);
 }
 
 /* Valor do dado */
 .valor--dado {
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   line-height: 1.5;
-  color: #1f2a44;
+  color: var(--cx-text);
   word-break: break-word;
 }
 

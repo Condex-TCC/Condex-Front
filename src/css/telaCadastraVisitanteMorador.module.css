@@ -104,8 +104,8 @@
   font-size: var(--cx-text-xl);
   font-weight: 800;
   letter-spacing: -0.01em;
-  line-height: 1.2;
   color: var(--cx-text-strong);
+  line-height: 1.2;
   margin: 0;
 }
 

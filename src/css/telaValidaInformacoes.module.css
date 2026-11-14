@@ -5,9 +5,9 @@
 
 /* Container principal da página */
 .container {
-  padding: 24px;
-  font-family: sans-serif;
-  background-color: #ffffff;
+  padding: var(--cx-space-lg);
+  font-family: var(--cx-font);
+  background-color: var(--cx-surface);
   max-width: 800px;
   margin: 0 auto;
 }
@@ -17,26 +17,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: var(--cx-space-xl);
 }
 
 /* Título da tela */
 .title {
   font-size: 18px;
-  color: #333;
+  color: var(--cx-text);
   margin: 0;
   font-weight: 500;
 }
 
 /* Botão voltar */
 .btnVoltar {
-  background-color: #274b8f;
+  background-color: var(--cx-primary);
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 8px 16px;
+  padding: var(--cx-space-sm) var(--cx-space-md);
   cursor: pointer;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -46,7 +46,7 @@
 .formContainer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--cx-space-md);
   flex: 1;
   max-width: 500px;
 }
@@ -55,13 +55,13 @@
 .dataField {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--cx-space-sm);
 }
 
 /* Rótulo de cada campo */
 .dataLabel {
-  font-size: 14px;
-  color: #333;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
   font-weight: 500;
 }
 
@@ -70,15 +70,15 @@
   width: 100%;
   padding: 10px 12px;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius-sm);
   box-sizing: border-box;
-  background-color: #fff;
+  background-color: var(--cx-surface);
 }
 
 .dataInput:focus {
   outline: none;
-  border-color: #4a90e2;
+  border-color: var(--cx-brand-blue);
 }
 
 /* Área do botão */
@@ -90,10 +90,10 @@
 
 /* Botão principal "Enviar" */
 .btnEnviar {
-  background: linear-gradient(to right, #3480eb, #12325c);
+  background: linear-gradient(to right, var(--cx-brand-blue), var(--cx-navy));
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--cx-radius-sm);
   padding: 14px 24px;
   font-size: 16px;
   font-weight: bold;

@@ -1,27 +1,27 @@
 /* TELA DE CADASTRO DE RECLAMAÇÃO DO MORADOR */
 
 .tcr-container {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #001c3f;
+  font-family: var(--cx-font);
+  color: var(--cx-navy);
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
-  padding-bottom: 16px;
+  padding-bottom: var(--cx-space-md);
 }
 
 .tcr-header {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-bottom: 16px;
+  margin-bottom: var(--cx-space-md);
 }
 
 .tcr-btnVoltar {
-  background-color: #ffffff;
-  border: 1px solid #d4d8e2;
-  border-radius: 8px;
-  color: #2b45a2;
-  font-size: 14px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  color: var(--cx-primary);
+  font-size: var(--cx-text-base);
   font-weight: 700;
   padding: 8px 14px;
   cursor: pointer;
@@ -29,22 +29,25 @@
 }
 
 .tcr-btnVoltar:hover {
-  background-color: #eef2ff;
-  border-color: #c9d0e6;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-border-strong);
 }
 
 .tcr-titulo {
-  font-size: 26px;
-  font-weight: 700;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cx-text-strong);
   line-height: 1.2;
-  margin-bottom: 24px;
+  margin-bottom: var(--cx-space-lg);
 }
 
 .tcr-form {
-  background-color: #ffffff;
-  border: 1px solid #eef0f4;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
+  box-shadow: var(--cx-shadow-sm);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -54,39 +57,39 @@
 .tcr-field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--cx-space-sm);
 }
 
 .tcr-label {
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
   font-weight: 700;
-  color: #7a87a7;
+  color: var(--cx-text-muted);
 }
 
 .tcr-textarea {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid #d4d8e2;
-  border-radius: 10px;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius-md);
   outline: none;
   padding: 12px 14px;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   line-height: 1.5;
-  color: #001c3f;
-  background-color: #ffffff;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--cx-navy);
+  background-color: var(--cx-surface);
+  font-family: var(--cx-font);
   resize: vertical;
   min-height: 180px;
   transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .tcr-textarea::placeholder {
-  color: #a3acc4;
+  color: var(--cx-text-faint);
 }
 
 .tcr-textarea:focus {
-  border-color: #2b45a2;
-  box-shadow: 0 0 0 1px #2b45a2;
+  border-color: var(--cx-primary);
+  box-shadow: 0 0 0 1px var(--cx-primary);
 }
 
 .tcr-action {
@@ -96,19 +99,19 @@
 
 .tcr-btnCadastrar {
   width: 100%;
-  background-color: #2b45a2;
-  color: #ffffff;
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
   border: none;
-  border-radius: 10px;
+  border-radius: var(--cx-radius-md);
   padding: 14px 20px;
-  font-size: 15px;
+  font-size: var(--cx-text-md);
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
 }
 
 .tcr-btnCadastrar:hover {
-  background-color: #203b8f;
+  background-color: var(--cx-primary-hover);
 }
 
 .tcr-btnCadastrar:active {

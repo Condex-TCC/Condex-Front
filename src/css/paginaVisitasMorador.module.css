@@ -8,9 +8,9 @@
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: 4px 0 40px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: #1f2a44;
+  padding: var(--cx-space-xs) 0 var(--cx-space-2xl);
+  font-family: var(--cx-font);
+  color: var(--cx-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -24,21 +24,22 @@
 
 /* Título da página */
 .titulo--pagina {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cx-text-strong);
+  line-height: 1.2;
   margin: 0;
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  line-height: 1.15;
-  color: #001c3f;
 }
 
 /* Descrição curta abaixo do título */
 .descricao--pagina {
   margin: 0;
   max-width: 620px;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   line-height: 1.5;
-  color: #55628b;
+  color: var(--cx-text-muted);
 }
 
 /* Barra com o menu de abas e o botão de consulta */
@@ -54,11 +55,11 @@
 /* Menu de botões entre as duas telas */
 .menu--pagina {
   display: inline-flex;
-  gap: 4px;
-  padding: 4px;
-  background-color: #f4f5f9;
-  border: 1px solid #e6e9f0;
-  border-radius: 12px;
+  gap: var(--cx-space-xs);
+  padding: var(--cx-space-xs);
+  background-color: var(--cx-surface-inset);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
 }
 
 /* Botão do menu */
@@ -66,61 +67,61 @@
   padding: 8px 20px;
   background-color: transparent;
   border: 1px solid transparent;
-  border-radius: 9px;
+  border-radius: var(--cx-radius-md);
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   font-weight: 600;
   line-height: 1.4;
-  color: #55628b;
+  color: var(--cx-text-muted);
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
 /* Botão da tela atual, destacado e sem navegação */
 .botao--menu--ativo {
-  background-color: #ffffff;
-  border-color: #dbe1ee;
-  color: #2b45a2;
+  background-color: var(--cx-surface);
+  border-color: var(--cx-border);
+  color: var(--cx-primary);
   font-weight: 700;
   cursor: default;
-  box-shadow: 0 1px 4px rgba(0, 28, 63, 0.12);
+  box-shadow: var(--cx-shadow-sm);
 }
 
 /* Botão que leva para a outra tela */
 .botao--menu--inativo:hover {
-  background-color: #e9ecf4;
-  color: #001c3f;
+  background-color: var(--cx-border);
+  color: var(--cx-navy);
 }
 
 /* Foco visível dos botões do menu */
 .botao--menu:focus-visible {
-  outline: 2px solid #2b45a2;
+  outline: 2px solid var(--cx-primary);
   outline-offset: 2px;
 }
 
 /* Botão de consultar visitante, alinhado à direita da barra */
 .botao--consulta {
   padding: 10px 20px;
-  background-color: #2b45a2;
+  background-color: var(--cx-primary);
   border: none;
-  border-radius: 10px;
+  border-radius: var(--cx-radius-md);
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   font-weight: 700;
   line-height: 1.4;
-  color: #ffffff;
+  color: var(--cx-on-primary);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 /* Escurece o botão de consulta ao passar o mouse */
 .botao--consulta:hover {
-  background-color: #203b8f;
+  background-color: var(--cx-primary-hover);
 }
 
 /* Foco visível do botão de consulta */
 .botao--consulta:focus-visible {
-  outline: 2px solid #001c3f;
+  outline: 2px solid var(--cx-navy);
   outline-offset: 2px;
 }
 
@@ -135,13 +136,13 @@
 .subtitulo--secao {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--cx-space-sm);
   margin: 0;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.2px;
   line-height: 1.3;
-  color: #001c3f;
+  color: var(--cx-navy);
 }
 
 /* Detalhe colorido antes do subtítulo da seção */
@@ -150,16 +151,16 @@
   width: 3px;
   height: 16px;
   border-radius: 2px;
-  background-color: #2b45a2;
+  background-color: var(--cx-primary);
 }
 
 /* Descrição curta de cada seção */
 .descricao--secao {
   margin: 0 0 12px 11px;
   max-width: 620px;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   line-height: 1.5;
-  color: #55628b;
+  color: var(--cx-text-muted);
 }
 
 /* Lista com um card por linha, como nas telas do síndico */
@@ -176,15 +177,15 @@
   align-items: center;
   justify-content: center;
   min-height: 180px;
-  padding: 24px;
-  background-color: #fafbfd;
-  border: 1px dashed #dfe6f0;
-  border-radius: 12px;
+  padding: var(--cx-space-lg);
+  background-color: var(--cx-surface-alt);
+  border: 1px dashed var(--cx-border);
+  border-radius: var(--cx-radius-lg);
   text-align: center;
   font-size: 13.5px;
   font-weight: 600;
   line-height: 1.5;
-  color: #667085;
+  color: var(--cx-text-muted);
 }
 
 /* Ajustes para telas menores */
@@ -192,7 +193,7 @@
 
   .pagina--visitas {
     gap: 18px;
-    padding-bottom: 24px;
+    padding-bottom: var(--cx-space-lg);
   }
 
   .menu--pagina {

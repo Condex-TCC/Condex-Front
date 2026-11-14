@@ -3,11 +3,11 @@
 /* Container principal da página, centralizado na tela */
 .pagina--consulta-visitante {
   /* Paleta e medidas compartilhadas pelos cartões da tela */
-  --cor-primaria: #001c3f;
-  --cor-texto: #1f2a44;
-  --cor-texto-suave: #667085;
-  --cor-borda: #e4eaf2;
-  --cor-fundo-cartao: #ffffff;
+  --cor-primaria: var(--cx-navy);
+  --cor-texto: var(--cx-text);
+  --cor-texto-suave: var(--cx-text-muted);
+  --cor-borda: var(--cx-border);
+  --cor-fundo-cartao: var(--cx-surface);
   --raio-cartao: 18px;
   --sombra-cartao: 0 1px 2px rgba(16, 24, 40, 0.04), 0 10px 28px rgba(16, 24, 40, 0.06);
 
@@ -17,8 +17,8 @@
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: 4px 0 40px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  padding: var(--cx-space-xs) 0 var(--cx-space-2xl);
+  font-family: var(--cx-font);
   color: var(--cor-texto);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,14 +35,15 @@
 
 /* Título da página */
 .titulo--pagina {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cx-text-strong);
+  line-height: 1.2;
+  margin: 0;
   flex: 1;
   min-width: 0;
-  margin: 0;
-  font-size: clamp(22px, 2.2vw, 28px);
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  line-height: 1.2;
-  color: var(--cor-primaria);
   word-break: break-word;
 }
 
@@ -50,27 +51,27 @@
 .botao--voltar {
   flex-shrink: 0;
   padding: 9px 16px;
-  background-color: #ffffff;
-  border: 1px solid #d4d8e2;
-  border-radius: 8px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   font-weight: 700;
   line-height: 1.4;
-  color: #2b45a2;
+  color: var(--cx-primary);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 /* Destaque suave ao passar o mouse pelo botão de voltar */
 .botao--voltar:hover {
-  background-color: #eef2ff;
-  border-color: #b9c4e6;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
 }
 
 /* Foco visível do botão de voltar */
 .botao--voltar:focus-visible {
-  outline: 2px solid #2b45a2;
+  outline: 2px solid var(--cx-primary);
   outline-offset: 2px;
 }
 
@@ -91,7 +92,7 @@
 .titulo--cartao {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--cx-space-sm);
   margin: 0;
   font-size: 16px;
   font-weight: 700;
@@ -106,14 +107,14 @@
   width: 3px;
   height: 14px;
   border-radius: 2px;
-  background-color: #2b45a2;
+  background-color: var(--cx-primary);
 }
 
 /* Descrição curta de cada cartão */
 .descricao--cartao {
   margin: 0;
   max-width: 620px;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   line-height: 1.5;
   color: var(--cor-texto-suave);
 }
@@ -122,7 +123,7 @@
 .grade--campos {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: var(--cx-space-md);
 }
 
 /* Cada campo do formulário */
@@ -135,7 +136,7 @@
 /* Rótulo do campo */
 .campo--formulario label {
   margin-bottom: 6px;
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
   font-weight: 600;
   color: var(--cor-primaria);
 }
@@ -144,20 +145,20 @@
 .campo--formulario input {
   height: 46px;
   box-sizing: border-box;
-  border: 1px solid #d4d8e2;
-  border-radius: 8px;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
   outline: none;
   padding: 0 12px;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   color: var(--cor-primaria);
-  background-color: #ffffff;
+  background-color: var(--cx-surface);
   width: 100%;
 }
 
 /* Destaque do campo que está sendo editado */
 .campo--formulario input:focus {
-  border-color: #2b45a2;
-  box-shadow: 0 0 0 1px #2b45a2;
+  border-color: var(--cx-primary);
+  box-shadow: 0 0 0 1px var(--cx-primary);
 }
 
 /* Área do botão de consulta */
@@ -169,26 +170,26 @@
 /* Botão que realiza a consulta */
 .botao--consultar {
   padding: 12px 22px;
-  background-color: #2b45a2;
+  background-color: var(--cx-primary);
   border: none;
-  border-radius: 10px;
+  border-radius: var(--cx-radius-md);
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   font-weight: 700;
   line-height: 1.4;
-  color: #ffffff;
+  color: var(--cx-on-primary);
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
 
 /* Destaque suave ao passar o mouse pelo botão de consulta */
 .botao--consultar:hover {
-  background-color: #203b8f;
+  background-color: var(--cx-primary-hover);
 }
 
 /* Foco visível do botão de consulta */
 .botao--consultar:focus-visible {
-  outline: 2px solid #2b45a2;
+  outline: 2px solid var(--cx-primary);
   outline-offset: 2px;
 }
 
@@ -196,7 +197,7 @@
 .linha--cadastro {
   display: flex;
   align-items: flex-end;
-  gap: 16px;
+  gap: var(--cx-space-md);
 }
 
 /* Campo de nome ocupa o espaço restante da linha */
@@ -208,26 +209,26 @@
 .botao--cadastrar {
   flex-shrink: 0;
   padding: 12px 22px;
-  background-color: #2b45a2;
+  background-color: var(--cx-primary);
   border: none;
-  border-radius: 10px;
+  border-radius: var(--cx-radius-md);
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   font-weight: 700;
   line-height: 1.4;
-  color: #ffffff;
+  color: var(--cx-on-primary);
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
 
 /* Destaque suave ao passar o mouse pelo botão de cadastro */
 .botao--cadastrar:hover {
-  background-color: #203b8f;
+  background-color: var(--cx-primary-hover);
 }
 
 /* Foco visível do botão de cadastro */
 .botao--cadastrar:focus-visible {
-  outline: 2px solid #2b45a2;
+  outline: 2px solid var(--cx-primary);
   outline-offset: 2px;
 }
 
@@ -242,8 +243,8 @@
 @media (max-width: 560px) {
 
   .pagina--consulta-visitante {
-    gap: 16px;
-    padding-bottom: 24px;
+    gap: var(--cx-space-md);
+    padding-bottom: var(--cx-space-lg);
   }
 
   .cabecalho--pagina {

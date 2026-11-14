@@ -1,42 +1,45 @@
 /* TELA DE EXIBIÇÃO DE RECLAMAÇÕES DO SÍNDICO */
 
 .prs-container {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #001c3f;
+  font-family: var(--cx-font);
+  color: var(--cx-navy);
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
-  padding-bottom: 8px;
+  padding-bottom: var(--cx-space-sm);
 }
 
 .prs-titulo {
-  font-size: 26px;
-  font-weight: 700;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cx-text-strong);
   line-height: 1.2;
-  margin-bottom: 16px;
+  margin-bottom: var(--cx-space-md);
 }
 
 .prs-abas {
   display: flex;
-  gap: 8px;
+  gap: var(--cx-space-sm);
   margin-bottom: 20px;
 }
 
 .prs-aba {
-  background-color: #ffffff;
-  border: 1px solid #d4d8e2;
-  border-radius: 8px;
-  color: #001c3f;
-  font-size: 14px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  color: var(--cx-navy);
+  font-size: var(--cx-text-base);
   font-weight: 600;
-  padding: 8px 16px;
+  padding: var(--cx-space-sm) var(--cx-space-md);
   cursor: pointer;
 }
 
 .prs-aba--ativa {
-  background-color: #eef2ff;
-  border-color: #2b45a2;
-  color: #2b45a2;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary);
+  color: var(--cx-primary);
   font-weight: 700;
 }
 

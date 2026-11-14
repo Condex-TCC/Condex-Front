@@ -65,18 +65,19 @@ function PaginaInicalMorador(){
     return(
         <div className={styles['dashboard--principal']}>
 
-            {/* Cabeçalho com a saudação do morador */}
-            <div className={styles['cabecalho--dashboard']}>
+            {/* Cabeçalho da página: contexto, título e apoio (padrão cx-page-header) */}
+            <header className={styles['cabecalho--dashboard']}>
 
                 {/* Bloco com o título e o subtítulo */}
                 <div className={styles['cabecalho--texto']}>
-                    <h1 className={styles['titulo--boas-vindas']}>Olá, Morador! 👋</h1>
-                    <p className={styles['subtitulo--boas-vindas']}>
+                    <p className="cx-overline">Painel do morador</p>
+                    <h2 className="cx-page-title">Olá, Morador!</h2>
+                    <p className="cx-page-subtitle">
                         Aqui está um resumo das suas informações no condomínio.
                     </p>
                 </div>
 
-            </div>
+            </header>
 
             {/* Cards de resumo do dia */}
             <div className={styles['container--resumo']}>

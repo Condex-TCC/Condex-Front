@@ -71,11 +71,7 @@ export function CardArea( {area, renderiza} ) {
         </p>
 
         {/* Mostra se as reservas dessa área precisam da aprovação do síndico */}
-        <span style={{
-          display: 'inline-block', marginTop: 8, padding: '4px 10px', borderRadius: 20, fontSize: 12, fontWeight: 700,
-          backgroundColor: exigeAprovacao ? '#fff4d6' : '#e4f7e8',
-          color: exigeAprovacao ? '#8a6100' : '#1e7e34'
-        }}>
+        <span className={`cx-badge ${exigeAprovacao ? 'cx-badge--warning' : 'cx-badge--success'} ${styles.seloAprovacao}`}>
           {exigeAprovacao ? 'Exige aprovação do síndico' : 'Confirmação automática'}
         </span>
       </div>

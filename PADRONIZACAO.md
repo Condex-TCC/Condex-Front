@@ -84,3 +84,30 @@ npm run dev
 
 Build validado com `npx vite build` e lint sem novidades em
 `src/pages`, `src/components` e `src/layouts`.
+
+## 7. Continuação — telas vindas da `master` (visitas, encomendas, reclamações)
+
+Depois da incorporação da `master`, as telas novas passaram pelo mesmo padrão
+(**só apresentação**; API, services, rotas e regras de negócio ficaram como na `master`).
+
+- **Tokens:** 34 módulos CSS ainda com cor/fonte/raio/sombra/espaçamento fixos
+  foram convertidos para `--cx-*` (cores por função: texto, borda, fundo,
+  sucesso, erro, alerta; fonte `--cx-font`; raios `--cx-radius-*`; sombras
+  `--cx-shadow-*`; tamanhos `--cx-text-*`; espaços `--cx-space-*`).
+  Cores decorativas fora da paleta (roxo, verde-água) foram mapeadas para a
+  família do azul principal ou para as cores funcionais.
+- **Títulos de página:** as classes próprias de título de cada tela
+  (`titulo--pagina`, `prs-titulo`, `rm-page-title`…) têm a mesma tipografia
+  do `.cx-page-title`.
+- **Dashboards (síndico e morador):** o cabeçalho "hero" (gradiente + círculo)
+  virou o cabeçalho de página padrão (`cx-overline` + `cx-page-title`).
+- **Botões:** "Histórico de visitas" e "Cancelar" do porteiro reutilizam o
+  estilo secundário `.btn--exit`; nas reservas do síndico há uma única ação
+  primária por cabeçalho.
+- **Compartilhados:** `cardReservaAutorizacao.module.css` e
+  `paginaExibeReservasSindico.module.css` passaram a herdar as regras do
+  padrão (os módulos duplicados `cardReserva` e `paginaExibeReserva` foram
+  removidos). Avisos de erro/ajuda usam `.formErro`/`.formAjuda`; selos de
+  status usam `.cx-badge--*`. Não restam `style={{…}}` com cor ou medida fixa.
+- **Menus:** Visitantes e Reclamações (síndico) e Encomendas (morador) entram
+  nos grupos do menu com o destaque de item ativo do padrão.

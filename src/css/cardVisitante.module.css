@@ -1,14 +1,14 @@
 /* CARD DE VISITANTE DO SÍNDICO */
 
 .card--visitante {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #001c3f;
-  background-color: #ffffff;
-  border: 1px solid #eef0f4;
-  border-radius: 10px;
+  font-family: var(--cx-font);
+  color: var(--cx-navy);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
   padding: 14px 16px;
   margin-bottom: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--cx-shadow-sm);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -22,32 +22,32 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background-color: #eef2ff;
+  background-color: var(--cx-primary-soft);
   font-size: 20px;
 }
 
 .dados--visitante {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--cx-space-2xs);
   min-width: 0;
 }
 
 .nome--visitante {
   font-size: 16px;
   font-weight: 700;
-  color: #001c3f;
+  color: var(--cx-navy);
   word-break: break-word;
 }
 
 .cpf--visitante {
-  font-size: 13px;
-  color: #7a87a7;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
   word-break: break-word;
 }
 
 .rg--visitante {
-  font-size: 13px;
-  color: #7a87a7;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
   word-break: break-word;
 }

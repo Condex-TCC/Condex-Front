@@ -1,14 +1,14 @@
 /* CARD DE RECLAMAÇÃO DO SÍNDICO */
 
 .crs-card {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #001c3f;
-  background-color: #ffffff;
-  border: 1px solid #eef0f4;
-  border-radius: 10px;
+  font-family: var(--cx-font);
+  color: var(--cx-navy);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
   padding: 14px 16px;
   margin-bottom: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--cx-shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -22,15 +22,15 @@
 }
 
 .crs-rotulo {
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
   font-weight: 700;
-  color: #7a87a7;
+  color: var(--cx-text-muted);
 }
 
 .crs-valor {
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   line-height: 1.5;
-  color: #001c3f;
+  color: var(--cx-navy);
   word-break: break-word;
   white-space: pre-wrap;
 }
@@ -39,21 +39,21 @@
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
-  border-radius: 20px;
+  border-radius: var(--cx-radius-xl);
   padding: 4px 10px;
-  font-size: 11px;
+  font-size: var(--cx-text-2xs);
   font-weight: 700;
   white-space: nowrap;
 }
 
 .crs-status--visualizado {
-  background-color: #e4f7e8;
-  color: #1e7e34;
+  background-color: var(--cx-success-soft);
+  color: var(--cx-success);
 }
 
 .crs-status--naoVisualizado {
-  background-color: #f4f5f9;
-  color: #55628b;
+  background-color: var(--cx-surface-inset);
+  color: var(--cx-text-muted);
 }
 
 .crs-secao {
@@ -65,42 +65,42 @@
 .crs-linha {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--cx-space-2xs);
 }
 
 .crs-rotuloSecao {
-  font-size: 12px;
+  font-size: var(--cx-text-xs);
   font-weight: 700;
-  color: #7a87a7;
+  color: var(--cx-text-muted);
 }
 
 .crs-valorSecao {
-  font-size: 13px;
-  color: #001c3f;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-navy);
   word-break: break-word;
 }
 
 .crs-resposta {
   margin: 0;
   padding: 10px 12px;
-  border-left: 3px solid #2b45a2;
-  border-radius: 6px;
-  background-color: #eef2ff;
+  border-left: 3px solid var(--cx-primary);
+  border-radius: var(--cx-radius-sm);
+  background-color: var(--cx-primary-soft);
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
 .crs-resposta-rotulo {
-  font-size: 12px;
+  font-size: var(--cx-text-xs);
   font-weight: 700;
-  color: #2b45a2;
+  color: var(--cx-primary);
 }
 
 .crs-resposta-valor {
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
   line-height: 1.5;
-  color: #001c3f;
+  color: var(--cx-navy);
   word-break: break-word;
   white-space: pre-wrap;
 }

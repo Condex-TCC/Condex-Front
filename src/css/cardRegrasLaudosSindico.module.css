@@ -374,3 +374,9 @@
     transform: none;
   }
 }
+
+/* Selo "Exige aprovação" / "Confirmação automática" da área comum
+   (cor e formato vêm do .cx-badge global; aqui só o respiro) */
+.seloAprovacao {
+  margin-top: var(--cx-space-sm);
+}

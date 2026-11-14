@@ -1,67 +1,213 @@
-/* =========================================
-   TELA DE RESERVAS DE ÁREAS COMUNS (SÍNDICO)
-   Segue o padrão visual das telas do síndico
-========================================= */
+/* ==================================================
+   RESERVAS DO SÍNDICO — agenda do dia + solicitações
+   --------------------------------------------------
+   Base visual herdada do padrão CONDEX (container, header,
+   botões, cards e pastilhas de status). Só os blocos próprios
+   desta tela (seletor de dia, estados vazio/erro) ficam ao final.
+   ================================================== */
 
-/* Container principal que envolve toda a tela */
+/* Composição: cabeçalho de página (overline/título/subtítulo + atalhos)
+   e duas colunas — agenda do dia à esquerda e solicitações à direita.
+   O shell já reserva a margem da área de conteúdo, então a raiz NÃO
+   repete padding; o respiro vem do gap. */
+
 .container {
-  font-family: sans-serif;
-  padding: 32px;
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;
+  min-width: 0;
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cx-space-lg);
 }
 
-/* Cabeçalho com o título e as ações da página */
+/* Linha de cabeçalho: título e ação de configuração */
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start; /* o bloco de texto fica no topo, igual aos demais títulos */
+  gap: var(--cx-space-md);
   flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 40px;
 }
 
-/* Título da página */
-.title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #000;
-  margin: 0;
-  text-decoration: underline;
-  text-decoration-color: #0088ff;
-  text-decoration-thickness: 3px;
-  text-underline-offset: 4px;
+/* Ação principal da tela: mesmo azul dos demais botões primários */
+.configButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--cx-control);
+  padding: 0 18px;
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
+  border: 1px solid transparent;
+  border-radius: var(--cx-radius);
+  box-shadow: 0 1px 2px rgba(11, 23, 51, 0.12);
+  font-size: var(--cx-text-base);
+  font-weight: 600;
+  font-family: var(--cx-font);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--cx-dur) ease, transform var(--cx-dur-fast) ease;
 }
+
+.configButton:hover {
+  background-color: var(--cx-primary-hover);
+}
+
+.configButton:active {
+  background-color: var(--cx-primary-active);
+  transform: translateY(1px);
+}
+
+.configButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+/* Grade de duas colunas: calendário ocupa o que sobra,
+   painel lateral tem largura fixa. minmax(0,...) é o que
+   impede o conteúdo de estourar a coluna. */
+.content {
+  display: flex;
+  gap: var(--cx-space-xl);
+  min-width: 0;
+}
+
+/* Painel lateral: uma coluna com os dois blocos de status.
+   space-between distribui os blocos pela altura da coluna
+   principal: o bloco superior fica no topo e o inferior
+   encosta no rodapé, fechando o "buraco" que sobrava ao
+   lado do calendário (as duas alturas passam a terminar
+   juntas). Em telas estreitas a coluna fica com altura de
+   conteúdo e a regra não tem efeito. */
+.sidebar {
+  width: 320px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--cx-space-lg);
+  min-width: 0;
+}
+
+/* Rótulo do bloco: secundário, sempre acima dos cards */
+.sectionTitle {
+  margin: 0;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cx-text-muted);
+}
+
+/* Card de reserva do painel: superfície padrão 5.5 */
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* pastilha de status alinhada ao miolo do card */
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+  min-width: 0;
+  padding: 14px 16px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
+  box-shadow: var(--cx-shadow-sm);
+}
+
+.cardContent {
+  min-width: 0;
+}
+
+.cardContent h4 {
+  margin: 0 0 4px 0;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-md);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+}
+
+.cardContent p {
+  margin: 0;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
+}
+
+/* Status em pastilha: fundo suave + borda na cor do
+   significado (âmbar = pendência, verde = confirmado),
+   com o texto sempre legível por cima.
+   flex:none + min-height garantem que a palavra inteira
+   ("Pendente...") seja desenhada: a pastilha nunca
+   encolhe ao lado do título nem é cortada na vertical. */
+.statusPending,
+.statusAccepted {
+  display: inline-flex;
+  align-items: center;
+  flex: none; /* largura do conteúdo: nada aperta o texto */
+  min-height: 24px;
+  padding: 4px 12px; /* respiro lateral para o texto não encostar na borda */
+  border-radius: var(--cx-radius-pill);
+  border: 1px solid transparent;
+  font-size: var(--cx-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-overflow: clip; /* nunca transforma o final da palavra em reticências */
+  overflow-wrap: normal;
+}
+
+.statusPending {
+  color: var(--cx-warning);
+  background-color: var(--cx-warning-soft);
+  border-color: var(--cx-warning-border);
+}
+
+.statusAccepted {
+  color: var(--cx-success);
+  background-color: var(--cx-success-soft);
+  border-color: var(--cx-success-border);
+}
+
+/* ==================================================
+   RESPONSIVIDADE
+   Em telas estreitas a coluna lateral desce abaixo
+   do calendário e ocupa toda a largura.
+   ================================================== */
+@media (max-width: 860px) {
+  .content {
+    flex-direction: column;
+    gap: var(--cx-space-lg);
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .configButton {
+    width: 100%; /* Ação principal ocupa a linha toda no celular */
+  }
+
+  .calendarPlaceholder {
+    min-height: 220px;
+  }
+}
+
+/* ---------- Blocos próprios desta tela ---------- */
 
 /* Grupo de botões de ação */
 .actions {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-}
-
-/* Botão de ação da página */
-.configButton {
-  background-color: #274092;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-/* Efeito ao passar o mouse por cima do botão */
-.configButton:hover {
-  background-color: #1e3375;
-}
-
-/* Área principal com o calendário e a barra lateral */
-.content {
-  display: flex;
-  gap: 40px;
 }
 
 /* Agenda com as reservas do dia escolhido */
@@ -75,57 +221,57 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 24px;
+  gap: var(--cx-space-sm);
+  margin-bottom: var(--cx-space-lg);
 }
 
 /* Botões de navegação entre os dias */
 .dayButton {
-  background-color: #ffffff;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  color: #274092;
-  font-size: 14px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  color: var(--cx-primary);
+  font-size: var(--cx-text-base);
   font-weight: 600;
   padding: 8px 12px;
   cursor: pointer;
 }
 
 .dayButton:hover {
-  background-color: #eef2ff;
+  background-color: var(--cx-primary-soft);
 }
 
 /* Campo para escolher o dia */
 .dayInput {
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
   padding: 8px 12px;
-  font-size: 14px;
-  color: #111827;
-  background-color: #ffffff;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text-strong);
+  background-color: var(--cx-surface);
 }
 
 /* Estado vazio e de carregamento das listas */
 .empty {
-  border: 1px dashed #d1d5db;
-  border-radius: 12px;
-  background-color: #f9fafb;
+  border: 1px dashed var(--cx-border-strong);
+  border-radius: var(--cx-radius-lg);
+  background-color: var(--cx-surface-alt);
   padding: 20px;
-  margin: 0 0 24px 0;
+  margin: 0 0 var(--cx-space-lg) 0;
   text-align: center;
-  font-size: 14px;
-  color: #6b7280;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text-muted);
 }
 
 /* Estado de erro ao carregar as listas */
 .error {
-  border: 1px solid #f3c6c6;
-  border-radius: 12px;
-  background-color: #fdecec;
-  padding: 16px;
-  margin: 0 0 24px 0;
-  font-size: 14px;
-  color: #a12626;
+  border: 1px solid var(--cx-danger-border);
+  border-radius: var(--cx-radius-lg);
+  background-color: var(--cx-danger-soft);
+  padding: var(--cx-space-md);
+  margin: 0 0 var(--cx-space-lg) 0;
+  font-size: var(--cx-text-base);
+  color: var(--cx-danger);
 }
 
 /* Espaço entre os cards da agenda */
@@ -133,68 +279,17 @@
   margin-bottom: 12px;
 }
 
-/* Barra lateral com as solicitações pendentes */
-.sidebar {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+/* Atalhos do cabeçalho: "Gerenciar reservas" é a ação principal (azul
+   sólido); "Áreas comuns" é secundária (contorno), como nos demais
+   cabeçalhos do sistema — uma única primária por tela */
+.actions .configButton:first-child {
+  background-color: var(--cx-surface);
+  color: var(--cx-primary);
+  border-color: var(--cx-border-strong);
+  box-shadow: var(--cx-shadow-xs);
 }
 
-/* Título das seções da barra lateral */
-.sectionTitle {
-  font-size: 16px;
-  font-weight: 500;
-  margin: 0 0 12px 0;
-  color: #374151;
-}
-
-/* Card com o resumo de uma reserva */
-.card {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  background-color: #ffffff;
-}
-
-/* Nome do espaço no card */
-.cardContent h4 {
-  margin: 0 0 4px 0;
-  font-size: 18px;
-  font-weight: 400;
-  color: #111827;
-}
-
-/* Informação do dia no card */
-.cardContent p {
-  margin: 0;
-  font-size: 14px;
-  color: #374151;
-}
-
-/* Status de reserva pendente */
-.statusPending {
-  color: #9ca3af;
-  font-size: 14px;
-}
-
-/* Status de reserva aceita */
-.statusAccepted {
-  color: #4ade80;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* Ajuste para telas menores */
-@media (max-width: 768px) {
-  .content {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-  }
+.actions .configButton:first-child:hover {
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
 }

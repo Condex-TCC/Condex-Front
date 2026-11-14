@@ -1,12 +1,12 @@
 /* TELA DE CADASTRO DE RECLAMAÇÃO DO MORADOR */
 
 .tcr-container {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #001c3f;
+  font-family: var(--cx-font);
+  color: var(--cx-navy);
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
-  padding-bottom: 8px;
+  padding-bottom: var(--cx-space-sm);
 }
 
 .tcr-header {
@@ -18,30 +18,34 @@
 
 .tcr-btnVoltar {
   flex-shrink: 0;
-  background-color: #ffffff;
-  border: 1px solid #d4d8e2;
-  border-radius: 8px;
-  color: #2b45a2;
-  font-size: 14px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  color: var(--cx-primary);
+  font-size: var(--cx-text-base);
   font-weight: 700;
   padding: 8px 12px;
   cursor: pointer;
 }
 
 .tcr-btnVoltar:hover {
-  background-color: #eef2ff;
+  background-color: var(--cx-primary-soft);
 }
 
 .tcr-titulo {
-  font-size: 22px;
-  font-weight: 700;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cx-text-strong);
   line-height: 1.2;
+  margin: 0;
 }
 
 .tcr-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--cx-space-md);
 }
 
 .tcr-field {
@@ -51,29 +55,29 @@
 }
 
 .tcr-label {
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
   font-weight: 600;
-  color: #001c3f;
+  color: var(--cx-navy);
 }
 
 .tcr-textarea {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid #d4d8e2;
-  border-radius: 8px;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
   outline: none;
   padding: 10px 12px;
-  font-size: 14px;
-  color: #001c3f;
-  background-color: #ffffff;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: var(--cx-text-base);
+  color: var(--cx-navy);
+  background-color: var(--cx-surface);
+  font-family: var(--cx-font);
   resize: vertical;
   min-height: 160px;
 }
 
 .tcr-textarea:focus {
-  border-color: #2b45a2;
-  box-shadow: 0 0 0 1px #2b45a2;
+  border-color: var(--cx-primary);
+  box-shadow: 0 0 0 1px var(--cx-primary);
 }
 
 .tcr-action {
@@ -83,19 +87,19 @@
 
 .tcr-btnCadastrar {
   width: 100%;
-  background-color: #2b45a2;
-  color: #ffffff;
+  background-color: var(--cx-primary);
+  color: var(--cx-on-primary);
   border: none;
-  border-radius: 10px;
+  border-radius: var(--cx-radius-md);
   padding: 14px 20px;
-  font-size: 15px;
+  font-size: var(--cx-text-md);
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
 
 .tcr-btnCadastrar:hover {
-  background-color: #203b8f;
+  background-color: var(--cx-primary-hover);
 }
 
 .tcr-btnCadastrar:active {

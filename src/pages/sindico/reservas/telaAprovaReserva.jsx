@@ -75,7 +75,7 @@ function PaginaExibeAprovaReservas(){
           {/* Aviso exibido quando não foi possível carregar as reservas */}
           {
             erro &&
-            <p role="alert" style={{ border: '1px solid #f3c6c6', borderRadius: 12, backgroundColor: '#fdecec', color: '#a12626', padding: 16, fontSize: 14, marginBottom: 16 }}>
+            <p role="alert" className={stylesTitle.formErro}>
               Não foi possível carregar as reservas pendentes. Verifique a conexão com a API e se você está logado como síndico.
             </p>
           }

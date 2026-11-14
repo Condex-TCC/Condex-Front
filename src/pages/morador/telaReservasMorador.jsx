@@ -159,11 +159,11 @@ function TelaReservasMorador(){
             {
                 //Estado de carregamento
                 carregando ?
-                    <p className={styles['rm-empty']} style={{ marginTop: 24 }}>Carregando reservas...</p>
+                    <p className={styles['rm-empty']}>Carregando reservas...</p>
                 :
                 //Estado de erro
                 erroCarregamento ?
-                    <div className={styles['rm-error']} style={{ marginTop: 24 }}>
+                    <div className={styles['rm-error']}>
                         {erroCarregamento}
                         <button type="button" className={styles['rm-btn-retry']} onClick={tentarNovamente}>
                             Tentar novamente
@@ -172,11 +172,11 @@ function TelaReservasMorador(){
                 :
                 //Estado sem nenhuma reserva cadastrada
                 reservas.length === 0 ?
-                    <p className={styles['rm-empty']} style={{ marginTop: 24 }}>Você ainda não possui reservas.</p>
+                    <p className={styles['rm-empty']}>Você ainda não possui reservas.</p>
                 :
                 <>
                     {/* Seção das reservas que ainda vão acontecer */}
-                    <section className={styles['rm-section']} style={{ marginTop: 24 }}>
+                    <section className={styles['rm-section']}>
                         <h2 className={styles['rm-section-title']}>Reservas ativas</h2>
 
                         {

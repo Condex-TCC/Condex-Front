@@ -5,9 +5,9 @@
 
 /* Container principal da página */
 .container {
-  padding: 24px;
-  font-family: sans-serif;
-  background-color: #ffffff;
+  padding: var(--cx-space-lg);
+  font-family: var(--cx-font);
+  background-color: var(--cx-surface);
   max-width: 800px;
   margin: 0 auto;
 }
@@ -17,26 +17,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: var(--cx-space-xl);
 }
 
 /* Título da tela */
 .title {
   font-size: 18px;
-  color: #333;
+  color: var(--cx-text);
   margin: 0;
   font-weight: 500;
 }
 
 /* Botão voltar no canto superior direito */
 .btnVoltar {
-  background-color: #274b8f; /* Azul escuro padrão do projeto */
+  background-color: var(--cx-primary); /* Azul escuro padrão do projeto */
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 8px 16px;
+  padding: var(--cx-space-sm) var(--cx-space-md);
   cursor: pointer;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -46,7 +46,7 @@
 .formContainer {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--cx-space-lg);
 }
 
 /* Linha superior com nível de acesso */
@@ -54,38 +54,38 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: var(--cx-space-sm);
 }
 
 /* Container do nível de acesso */
 .accessContainer {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--cx-space-sm);
   width: 150px;
 }
 
 /* Rótulo "Nível de acesso" */
 .accessLabel {
-  font-size: 14px;
-  color: #333;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
 }
 
 /* Texto que exibe o tipo de usuário (Sindico, Morador ou Porteiro) */
 .accessText {
-  font-size: 14px;
-  color: #555;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text-muted);
   padding: 12px 16px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  background-color: #f9f9f9;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius-sm);
+  background-color: var(--cx-surface-alt);
 }
 
 /* Container com os dados do usuário */
 .dataContainer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--cx-space-md);
   flex: 1;
   max-width: 500px;
 }
@@ -94,24 +94,24 @@
 .dataField {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--cx-space-sm);
 }
 
 /* Rótulo de cada campo de dado */
 .dataLabel {
-  font-size: 14px;
-  color: #333;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text);
   font-weight: 500;
 }
 
 /* Texto com o valor de cada campo de dado */
 .dataValue {
-  font-size: 14px;
-  color: #555;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text-muted);
   padding: 12px 16px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  background-color: #f9f9f9;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius-sm);
+  background-color: var(--cx-surface-alt);
   word-wrap: break-word;
 }
 
@@ -124,10 +124,10 @@
 
 /* Botão principal "Editar usuário" */
 .btnEditar {
-  background: linear-gradient(to right, #3480eb, #12325c); /* Degradê azul padrão do projeto */
+  background: linear-gradient(to right, var(--cx-brand-blue), var(--cx-navy)); /* Degradê azul padrão do projeto */
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--cx-radius-sm);
   padding: 14px 24px;
   font-size: 16px;
   font-weight: bold;
@@ -140,15 +140,15 @@
     width: 100%;
     padding: 10px 12px;
     font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    border: 1px solid var(--cx-border-strong);
+    border-radius: var(--cx-radius-sm);
     box-sizing: border-box;
-    background-color: #fff;
+    background-color: var(--cx-surface);
 }
 
 .dataInput:focus {
     outline: none;
-    border-color: #4a90e2;
+    border-color: var(--cx-brand-blue);
 }
 
 /* Botão desabilitado enquanto salva ou carrega */
@@ -159,21 +159,21 @@
 
 /* Campo desabilitado enquanto os dados carregam */
 .dataInput:disabled {
-  background-color: #f1f1f1;
+  background-color: var(--cx-surface-inset);
   cursor: not-allowed;
 }
 
 /* Mensagem de carregamento */
 .aviso {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 16px;
+  font-size: var(--cx-text-base);
+  color: var(--cx-text-muted);
+  margin-bottom: var(--cx-space-md);
 }
 
 /* Mensagem de erro de campo ou de envio */
 .erro {
-  color: #d9534f;
-  font-size: 12px;
+  color: var(--cx-danger);
+  font-size: var(--cx-text-xs);
   margin-top: 6px;
 }
 
@@ -182,8 +182,8 @@
   background: none;
   border: none;
   padding: 0;
-  color: #2b45a2;
-  font-size: 12px;
+  color: var(--cx-primary);
+  font-size: var(--cx-text-xs);
   font-weight: bold;
   text-decoration: underline;
   cursor: pointer;

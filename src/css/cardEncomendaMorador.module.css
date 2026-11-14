@@ -4,24 +4,24 @@
 .card--encomenda {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--cx-space-md);
   width: 100%;
   padding: 22px 24px;
-  background-color: #ffffff;
-  border: 1px solid #e4eaf2;
-  border-radius: 18px;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 10px 28px rgba(16, 24, 40, 0.06);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-xl);
+  box-shadow: var(--cx-shadow-md);
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: #1f2a44;
+  font-family: var(--cx-font);
+  color: var(--cx-text);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 /* Leve destaque ao passar o mouse pelo card */
 .card--encomenda:hover {
   transform: translateY(-2px);
-  border-color: #d7e3f2;
-  box-shadow: 0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 34px rgba(16, 24, 40, 0.1);
+  border-color: var(--cx-border);
+  box-shadow: var(--cx-shadow-lg);
 }
 
 /* Cabeçalho do card com a identificação e o selo */
@@ -29,14 +29,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--cx-space-md);
 }
 
 /* Bloco com o ícone e o nome da encomenda */
 .identificacao--encomenda {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--cx-space-md);
   min-width: 0;
 }
 
@@ -49,7 +49,7 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ecfdf3, #d9f7e5);
+  background: linear-gradient(135deg, var(--cx-success-soft), var(--cx-success-soft));
   font-size: 24px;
   line-height: 1;
 }
@@ -57,10 +57,10 @@
 /* Nome da encomenda em destaque */
 .nome--encomenda {
   min-width: 0;
-  font-size: 17px;
+  font-size: var(--cx-text-lg);
   font-weight: 700;
   line-height: 1.35;
-  color: #001c3f;
+  color: var(--cx-navy);
   word-break: break-word;
 }
 
@@ -69,7 +69,7 @@
   display: inline-block;
   flex-shrink: 0;
   padding: 5px 12px;
-  border-radius: 999px;
+  border-radius: var(--cx-radius-pill);
   font-size: 11.5px;
   font-weight: 700;
   line-height: 1.4;
@@ -78,25 +78,25 @@
 
 /* Selo verde para encomendas já retiradas */
 .selo--status--retirada {
-  background-color: #ecfdf3;
-  border: 1px solid #d1fadf;
-  color: #067647;
+  background-color: var(--cx-success-soft);
+  border: 1px solid var(--cx-success-soft);
+  color: var(--cx-success);
 }
 
 /* Selo laranja para encomendas aguardando retirada */
 .selo--status--aguardando {
-  background-color: #fff4e5;
-  border: 1px solid #ffe0b8;
-  color: #b45309;
+  background-color: var(--cx-warning-soft);
+  border: 1px solid var(--cx-warning-border);
+  color: var(--cx-warning);
 }
 
 /* Área com as informações completas da encomenda */
 .informacoes--encomenda {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px 24px;
-  padding-top: 16px;
-  border-top: 1px solid #eef2f7;
+  gap: var(--cx-space-md) var(--cx-space-lg);
+  padding-top: var(--cx-space-md);
+  border-top: 1px solid var(--cx-border);
 }
 
 /* Não reserva espaço quando a encomenda não tem informações extras */
@@ -108,7 +108,7 @@
 .linha--informacao {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--cx-space-xs);
   min-width: 0;
 }
 
@@ -119,15 +119,15 @@
   letter-spacing: 0.03em;
   line-height: 1.4;
   text-transform: uppercase;
-  color: #7a87a7;
+  color: var(--cx-text-muted);
 }
 
 /* Valor da informação */
 .valor--informacao {
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   font-weight: 500;
   line-height: 1.6;
-  color: #475467;
+  color: var(--cx-text-muted);
   word-break: break-word;
 }
 
@@ -141,7 +141,7 @@
   .icone--encomenda {
     width: 46px;
     height: 46px;
-    font-size: 21px;
+    font-size: var(--cx-text-xl);
   }
 
   .informacoes--encomenda {

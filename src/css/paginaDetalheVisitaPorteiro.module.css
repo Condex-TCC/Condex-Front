@@ -3,11 +3,11 @@
 /* Container principal da página, centralizado na tela */
 .pagina--detalhe-visita {
   /* Paleta e medidas compartilhadas pelos cartões da tela */
-  --cor-primaria: #001c3f;
-  --cor-texto: #1f2a44;
-  --cor-texto-suave: #667085;
-  --cor-borda: #e4eaf2;
-  --cor-fundo-cartao: #ffffff;
+  --cor-primaria: var(--cx-navy);
+  --cor-texto: var(--cx-text);
+  --cor-texto-suave: var(--cx-text-muted);
+  --cor-borda: var(--cx-border);
+  --cor-fundo-cartao: var(--cx-surface);
   --raio-cartao: 18px;
   --sombra-cartao: 0 1px 2px rgba(16, 24, 40, 0.04), 0 10px 28px rgba(16, 24, 40, 0.06);
 
@@ -17,8 +17,8 @@
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: 4px 0 40px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  padding: var(--cx-space-xs) 0 var(--cx-space-2xl);
+  font-family: var(--cx-font);
   color: var(--cor-texto);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,14 +35,15 @@
 
 /* Título da página com o nome do visitante */
 .titulo--pagina {
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cx-text-strong);
+  line-height: 1.2;
+  margin: 0;
   flex: 1;
   min-width: 0;
-  margin: 0;
-  font-size: clamp(22px, 2.2vw, 28px);
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  line-height: 1.2;
-  color: var(--cor-primaria);
   word-break: break-word;
 }
 
@@ -50,27 +51,27 @@
 .botao--voltar {
   flex-shrink: 0;
   padding: 9px 16px;
-  background-color: #ffffff;
-  border: 1px solid #d4d8e2;
-  border-radius: 8px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   font-weight: 700;
   line-height: 1.4;
-  color: #2b45a2;
+  color: var(--cx-primary);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 /* Destaque suave ao passar o mouse pelo botão de voltar */
 .botao--voltar:hover {
-  background-color: #eef2ff;
-  border-color: #b9c4e6;
+  background-color: var(--cx-primary-soft);
+  border-color: var(--cx-primary-border);
 }
 
 /* Foco visível do botão de voltar */
 .botao--voltar:focus-visible {
-  outline: 2px solid #2b45a2;
+  outline: 2px solid var(--cx-primary);
   outline-offset: 2px;
 }
 
@@ -91,7 +92,7 @@
 .titulo--cartao {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--cx-space-sm);
   margin: 0;
   font-size: 16px;
   font-weight: 700;
@@ -106,7 +107,7 @@
   width: 3px;
   height: 14px;
   border-radius: 2px;
-  background-color: #2b45a2;
+  background-color: var(--cx-primary);
 }
 
 /* Grade com os rótulos e valores de um bloco */
@@ -120,7 +121,7 @@
 .linha--informacao {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--cx-space-xs);
   min-width: 0;
 }
 
@@ -131,12 +132,12 @@
 
 /* Rótulo da informação */
 .rotulo--informacao {
-  font-size: 11px;
+  font-size: var(--cx-text-2xs);
   font-weight: 700;
   letter-spacing: 0.05em;
   line-height: 1.4;
   text-transform: uppercase;
-  color: #7a87a7;
+  color: var(--cx-text-muted);
 }
 
 /* Valor da informação */
@@ -163,8 +164,8 @@
   align-items: center;
   gap: 6px;
   padding: 6px 16px;
-  border-radius: 999px;
-  font-size: 12px;
+  border-radius: var(--cx-radius-pill);
+  font-size: var(--cx-text-xs);
   font-weight: 700;
   line-height: 1.4;
   white-space: nowrap;
@@ -181,47 +182,47 @@
 
 /* Selo laranja para visitas pendentes */
 .selo--pendente {
-  background-color: #fff4e5;
-  border: 1px solid #ffe0b8;
-  color: #b45309;
+  background-color: var(--cx-warning-soft);
+  border: 1px solid var(--cx-warning-border);
+  color: var(--cx-warning);
 }
 
 /* Selo verde para visitas aprovadas */
 .selo--aprovada {
-  background-color: #ecfdf3;
-  border: 1px solid #d1fadf;
-  color: #067647;
+  background-color: var(--cx-success-soft);
+  border: 1px solid var(--cx-success-soft);
+  color: var(--cx-success);
 }
 
 /* Selo vermelho para visitas recusadas */
 .selo--recusada {
-  background-color: #fde8e8;
-  border: 1px solid #fecdca;
-  color: #b42318;
+  background-color: var(--cx-danger-soft);
+  border: 1px solid var(--cx-danger-border);
+  color: var(--cx-danger);
 }
 
 /* Selo verde para visitas finalizadas */
 .selo--finalizada {
-  background-color: #e4f7e8;
-  color: #1e7e34;
+  background-color: var(--cx-success-soft);
+  color: var(--cx-success);
 }
 
 /* Selo laranja para visitas em andamento */
 .selo--andamento {
-  background-color: #fff1e0;
-  color: #b25e09;
+  background-color: var(--cx-warning-soft);
+  color: var(--cx-warning);
 }
 
 /* Selo azul para visitas autorizadas */
 .selo--autorizada {
-  background-color: #e6efff;
-  color: #1d4ed8;
+  background-color: var(--cx-primary-soft-hover);
+  color: var(--cx-primary);
 }
 
 /* Selo cinza para visitas aguardando autorização */
 .selo--aguardando {
-  background-color: #eef0f4;
-  color: #5b6785;
+  background-color: var(--cx-neutral-soft);
+  color: var(--cx-text-muted);
 }
 
 /* Grade com os cartões de entrada e saída */
@@ -246,7 +247,7 @@
 
 /* Data e hora de um registro */
 .data--registro {
-  font-size: 15px;
+  font-size: var(--cx-text-md);
   font-weight: 600;
   line-height: 1.5;
   color: var(--cor-primaria);
@@ -254,9 +255,9 @@
 
 /* Aviso de registro ainda não realizado */
 .aviso--registro {
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   line-height: 1.5;
-  color: #7a87a7;
+  color: var(--cx-text-muted);
 }
 
 /* AÇÕES DA VISITA */
@@ -267,8 +268,8 @@
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 10px;
-  padding-top: 16px;
-  border-top: 1px solid #eef0f4;
+  padding-top: var(--cx-space-md);
+  border-top: 1px solid var(--cx-border);
 }
 
 /* Esconde o rodapé de ações quando nenhum botão é exibido */
@@ -279,10 +280,10 @@
 /* Botão de ação da visita */
 .botao--acao {
   border: none;
-  border-radius: 8px;
+  border-radius: var(--cx-radius);
   padding: 10px 18px;
   font-family: inherit;
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
   font-weight: 700;
   cursor: pointer;
   transition: filter 0.15s ease;
@@ -295,20 +296,20 @@
 
 /* Botão verde para registrar a entrada */
 .botao--entrada {
-  background-color: #1e7e34;
-  color: #ffffff;
+  background-color: var(--cx-success);
+  color: var(--cx-on-primary);
 }
 
 /* Botão laranja para registrar a saída */
 .botao--saida {
-  background-color: #b25e09;
-  color: #ffffff;
+  background-color: var(--cx-warning);
+  color: var(--cx-on-primary);
 }
 
 /* Botão vermelho para deletar a visita */
 .botao--deletar {
-  background-color: #b42318;
-  color: #ffffff;
+  background-color: var(--cx-danger);
+  color: var(--cx-on-primary);
 }
 
 /* Ajustes para telas menores */
@@ -322,8 +323,8 @@
 @media (max-width: 520px) {
 
   .pagina--detalhe-visita {
-    gap: 16px;
-    padding-bottom: 24px;
+    gap: var(--cx-space-md);
+    padding-bottom: var(--cx-space-lg);
   }
 
   .cabecalho--pagina {

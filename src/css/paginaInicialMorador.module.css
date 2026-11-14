@@ -3,84 +3,45 @@
 /* Container principal da página */
 .dashboard--principal {
   /* Paleta e medidas compartilhadas pelos componentes da tela */
-  --cor-primaria: #001c3f;
-  --cor-texto: #1f2a44;
-  --cor-texto-suave: #667085;
-  --cor-borda: #e4eaf2;
-  --cor-fundo-cartao: #ffffff;
-  --raio-cartao: 18px;
-  --sombra-cartao: 0 1px 2px rgba(16, 24, 40, 0.04), 0 10px 28px rgba(16, 24, 40, 0.06);
+  --cor-primaria: var(--cx-navy);
+  --cor-texto: var(--cx-text);
+  --cor-texto-suave: var(--cx-text-muted);
+  --cor-borda: var(--cx-border);
+  --cor-fundo-cartao: var(--cx-surface);
+  --raio-cartao: var(--cx-radius-lg);
+  --sombra-cartao: var(--cx-shadow-sm);
 
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--cx-space-lg);
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 4px 0 40px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  padding: var(--cx-space-xs) 0 var(--cx-space-2xl);
+  font-family: var(--cx-font);
   color: var(--cor-texto);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Cabeçalho com a saudação do morador */
+/* Cabeçalho da página (padrão cx-page-header): contexto + título à
+   esquerda e a data à direita; sem fundo próprio, como nas demais telas */
 .cabecalho--dashboard {
-  position: relative;
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-end;
   flex-wrap: wrap;
-  gap: 24px;
-  overflow: hidden;
-  padding: 28px 32px;
-  background:
-    radial-gradient(circle at 100% 0%, rgba(51, 195, 240, 0.16), transparent 38%),
-    radial-gradient(circle at 0% 100%, rgba(43, 69, 162, 0.1), transparent 42%),
-    linear-gradient(135deg, #f3f8ff 0%, #ffffff 58%, #f8fcff 100%);
-  border: 1px solid #e2ebf7;
-  border-radius: 22px;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03), 0 12px 32px rgba(16, 24, 40, 0.05);
-}
-
-/* Círculo decorativo do cabeçalho */
-.cabecalho--dashboard::after {
-  content: "";
-  position: absolute;
-  top: -90px;
-  right: -70px;
-  width: 260px;
-  height: 260px;
-  border: 1px solid rgba(51, 195, 240, 0.22);
-  border-radius: 50%;
-  box-shadow: 0 0 0 28px rgba(51, 195, 240, 0.04);
-  pointer-events: none;
+  gap: var(--cx-space-md);
 }
 
 /* Bloco do cabeçalho com o título e o subtítulo */
 .cabecalho--texto {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--cx-space-sm);
 }
 
-/* Título de boas-vindas */
-.titulo--boas-vindas {
-  font-size: clamp(24px, 2.4vw, 32px);
-  font-weight: 800;
-  letter-spacing: -0.6px;
-  color: var(--cor-primaria);
-  line-height: 1.15;
-}
 
-/* Subtítulo do cabeçalho */
-.subtitulo--boas-vindas {
-  max-width: 580px;
-  font-size: 14.5px;
-  color: var(--cor-texto-suave);
-  line-height: 1.6;
-}
 
 /* Linha de cards de resumo */
 .container--resumo {
@@ -94,7 +55,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--cx-space-md);
   overflow: hidden;
   padding: 20px;
   background-color: var(--cor-fundo-cartao);
@@ -113,8 +74,8 @@
 /* Destaque visual ao passar o mouse pelo card clicável */
 .cartao--resumo--clicavel:hover {
   transform: translateY(-3px);
-  border-color: #d7e3f2;
-  box-shadow: 0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 34px rgba(16, 24, 40, 0.1);
+  border-color: var(--cx-border);
+  box-shadow: var(--cx-shadow-lg);
 }
 
 /* Leve retorno ao pressionar o card clicável */
@@ -128,20 +89,20 @@
   position: absolute;
   inset: 0 0 auto 0;
   height: 3px;
-  background: var(--cor-acento, #dbe4f0);
+  background: var(--cor-acento, var(--cx-border));
 }
 
 /* Cores de destaque dos cards */
 .cartao--resumo--comunicados {
-  --cor-acento: linear-gradient(90deg, #a855f7, #d8b4fe);
+  --cor-acento: linear-gradient(90deg, var(--cx-primary), var(--cx-blue-light));
 }
 
 .cartao--resumo--reservas {
-  --cor-acento: linear-gradient(90deg, #f5b84b, #ffd68a);
+  --cor-acento: linear-gradient(90deg, var(--cx-warning-border), var(--cx-warning-border));
 }
 
 .cartao--resumo--encomendas {
-  --cor-acento: linear-gradient(90deg, #34c38f, #7ce0b4);
+  --cor-acento: linear-gradient(90deg, var(--cx-success), var(--cx-success-border));
 }
 
 /* Quadrado colorido que envolve o ícone do card */
@@ -151,22 +112,22 @@
   justify-content: center;
   width: 48px;
   height: 48px;
-  border-radius: 15px;
+  border-radius: var(--cx-radius-lg);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
   flex-shrink: 0;
 }
 
 /* Cores suaves de cada card de resumo */
 .caixa--icone--comunicados {
-  background: linear-gradient(135deg, #f5edff, #eadcff);
+  background: linear-gradient(135deg, var(--cx-primary-soft), var(--cx-primary-soft-hover));
 }
 
 .caixa--icone--reservas {
-  background: linear-gradient(135deg, #fff7ea, #ffedd0);
+  background: linear-gradient(135deg, var(--cx-warning-soft), var(--cx-warning-soft));
 }
 
 .caixa--icone--encomendas {
-  background: linear-gradient(135deg, #ecfdf3, #d9f7e5);
+  background: linear-gradient(135deg, var(--cx-success-soft), var(--cx-success-soft));
 }
 
 /* Título do card de resumo */
@@ -208,7 +169,7 @@
 .seta--cartao--resumo {
   font-size: 26px;
   font-weight: 300;
-  color: #c0c8d6;
+  color: var(--cx-text-faint);
   line-height: 1;
   transform: translateY(-1px);
   flex-shrink: 0;
@@ -238,15 +199,15 @@
 
 /* Variações sutis de fundo dos painéis */
 .cartao--painel--reservas {
-  background:
+  background: 
     radial-gradient(circle at 100% 0%, rgba(245, 184, 75, 0.08), transparent 35%),
-    #ffffff;
+    var(--cx-surface);
 }
 
 .cartao--painel--comunicados {
-  background:
+  background: 
     radial-gradient(circle at 100% 0%, rgba(51, 195, 240, 0.06), transparent 35%),
-    #ffffff;
+    var(--cx-surface);
 }
 
 /* Cabeçalho do painel com ícone e título */
@@ -255,9 +216,9 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  padding-bottom: 16px;
+  padding-bottom: var(--cx-space-md);
   margin-bottom: 18px;
-  border-bottom: 1px solid #eef2f7;
+  border-bottom: 1px solid var(--cx-border);
 }
 
 /* Ícone do painel */
@@ -267,7 +228,7 @@
   justify-content: center;
   width: 42px;
   height: 42px;
-  background: linear-gradient(135deg, #eef5ff, #e1f4ff);
+  background: linear-gradient(135deg, var(--cx-primary-soft), var(--cx-blue-light-soft));
   border-radius: 13px;
   font-size: 20px;
   line-height: 1;
@@ -276,18 +237,18 @@
 
 /* Cores dos ícones de cada painel */
 .cartao--painel--reservas .icone--painel {
-  background: linear-gradient(135deg, #fff7ea, #ffedd0);
+  background: linear-gradient(135deg, var(--cx-warning-soft), var(--cx-warning-soft));
 }
 
 .cartao--painel--comunicados .icone--painel {
-  background: linear-gradient(135deg, #e8f1ff, #dbeafe);
+  background: linear-gradient(135deg, var(--cx-primary-soft), var(--cx-primary-soft));
 }
 
 /* Título do painel */
 .titulo--painel {
   flex: 1;
   min-width: 0;
-  font-size: 17px;
+  font-size: var(--cx-text-lg);
   font-weight: 700;
   letter-spacing: -0.2px;
   color: var(--cor-primaria);
@@ -303,9 +264,9 @@
   padding-right: 6px;
   font-size: 14.5px;
   line-height: 1.75;
-  color: #475467;
+  color: var(--cx-text-muted);
   scrollbar-width: thin;
-  scrollbar-color: #d7dfea transparent;
+  scrollbar-color: var(--cx-border) transparent;
 }
 
 /* Barra de rolagem discreta no Chrome, Edge e Safari */
@@ -318,8 +279,8 @@
 }
 
 .conteudo--painel::-webkit-scrollbar-thumb {
-  background-color: #d7dfea;
-  border-radius: 999px;
+  background-color: var(--cx-border);
+  border-radius: var(--cx-radius-pill);
 }
 
 /* Item de reserva */
@@ -328,7 +289,7 @@
   align-items: center;
   gap: 14px;
   padding: 14px 10px;
-  border-bottom: 1px solid #f0f3f8;
+  border-bottom: 1px solid var(--cx-border);
 }
 
 /* Ajustes do primeiro e do último item da lista */
@@ -348,10 +309,10 @@
   align-items: center;
   justify-content: center;
   width: 52px;
-  padding: 8px 0;
-  background: linear-gradient(135deg, #fff7ea, #ffedd0);
-  border: 1px solid #ffe6bf;
-  border-radius: 12px;
+  padding: var(--cx-space-sm) 0;
+  background: linear-gradient(135deg, var(--cx-warning-soft), var(--cx-warning-soft));
+  border: 1px solid var(--cx-warning-border);
+  border-radius: var(--cx-radius-lg);
   flex-shrink: 0;
 }
 
@@ -369,7 +330,7 @@
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: #b45309;
+  color: var(--cx-warning);
   text-transform: uppercase;
   line-height: 1.2;
 }
@@ -378,7 +339,7 @@
 .texto--reserva {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--cx-space-xs);
   flex: 1;
   min-width: 0;
 }
@@ -406,7 +367,7 @@
 .selo--status {
   display: inline-block;
   padding: 4px 10px;
-  border-radius: 999px;
+  border-radius: var(--cx-radius-pill);
   font-size: 11.5px;
   font-weight: 700;
   line-height: 1.4;
@@ -421,16 +382,16 @@
 
 /* Selo laranja para reservas pendentes */
 .selo--status--pendente {
-  background-color: #fff4e5;
-  border: 1px solid #ffe0b8;
-  color: #b45309;
+  background-color: var(--cx-warning-soft);
+  border: 1px solid var(--cx-warning-border);
+  color: var(--cx-warning);
 }
 
 /* Selo neutro para os demais status */
 .selo--status--neutro {
-  background-color: #f2f4f7;
-  border: 1px solid #e4e7ec;
-  color: #667085;
+  background-color: var(--cx-surface-inset);
+  border: 1px solid var(--cx-border);
+  color: var(--cx-text-muted);
 }
 
 /* Item de comunicado recente */
@@ -439,15 +400,15 @@
   align-items: flex-start;
   gap: 14px;
   padding: 14px 10px;
-  border-bottom: 1px solid #f0f3f8;
-  border-radius: 10px;
+  border-bottom: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 /* Destaque visual ao passar o mouse pelo comunicado clicável */
 .item--comunicado:hover {
-  background-color: #f7faff;
+  background-color: var(--cx-surface-alt);
 }
 
 /* Ajustes do primeiro e do último item da lista */
@@ -467,7 +428,7 @@
   justify-content: center;
   width: 38px;
   height: 38px;
-  background: linear-gradient(135deg, #eef4ff, #e3edff);
+  background: linear-gradient(135deg, var(--cx-primary-soft), var(--cx-primary-soft));
   border-radius: 50%;
   font-size: 16px;
   line-height: 1;
@@ -478,7 +439,7 @@
 .texto--comunicado {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--cx-space-xs);
   flex: 1;
   min-width: 0;
 }
@@ -487,7 +448,7 @@
 .linha--titulo--comunicado {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--cx-space-sm);
   min-width: 0;
 }
 
@@ -499,7 +460,7 @@
   overflow: hidden;
   flex: 1;
   min-width: 0;
-  font-size: 15px;
+  font-size: var(--cx-text-md);
   font-weight: 600;
   color: var(--cor-texto);
   line-height: 1.5;
@@ -508,8 +469,8 @@
 /* Selos de status do comunicado */
 .selo--novo,
 .selo--visualizado {
-  padding: 2px 8px;
-  border-radius: 999px;
+  padding: var(--cx-space-2xs) var(--cx-space-sm);
+  border-radius: var(--cx-radius-pill);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -519,16 +480,16 @@
 
 /* Selo de comunicado não visualizado */
 .selo--novo {
-  background-color: #eef2ff;
-  border: 1px solid #e0e7ff;
-  color: #4f46e5;
+  background-color: var(--cx-primary-soft);
+  border: 1px solid var(--cx-primary-border);
+  color: var(--cx-primary);
 }
 
 /* Selo de comunicado já visualizado */
 .selo--visualizado {
-  background-color: #ecfdf3;
-  border: 1px solid #d1fadf;
-  color: #067647;
+  background-color: var(--cx-success-soft);
+  border: 1px solid var(--cx-success-soft);
+  color: var(--cx-success);
 }
 
 /* Descrição do comunicado limitada a duas linhas */
@@ -537,7 +498,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
   color: var(--cor-texto-suave);
   line-height: 1.55;
 }
@@ -545,9 +506,9 @@
 /* Data do comunicado à direita */
 .data--comunicado {
   padding: 5px 9px;
-  background-color: #f7f9fc;
-  border: 1px solid #eef2f7;
-  border-radius: 8px;
+  background-color: var(--cx-surface-alt);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius);
   font-size: 11.5px;
   font-weight: 600;
   color: var(--cor-texto-suave);
@@ -563,10 +524,10 @@
   align-items: center;
   justify-content: center;
   min-height: 260px;
-  padding: 24px;
-  background-color: #fafbfd;
-  border: 1px dashed #dfe6f0;
-  border-radius: 14px;
+  padding: var(--cx-space-lg);
+  background-color: var(--cx-surface-alt);
+  border: 1px dashed var(--cx-border);
+  border-radius: var(--cx-radius-lg);
   text-align: center;
   font-size: 13.5px;
   font-weight: 600;
@@ -576,10 +537,6 @@
 
 /* Ajustes para telas menores */
 @media (max-width: 900px) {
-  .cabecalho--dashboard {
-    padding: 24px;
-  }
-
   .cartao--painel {
     min-height: 400px;
   }
@@ -588,18 +545,9 @@
 @media (max-width: 640px) {
   .dashboard--principal {
     gap: 18px;
-    padding-bottom: 24px;
+    padding-bottom: var(--cx-space-lg);
   }
 
-  .cabecalho--dashboard {
-    gap: 20px;
-    padding: 22px;
-    border-radius: 18px;
-  }
-
-  .titulo--boas-vindas {
-    font-size: 24px;
-  }
 
   .container--resumo {
     grid-template-columns: 1fr;
@@ -624,13 +572,7 @@
 }
 
 @media (max-width: 420px) {
-  .titulo--boas-vindas {
-    font-size: 22px;
-  }
 
-  .subtitulo--boas-vindas {
-    font-size: 13.5px;
-  }
 
   .valor--resumo {
     font-size: 28px;

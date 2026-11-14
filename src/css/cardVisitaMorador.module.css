@@ -7,20 +7,20 @@
   gap: 18px;
   width: 100%;
   padding: 18px 20px;
-  background-color: #ffffff;
-  border: 1px solid #e8ebf1;
-  border-radius: 14px;
-  box-shadow: 0 2px 6px rgba(0, 28, 63, 0.06);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-lg);
+  box-shadow: var(--cx-shadow-sm);
   box-sizing: border-box;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #001c3f;
+  font-family: var(--cx-font);
+  color: var(--cx-navy);
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 /* Leve destaque ao passar o mouse pelo card */
 .card--visita:hover {
-  border-color: #dbe1ee;
-  box-shadow: 0 4px 12px rgba(0, 28, 63, 0.09);
+  border-color: var(--cx-border);
+  box-shadow: var(--cx-shadow);
 }
 
 /* CABEÇALHO */
@@ -51,8 +51,8 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e6efff, #dbe6ff);
-  color: #2b45a2;
+  background: linear-gradient(135deg, var(--cx-primary-soft-hover), var(--cx-primary-soft-hover));
+  color: var(--cx-primary);
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -63,7 +63,7 @@
 .dados--visita {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--cx-space-sm);
   min-width: 0;
 }
 
@@ -72,7 +72,7 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 1.25;
-  color: #001c3f;
+  color: var(--cx-navy);
   word-break: break-word;
 }
 
@@ -88,11 +88,11 @@
   display: inline-flex;
   align-items: center;
   padding: 3px 9px;
-  border-radius: 999px;
-  background-color: #f4f5f9;
-  border: 1px solid #e6e9f0;
-  color: #55628b;
-  font-size: 12px;
+  border-radius: var(--cx-radius-pill);
+  background-color: var(--cx-surface-inset);
+  border: 1px solid var(--cx-border);
+  color: var(--cx-text-muted);
+  font-size: var(--cx-text-xs);
   font-weight: 600;
   letter-spacing: 0.2px;
   word-break: break-word;
@@ -104,9 +104,9 @@
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
-  border-radius: 20px;
+  border-radius: var(--cx-radius-xl);
   padding: 5px 12px;
-  font-size: 11px;
+  font-size: var(--cx-text-2xs);
   font-weight: 700;
   letter-spacing: 0.2px;
   white-space: nowrap;
@@ -123,32 +123,32 @@
 
 /* Selo verde para visitas finalizadas */
 .selo--finalizada {
-  background-color: #e4f7e8;
-  color: #1e7e34;
+  background-color: var(--cx-success-soft);
+  color: var(--cx-success);
 }
 
 /* Selo laranja para visitas em andamento */
 .selo--andamento {
-  background-color: #fff1e0;
-  color: #b25e09;
+  background-color: var(--cx-warning-soft);
+  color: var(--cx-warning);
 }
 
 /* Selo azul para visitas autorizadas */
 .selo--autorizada {
-  background-color: #e6efff;
-  color: #1d4ed8;
+  background-color: var(--cx-primary-soft-hover);
+  color: var(--cx-primary);
 }
 
 /* Selo cinza para visitas aguardando autorização */
 .selo--aguardando {
-  background-color: #eef0f4;
-  color: #5b6785;
+  background-color: var(--cx-neutral-soft);
+  color: var(--cx-text-muted);
 }
 
 /* Selo vermelho para visitas negadas */
 .selo--negada {
-  background-color: #fde8e8;
-  color: #b42318;
+  background-color: var(--cx-danger-soft);
+  color: var(--cx-danger);
 }
 
 /* SEÇÕES DE INFORMAÇÃO */
@@ -158,22 +158,22 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-top: 16px;
-  border-top: 1px solid #eef0f4;
+  padding-top: var(--cx-space-md);
+  border-top: 1px solid var(--cx-border);
 }
 
 /* Título de cada seção */
 .titulo--secao {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--cx-space-sm);
   margin: 0;
-  font-size: 11px;
+  font-size: var(--cx-text-2xs);
   font-weight: 800;
   line-height: 1.2;
   letter-spacing: 0.8px;
   text-transform: uppercase;
-  color: #7a87a7;
+  color: var(--cx-text-muted);
 }
 
 /* Detalhe colorido antes do título da seção */
@@ -182,7 +182,7 @@
   width: 3px;
   height: 12px;
   border-radius: 2px;
-  background-color: #2b45a2;
+  background-color: var(--cx-primary);
 }
 
 /* Grade com as informações da seção */
@@ -202,20 +202,20 @@
 
 /* Rótulo da informação */
 .rotulo--informacao {
-  font-size: 11px;
+  font-size: var(--cx-text-2xs);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.6px;
   text-transform: uppercase;
-  color: #7a87a7;
+  color: var(--cx-text-muted);
 }
 
 /* Valor da informação */
 .valor--informacao {
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   font-weight: 500;
   line-height: 1.45;
-  color: #001c3f;
+  color: var(--cx-navy);
   word-break: break-word;
 }
 
@@ -232,35 +232,35 @@
 .registro {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--cx-space-xs);
   padding: 12px 14px;
-  background-color: #fafbfe;
-  border: 1px solid #eef0f4;
-  border-radius: 10px;
+  background-color: var(--cx-surface-alt);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
   min-width: 0;
 }
 
 /* Título do registro */
 .registro--titulo {
-  font-size: 11px;
+  font-size: var(--cx-text-2xs);
   font-weight: 800;
   letter-spacing: 0.6px;
   text-transform: uppercase;
-  color: #55628b;
+  color: var(--cx-text-muted);
 }
 
 /* Data do registro */
 .registro--data {
-  font-size: 14px;
+  font-size: var(--cx-text-base);
   font-weight: 600;
-  color: #001c3f;
+  color: var(--cx-navy);
 }
 
 /* Aviso de registro ainda não realizado */
 .registro--vazio {
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
   font-style: italic;
-  color: #a0aac4;
+  color: var(--cx-text-faint);
 }
 
 /* Ações da visita */
@@ -268,33 +268,33 @@
   display: flex;
   justify-content: flex-end;
   padding-top: 14px;
-  border-top: 1px solid #eef0f4;
+  border-top: 1px solid var(--cx-border);
 }
 
 /* Botão de cancelar visita */
 .botao--cancelar {
-  padding: 8px 16px;
-  background-color: #ffffff;
-  border: 1px solid #fecdca;
-  border-radius: 8px;
+  padding: var(--cx-space-sm) var(--cx-space-md);
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-danger-border);
+  border-radius: var(--cx-radius);
   font-family: inherit;
-  font-size: 13px;
+  font-size: var(--cx-text-sm);
   font-weight: 700;
   line-height: 1.4;
-  color: #b42318;
+  color: var(--cx-danger);
   cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 /* Destaque suave ao passar o mouse pelo botão de cancelar */
 .botao--cancelar:hover {
-  background-color: #fef3f2;
-  border-color: #fda29b;
+  background-color: var(--cx-danger-soft);
+  border-color: var(--cx-danger-border);
 }
 
 /* Foco visível do botão de cancelar */
 .botao--cancelar:focus-visible {
-  outline: 2px solid #b42318;
+  outline: 2px solid var(--cx-danger);
   outline-offset: 2px;
 }
 
