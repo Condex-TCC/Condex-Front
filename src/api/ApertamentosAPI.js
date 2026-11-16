@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer a requisição para a API dos apertamentos
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera todos os porteiros do banco de dados
 export async function getApertamentosAPI(){
@@ -10,7 +11,7 @@ export async function getApertamentosAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/unidade/get"
+    let endPoint = `${API_URL}/api/sindico/unidade/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -39,7 +40,7 @@ export async function deleteApertamentoAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/unidade/delete/" + id
+    let endPoint = `${API_URL}/api/sindico/unidade/delete/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -67,7 +68,7 @@ export async function insertApertamentoAPI(bloco, numero, descricao){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/unidade/create"
+    let endPoint = `${API_URL}/api/sindico/unidade/create`
 
     //Objeto com os elementos
     let novoApertamento = {
@@ -106,7 +107,7 @@ export async function showApertamentoAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/unidade/show/" + id
+    let endPoint = `${API_URL}/api/sindico/unidade/show/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -134,7 +135,7 @@ export async function updateApertamentoAPI(id, bloco, numero, descricao){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/unidade/update/" + id
+    let endPoint = `${API_URL}/api/sindico/unidade/update/` + id
     
     //Objeto com os valores que vão ser atualizados
     let apertamentoAtualizado = {

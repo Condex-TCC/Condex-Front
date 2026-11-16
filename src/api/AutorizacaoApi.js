@@ -3,6 +3,7 @@
 import { GetCookie } from "../service/cookie"
 import { USE_MOCK } from "../mock/ativo"
 import { allowEntryMock, getAuthorizedVisitorsMock } from "../mock/porteiroMock"
+import { API_URL } from './config'
 
 //Função que recupera os visitantes autorizados (pré cadastrados) do porteiro
 export async function getAuthorizedVisitorsAPI(){
@@ -18,7 +19,7 @@ export async function getAuthorizedVisitorsAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/autorizacao/authorized"
+    let endPoint = `${API_URL}/api/porteiro/autorizacao/authorized`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -52,7 +53,7 @@ export async function allowEntryAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/autorizacao/entry/" + id
+    let endPoint = `${API_URL}/api/porteiro/autorizacao/entry/` + id
 
     //Criando a requisição
     const requisicao = fetch(

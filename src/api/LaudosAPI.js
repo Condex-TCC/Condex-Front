@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer a requisição para a API das regras
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera todos os laudos do banco de dados
 export async function getLaudosAPI(){
@@ -10,7 +11,7 @@ export async function getLaudosAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/laudos/get"
+    let endPoint = `${API_URL}/api/sindico/laudos/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -39,7 +40,7 @@ export async function deleteLaudoAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/laudos/delete/" + id
+    let endPoint = `${API_URL}/api/sindico/laudos/delete/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -68,7 +69,7 @@ export async function insertLaudoAPI(nome, documento) {
     let token = cookie.token
 
     // Endpoint baseado no seu print do Insomnia
-    let endPoint = "http://127.0.0.1:8000/api/sindico/laudos/create"
+    let endPoint = `${API_URL}/api/sindico/laudos/create`
 
     // Criando um FormData para suportar envio de arquivo e texto juntos
     let formData = new FormData()
@@ -105,7 +106,7 @@ export async function showLaudoAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/laudos/show/" + id
+    let endPoint = `${API_URL}/api/sindico/laudos/show/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -133,7 +134,7 @@ export async function updateLaudoAPI(id, nome, documentoOuCaminho) {
     let token = cookie.token
 
     // Endpoint baseado no seu print do Insomnia para atualizar
-    let endPoint = "http://127.0.0.1:8000/api/sindico/laudos/update/" + id
+    let endPoint = `${API_URL}/api/sindico/laudos/update/` + id
 
     // Criando o FormData (mesma estrutura do create)
     let formData = new FormData()
@@ -170,7 +171,7 @@ export async function getLaudossMoradorAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/laudos/get"
+    let endPoint = `${API_URL}/api/morador/laudos/get`
 
     //Criando a requisição
     const requisicao = fetch(

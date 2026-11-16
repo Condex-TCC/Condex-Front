@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer a requisição do primeiro acesso para a API
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que conclui o primeiro acesso do usuário logado
 //A API exige o tipo de usuário e, dentro de "dados", nome, cpf, email, telefone e password
@@ -11,7 +12,7 @@ export async function primeiroAcessoAPI(usuario, nome, email, telefone, cpf, pas
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "/api/perfil/primeiroAcesso"
+    let endPoint = `${API_URL}/api/perfil/primeiroAcesso`
 
     //Objeto com os elementos no formato que a API espera
     let dadosPrimeiroAcesso = {

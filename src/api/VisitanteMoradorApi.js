@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer a requisição para a API de visitantes do morador
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera os visitantes cadastrados pelo morador logado
 export async function getVisitantesMoradorAPI(){
@@ -10,7 +11,7 @@ export async function getVisitantesMoradorAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "/api/morador/visitante/get"
+    let endPoint = `${API_URL}/api/morador/visitante/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -41,7 +42,7 @@ export async function insertVisitanteMoradorAPI(nome, cpf){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/visitante/create"
+    let endPoint = `${API_URL}/api/morador/visitante/create`
 
     //Objeto com os elementos
     let novoVisitante = {

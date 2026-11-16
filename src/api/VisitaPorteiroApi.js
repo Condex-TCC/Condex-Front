@@ -2,6 +2,7 @@
 
 import { GetCookie } from "../service/cookie"
 import { montarQuery } from "../utils/busca"
+import { API_URL } from './config'
 
 export async function getVisitasAPI(filtros = {}){
 
@@ -9,7 +10,7 @@ export async function getVisitasAPI(filtros = {}){
     let token = cookie.token
 
     //A API aceita os filtros ?nome= e ?cpf= (do visitante)
-    let endPoint = "/api/porteiro/visita/get" + montarQuery(filtros)
+    let endPoint = `${API_URL}/api/porteiro/visita/get` + montarQuery(filtros)
 
     const requisicao = fetch(
         endPoint,
@@ -34,7 +35,7 @@ export async function allowEntryAPI(idPorteiro, idMorador, idVisitante){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "/api/porteiro/visita/entry"
+    let endPoint = `${API_URL}/api/porteiro/visita/entry`
 
     //Objeto com os dados exigidos pela API
     let dadosEntrada = {
@@ -66,7 +67,7 @@ export async function registerExitAPI(id){
     let cookie = await GetCookie()
     let token = cookie.token
 
-    let endPoint = "/api/porteiro/visita/exit/" + id
+    let endPoint = `${API_URL}/api/porteiro/visita/exit/` + id
 
     const requisicao = fetch(
         endPoint,

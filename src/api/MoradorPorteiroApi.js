@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer a requisição para a API de moradores do porteiro
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera todos os moradores que o porteiro pode consultar
 //O endpoint do porteiro devolve a lista para vincular visitantes e encomendas
@@ -11,7 +12,7 @@ export async function getMoradoresPorteiroAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "/api/porteiro/morador/get"
+    let endPoint = `${API_URL}/api/porteiro/morador/get`
 
     //Criando a requisição
     const requisicao = fetch(

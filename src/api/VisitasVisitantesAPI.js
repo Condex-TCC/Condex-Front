@@ -2,6 +2,7 @@
 
 import { GetCookie } from "../service/cookie"
 import { montarQuery } from "../utils/busca"
+import { API_URL } from './config'
 
 //Função que obtem as visitas registradas no condomínio
 export async function getVisitasSindicoAPI(filtros = {}){
@@ -12,7 +13,7 @@ export async function getVisitasSindicoAPI(filtros = {}){
 
     //Endpoint
     //A API aceita o filtro ?nome= para buscar pelo nome do visitante
-    let endPoint = "http://127.0.0.1:8000/api/sindico/visita/get" + montarQuery(filtros)
+    let endPoint = `${API_URL}/api/sindico/visita/get` + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(
@@ -43,7 +44,7 @@ export async function getVisitantesSindicoAPI(filtros = {}){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/sindico/visitante/get" + montarQuery(filtros)
+    let endPoint = `${API_URL}/api/sindico/visitante/get` + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(
@@ -74,7 +75,7 @@ export async function getVisitasMoradorAPI(){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/morador/visita/get" 
+    let endPoint = `${API_URL}/api/morador/visita/get` 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -105,7 +106,7 @@ export async function getVisitasHisoticoMoradorAPI(){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/morador/visita/historico" 
+    let endPoint = `${API_URL}/api/morador/visita/historico` 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -136,7 +137,7 @@ export async function cancelaVisitamoradorAPI(id){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/morador/visita/cancela/" + id 
+    let endPoint = `${API_URL}/api/morador/visita/cancela/` + id 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -167,7 +168,7 @@ export async function autorizaVisitamoradorAPI(id){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/morador/visita/autoriza/" + id 
+    let endPoint = `${API_URL}/api/morador/visita/autoriza/` + id 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -198,7 +199,7 @@ export async function showVisitaMoradorAPI(id){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/morador/visita/show/" + id 
+    let endPoint = `${API_URL}/api/morador/visita/show/` + id 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -228,7 +229,7 @@ export async function consultaVisitanteAPI(rg, cpf){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/visitantes/consulta"
+    let endPoint = `${API_URL}/api/morador/visitantes/consulta`
 
     //Montando o body que vai ser enviado na requisição
     let bodyObject = {
@@ -267,7 +268,7 @@ export async function cadastraVisitanteAPI(nome, rg, cpf){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/visitantes/create"
+    let endPoint = `${API_URL}/api/morador/visitantes/create`
 
     //Montando o body que vai ser enviado na requisição
     let bodyObject = {
@@ -308,7 +309,7 @@ export async function cadastraVisitaMoradorAPI(id_visitante, hora_entrada, hora_
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/visita/create"
+    let endPoint = `${API_URL}/api/morador/visita/create`
 
     //Montando o body que vai ser enviado na requisição
     let bodyObject = {
@@ -350,7 +351,7 @@ export async function getVisitasPorterioAPI(filtros = {}){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/get" + montarQuery(filtros)
+    let endPoint = `${API_URL}/api/porteiro/visita/get` + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(
@@ -381,7 +382,7 @@ export async function getHistoricoVisitasPorterioAPI(filtros = {}){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/historico/get" + montarQuery(filtros)
+    let endPoint = `${API_URL}/api/porteiro/visita/historico/get` + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(
@@ -413,7 +414,7 @@ export async function showVisitasPorterioAPI(id){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/show/" + id 
+    let endPoint = `${API_URL}/api/porteiro/visita/show/` + id 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -444,7 +445,7 @@ export async function deleteVisitaPorterioAPI(id){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/delete/" + id 
+    let endPoint = `${API_URL}/api/porteiro/visita/delete/` + id 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -475,7 +476,7 @@ export async function registraEntradaVisitaAPI(id){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/entrada/" + id 
+    let endPoint = `${API_URL}/api/porteiro/visita/entrada/` + id 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -507,7 +508,7 @@ export async function registraSaidaVisitaAPI(id){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/saida/" + id 
+    let endPoint = `${API_URL}/api/porteiro/visita/saida/` + id 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -537,7 +538,7 @@ export async function consultaVisitantePortieroAPI(rg, cpf){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visitante/consulta"
+    let endPoint = `${API_URL}/api/porteiro/visitante/consulta`
 
     //Montando o body que vai ser enviado na requisição
     let bodyObject = {
@@ -576,7 +577,7 @@ export async function cadastraVisitantePorteiroAPI(nome, rg, cpf){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visitante/create"
+    let endPoint = `${API_URL}/api/porteiro/visitante/create`
 
     //Montando o body que vai ser enviado na requisição
     let bodyObject = {
@@ -617,7 +618,7 @@ export async function getMoradoresVisitasPortieroAPI(filtros = {}){
 
     //Endpoint
     //A API aceita o filtro ?email= (o backend do morador só pesquisa pelo email)
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/morador/get" + montarQuery(filtros)
+    let endPoint = `${API_URL}/api/porteiro/morador/get` + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(
@@ -648,7 +649,7 @@ export async function cadastraVisitaPorteiroAPI(id_visitante, id_Morador, hora_e
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/porteiro/visita/create"
+    let endPoint = `${API_URL}/api/porteiro/visita/create`
 
     //Montando o body que vai ser enviado na requisição
     let bodyObject = {

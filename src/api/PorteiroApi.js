@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer a requisição para a API dos Porteiros
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera todos os porteiros do banco de dados
 export async function getPorteiro(){
@@ -10,7 +11,7 @@ export async function getPorteiro(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/porteiro/get"
+    let endPoint = `${API_URL}/api/sindico/porteiro/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -39,7 +40,7 @@ export async function deletePorteirosAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/porteiro/delete/" + id
+    let endPoint = `${API_URL}/api/sindico/porteiro/delete/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -67,7 +68,7 @@ export async function insertPorteiroAPI(email){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/porteiro/create"
+    let endPoint = `${API_URL}/api/sindico/porteiro/create`
 
     //Objeto com os elementos
     let novoPorteiro = {
@@ -104,7 +105,7 @@ export async function showPorteiroAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/porteiro/show/" + id
+    let endPoint = `${API_URL}/api/sindico/porteiro/show/` + id
 
     //Criando a requisição
     const requisicao = fetch(

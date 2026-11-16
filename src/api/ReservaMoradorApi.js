@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer as requisições para a API de reservas e espaços do morador
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que monta os headers padrão das requisições do morador
 function montaHeaders(){
@@ -21,7 +22,7 @@ function montaHeaders(){
 export async function getEspacosMoradorAPI(){
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/espaco/get"
+    let endPoint = `${API_URL}/api/morador/espaco/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -40,7 +41,7 @@ export async function getEspacosMoradorAPI(){
 export async function getReservasMoradorAPI(){
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/reservas/get"
+    let endPoint = `${API_URL}/api/morador/reservas/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -60,7 +61,7 @@ export async function getReservasMoradorAPI(){
 export async function createReservaMoradorAPI(idEspaco, data, inicio, fim){
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/reservas/create"
+    let endPoint = `${API_URL}/api/morador/reservas/create`
 
     //Monstando o json que vai ser enviado para o back end
     let novaReserva = {
@@ -88,7 +89,7 @@ export async function createReservaMoradorAPI(idEspaco, data, inicio, fim){
 export async function cancelReservaMoradorAPI(id){
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/reservas/cancel/" + id
+    let endPoint = `${API_URL}/api/morador/reservas/cancel/` + id
 
     //Criando a requisição
     const requisicao = fetch(

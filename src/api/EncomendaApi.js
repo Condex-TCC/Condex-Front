@@ -4,6 +4,7 @@ import { GetCookie } from "../service/cookie"
 import { montarQuery } from "../utils/busca"
 import { USE_MOCK } from "../mock/ativo"
 import { getEncomendasMock, insertEncomendaMock, withdrawEncomendaMock } from "../mock/porteiroMock"
+import { API_URL } from './config'
 
 //Função que recupera todas as encomendas do banco de dados
 export async function getEncomendasAPI(filtros = {}){
@@ -20,7 +21,7 @@ export async function getEncomendasAPI(filtros = {}){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?descricao=
-    let endPoint = "/api/porteiro/encomenda/get" + montarQuery(filtros)
+    let endPoint = `${API_URL}/api/porteiro/encomenda/get` + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(
@@ -59,7 +60,7 @@ export async function insertEncomendaAPI(nome, descricao, idMorador, detalhes = 
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "/api/porteiro/encomenda/create"
+    let endPoint = `${API_URL}/api/porteiro/encomenda/create`
 
     //Objeto com os elementos
     let novaEncomenda = {
@@ -105,7 +106,7 @@ export async function withdrawEncomendaAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "/api/porteiro/encomenda/withdraw/" + id
+    let endPoint = `${API_URL}/api/porteiro/encomenda/withdraw/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -136,7 +137,7 @@ export async function getEncomendasMoradorAPI(){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?descricao=
-    let endPoint = "/api/morador/encomenda/get"
+    let endPoint = `${API_URL}/api/morador/encomenda/get`
 
     //Criando a requisição
     const requisicao = fetch(

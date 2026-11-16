@@ -2,6 +2,7 @@
 
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera todos os moradores do banco de dados
 export async function getMoradores(){
@@ -11,7 +12,7 @@ export async function getMoradores(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/morador/get"
+    let endPoint = `${API_URL}/api/sindico/morador/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -41,7 +42,7 @@ export async function deleteMoradores(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/morador/delete/" + id
+    let endPoint = `${API_URL}/api/sindico/morador/delete/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -69,7 +70,7 @@ export async function vefifyMoradorAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/morador/verify/" + id
+    let endPoint = `${API_URL}/api/sindico/morador/verify/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -98,7 +99,7 @@ export async function insertMoradorAPI(email, id_unidade){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/morador/create"
+    let endPoint = `${API_URL}/api/sindico/morador/create`
 
     //Objeto com os elementos
     let novaRegra = {
@@ -136,7 +137,7 @@ export async function showMoradorAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/morador/show/" + id
+    let endPoint = `${API_URL}/api/sindico/morador/show/` + id
 
     //Criando a requisição
     const requisicao = fetch(

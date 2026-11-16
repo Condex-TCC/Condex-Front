@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer a requisição para a API das telas iniciais
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que obtem os dados da tela inicial do sindico
 export async function getTelaIncialSindicoAPI(){
@@ -10,7 +11,7 @@ export async function getTelaIncialSindicoAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/index"
+    let endPoint = `${API_URL}/api/sindico/index`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -40,7 +41,7 @@ export async function getTelaInicialMoradorAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/index"
+    let endPoint = `${API_URL}/api/morador/index`
 
     //Criando a requisição
     const requisicao = fetch(

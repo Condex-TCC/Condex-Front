@@ -2,6 +2,7 @@
 
 import { GetCookie } from "../service/cookie"
 import { montarQuery } from "../utils/busca"
+import { API_URL } from './config'
 
 //Função que recupera todos os visitantes cadastrados na API
 //O endpoint do porteiro devolve tanto os visitantes cadastrados por moradores
@@ -14,7 +15,7 @@ export async function getVisitantesPorteiroAPI(filtros = {}){
 
     //Endpoint
     //A API aceita os filtros ?nome= e ?cpf=
-    let endPoint = "/api/porteiro/visitante/get" + montarQuery(filtros)
+    let endPoint = `${API_URL}/api/porteiro/visitante/get` + montarQuery(filtros)
 
     //Criando a requisição
     const requisicao = fetch(
@@ -44,7 +45,7 @@ export async function insertVisitantePorteiroAPI(nome, cpf){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "/api/porteiro/visitante/create"
+    let endPoint = `${API_URL}/api/porteiro/visitante/create`
 
     //Objeto com os elementos no formato que a API espera
     let novoVisitante = {

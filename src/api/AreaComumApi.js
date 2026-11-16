@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer a requisição para a API das áreas comuns[cite: 1]
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera todas as áreas comuns do banco de dados[cite: 1]
 export async function getAreasComunsAPI(){
@@ -10,7 +11,7 @@ export async function getAreasComunsAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/espaco/get"
+    let endPoint = `${API_URL}/api/sindico/espaco/get`
 
     //Criando a requisição[cite: 1]
     const requisicao = fetch(
@@ -39,7 +40,7 @@ export async function deleteAreaComunAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/espaco/delete/" + id
+    let endPoint = `${API_URL}/api/sindico/espaco/delete/` + id
 
     //Criando a requisição[cite: 1]
     const requisicao = fetch(
@@ -67,7 +68,7 @@ export async function insertAreaComunAPI(nome, descricao, autorizacao){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/espaco/create"
+    let endPoint = `${API_URL}/api/sindico/espaco/create`
 
     //Objeto com os elementos[cite: 1]
     let novaArea = {
@@ -106,7 +107,7 @@ export async function showAreaComunAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/espaco/show/" + id
+    let endPoint = `${API_URL}/api/sindico/espaco/show/` + id
 
     //Criando a requisição[cite: 1]
     const requisicao = fetch(
@@ -134,7 +135,7 @@ export async function updateAreaComunAPI(nome, descricao, autorizacao, id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/espaco/update/" + id
+    let endPoint = `${API_URL}/api/sindico/espaco/update/` + id
 
     //Objeto com os valores que vão ser atualizados[cite: 1]
     let areaAtualizada = {

@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer a requisição para a API dos comunicados
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera todos os laudos do banco de dados
 export async function getComunicadosAPI(){
@@ -10,7 +11,7 @@ export async function getComunicadosAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/comunicado/get"
+    let endPoint = `${API_URL}/api/sindico/comunicado/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -40,7 +41,7 @@ export async function getRespostasAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/comunicado/perguntas"
+    let endPoint = `${API_URL}/api/sindico/comunicado/perguntas`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -69,7 +70,7 @@ export async function getEnviosComunicadosAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/comunicado/show/" + id
+    let endPoint = `${API_URL}/api/sindico/comunicado/show/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -98,7 +99,7 @@ export async function showEnvioDetalheAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/comunicado/show/detalhes/" + id
+    let endPoint = `${API_URL}/api/sindico/comunicado/show/detalhes/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -127,7 +128,7 @@ export async function updateEnvioContraRespostaAPI(id, contraResposta){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/comunicado/contraResposta/" + id
+    let endPoint = `${API_URL}/api/sindico/comunicado/contraResposta/` + id
 
     //Construtindo o objeto que ser envio no body do json
     let bodyJson = {
@@ -165,7 +166,7 @@ export async function envioComunicadoAPI(titulo, descricao, moradorSelecionado){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/comunicado/create"
+    let endPoint = `${API_URL}/api/sindico/comunicado/create`
 
     //Construtindo o objeto que ser envio no body do json
     let bodyJson = {}
@@ -220,7 +221,7 @@ export async function getComunicadoMoradorAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/comunicado/get"
+    let endPoint = `${API_URL}/api/morador/comunicado/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -249,7 +250,7 @@ export async function getComunicadoHistoricoAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/comunicado/historico/get"
+    let endPoint = `${API_URL}/api/morador/comunicado/historico/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -279,7 +280,7 @@ export async function getDetalhesComunicadoAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/comunicado/show/" + id
+    let endPoint = `${API_URL}/api/morador/comunicado/show/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -309,7 +310,7 @@ export async function cadastraRespostaMoradorAPI(id, resposta){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/comunicado/resposta/" + id
+    let endPoint = `${API_URL}/api/morador/comunicado/resposta/` + id
 
     //Construtindo o objeto que ser envio no body do json
     let bodyJson = {

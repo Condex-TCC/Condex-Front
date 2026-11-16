@@ -3,6 +3,7 @@
 
 //Importando a função que recupera os dados salvos no cookie (onde fica o token)
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera todas as reclamações não visualizadas pelo síndico
 export async function getReclamacoesAPI(){
@@ -12,7 +13,7 @@ export async function getReclamacoesAPI(){
     let token = cookie.token //Pega apenas o token que está dentro do cookie
 
     //Endpoint | //Rota das reclamações não visualizadas
-    let endPoint = "http://127.0.0.1:8000/api/sindico/reclamacao/get"
+    let endPoint = `${API_URL}/api/sindico/reclamacao/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -41,7 +42,7 @@ export async function getReclamacoesHistoricoAPI(){
     let token = cookie.token //Pega apenas o token que está dentro do cookie
 
     //Endpoint | Rota do histórico de reclamações
-    let endPoint = "http://127.0.0.1:8000/api/sindico/reclamacao/historico/get" 
+    let endPoint = `${API_URL}/api/sindico/reclamacao/historico/get` 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -70,7 +71,7 @@ export async function showReclamacaoAPI(id){
     let token = cookie.token //Pega apenas o token que está dentro do cookie
 
     //Endpoint | Rota da reclamação, com o id no final
-    let endPoint = "http://127.0.0.1:8000/api/sindico/reclamacao/show/" + id 
+    let endPoint = `${API_URL}/api/sindico/reclamacao/show/` + id 
 
     //Criando a requisição
     const requisicao = fetch(
@@ -99,7 +100,7 @@ export async function respondeReclamacaoAPI(id, resposta){
     let token = cookie.token //Pega apenas o token que está dentro do cookie
 
     //Endpoint | Rota de resposta, com o id da reclamação no final
-    let endPoint = "http://127.0.0.1:8000/api/sindico/reclamacao/resposta/" + id 
+    let endPoint = `${API_URL}/api/sindico/reclamacao/resposta/` + id 
 
     //Construindo o objeto que será enviado no body do json
     let bodyJson = {
@@ -136,7 +137,7 @@ export async function getReclamacoesMoradorAPI(){
     let token = cookie.token //Pega apenas o token que está dentro do cookie
 
     //Endpoint | Rota das reclamações do morador
-    let endPoint = "http://127.0.0.1:8000/api/morador/reclamacao/get"
+    let endPoint = `${API_URL}/api/morador/reclamacao/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -165,7 +166,7 @@ export async function insertReclamacaoAPI(reclamacao){
     let token = cookie.token //Pega apenas o token que está dentro do cookie
 
     //Endpoint | Rota de cadastro da reclamação
-    let endPoint = "http://127.0.0.1:8000/api/morador/reclamacao/create"
+    let endPoint = `${API_URL}/api/morador/reclamacao/create`
 
     //Construindo o objeto que será enviado no body do json
     let novaReclamacao = {
@@ -202,7 +203,7 @@ export async function deleteReclamacaoAPI(id){
     let token = cookie.token //Pega apenas o token que está dentro do cookie
 
     //Endpoint | Rota de exclusão, com o id da reclamação no final
-    let endPoint = "http://127.0.0.1:8000/api/morador/reclamacao/delete/" + id
+    let endPoint = `${API_URL}/api/morador/reclamacao/delete/` + id
 
     //Criando a requisição
     const requisicao = fetch(

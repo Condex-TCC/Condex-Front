@@ -1,6 +1,7 @@
 //Arquivo responsável por consumir a API
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera todas as reservas pentes
 export async function getReservasPendentesAPI(){
@@ -10,7 +11,7 @@ export async function getReservasPendentesAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/reservas/pendentes/get"
+    let endPoint = `${API_URL}/api/sindico/reservas/pendentes/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -39,7 +40,7 @@ export async function showReservaAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/reservas/show/" + id
+    let endPoint = `${API_URL}/api/sindico/reservas/show/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -68,7 +69,7 @@ export async function aprovaReservaAPI(id, aprovada){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/reservas/aproved/" + id
+    let endPoint = `${API_URL}/api/sindico/reservas/aproved/` + id
 
     //Monstando o json que vai ser enviado para o back end
     let objetoBody = {
@@ -105,7 +106,7 @@ export async function getReservasPorDataAPI(data){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/reservas/reservation/date"
+    let endPoint = `${API_URL}/api/sindico/reservas/reservation/date`
 
     //Monstando o json que vai ser enviado para o back end
     let objetoBody = {

@@ -1,12 +1,13 @@
 //Arquivo responsavel por fazer a requisição para a API
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que interaje com o login
 export function LoginApi(email, password){
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/login"
+    let endPoint = `${API_URL}/api/login`
 
     //Objeto com os elementos
     let credenciais = {
@@ -42,7 +43,7 @@ export async function EditarPerilAPI(usuario, nome, email, telefone, cpf){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/perfil/updade"
+    let endPoint = `${API_URL}/api/perfil/updade`
 
     //Objeto com os elementos
     let novosDados = {
@@ -86,7 +87,7 @@ export async function getUserAPI(usuario){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/perfil/show/" + usuario
+    let endPoint = `${API_URL}/api/perfil/show/` + usuario
 
     //Criando a requisição
     const requisicao = fetch(
@@ -111,7 +112,7 @@ export async function getUserAPI(usuario){
 export function validaContaAPI(email, cpf, telefone){
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/redefine/valida/conta"
+    let endPoint = `${API_URL}/api/redefine/valida/conta`
 
     //Objeto com os elementos
     let dadosConta = {
@@ -145,7 +146,7 @@ export function validaContaAPI(email, cpf, telefone){
 export function validaCodigoAPI(id, tipo, codigo){
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/redefine/valida/codigo"
+    let endPoint = `${API_URL}/api/redefine/valida/codigo`
 
     //Objeto com os elementos
     let dadosCodigo = {
@@ -179,7 +180,7 @@ export function validaCodigoAPI(id, tipo, codigo){
 export function redefinirSenhaAPI(id, tipo, codigo, novaSenha){
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/redefine/senha"
+    let endPoint = `${API_URL}/api/redefine/senha`
 
     //Objeto com os elementos
     let dadosSenha = {

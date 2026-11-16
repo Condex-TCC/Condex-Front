@@ -1,6 +1,7 @@
 //Arquivo responsável por fazer a requisição para a API das regras
 
 import { GetCookie } from "../service/cookie"
+import { API_URL } from './config'
 
 //Função que recupera todos os porteiros do banco de dados
 export async function getRegras(){
@@ -10,7 +11,7 @@ export async function getRegras(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/regras/get"
+    let endPoint = `${API_URL}/api/sindico/regras/get`
 
     //Criando a requisição
     const requisicao = fetch(
@@ -39,7 +40,7 @@ export async function deleteRegraAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/regras/delete/" + id
+    let endPoint = `${API_URL}/api/sindico/regras/delete/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -67,7 +68,7 @@ export async function insertRegraAPI(nome, descricao){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/regras/create"
+    let endPoint = `${API_URL}/api/sindico/regras/create`
 
     //Objeto com os elementos
     let novaRegra = {
@@ -105,7 +106,7 @@ export async function showRegraAPI(id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/regras/show/" + id
+    let endPoint = `${API_URL}/api/sindico/regras/show/` + id
 
     //Criando a requisição
     const requisicao = fetch(
@@ -133,7 +134,7 @@ export async function updateRegraAPI(nome, descricao, id){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/sindico/regras/update/" + id
+    let endPoint = `${API_URL}/api/sindico/regras/update/` + id
 
     //Objeto com os valores que vão ser atualizados
     let porteiroAtualizado = {
@@ -171,7 +172,7 @@ export async function getRegrasMoradorAPI(){
     let token = cookie.token
 
     //Endpoint
-    let endPoint = "http://127.0.0.1:8000/api/morador/regras/get"
+    let endPoint = `${API_URL}/api/morador/regras/get`
 
     //Criando a requisição
     const requisicao = fetch(
