@@ -4,6 +4,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { criarVisitaPreCadastrada } from '../../service/Visitante'
+import { apenasDigitos, mascaraCpf } from '../../utils/mascaras'
+import { validarCpf } from '../../utils/validacoes'
 import styles from '../../css/telaCadastraVisitanteMorador.module.css'
 
 //Função que cria a tela de cadastro
@@ -15,6 +17,7 @@ function TelaCadastraVisitanteMorador(){
     //Estado que guarda os valores digitados nos campos do formulário
     const [nome, setNome] = useState('')
     const [documento, setDocumento] = useState('')
+    const [erro, setErro] = useState('')
 
     //Função que devolve o morador para a lista de visitantes
     const voltarParaVisitantes = () => {
@@ -28,18 +31,27 @@ function TelaCadastraVisitanteMorador(){
         //Evita que a página recarregue ao enviar o formulário
         evento.preventDefault()
 
-        //Impede o envio sem os campos obrigatórios da API (nome e cpf)
-        if(!nome.trim() || !documento.trim()){
+        //Impede o envio com o nome vazio ou com um CPF inválido
+        if(!nome.trim()){
 
-            alert('Preencha o nome e o CPF do visitante.')
+            setErro('Preencha o nome do visitante.')
 
             return
         }
 
+        if(!validarCpf(documento)){
+
+            setErro('Informe um CPF válido.')
+
+            return
+        }
+
+        setErro('')
+
         //Monta o registro no formato aceito pela API
         const visita = {
             nome: nome.trim(),
-            documento: documento.trim()
+            documento: apenasDigitos(documento)
         }
 
         //Chama a service que grava a visita e devolve o resultado
@@ -97,13 +109,15 @@ function TelaCadastraVisitanteMorador(){
 
                 {/* Documento */}
                 <div className={`${styles['cv-field']} ${styles['cv-field--full']}`}>
-                    <label htmlFor="cv-documento">CPF / Documento</label>
+                    <label htmlFor="cv-documento">CPF</label>
                     <input
                         id="cv-documento"
                         type="text"
                         placeholder="000.000.000-00"
+                        inputMode="numeric"
+                        maxLength={14}
                         value={documento}
-                        onChange={(evento) => setDocumento(evento.target.value)}
+                        onChange={(evento) => setDocumento(mascaraCpf(evento.target.value))}
                     />
                 </div>
 
@@ -113,6 +127,9 @@ function TelaCadastraVisitanteMorador(){
                     (data, horário de chegada e saída prevista), então esses
                     campos ficaram fora do formulário até o backend criá-los.
                 */}
+
+                {/* Erro de validação do nome ou do CPF */}
+                {erro && <p className={`${styles['cv-erro']} ${styles['cv-field--full']}`} role="alert">{erro}</p>}
 
                 {/* Botão de salvar: largura automática alinhada à direita no
                     pé do card (desktop); no celular continua largura total */}

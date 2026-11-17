@@ -241,6 +241,17 @@
   background-color: var(--cx-primary-soft);
 }
 
+/* Wrapper do campo de data do react-datepicker */
+.dayInputWrapper {
+  display: inline-flex;
+}
+
+/* Calendário aberto pelo react-datepicker */
+.dayCalendar {
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+}
+
 /* Campo para escolher o dia */
 .dayInput {
   border: 1px solid var(--cx-border-strong);

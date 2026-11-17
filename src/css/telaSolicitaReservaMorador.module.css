@@ -106,6 +106,31 @@
   box-shadow: 0 0 0 1px var(--cx-primary); /* Reforça o destaque com um halo azul */
 }
 
+/* Wrapper do calendário de data da reserva */
+.sr-data-wrapper {
+  width: 100%;
+}
+
+/* Campo de data aberto pelo react-datepicker */
+.sr-data-input {
+  width: 100%;
+  height: var(--cx-control-lg);
+  box-sizing: border-box;
+  border: 1px solid var(--cx-border-strong);
+  border-radius: var(--cx-radius);
+  padding: 0 12px;
+  font-size: var(--cx-text-base);
+  font-family: var(--cx-font);
+  color: var(--cx-navy);
+  background-color: var(--cx-surface);
+}
+
+/* Ajuste do calendário aberto pelo react-datepicker */
+.sr-calendario {
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+}
+
 /* Aviso de que a área exige aprovação do síndico */
 .sr-hint {
   margin-top: 6px; /* Separa do campo */

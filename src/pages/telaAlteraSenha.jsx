@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import styles from "../css/telaAlteraSenha.module.css"
 import { redefinirSenha } from "../service/Login"
+import CampoSenha from "../components/CampoSenha"
 
 //Importações do arquivo
 
@@ -79,13 +80,12 @@ function PaginaRedefineSenha(){
             <div className={styles.formContainer}>
                 <div className={styles.dataField}>
                     <label htmlFor="novaSenha" className={styles.dataLabel}>Nova senha</label>
-                    <input
+                    <CampoSenha
                         id="novaSenha"
-                        type="password"
                         minLength={8}
                         required
                         autoComplete="new-password"
-                        className={styles.dataInput}
+                        inputClassName={styles.dataInput}
                         placeholder="Digite a sua nova senha"
                         value={novaSenha}
                         onChange={(e) => setNovaSenha(e.target.value)}

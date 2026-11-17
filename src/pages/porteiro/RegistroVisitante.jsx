@@ -4,22 +4,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { cadastrarVisitantePorteiro } from '../../service/VisitantePorteiro'
+import { mascaraCpf } from '../../utils/mascaras'
+import { validarCpf } from '../../utils/validacoes'
 import styles from '../../css/formularioPorteiro.module.css'
-
-//Função que aplica a máscara 000.000.000-00 enquanto o CPF é digitado
-//A API aceita no máximo 14 caracteres, que é o tamanho do CPF com máscara
-function mascaraCpf(valor) {
-
-    //Mantém apenas os dígitos, limitados a 11
-    const d = valor.replace(/\D/g, '').slice(0, 11)
-
-    //Monta o CPF conforme os dígitos digitados
-    if(d.length > 9){ return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}` }
-    if(d.length > 6){ return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6)}` }
-    if(d.length > 3){ return `${d.slice(0, 3)}.${d.slice(3)}` }
-
-    return d
-}
 
 //Tela responsável por cadastrar o visitante pelo porteiro
 export default function RegistroVisitante() {
@@ -44,7 +31,7 @@ export default function RegistroVisitante() {
 
         if(!nome.trim()){ novosErros.nome = 'Informe o nome do visitante.' }
 
-        if(cpf.replace(/\D/g, '').length !== 11){ novosErros.cpf = 'Informe o CPF completo.' }
+        if(!validarCpf(cpf)){ novosErros.cpf = 'Informe um CPF válido.' }
 
         setErros(novosErros)
 

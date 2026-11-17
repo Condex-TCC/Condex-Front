@@ -14,6 +14,10 @@ import {
     validaSolicitacaoReserva
 } from '../../service/ReservaMorador'
 import { dataHojeIso, formatarHoraReserva } from '../../service/Reservas'
+import { dataParaIso, isoParaData } from '../../utils/datas'
+import DatePicker from 'react-datepicker'
+import { ptBR } from 'date-fns/locale'
+import 'react-datepicker/dist/react-datepicker.css'
 import styles from '../../css/telaSolicitaReservaMorador.module.css'
 
 //Função que cria a tela de solicitação
@@ -213,12 +217,17 @@ function TelaSolicitaReservaMorador(){
                     {/* Data */}
                     <div className={`${styles['sr-field']} ${styles['sr-field--full']}`}>
                         <label htmlFor="sr-data">Data</label>
-                        <input
+                        <DatePicker
                             id="sr-data"
-                            type="date"
-                            min={dataHojeIso()}
-                            value={data}
-                            onChange={(evento) => alteraCampo(setData, evento.target.value)}
+                            selected={isoParaData(data)}
+                            onChange={(dataEscolhida) => alteraCampo(setData, dataParaIso(dataEscolhida))}
+                            minDate={isoParaData(dataHojeIso())}
+                            locale={ptBR}
+                            dateFormat="dd/MM/yyyy"
+                            placeholderText="dd/mm/aaaa"
+                            wrapperClassName={styles['sr-data-wrapper']}
+                            className={styles['sr-data-input']}
+                            calendarClassName={styles['sr-calendario']}
                         />
                     </div>
 

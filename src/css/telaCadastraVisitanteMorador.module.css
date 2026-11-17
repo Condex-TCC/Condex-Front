@@ -184,6 +184,18 @@
   background-color: var(--cx-surface);
 }
 
+/* Mensagem de erro de validação do formulário */
+.cv-erro {
+  margin: 0;
+  padding: var(--cx-space-sm) var(--cx-space-md);
+  border: 1px solid var(--cx-danger-border);
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-danger-soft);
+  color: var(--cx-danger);
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-sm);
+}
+
 /* Área do botão de salvar: célula larga da grade. No desktop a
    ação principal fica alinhada à direita no pé do card (largura
    automática, regra .cv-btn-salvar--auto); no celular o botão

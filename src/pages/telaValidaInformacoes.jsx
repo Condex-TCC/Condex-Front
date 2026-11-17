@@ -4,6 +4,8 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import styles from "../css/telaValidaInformacoes.module.css"
 import { validaContaUsuario } from "../service/Login"
+import { apenasDigitos, mascaraCpf } from "../utils/mascaras"
+import { validarCpf } from "../utils/validacoes"
 
 //Importações do arquivo
 
@@ -14,6 +16,7 @@ function PaginaValdiaInformacoes(){
     const [email, setEmail] = useState("")
     const [cpf, setCpf] = useState("")
     const [telefone, setTelefone] = useState("")
+    const [erro, setErro] = useState("")
 
     //Hook que realiza a navegação
     const navigate = useNavigate()
@@ -28,8 +31,18 @@ function PaginaValdiaInformacoes(){
     //Função que pega os dados 
     const validaConta = async () => {
 
-        //Chamando a função que realiza a validação
-        const request = await validaContaUsuario(email, cpf, telefone)
+        //Não envia a requisição enquanto o CPF estiver inválido
+        if(!validarCpf(cpf)){
+
+            setErro("Informe um CPF válido.")
+
+            return
+        }
+
+        setErro("")
+
+        //A API compara o CPF gravado apenas com dígitos
+        const request = await validaContaUsuario(email, apenasDigitos(cpf), telefone)
 
         //Desestrutrando os dados
         const { usuario } = await request
@@ -80,9 +93,11 @@ function PaginaValdiaInformacoes(){
                         id="cpf"
                         type="text"
                         className={styles.dataInput}
-                        placeholder="Digite seu CPF"
+                        placeholder="000.000.000-00"
+                        inputMode="numeric"
+                        maxLength={14}
                         value={cpf}
-                        onChange={(e) => setCpf(e.target.value)}
+                        onChange={(e) => setCpf(mascaraCpf(e.target.value))}
                     />
                 </div>
 
@@ -100,6 +115,9 @@ function PaginaValdiaInformacoes(){
                 </div>
 
             </div>
+
+            {/* Erro de validação do CPF */}
+            {erro && <p className={styles.erro} role="alert">{erro}</p>}
 
             {/* Botão para enviar os dados */}
             <footer className={styles.footer}>

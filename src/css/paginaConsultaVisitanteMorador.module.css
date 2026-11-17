@@ -161,6 +161,18 @@
   box-shadow: 0 0 0 1px var(--cx-primary);
 }
 
+/* Mensagem de erro de validação dos documentos */
+.mensagem--erro {
+  margin-top: var(--cx-space-sm);
+  padding: var(--cx-space-sm) var(--cx-space-md);
+  border: 1px solid var(--cx-danger-border);
+  border-radius: var(--cx-radius);
+  background-color: var(--cx-danger-soft);
+  color: var(--cx-danger);
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-sm);
+}
+
 /* Área do botão de consulta */
 .acoes--cartao {
   display: flex;

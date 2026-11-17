@@ -19,6 +19,18 @@ export function mascaraCpf(valor){
     return d
 }
 
+//Função que aplica a máscara 00.000.000-0 enquanto o RG é digitado
+export function mascaraRg(valor){
+
+    //Mantém apenas os dígitos, limitados a 9
+    const d = apenasDigitos(valor).slice(0, 9)
+
+    return d
+        .replace(/^(\d{2})(\d)/, "$1.$2")
+        .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+        .replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4")
+}
+
 //Função que aplica a máscara (00) 00000-0000 enquanto o telefone é digitado
 //Aceita fixo (10 dígitos) e celular (11 dígitos)
 export function mascaraTelefone(valor){

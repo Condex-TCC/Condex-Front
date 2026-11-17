@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { GetCookie } from "../service/cookie"
 import { atualizarPerfil, buscarPerfil } from "../service/Perfil"
 import { apenasDigitos, mascaraCpf, mascaraTelefone } from "../utils/mascaras"
+import { validarCpf } from "../utils/validacoes"
 import styles from "../css/editarPerfil.module.css"
 
 //Tela inicial de cada nível de acesso, usada para voltar depois de editar
@@ -103,7 +104,7 @@ function PaginaEditarPerfil(){
 
         if(!emailValido(emailUser.trim())){ novosErros.email = "Informe um e-mail válido." }
 
-        if(apenasDigitos(cpfUser).length !== 11){ novosErros.cpf = "Informe o CPF completo." }
+        if(!validarCpf(cpfUser)){ novosErros.cpf = "Informe um CPF válido." }
 
         const tamanhoTelefone = apenasDigitos(telefoneUser).length
 
