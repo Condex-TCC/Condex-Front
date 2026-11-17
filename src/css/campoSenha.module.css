@@ -1,0 +1,46 @@
+/* Campo de senha com botão para mostrar ou ocultar o valor digitado */
+
+.campo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+}
+
+.botao {
+    position: absolute;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: none;
+    border-radius: var(--cx-radius-sm);
+    background: transparent;
+    color: var(--cx-text-faint);
+    cursor: pointer;
+}
+
+.botao svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+.botao:hover {
+    color: var(--cx-primary);
+}
+
+.botao:focus-visible {
+    outline: none;
+    box-shadow: var(--cx-focus-halo);
+}
+
+.botao:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -81,6 +81,18 @@
   border-color: var(--cx-brand-blue);
 }
 
+/* Mensagem de erro de validação do CPF */
+.erro {
+  margin-top: var(--cx-space-sm);
+  padding: var(--cx-space-sm) var(--cx-space-md);
+  border: 1px solid var(--cx-danger-border);
+  border-radius: var(--cx-radius-sm);
+  background-color: var(--cx-danger-soft);
+  color: var(--cx-danger);
+  font-family: var(--cx-font);
+  font-size: var(--cx-text-base);
+}
+
 /* Área do botão */
 .footer {
   display: flex;

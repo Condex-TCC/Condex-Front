@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom"
 import { DeleteCookie, GetCookie, SetPrimeiroAcessoPendente } from "../service/cookie"
 import { buscarPerfil, concluirPrimeiroAcesso } from "../service/Perfil"
 import { apenasDigitos, mascaraCpf, mascaraTelefone } from "../utils/mascaras"
+import { validarCpf } from "../utils/validacoes"
+import CampoSenha from "../components/CampoSenha"
 import styles from "../css/editarPerfil.module.css"
 
 //Tamanho mínimo da senha
@@ -110,7 +112,7 @@ function PaginaPrimeiroAcesso(){
 
         if(!emailValido(emailUser.trim())){ novosErros.email = "Informe um e-mail válido." }
 
-        if(apenasDigitos(cpfUser).length !== 11){ novosErros.cpf = "Informe o CPF completo." }
+        if(!validarCpf(cpfUser)){ novosErros.cpf = "Informe um CPF válido." }
 
         const tamanhoTelefone = apenasDigitos(telefoneUser).length
 
@@ -277,11 +279,10 @@ function PaginaPrimeiroAcesso(){
                     {/* Campo Nova senha */}
                     <div className={styles.dataField}>
                         <label htmlFor="senha" className={styles.dataLabel}>Nova senha</label>
-                        <input
+                        <CampoSenha
                             id="senha"
-                            type="password"
                             autoComplete="new-password"
-                            className={styles.dataInput}
+                            inputClassName={styles.dataInput}
                             disabled={formularioBloqueado}
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
@@ -292,11 +293,10 @@ function PaginaPrimeiroAcesso(){
                     {/* Campo Confirmar senha */}
                     <div className={styles.dataField}>
                         <label htmlFor="confirmaSenha" className={styles.dataLabel}>Confirmar senha</label>
-                        <input
+                        <CampoSenha
                             id="confirmaSenha"
-                            type="password"
                             autoComplete="new-password"
-                            className={styles.dataInput}
+                            inputClassName={styles.dataInput}
                             disabled={formularioBloqueado}
                             value={confirmaSenha}
                             onChange={(e) => setConfirmaSenha(e.target.value)}

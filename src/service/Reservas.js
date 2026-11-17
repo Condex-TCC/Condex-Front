@@ -1,6 +1,7 @@
 //Arquivo responsável por tratar as requisições da api
 
 import { aprovaReservaAPI, getReservasPendentesAPI, getReservasPorDataAPI, showReservaAPI } from "../api/ReservasAPI"
+import { dataParaIso } from "../utils/datas"
 
 
 //Função que obtem todas as reservas que precisan se aprovação
@@ -170,13 +171,6 @@ export function formatarHoraReserva(hora) {
 //Função que devolve a data de hoje no padrão aaaa-mm-dd, usando o fuso do navegador
 export function dataHojeIso() {
 
-    //Data atual do navegador
-    const hoje = new Date()
-
-    //Completa mês e dia com zero à esquerda
-    const mes = String(hoje.getMonth() + 1).padStart(2, '0')
-    const dia = String(hoje.getDate()).padStart(2, '0')
-
-    //Retorna a data no formato aaaa-mm-dd
-    return `${hoje.getFullYear()}-${mes}-${dia}`
+    //Converte a data atual do navegador para aaaa-mm-dd
+    return dataParaIso(new Date())
 }

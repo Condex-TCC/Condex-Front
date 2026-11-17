@@ -7,6 +7,10 @@ import { dataHojeIso, formatarDataReserva, formatarHoraReserva, getReservaPenden
 import styles from '../../../css/paginaExibeReservasSindico.module.css';
 import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
 import { filtrarPorTexto } from '../../../utils/busca'
+import { dataParaIso, isoParaData } from '../../../utils/datas'
+import DatePicker from 'react-datepicker'
+import { ptBR } from 'date-fns/locale'
+import 'react-datepicker/dist/react-datepicker.css'
 
 //Função que soma (ou subtrai) dias de uma data no formato aaaa-mm-dd
 function somaDias(dataIso, dias) {
@@ -166,11 +170,15 @@ export default function PaginaExibeReserva() {
               &larr;
             </button>
 
-            <input
-              type="date"
+            <DatePicker
+              selected={isoParaData(dataSelecionada)}
+              onChange={(dataEscolhida) => alteraData(dataParaIso(dataEscolhida))}
+              locale={ptBR}
+              dateFormat="dd/MM/yyyy"
+              placeholderText="dd/mm/aaaa"
+              wrapperClassName={styles.dayInputWrapper}
               className={styles.dayInput}
-              value={dataSelecionada}
-              onChange={(evento) => alteraData(evento.target.value)}
+              calendarClassName={styles.dayCalendar}
               aria-label="Dia da agenda"
             />
 

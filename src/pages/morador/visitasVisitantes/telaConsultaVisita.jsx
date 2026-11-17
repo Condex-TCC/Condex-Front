@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { cadastraVisitante, consultaVisitante } from "../../../service/VisitasVisitantes";
+import { mascaraCpf, mascaraRg } from "../../../utils/mascaras";
+import { validarCpf, validarRg } from "../../../utils/validacoes";
 
 //Importações do arquivo
 import styles from "../../../css/paginaConsultaVisitanteMorador.module.css";
@@ -16,6 +18,7 @@ function PaginaConsultaVisitanteMorador(){
     const [nome, setNome] = useState("")
     const [rg, setRg] = useState("")
     const [cpf, setCpf] = useState("")
+    const [erro, setErro] = useState("")
 
     //Hook que realiza a navegaçação
     const navigate = useNavigate()
@@ -39,32 +42,6 @@ function PaginaConsultaVisitanteMorador(){
         })
     }
 
-    //Função que aplica a máscara do RG (00.000.000-0)
-    const mascaraRg = (valor) => {
-
-        //Remove tudo que não for dígito e limita a 9 dígitos
-        const digitos = valor.replace(/\D/g, "").slice(0, 9)
-
-        //Monta a máscara conforme os dígitos já foram digitados
-        return digitos
-            .replace(/^(\d{2})(\d)/, "$1.$2")
-            .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
-            .replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4")
-    }
-
-    //Função que aplica a máscara do CPF (000.000.000-00)
-    const mascaraCpf = (valor) => {
-
-        //Remove tudo que não for dígito e limita a 11 dígitos
-        const digitos = valor.replace(/\D/g, "").slice(0, 11)
-
-        //Monta a máscara conforme os dígitos já foram digitados
-        return digitos
-            .replace(/^(\d{3})(\d)/, "$1.$2")
-            .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
-            .replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4")
-    }
-
     //Função que atualiza o RG e limpa a consulta anterior
     const mudaRg = (e) => {
 
@@ -73,6 +50,7 @@ function PaginaConsultaVisitanteMorador(){
 
         //Volta a consulta para o estado inicial
         setExiste(null)
+        setErro("")
     }
 
     //Função que atualiza o CPF e limpa a consulta anterior
@@ -83,10 +61,33 @@ function PaginaConsultaVisitanteMorador(){
 
         //Volta a consulta para o estado inicial
         setExiste(null)
+        setErro("")
+    }
+
+    //Função que valida os documentos antes de consultar ou cadastrar o visitante
+    const documentosValidos = () => {
+
+        if(!validarRg(rg) || !validarCpf(cpf)){
+
+            setExiste(null)
+            setErro("Informe um RG e um CPF válidos.")
+
+            return false
+        }
+
+        setErro("")
+
+        return true
     }
 
     //Função que realiza a consulta do visitante
     const buscaVisitante = async () => {
+
+        //Não consulta a API enquanto os documentos estiverem inválidos
+        if(!documentosValidos()){
+
+            return
+        }
 
         //Remove a máscara do RG e do CPF antes de enviar
         const rgSemMascara = rg.replace(/\D/g, "")
@@ -115,6 +116,12 @@ function PaginaConsultaVisitanteMorador(){
 
     //Função que cadastra visitante
     const createVisitante = async () => {
+
+        //Não cadastra a API enquanto os documentos estiverem inválidos
+        if(!documentosValidos()){
+
+            return
+        }
 
         //Remove a máscara do RG e do CPF antes de enviar
         const rgSemMascara = rg.replace(/\D/g, "")
@@ -202,6 +209,9 @@ function PaginaConsultaVisitanteMorador(){
                     </div>
 
                 </div>
+
+                {/* Erro de validação do RG ou do CPF */}
+                {erro && <p className={styles['mensagem--erro']} role="alert">{erro}</p>}
 
                 {/* Botão que realiza a consulta */}
                 <div className={styles['acoes--cartao']}>

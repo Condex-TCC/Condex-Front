@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from "../css/loginLayout.module.css" //Importando o CSS para trabalhar com módulos
 import { useState } from 'react';
 import MarcaCondex from '../components/marca/marcaCondex';
+import CampoSenha from '../components/CampoSenha';
 import { HendleLogin } from '../service/Login';
 import * as CookieService from '../service/cookie'
 import { useEffect } from 'react';
@@ -202,14 +203,12 @@ function TelaDeLogin(){
 
                                 {/* Capturando o estado da variável | Passando uma função anonima que recebe um evento */}
                                 {/* Esse evento pega o valor da input e atualiza o a variável, além de recarregar o componente */}
-                                <input id="campo-senha" type="password" placeholder="••••••" onChange={(evento) => {setPassword(evento.target.value)}} />
+                                <CampoSenha
+                                    id="campo-senha"
+                                    value={password}
+                                    onChange={(evento) => setPassword(evento.target.value)}
+                                />
 
-                                {/* Ícone de Olho (Visualizar Senha) — apenas indicativo
-                                    visual, sem comportamento associado */}
-                                <svg className={styles['icone-direita']} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                </svg>
                             </div>
                         </div>
 
