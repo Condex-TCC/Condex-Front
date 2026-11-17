@@ -24,6 +24,7 @@ export function LoginApi(email, password){
             //Passando os headers
             headers: {
                 'Content-Type': 'application/json', //Tipo de formatação
+                'Accept': 'application/json', // Obriga o Laravel a retornar JSON mesmo em erros
             },
 
             //Passando o corpo da requisição
