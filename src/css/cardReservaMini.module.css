@@ -1,0 +1,98 @@
+/* Cards mini para reservas do dia (síndico) */
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--cx-space-md);
+  flex-wrap: wrap;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  background-color: var(--cx-surface);
+  border: 1px solid var(--cx-border);
+  border-radius: var(--cx-radius-md);
+  box-shadow: var(--cx-shadow-sm);
+  font-family: var(--cx-font);
+  color: var(--cx-text);
+  text-align: left;
+}
+
+.cardButton {
+  cursor: pointer;
+  transition: box-shadow var(--cx-dur) ease, border-color var(--cx-dur) ease, transform var(--cx-dur) ease;
+}
+
+.cardButton:hover {
+  box-shadow: var(--cx-shadow);
+  border-color: var(--cx-primary-border);
+  transform: translateY(-2px);
+}
+
+.cardButton:focus-visible {
+  outline: none;
+  box-shadow: var(--cx-focus-halo);
+}
+
+.cardButton:active {
+  transform: translateY(0);
+}
+
+.content {
+  min-width: 0;
+  flex: 1;
+}
+
+.title {
+  margin: 0 0 4px 0;
+  font-family: var(--cx-font-display);
+  font-size: var(--cx-text-md);
+  font-weight: 700;
+  color: var(--cx-text-strong);
+}
+
+.info {
+  margin: 0;
+  font-size: var(--cx-text-sm);
+  color: var(--cx-text-muted);
+  line-height: 1.45;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  min-height: 24px;
+  padding: 4px 12px;
+  border-radius: var(--cx-radius-pill);
+  border: 1px solid transparent;
+  font-size: var(--cx-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.statusConfirmada {
+  color: var(--cx-success);
+  background-color: var(--cx-success-soft);
+  border-color: var(--cx-success-border);
+}
+
+.statusPendente {
+  color: var(--cx-warning);
+  background-color: var(--cx-warning-soft);
+  border-color: var(--cx-warning-border);
+}
+
+.statusCancelada {
+  color: var(--cx-danger);
+  background-color: var(--cx-danger-soft);
+  border-color: var(--cx-danger-border);
+}
+
+@media (max-width: 640px) {
+  .card {
+    align-items: flex-start;
+  }
+}
