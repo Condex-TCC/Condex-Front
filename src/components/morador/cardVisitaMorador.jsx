@@ -12,7 +12,9 @@ function CardVisitaMorador({ visita, redireciona }) {
     const navigate = useNavigate()
 
     //Função que realiza o cancelamento
-    const cancelaVisita = async () => {
+    const cancelaVisita = async (e) => {
+        //Parando a propagação do evento
+        e.stopPropagation();
 
         //Chama a função que cancela visita
         const resonse = await cancelaVisitamorador(visita.id_visita)
