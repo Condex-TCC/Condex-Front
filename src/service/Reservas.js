@@ -109,25 +109,28 @@ export async function aprovaReserva(id, aprovada) {
 
 //Função que obtem todas as reservas de um determinado dia (aaaa-mm-dd)
 //Devolve { reservas, reservas_pendentes } ou undefined caso a API falhe
-export async function getReservasPorData(data) {
+export async function getReservasPorData(dia) {
 
     //Tendanto executar a requisição
     try{
 
         //Chamando a função que realiza a requisição no API
-        let response = await getReservasPorDataAPI(data)
+        let response = await getReservasPorDataAPI(dia)
         //Convertendo o JSON para objetos no JS
         let json = await response.json()
 
+        //Desestrutura o promisse
+        const { message, status, data} = json
+
         //Verifica se houve algum erro na requisição
-        if(json.status != 200){
+        if(status != 200){
 
             //Para a execução do try e lança um erro para o catch
-            throw("Erro na requisição " + json.status)
+            throw("Erro na requisição " + status)
         }
 
-        //Retornando os dados
-        return json.data
+        //Retornando a menssagem
+        return data
     }
     //Casso aconteça algum erro na requisição, cai nesse bloco
     catch(erro){

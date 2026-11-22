@@ -1,165 +1,121 @@
-// Reservas.jsx
-//Tela de acesso rápido às reservas do síndico | Agenda do dia e solicitações pendentes
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CardReservaAutorizacao from '../../../components/sindico/cardReserva';
-import { dataHojeIso, formatarDataReserva, formatarHoraReserva, getReservaPendentes, getReservasPorData } from '../../../service/Reservas';
-import styles from '../../../css/paginaExibeReservasSindico.module.css';
-import { useBuscaHeader } from '../../../hooks/useBuscaHeader'
-import { filtrarPorTexto } from '../../../utils/busca'
-import { dataParaIso, isoParaData } from '../../../utils/datas'
-import DatePicker from 'react-datepicker'
-import { ptBR } from 'date-fns/locale'
-import 'react-datepicker/dist/react-datepicker.css'
+import DatePicker from 'react-datepicker';
+import { ptBR } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
 
-//Função que soma (ou subtrai) dias de uma data no formato aaaa-mm-dd
-function somaDias(dataIso, dias) {
+import CardReservaPendenteMini from '../../../components/sindico/cardReservaPendenteMini';
+import CardReservaConfirmadaMini from '../../../components/sindico/cardReservaConfirmadaMini';
+import CardReservaCanceladaMini from '../../../components/sindico/cardReservaCanceladaMini';
+import { dataHojeIso, formatarDataReserva, getReservasPorData } from '../../../service/Reservas';
+import styles from '../../../css/telaExibeReservasSindico.module.css';
 
-  //Separa ano, mês e dia
-  const [ano, mes, dia] = dataIso.split('-').map(Number)
-
-  //Cria a nova data | O JS ajusta sozinho a virada de mês e de ano
-  const nova = new Date(ano, mes - 1, dia + dias)
-
-  //Monta de volta no formato aaaa-mm-dd
-  const novoMes = String(nova.getMonth() + 1).padStart(2, '0')
-  const novoDia = String(nova.getDate()).padStart(2, '0')
-
-  return `${nova.getFullYear()}-${novoMes}-${novoDia}`
+// Converte uma data ISO (aaaa-mm-dd) para objeto Date local
+function isoParaData(valor) {
+  if (!valor) return null;
+  const [ano, mes, dia] = String(valor).slice(0, 10).split('-').map(Number);
+  if (!ano || !mes || !dia) return null;
+  return new Date(ano, mes - 1, dia);
 }
 
-//Tela inicial das reservas: cabeçalho de página + área do
-//calendário à esquerda e o painel de solicitações/próximas
-//reservas à direita. Os dados exibidos são os mesmos de
-//sempre; o que muda é a hierarquia (overline/título/subtítulo),
-//os status em pastilha e o comportamento em telas estreitas.
+// Converte um objeto Date para ISO (aaaa-mm-dd)
+function dataParaIso(data) {
+  if (!data) return '';
+  const ano = data.getFullYear();
+  const mes = String(data.getMonth() + 1).padStart(2, '0');
+  const dia = String(data.getDate()).padStart(2, '0');
+  return `${ano}-${mes}-${dia}`;
+}
+
+// Soma ou subtrai dias de uma data ISO
+function somaDias(dataIso, dias) {
+  const [ano, mes, dia] = String(dataIso).split('-').map(Number);
+  const nova = new Date(ano, mes - 1, dia + dias);
+  const novoMes = String(nova.getMonth() + 1).padStart(2, '0');
+  const novoDia = String(nova.getDate()).padStart(2, '0');
+  return `${nova.getFullYear()}-${novoMes}-${novoDia}`;
+}
+
 export default function PaginaExibeReserva() {
+  const navigate = useNavigate();
 
-    //Texto da barra de pesquisa do header, usado para filtrar a lista desta página
-    const { termo } = useBuscaHeader()
+  // Dia selecionado na agenda (padrão: hoje)
+  const [dataSelecionada, setDataSelecionada] = useState(dataHojeIso());
 
-    //Hook para navegação
-    const navigate = useNavigate()
+  // Reservas do dia selecionado
+  const [agenda, setAgenda] = useState({
+    data: null,
+    confirmadas: [],
+    pendentes: [],
+    canceladas: [],
+    erro: false,
+  });
 
-    //Estado com o dia que está sendo consultado na agenda
-    const [dataSelecionada, setDataSelecionada] = useState(dataHojeIso())
+  const carregando = agenda.data !== dataSelecionada;
 
-    //Estado com as reservas do dia | Guarda também a data a que elas pertencem
-    const [agenda, setAgenda] = useState({ data: null, confirmadas: [], pendentes: [], erro: false })
+  // Busca as reservas sempre que a data selecionada mudar
+  useEffect(() => {
+    let montado = true;
 
-    //Estado com as solicitações pendentes de aprovação (de todas as datas)
-    const [solicitacoes, setSolicitacoes] = useState({ carregado: false, lista: [], erro: false })
+    const carregarAgenda = async () => {
+      const resposta = await getReservasPorData(dataSelecionada);
 
-    //A agenda está carregando enquanto os dados guardados não forem do dia escolhido
-    const carregandoAgenda = agenda.data !== dataSelecionada
+      if (!montado) return;
 
-    //Busca as solicitações pendentes quando a tela abre
-    useEffect(() => {
+      setAgenda({
+        data: dataSelecionada,
+        confirmadas: resposta?.reservas ?? [],
+        pendentes: resposta?.reservas_pendentes ?? [],
+        canceladas: resposta?.reservas_canceladas ?? [],
+        erro: !resposta,
+      });
+    };
 
-      //Evita atualizar o estado caso a tela já tenha sido fechada
-      let montado = true
+    carregarAgenda();
 
-      const carregarSolicitacoes = async () => {
+    return () => {
+      montado = false;
+    };
+  }, [dataSelecionada]);
 
-        //O service devolve undefined quando a API falha
-        const resposta = await getReservaPendentes()
-
-        if (!montado) {
-
-          return
-        }
-
-        setSolicitacoes({ carregado: true, lista: resposta?.reservas ?? [], erro: !resposta })
-      }
-
-      carregarSolicitacoes()
-
-      return () => {
-
-        montado = false
-      }
-    }, [])
-
-    //Busca as reservas do dia sempre que o dia escolhido muda
-    useEffect(() => {
-
-      //Evita atualizar o estado caso a tela já tenha sido fechada ou o dia tenha mudado
-      let montado = true
-
-      const carregarAgenda = async () => {
-
-        //O service devolve undefined quando a API falha
-        const resposta = await getReservasPorData(dataSelecionada)
-
-        if (!montado) {
-
-          return
-        }
-
-        setAgenda({
-          data: dataSelecionada,
-          confirmadas: resposta?.reservas ?? [],
-          pendentes: resposta?.reservas_pendentes ?? [],
-          erro: !resposta
-        })
-      }
-
-      carregarAgenda()
-
-      return () => {
-
-        montado = false
-      }
-    }, [dataSelecionada])
-
-    //Função que altera o dia consultado | Ignora o campo de data apagado
-    const alteraData = (valor) => {
-
-      if (valor) {
-
-        setDataSelecionada(valor)
-      }
+  const alteraData = (valor) => {
+    if (valor) {
+      setDataSelecionada(valor);
     }
+  };
 
-    //Função que realiza o redirecionamento
-    const redirecionaGerencia = () => {
+  const redirecionaGerencia = () => {
+    navigate('gerenciamento');
+  };
 
-      navigate("gerenciamento")
-    }
-
-    //Função que realiza o redirecinamento para a tela que exibe as reservas que vão ser aprovadas
-    const redirecinaAprovadas= () => {
-
-      navigate("/sindico/reservas/exibe/aprovadas")
-    }
+  const redirecinaAprovadas = () => {
+    navigate('/sindico/reservas/exibe/aprovadas');
+  };
 
   return (
     <div className={styles.container}>
-
-      {/* Cabeçalho da página: contexto à esquerda, ação principal
-          à direita. No celular o botão desce para a própria linha. */}
       <header className={styles.header}>
         <div>
           <p className="cx-overline">Áreas comuns</p>
           <h2 className="cx-page-title">Reservas de áreas comuns</h2>
           <p className="cx-page-subtitle">
-            Acompanhe as solicitações pendentes e as próximas reservas do condomínio.
+            Acompanhe as solicitações pendentes e as reservas do condomínio no dia selecionado.
           </p>
         </div>
 
-        {/* Atalhos para as telas de áreas comuns e de gerenciamento de reservas */}
         <div className={styles.actions}>
-          <button type="button" className={styles.configButton} onClick={redirecionaGerencia}>Áreas comuns</button>
-          <button type="button" className={styles.configButton} onClick={redirecinaAprovadas}>Gerenciar reservas</button>
+          <button type="button" className={styles.configButton} onClick={redirecionaGerencia}>
+            Áreas comuns
+          </button>
+          <button type="button" className={styles.configButton} onClick={redirecinaAprovadas}>
+            Gerenciar reservas
+          </button>
         </div>
       </header>
 
       <main className={styles.content}>
-
-        {/* Agenda do dia escolhido */}
+        {/* Área central: calendário e reservas do dia */}
         <section className={styles.agenda}>
-
-          {/* Seletor de dia */}
           <div className={styles.dayPicker}>
             <button
               type="button"
@@ -200,88 +156,76 @@ export default function PaginaExibeReserva() {
             </button>
           </div>
 
-          {
-            //Estado de carregamento
-            carregandoAgenda ?
-              <p className={styles.empty}>Carregando reservas do dia...</p>
-            :
-            //Estado de erro
-            agenda.erro ?
-              <p className={styles.error}>Não foi possível carregar as reservas deste dia.</p>
-            :
+          {carregando ? (
+            <p className={styles.empty}>Carregando reservas do dia...</p>
+          ) : agenda.erro ? (
+            <p className={styles.error}>Não foi possível carregar as reservas deste dia.</p>
+          ) : (
             <>
-              {/* Reservas confirmadas no dia */}
-              <h3 className={styles.sectionTitle}>Reservas confirmadas em {formatarDataReserva(dataSelecionada)}</h3>
+              <h3 className={styles.sectionTitle}>
+                Reservas confirmadas em {formatarDataReserva(dataSelecionada)}
+              </h3>
+              {agenda.confirmadas.length === 0 ? (
+                <p className={styles.empty}>Nenhuma reserva confirmada neste dia.</p>
+              ) : (
+                <div className={styles.listaCards}>
+                  {agenda.confirmadas.map((reserva) => (
+                    <CardReservaConfirmadaMini
+                      key={reserva.id}
+                      espaco={reserva.espaco}
+                      inicio={reserva.inicio}
+                      fim={reserva.fim}
+                      morador={reserva.morador}
+                    />
+                  ))}
+                </div>
+              )}
 
-              {
-                filtrarPorTexto(agenda.confirmadas, termo).length === 0 ?
-                  <p className={styles.empty}>Nenhuma reserva confirmada neste dia.</p>
-                :
-                filtrarPorTexto(agenda.confirmadas, termo).map((reserva) => (
-                  <div key={reserva.id} className={`${styles.card} ${styles.cardGap}`}>
-                    <div className={styles.cardContent}>
-                      <h4>{reserva.espaco?.nome}</h4>
-                      <p>{formatarHoraReserva(reserva.inicio)} às {formatarHoraReserva(reserva.fim)}</p>
-                      <p>{reserva.morador?.nome} · {reserva.morador?.unidade?.bloco} - Apto {reserva.morador?.unidade?.numero}</p>
-                    </div>
-                    <span className={styles.statusAccepted}>Confirmada ✓</span>
-                  </div>
-                ))
-              }
+              <h3 className={styles.sectionTitle}>Reservas canceladas</h3>
+              {agenda.canceladas.length === 0 ? (
+                <p className={styles.empty}>Nenhuma reserva cancelada neste dia.</p>
+              ) : (
+                <div className={styles.listaCards}>
+                  {agenda.canceladas.map((reserva) => (
+                    <CardReservaCanceladaMini
+                      key={reserva.id}
+                      espaco={reserva.espaco}
+                      inicio={reserva.inicio}
+                      fim={reserva.fim}
+                      morador={reserva.morador}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </section>
 
-              {/* Solicitações pendentes para o dia */}
-              <h3 className={styles.sectionTitle}>Aguardando aprovação neste dia</h3>
+        {/* Lateral direita: reservas pendentes */}
+        <aside className={styles.sidebar}>
+          <div>
+            <h3 className={styles.sectionTitle}>Reservas pendentes</h3>
 
-              {
-                filtrarPorTexto(agenda.pendentes, termo).length === 0 ?
-                  <p className={styles.empty}>Nenhuma solicitação pendente neste dia.</p>
-                :
-                filtrarPorTexto(agenda.pendentes, termo).map((reserva) => (
-                  <CardReservaAutorizacao
+            {carregando ? (
+              <p className={styles.empty}>Carregando reservas pendentes...</p>
+            ) : agenda.erro ? (
+              <p className={styles.error}>Não foi possível carregar as reservas pendentes.</p>
+            ) : agenda.pendentes.length === 0 ? (
+              <p className={styles.empty}>Nenhuma reserva pendente neste dia.</p>
+            ) : (
+              <div className={styles.listaCards}>
+                {agenda.pendentes.map((reserva) => (
+                  <CardReservaPendenteMini
                     key={reserva.id}
                     id={reserva.id}
                     espaco={reserva.espaco}
-                    data={reserva.data}
                     inicio={reserva.inicio}
                     fim={reserva.fim}
                     morador={reserva.morador}
                   />
-                ))
-              }
-            </>
-          }
-        </section>
-
-        {/* Solicitações que aguardam a decisão do síndico */}
-        <aside className={styles.sidebar}>
-          <div>
-            <h3 className={styles.sectionTitle}>Solicitações de reservas</h3>
-
-            {
-              //Estado de carregamento
-              !solicitacoes.carregado ?
-                <p className={styles.empty}>Carregando solicitações...</p>
-              :
-              //Estado de erro
-              solicitacoes.erro ?
-                <p className={styles.error}>Não foi possível carregar as solicitações.</p>
-              :
-              //Estado sem solicitações
-              filtrarPorTexto(solicitacoes.lista, termo).length === 0 ?
-                <p className={styles.empty}>Nenhuma solicitação pendente.</p>
-              :
-              filtrarPorTexto(solicitacoes.lista, termo).map((reserva) => (
-                <CardReservaAutorizacao
-                  key={reserva.id}
-                  id={reserva.id}
-                  espaco={reserva.espaco}
-                  data={reserva.data}
-                  inicio={reserva.inicio}
-                  fim={reserva.fim}
-                  morador={reserva.morador}
-                />
-              ))
-            }
+                ))}
+              </div>
+            )}
           </div>
         </aside>
       </main>
