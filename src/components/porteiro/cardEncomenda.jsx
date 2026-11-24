@@ -127,7 +127,7 @@ function CardEncomenda({ encomenda, atualizaLista }){
                                     Retirado por: {encomenda.retirado_por}
                                 </span>
                             }
-                            <span className={styles["text--date"]}>Retirada em: {encomenda.data}</span>
+                            <span className={styles["text--date"]}>Retirada em: {new Date(encomenda.data).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })}</span>
                         </>
                     }
                 </div>
